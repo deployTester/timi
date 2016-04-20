@@ -38,6 +38,9 @@ class SiteController extends Controller
 	}
 
 
+	/*
+	*	Handles facebook login + sign up
+	*/
 	public function actionFacebookLogin(){
 		if(!isset($_GET['selfData'])){
 			$this->sendJSONResponse(array(
@@ -88,7 +91,9 @@ class SiteController extends Controller
 		}
 	}
 
-
+	/*
+	*	Returns all your friends free slots on the SAME day in the SAME city
+	*/
 	public function actionGetFriendsFreeSlots(){
 
 		if(!isset($_GET['user_token'])){
@@ -163,7 +168,9 @@ class SiteController extends Controller
 	}
 
 
-
+	/*
+	*	Load your own free time slot
+	*/
 	public function actionFreetime(){
 		if(!isset($_GET['user_token'])){
 			$this->sendJSONResponse(array(
@@ -223,6 +230,9 @@ class SiteController extends Controller
 	}
 
 
+	/*
+	*	Update / create your own free time slot
+	*/
 	public function actionUpdateFreeTime(){
 		if(!isset($_GET['user_token'])){
 			$this->sendJSONResponse(array(
@@ -253,7 +263,9 @@ class SiteController extends Controller
 	}
 
 
-
+	/*
+	*	take phone number, output verification code
+	*/
 	public function actionInputPhone(){
 
 		if(!isset($_GET['user_token'])){
@@ -313,7 +325,9 @@ class SiteController extends Controller
 
 	}
 
-
+	/*
+	*	take verification code, after verification, save it into phone column in tbl_users
+	*/
 	public function actionInputCode(){
 
 		if(!isset($_GET['user_token'])){
@@ -353,6 +367,97 @@ class SiteController extends Controller
 		));
 
 	}
+
+	/*
+	*	Request event (from friend 1-> friend 2), need receiver, request_day, request_time
+	*	if you send the request and the other party did not send it, just send request
+	*   if both party has the request, match it!
+	*   need: user_token, request_day(0 for sunday, 1 for monday....etc.), request_time(0 for noon, 1 for evening, 2 for night), receiver
+	*/
+	public function actionSendRequest(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		if(!isset($_GET['receiver'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no receiver id'
+			));
+			exit();
+		}
+
+		if(!isset($_GET['request_day']) || !isset($_GET['request_time'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no request day or time'
+			));
+			exit();
+		}
+
+
+		$friends = Friends::model()->find('(sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)', array(":me"=>$user->id, ":uid"=>$_GET['receiver']));
+		if(!$friends){
+			$this->sendJSONResponse(array(
+				'error'=>'no friendship exists'
+			));
+			exit();
+		}
+
+		$status = "sent";
+
+		//you are always the receiver, since you are ACCEPTING the request
+		$request = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND sender = :uid AND receiver = :me', 
+					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+
+		if($request){
+
+			$request->status = 1;	//approve, since it's mutual!
+			$request->save(false);
+
+			//if approve, deny all other requests during the same time
+			if($request->status == 1){
+				$requests = Requests::model()->findAll('id != :rid AND status = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :me', 
+						array(':rid'=>$request->id,':me'=>$user->id, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+				if($requests){
+					foreach($requests as $req){
+						$req->status = 3;
+						$req->save(false);
+					}
+				}
+			}
+
+			$status = "matched";
+
+		}else{
+
+			$request = new Requests;
+			$request->create_time = time();
+			$request->sender = $user->id;
+			$request->request_day = $_GET['request_day'];	//0 for sunday, 1 for monday...
+			$request->request_time = $_GET['request_time'];	//0 for noon, 1 for evening, 2 for night
+			$request->receiver = $_GET['receiver'];
+			$request->status = 0;
+			$request->save(false);
+
+		}
+
+		$this->sendJSONResponse(array(
+			'status'=>$status,
+		));		
+
+	}
+
 
 
 	/**
