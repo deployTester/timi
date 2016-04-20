@@ -42,6 +42,7 @@ class Users extends CActiveRecord
 			array('social_token_type, create_time, lastaction, status, gender', 'numerical', 'integerOnly'=>true),
 			array('username, user_token', 'length', 'max'=>200),
 			array('password, social_token, email', 'length', 'max'=>300),
+			array('avatar', 'length', 'max'=>500),
 			array('social_id, ip', 'length', 'max'=>100),
 			array('phone', 'length', 'max'=>30),
 			array('city, country', 'length', 'max'=>50),

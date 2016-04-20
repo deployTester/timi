@@ -5,13 +5,13 @@ class CrontabController extends Controller
 
 	public function actionUpdateTimeSlot(){
         //prevent anyone else from using our cron
-        if ($_SERVER['REMOTE_ADDR'] !== '52.9.2.200' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '52.9.2.200')) {
+        if ($_SERVER['REMOTE_ADDR'] !== '52.9.2.100' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '52.9.2.100')) {
             throw new CHttpException(404, "The requested link does not exist.");
         }
 
 		date_default_timezone_set("America/New_York");	//set it to NEW YORK FOR NOW
 		$timestamp = time();
-		$noon_expire = strtotime('4pm', $timestamp);
+		$noon_expire = strtotime('3pm', $timestamp);
 		$evening_expire = strtotime('9pm', $timestamp);
 		$night_expire = strtotime('11pm', $timestamp) + 4 * 3600;
 
@@ -27,6 +27,9 @@ where matched = 0 AND slot = 1 AND day = ".$day)->queryAll();
 		}else if(time() > $noon_expire){	//update noon slots
 			$slots = Yii::app()->db->createCommand("select * from tbl_free_time_slot 
 where matched = 0 AND slot = 0 AND day = ".$day)->queryAll();
+		}else{
+			echo 200;
+			exit();	//not a time to call
 		}
 
         foreach($slots as $entry):
@@ -35,13 +38,13 @@ where matched = 0 AND slot = 0 AND day = ".$day)->queryAll();
         	$slot->save(false);
 		endforeach;
 
-		return 200;
+		echo 200;
 	}
 
 
 	public function actionResetTimeSlot(){
         //prevent anyone else from using our cron
-        if ($_SERVER['REMOTE_ADDR'] !== '52.9.2.200' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '52.9.2.200')) {
+        if ($_SERVER['REMOTE_ADDR'] !== '52.9.2.100' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '52.9.2.100')) {
            throw new CHttpException(404, "The requested link does not exist.");
         }
 
@@ -52,7 +55,7 @@ where matched = 0 AND slot = 0 AND day = ".$day)->queryAll();
 			$rows_affected = Yii::app()->db->createCommand("update tbl_free_time_slot set matched = 0")->execute();
 		}
 
-		return 200;
+		echo 200;
 	}
 
 

@@ -89,6 +89,80 @@ class SiteController extends Controller
 	}
 
 
+	public function actionGetFriendsFreeSlots(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		date_default_timezone_set("America/New_York");	//set it to NEW YORK FOR NOW
+		$jd_day = cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
+		$day = (jddayofweek($jd_day,0)); 
+
+
+		$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
+				where s.matched = 0 and (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$user->id.' and s.day = '.$day.' and u.city = "'.$user->city.'" group by sid')->queryAll();
+
+		$final = array();
+
+		//好友？？如何parent array
+
+		foreach($slots as $entry):
+
+			if($user->id == $entry['sender']){
+				$friend = $entry['receiver'];
+			}else{
+				$friend = $entry['sender'];
+			}
+
+			if(!isset($final[$friend])){
+				$final[$friend] = array(0, 0, 0);
+			}
+
+			$slot = FreeTimeSlot::model()->findByPk($entry['sid']);
+			if($slot){
+				$final[$friend][$slot->slot] = $slot->free;
+			}
+		endforeach;
+
+
+		$result = array();
+
+		foreach($final as $key=>$value):
+
+			if(!$value[0] && !$value[1] && !$value[2]){
+				continue; //busy ->0, 0, 0
+			}
+
+			$friend = Users::model()->findByPk($key);	//get friend details
+			$result[] = array(
+				'user_id'=>$key,
+				'username'=>$friend->username,
+				'avatar'=>$friend->avatar,
+				'availability'=>$value
+			);
+
+		endforeach;
+
+		$result = json_encode($result);
+
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+
 
 	public function actionFreetime(){
 		if(!isset($_GET['user_token'])){
