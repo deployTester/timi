@@ -28,7 +28,7 @@ class Friends extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('sender, receiver, create_time', 'required'),
-			array('sender, receiver, create_time', 'numerical', 'integerOnly'=>true),
+			array('sender, receiver, create_time, accept', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, sender, receiver, create_time', 'safe', 'on'=>'search'),

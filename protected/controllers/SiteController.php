@@ -75,8 +75,11 @@ class SiteController extends Controller
 			$user->save();
 		}
 
-		$user->updateFriendsViaFB($friends);
+		if($friends){
+			$user->updateFriendsViaFB($friends);
+		}
 		$user->userActed();
+		DeviceToken::model()->addNewToken($user->id);
 
 		if($user->phone){
 			$this->sendJSONResponse(array(
@@ -89,6 +92,203 @@ class SiteController extends Controller
 				'phone'=>false,
 			));
 		}
+	}
+
+
+	/*
+	*	Save contact list friends
+	*/
+	public function actionTakePhoneContact(){
+
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Methods: POST');
+		header('Access-Control-Max-Age: 1000');
+
+		if(!isset($_POST['user_token'])){
+			$this->sendJSONPost(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_POST['user_token']));
+			if(!$user){
+				$this->sendJSONPost(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}	
+
+		$user->lastaction = time();
+		$user->save(false);
+
+		if(!isset($_POST['list'])){
+			$this->sendJSONPost(array(
+				'error'=>'no list'
+			));
+			exit();
+		}
+		$array = json_decode($_POST['list'], true);
+
+		if($array):
+			foreach($array as $arr):
+				if(!$arr['name']){
+					continue;
+				}
+				$contact = PhoneContacts::model()->findByAttributes(array('user_id'=>$user->id, 'name'=>$arr['name']));
+				$exist = null;
+				if(!$contact){
+					$contact = new PhoneContacts;
+					$contact->user_id = $user->id;
+					$contact->name = $arr['name'];
+					if(isset($arr['email'])){
+						if(isset($arr['email'][0])){
+							$contact->email = $arr['email'][0];
+						}
+					}
+					if(isset($arr['number'][0])){
+						$contact->number1 = $this->cleanPhoneNumber($arr['number'][0]);
+						$exist = Users::model()->findByAttributes(array('phone'=>$contact->number1));
+					}
+
+					if(!$contact->number1 && !$contact->email){
+						continue;
+					}
+
+					if(isset($arr['number'][1])){
+						$contact->number2 = $this->cleanPhoneNumber($arr['number'][1]);
+						if(!$exist){
+							$exist = Users::model()->findByAttributes(array('phone'=>$contact->number2));
+						}
+					}
+					if(isset($arr['number'][2])){
+						$contact->number3 = $this->cleanPhoneNumber($arr['number'][2]);
+						if(!$exist){
+							$exist = Users::model()->findByAttributes(array('phone'=>$contact->number3));
+						}
+					}
+					if($exist && !$contact->signed_up){
+						$friends = Friends::model()->find('(sender = :uid AND receiver = :myid) OR (sender = :myid AND receiver = :uid)',array(':uid'=>$exist->id, ':myid'=>$user->id));
+						if(!$friends){
+							$friends = new Friends;
+							$friends->sender = $user->id;
+							$friends->receiver = $exist->id;
+							$friends->create_time = time();
+							$friends->save(false);
+						}
+						$contact->signed_up = 1;	//means your friend signed up already and you added him
+					}
+					$contact->create_time = time();
+					$contact->save();
+				}
+			endforeach;
+		endif;
+
+		$this->sendJSONPost(array(
+			'success'=>'updated'
+		));
+
+	}
+
+
+	/*
+	*	Pass a number, this will invite your friend to join Timi.
+	*/
+	public function actionInvitefriends(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		if(!isset($_GET['number'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no number'
+			));
+			exit();
+		}
+
+		$newNumber = $this->cleanPhoneNumber($_GET['number']);
+
+        spl_autoload_unregister(array('YiiBase', 'autoload'));
+        require_once '/var/www/html/webapp/protected/extensions/twilio/Services/Twilio.php';
+        spl_autoload_register(array('YiiBase', 'autoload'));
+
+        $sid = "AC0c903dd4a822025fe1ea9e9d069c5ee8"; // Your Account SID from www.twilio.com/user/account
+        $token = "31b5c426f5a0570b3d53ef8f368c6703"; // Your Auth Token from www.twilio.com/user/account
+
+        $client = new Services_Twilio($sid, $token);
+        $message = $client->account->messages->sendMessage(
+                 '+16282226190', // From a valid Twilio number
+                  '+'.$newNumber, // Text this number
+                  "Hi, ".$user->username." wants you to go out together! Join Timi at :gettimi.com and respond!"	//message
+        );
+
+		$contact = PhoneContacts::model()->find('number1 = :number OR number2 = :number OR number3 = :number', array(':number'=>$newNumber));
+		if($contact){
+			$contact->invited = 1;
+			$contact->save(false);
+		}
+
+		$this->sendJSONResponse(array(
+			'success'=>"sent",
+		));
+
+	}
+
+	/*
+	*	return signed up or friends that already got invited (list of friends)
+	*/
+	public function actionReturnInvitedSignedup(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		$user->lastaction = time();
+		$user->save(false);
+
+		$contacts = PhoneContacts::model()->findAll("user_id = :uid AND (invited > 0 OR signed_up > 0)", array(":uid"=>$user->id));
+		$result = array();
+		foreach($contacts as $contact):
+			$result[$contact->name] = array($contact->invited, $contact->signed_up);
+		endforeach;
+		$result = json_encode($result);
+
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+
+	/*
+	*	This function gets rid of all special char and append 1 when necessary(10 digits) as country code for US
+	*/
+	protected function cleanPhoneNumber($string) {
+	   $string = preg_replace('/[^A-Za-z0-9]/', '', $string);
+	   if(strlen($string) == 10){
+	   	   $string = "1".$string;
+	   }
+	   return preg_replace('/[^A-Za-z0-9]/', '', $string); // Removes special chars.
 	}
 
 	/*
@@ -111,6 +311,9 @@ class SiteController extends Controller
 			}
 		}
 
+		$user->lastaction = time();
+		$user->save(false);
+
 		date_default_timezone_set("America/New_York");	//set it to NEW YORK FOR NOW
 		$jd_day = cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
 		$day = (jddayofweek($jd_day,0)); 
@@ -120,8 +323,6 @@ class SiteController extends Controller
 				where s.matched = 0 and (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$user->id.' and s.day = '.$day.' and u.city = "'.$user->city.'" group by sid')->queryAll();
 
 		$final = array();
-
-		//好友？？如何parent array
 
 		foreach($slots as $entry):
 
@@ -137,10 +338,35 @@ class SiteController extends Controller
 
 			$slot = FreeTimeSlot::model()->findByPk($entry['sid']);
 			if($slot){
-				$final[$friend][$slot->slot] = $slot->free;
+
+				$check_if_busy = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
+					array(":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+
+				$check_if_reject = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 2', 
+					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+
+				$check_if_sent = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND sender = :me AND receiver = :uid AND status = 0', 
+					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+
+				$check_if_matched = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 1', 
+					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+
+				if($check_if_busy){
+					$final[$friend][$slot->slot] = "matched others";	//she matched someone else.
+				}
+				else if($check_if_reject){
+					$final[$friend][$slot->slot] = "one rejected";	//either you rejected her, or vice versa.
+				}
+				else if($check_if_sent){
+					$final[$friend][$slot->slot] = "request sent";	//you sent the request already
+				}
+				else if($check_if_matched){
+					$final[$friend][$slot->slot] = "matched";	//you guys have been matched.
+				}else{
+					$final[$friend][$slot->slot] = $slot->free;	//see if they are actually free
+				}
 			}
 		endforeach;
-
 
 		$result = array();
 
@@ -186,6 +412,9 @@ class SiteController extends Controller
 				exit();	
 			}
 		}
+
+		$user->lastaction = time();
+		$user->save(false);
 
 		$json = $_GET['free_time'];
 		$array = json_decode($json);
@@ -248,6 +477,10 @@ class SiteController extends Controller
 				exit();	
 			}
 		}
+
+		$user->lastaction = time();
+		$user->save(false);
+
 		$slots = FreeTimeSlot::model()->findAllByAttributes(array('user_id'=>$user->id), array('order'=>'day ASC'));
 		$result = array();
 		foreach($slots as $slot){
@@ -255,6 +488,61 @@ class SiteController extends Controller
 				$result[$slot->day] = array(0, 0, 0);
 			}
 			$result[$slot->day][$slot->slot] = $slot->free;
+		}
+		$result = json_encode($result);
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+
+	/*
+	*	This function returns your own schedule today.
+	*/
+	public function actionGetMySchedule(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		$user->lastaction = time();
+		$user->save(false);
+
+		date_default_timezone_set("America/New_York");	//set it to NEW YORK FOR NOW
+		$jd_day = cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
+		$day = (jddayofweek($jd_day,0)); 
+
+		$slots = FreeTimeSlot::model()->findAllByAttributes(array('user_id'=>$user->id, 'day'=>$day), array('order'=>'slot ASC'));
+		$result = array(0, 0, 0);
+		foreach($slots as $slot){
+			$check_if_matched = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (receiver = :me OR sender = :me) AND status = 1', 
+					array(":me"=>$user->id, ":request_day"=>$day, "request_time"=>$slot->slot));
+			if($check_if_matched){
+				if($user->id == $check_if_matched->receiver){	//if i am receiver, the other guy is sender. 
+					$other = Users::model()->findByPk($check_if_matched->sender);
+				}else{
+					$other = Users::model()->findByPk($check_if_matched->receiver);
+				}
+				$result[$slot->slot] = array(
+					'user_id'=>$other->id, //friend’s id 
+					'username'=>$other->username, //friend’s usnerame
+					'avatar'=>$other->avatar, //friend’s profile pic
+					'whatsup'=>$other->whatsup, //friend’s status
+					'phone'=>$other->phone, //friend’s phone
+				);
+			}else{
+				$result[$slot->slot] = $slot->free;
+			}
 		}
 		$result = json_encode($result);
 		$this->sendJSONResponse(array(
@@ -301,7 +589,6 @@ class SiteController extends Controller
 
         $valid_code = rand(1000, 9999);
 
-        $client = new Services_Twilio($sid, $token);
         $client = new Services_Twilio($sid, $token);
         $message = $client->account->messages->sendMessage(
                  '+16282226190', // From a valid Twilio number
@@ -372,7 +659,7 @@ class SiteController extends Controller
 	*	Request event (from friend 1-> friend 2), need receiver, request_day, request_time
 	*	if you send the request and the other party did not send it, just send request
 	*   if both party has the request, match it!
-	*   need: user_token, request_day(0 for sunday, 1 for monday....etc.), request_time(0 for noon, 1 for evening, 2 for night), receiver
+	*   need: user_token, request_day(0 for sunday, 1 for monday....etc.), request_time(0 for noon, 1 for evening, 2 for night), receiver, decision
 	*/
 	public function actionSendRequest(){
 
@@ -391,6 +678,9 @@ class SiteController extends Controller
 			}
 		}
 
+		$user->lastaction = time();
+		$user->save(false);
+
 		if(!isset($_GET['receiver'])){
 			$this->sendJSONResponse(array(
 				'error'=>'no receiver id'
@@ -405,6 +695,12 @@ class SiteController extends Controller
 			exit();
 		}
 
+		if(!isset($_GET['decision'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no decision'
+			));
+			exit();
+		}		
 
 		$friends = Friends::model()->find('(sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)', array(":me"=>$user->id, ":uid"=>$_GET['receiver']));
 		if(!$friends){
@@ -415,12 +711,13 @@ class SiteController extends Controller
 		}
 
 		$status = "sent";
+		$decision = $_GET['decision'];	//1 for approve, 2 for reject
 
 		//you are always the receiver, since you are ACCEPTING the request
 		$request = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND sender = :uid AND receiver = :me', 
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 
-		if($request){
+		if($request && $decision == 1){	//i approve a request
 
 			$request->status = 1;	//approve, since it's mutual!
 			$request->save(false);
@@ -439,23 +736,114 @@ class SiteController extends Controller
 
 			$status = "matched";
 
-		}else{
+		}else if($decision == 1){	//no request sent to me, i sent out request
 
-			$request = new Requests;
-			$request->create_time = time();
-			$request->sender = $user->id;
-			$request->request_day = $_GET['request_day'];	//0 for sunday, 1 for monday...
-			$request->request_time = $_GET['request_time'];	//0 for noon, 1 for evening, 2 for night
-			$request->receiver = $_GET['receiver'];
-			$request->status = 0;
+			$old = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND receiver = :uid AND sender = :me', 
+					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+			if(!$old){
+				$request = new Requests;
+				$request->create_time = time();
+				$request->sender = $user->id;
+				$request->request_day = $_GET['request_day'];	//0 for sunday, 1 for monday...
+				$request->request_time = $_GET['request_time'];	//0 for noon, 1 for evening, 2 for night
+				$request->receiver = $_GET['receiver'];
+				$request->status = 0;
+				$request->save(false);
+			}
+
+			$status = "sent";
+
+		}else if($request && $decision == 2){	//request sent to me, i turned it down
+			$request->status = 2;
 			$request->save(false);
 
+			$status = "rejected";
+
+		}else if($decision == 2){	//no request sent to me, i just clicked dislike
+
+			$old = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND receiver = :uid AND sender = :me', 
+					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+			if(!$old){
+				$request = new Requests;
+				$request->create_time = time();
+				$request->sender = $user->id;
+				$request->request_day = $_GET['request_day'];	//0 for sunday, 1 for monday...
+				$request->request_time = $_GET['request_time'];	//0 for noon, 1 for evening, 2 for night
+				$request->receiver = $_GET['receiver'];
+				$request->status = 2;	//save as rejection
+				$request->save(false);
+			}
+			$status = "disliked";
 		}
 
 		$this->sendJSONResponse(array(
 			'status'=>$status,
 		));		
 
+	}
+
+
+
+	/*
+	*	This function handles change avatar for students.
+	*   And update whatsup (optional)
+	*/
+	public function actionChangeAvatar(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+
+		if(isset($_FILES['file']) || isset($_GET['whatsup']))
+		{
+
+			if(isset($_GET['whatsup'])){
+				$user->whatsup = strip_tags($_GET['whatsup']);
+			}
+
+			if(isset($_FILES['file'])){
+						$filename = "avatar" . time() . rand(1, 999) . ".jpg";
+
+						if (!isset($_FILES["file"]["tmp_name"]) || !$_FILES["file"]["tmp_name"]) {
+							$this->sendJSONPost(array(
+								'error' => 'No picture posted.'
+							));
+							exit();
+						}
+
+						$new_image_name = $filename; //strtolower($_FILES['file']['name']);
+
+						$fileSavePath = "uploads/avatar/" . $user->id . "/";
+						if (!file_exists($fileSavePath)) {
+							mkdir($fileSavePath, 0777, true);
+						}
+						$user->avatar = "/".$fileSavePath.$new_image_name;
+			}
+
+			$user->save();
+
+			$this->sendJSONPost(array(
+				'avatar' => $user->avatar,
+				'whatsup' => $user->whatsup,
+			));
+
+		}else{
+			$this->sendJSONPost(array(
+				'error' => 'No post file or status',
+			));
+		}
 	}
 
 
@@ -511,6 +899,9 @@ class SiteController extends Controller
 		}
 		$this->render('contact',array('model'=>$model));
 	}
+
+
+
 
 	/**
 	 * Displays the login page

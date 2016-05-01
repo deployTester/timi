@@ -38,12 +38,13 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('social_id, user_token, create_time', 'required'),
+			array('social_id, user_token, create_time, username', 'required'),
 			array('social_token_type, create_time, lastaction, status, gender', 'numerical', 'integerOnly'=>true),
 			array('username, user_token', 'length', 'max'=>200),
 			array('password, social_token, email', 'length', 'max'=>300),
 			array('avatar', 'length', 'max'=>500),
 			array('social_id, ip', 'length', 'max'=>100),
+			array('whatsup', 'length', 'max'=>200),
 			array('phone', 'length', 'max'=>30),
 			array('city, country', 'length', 'max'=>50),
 			// The following rule is used by search().
@@ -168,6 +169,27 @@ class Users extends CActiveRecord
 		}
 
 		$this->save(false);
+	}
+
+
+
+	public function sendiOSNotification($data){	//pass in ['title'], ['user_id'], ['type']
+		$notifs = DeviceToken::model()->findAllByAttributes(array("user_id"=>$data['user_id'], "device"=>"iOS"));
+		foreach($notifs as $notif){
+			if ($notif && $notif->token) {
+				$data["token"] = $notif->token;
+				$data["unread"] = 1;	//1 for now
+			 	$url = Yii::app()->params['globalURL'].'/simplepush/iospush.php?'.http_build_query($data);
+				$ch  = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //this prevent printing the 200json code
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1); //timeout 1s
+				curl_setopt($ch, CURLOPT_TIMEOUT, 1); //timeout 1s
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+		}
 	}
 
 	/**

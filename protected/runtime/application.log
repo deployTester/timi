@@ -9825,3 +9825,1033 @@ Stack trace:
 REQUEST_URI=/site/sendrequest?user_token=34e760735a29876e2d95cd9c99d38b51&_=14610923447589&callback=1&receiver=23&request_day=3&request_time=1
 in /var/www/html/webapp/protected/controllers/SiteController.php (432)
 in /var/www/html/webapp/index.php (13)
+2016/04/20 18:07:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/21 08:39:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/21 19:35:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp1.piwo.pila.pl/testproxy.php
+---
+2016/04/21 19:35:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp4.pospr.waw.pl/testproxy.php
+---
+2016/04/21 19:36:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp4.pospr.waw.pl/testproxy.php
+---
+2016/04/22 01:04:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "wp-login.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('wp-login.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/wp-login.php
+HTTP_REFERER=http://gettimi.com/wp-login.php
+---
+2016/04/22 01:04:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "blog//wp-login.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('blog//wp-login....')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/blog//wp-login.php
+HTTP_REFERER=http://gettimi.com/blog//wp-login.php
+---
+2016/04/22 01:04:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "administrator".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('administrator')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/administrator/
+HTTP_REFERER=http://gettimi.com/administrator/
+---
+2016/04/22 01:04:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "blog//administrator".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('blog//administr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/blog//administrator/
+HTTP_REFERER=http://gettimi.com/blog//administrator/
+---
+2016/04/22 13:01:37 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111106194511349312961_1461344483522&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBACPVGRptP8KeqwLVrRO5NDukVT18wmoqSTlXDAoC7WXpFfHEvveVZBZBm5TETwDMvHEkZArJM3ZCBElkZAtXpBk4isKAqQL0E9Uo5FW5KpN5gAZB8HHMSI5siY0UcYziC47PD6Cy9dLkTCDoc1IYG3dgkv3nKquTIjVwL1teAYYYB04KQrC7umbQwO0ZAmWVFTt7z4QQbcQ%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBACPVGRptP8KeqwLVrRO5NDukVT18wmoqSTlXDAoC7WXpFfHEvveVZBZBm5TETwDMvHEkZArJM3ZCBElkZAtXpBk4isKAqQL0E9Uo5FW5KpN5gAZB8HHMSI5siY0UcYziC47PD6Cy9dLkTCDoc1IYG3dgkv3nKquTIjVwL1teAYYYB04KQrC7umbQwO0ZAmWVFTt7z4QQbcQ%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344483523
+---
+2016/04/22 13:01:48 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111106194511349312961_1461344483524&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAIZAwIgh75lZCrsa5rs3Tn69sTcmIBn1xwtlV08IcZAAeO8Agpbc9lckvy23zT2CLfgOb7FzWRp1ATcyyVD12IttftLb1XXdTPIqdNTmJBwCod5JXAJ5ajzxhrCPlAaPZAhZB9fKy8ZB7XolIN0ZCqA5NdKWli9UGw3hOgZBwV9EybX3hk9ZB928JlMyWxk00vfNPdzTGwyR7GM6VZALZCBOoBZBVneTlzdwz36GEMxV1Jfy%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAIZAwIgh75lZCrsa5rs3Tn69sTcmIBn1xwtlV08IcZAAeO8Agpbc9lckvy23zT2CLfgOb7FzWRp1ATcyyVD12IttftLb1XXdTPIqdNTmJBwCod5JXAJ5ajzxhrCPlAaPZAhZB9fKy8ZB7XolIN0ZCqA5NdKWli9UGw3hOgZBwV9EybX3hk9ZB928JlMyWxk00vfNPdzTGwyR7GM6VZALZCBOoBZBVneTlzdwz36GEMxV1Jfy%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344483525
+---
+2016/04/22 13:02:01 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111101041021030396223_1461344513831&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAAZCiM5UuuChwrG5w04S60vzsKysYGRXMJZCHZAUV99Y2ardWGVohLgYpJAooJZCdKA5kSNWiBmOgXVAYKbFYOvMW164JNuZCm2NFoimbUXv3xV3Iev4ZAQu4nKPLHbA4uuGDbZA8vg7VZApaN13wmowAk0HCl9n9JIiEOrcFTkE2mkOPsf2YZB8f0o9cV8Wf8vbZCs2Lsj6wnFwtPhyFmhFlMLTnk5ZC71TvQV6ZCYvm0sq%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAAZCiM5UuuChwrG5w04S60vzsKysYGRXMJZCHZAUV99Y2ardWGVohLgYpJAooJZCdKA5kSNWiBmOgXVAYKbFYOvMW164JNuZCm2NFoimbUXv3xV3Iev4ZAQu4nKPLHbA4uuGDbZA8vg7VZApaN13wmowAk0HCl9n9JIiEOrcFTkE2mkOPsf2YZB8f0o9cV8Wf8vbZCs2Lsj6wnFwtPhyFmhFlMLTnk5ZC71TvQV6ZCYvm0sq%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344513832
+---
+2016/04/22 13:03:06 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111101707602448295802_1461344582581&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAFDStVg1MlcokFDooSuDZAuRLQlHNS1bsDPBQkwLrQODEqD9Igwz8fbuAd5TQTn5wqoEwZAVavkj9HgPFfRFKkGfYOGyXZBnCVybqr7osF7oqoclEQAnFNZAOVtaWC56dZBPw6b9LXeBfgQXTxy56rlZBPpV4amwiIZCmJ8i2yzZCIw1MKdxVLVJ6RpTaYC72ntqtFW2ZAOmoVjv3iU1onrkGD0NNvU3UrcDZB9QZByZAEmG%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAFDStVg1MlcokFDooSuDZAuRLQlHNS1bsDPBQkwLrQODEqD9Igwz8fbuAd5TQTn5wqoEwZAVavkj9HgPFfRFKkGfYOGyXZBnCVybqr7osF7oqoclEQAnFNZAOVtaWC56dZBPw6b9LXeBfgQXTxy56rlZBPpV4amwiIZCmJ8i2yzZCIw1MKdxVLVJ6RpTaYC72ntqtFW2ZAOmoVjv3iU1onrkGD0NNvU3UrcDZB9QZByZAEmG%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344582582
+---
+2016/04/22 13:04:39 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111106058600309770554_1461344674706&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAEB50mLO9NclUJyX6Mch3ZCcwMDVIbgZBsbKNYLZBbYdRUS4rcSXjnC3EdhopmeJdb5z9sxpMs6YXeCVuaFXk0ZC8ZAmdSlwVdKMiVCcTnZB7hIYvWZBQ2TUtjxZAV2KqyZCH6ZCHPmpCeWqBrStuZCgI48vZBZAhc1ZCwYq4qEE5Hrl9ZABPR6SKEuOMHVKAXanLjTjgIMFy5WHt8Hi3QK9ALyTtOyyXDbSOmQZCE2HtnCuwXZB2%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAEB50mLO9NclUJyX6Mch3ZCcwMDVIbgZBsbKNYLZBbYdRUS4rcSXjnC3EdhopmeJdb5z9sxpMs6YXeCVuaFXk0ZC8ZAmdSlwVdKMiVCcTnZB7hIYvWZBQ2TUtjxZAV2KqyZCH6ZCHPmpCeWqBrStuZCgI48vZBZAhc1ZCwYq4qEE5Hrl9ZABPR6SKEuOMHVKAXanLjTjgIMFy5WHt8Hi3QK9ALyTtOyyXDbSOmQZCE2HtnCuwXZB2%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344674707
+---
+2016/04/22 13:04:50 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111106058600309770554_1461344674708&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBACoWrasXHU0UcfZBKyDt2IWT9hFZCtKiotKxw1pQJYhtDr4uzfv1cOV4N73NnH6YdPHKT1V9PA74ZArKPumiAxPZB1wfnMOMheWBZAZBvYMfNbMKjLI4oO8IuPcvI1MKZCZCow0AuthfZAUqUUBa2TrRuN7Jy7n9m9FT7JrxUOLGHUoLZBpI0xVofE6JpZCLlhf3Ily4gR9QFd3EAwZBmK7gdEHq2ZBEw2Utl6ExLXUJr7a64%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBACoWrasXHU0UcfZBKyDt2IWT9hFZCtKiotKxw1pQJYhtDr4uzfv1cOV4N73NnH6YdPHKT1V9PA74ZArKPumiAxPZB1wfnMOMheWBZAZBvYMfNbMKjLI4oO8IuPcvI1MKZCZCow0AuthfZAUqUUBa2TrRuN7Jy7n9m9FT7JrxUOLGHUoLZBpI0xVofE6JpZCLlhf3Ily4gR9QFd3EAwZBmK7gdEHq2ZBEw2Utl6ExLXUJr7a64%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344674709
+---
+2016/04/22 13:05:10 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111106058600309770554_1461344674710&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAOvXTZCoTtuGyLZCdBr3TKqUYk9tdDZAfC0foZB8YM414SDprK1dRdVqlHZAiRh9yWqPtNuUgxyftPiKYUsuuv2SLZBJXVc94gIZADz1OKh48CHbieZA8aW3mKGwJG2lTwTqroQY6xpkQtSUeZCwRZB9OMnhZB9FiXlpHXNpy9pjnjSqhZBK0AUQqysMGqXu3ZAG8NIL2IcZB3i6OQZC4Awe5WUNj2VAj5lkl8IpLlVfLR9qW4L%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAOvXTZCoTtuGyLZCdBr3TKqUYk9tdDZAfC0foZB8YM414SDprK1dRdVqlHZAiRh9yWqPtNuUgxyftPiKYUsuuv2SLZBJXVc94gIZADz1OKh48CHbieZA8aW3mKGwJG2lTwTqroQY6xpkQtSUeZCwRZB9OMnhZB9FiXlpHXNpy9pjnjSqhZBK0AUQqysMGqXu3ZAG8NIL2IcZB3i6OQZC4Awe5WUNj2VAj5lkl8IpLlVfLR9qW4L%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344674711
+---
+2016/04/22 13:06:21 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111109410710819065571_1461344776602&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBABC2yvBVXFgIcRB1ZCTQ5oWcUYJZCP4lYNSXrzgvmSGrOiq2NkzCNhd6I5y1SnVN0LV79GoPRfUtdgw567X0LPnebZCmkY7ZAL7FhIlaOQ3NZAGYVKmAe9sIJ0DniYfJZAFRbcYdd61hLJoXgeLpOFXmVFVtxCIUhaQ3hlxNMgCTAtOvNdc2sntgObacAOUQ9rZBOeVR7sl5z99D6A6QTSXfF3R2FpuUjnqpcOp5YFR%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBABC2yvBVXFgIcRB1ZCTQ5oWcUYJZCP4lYNSXrzgvmSGrOiq2NkzCNhd6I5y1SnVN0LV79GoPRfUtdgw567X0LPnebZCmkY7ZAL7FhIlaOQ3NZAGYVKmAe9sIJ0DniYfJZAFRbcYdd61hLJoXgeLpOFXmVFVtxCIUhaQ3hlxNMgCTAtOvNdc2sntgObacAOUQ9rZBOeVR7sl5z99D6A6QTSXfF3R2FpuUjnqpcOp5YFR%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344776603
+---
+2016/04/22 13:06:25 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111109410710819065571_1461344776604&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAJnlv4kyRTnMAUZCY9DQ1IyzM1PYRo4aDxMAOZABsBqtJdkMiGnaRVL7SpeyZBjNRjCOG4Dr1w5ZB0ZBtk0meMFsNWhF68meynNNplE7PRj8uZCgWCLckqZBs1QTsYZBNgWr0MfGZBpyScCKrm8WBEALhqhpnisML60TrNzwW2hPBSik1OFToDs1TmN6GcyMM9cHt2R4MSltQqVwJz4EdYZBXbOWCi53emhrZAEb6P51ISp%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAJnlv4kyRTnMAUZCY9DQ1IyzM1PYRo4aDxMAOZABsBqtJdkMiGnaRVL7SpeyZBjNRjCOG4Dr1w5ZB0ZBtk0meMFsNWhF68meynNNplE7PRj8uZCgWCLckqZBs1QTsYZBNgWr0MfGZBpyScCKrm8WBEALhqhpnisML60TrNzwW2hPBSik1OFToDs1TmN6GcyMM9cHt2R4MSltQqVwJz4EdYZBXbOWCi53emhrZAEb6P51ISp%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344776605
+---
+2016/04/22 13:06:30 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111109410710819065571_1461344776606&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAKDMr6e8fwhkkOnQALLlftm4lDOZA8CZCdPZAON4Sc5bBxoP0wwDatMVgCD8rIZAZCo8JVb5qROb7WQXpacrlkI4ZCILYlo4gbTHUsnjI8Q8EWCC4wp7BziBlBBfmbYAteHfdc4Yrie95bpnjXY9nXDuv6m1mRDZCDUfl16YZBsYhafOjyw42kviDvHtnapF2WXUEITyU4AVScCIdOrXyydrZBH7QWDOak5ZAZBmE4xD7OV%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAKDMr6e8fwhkkOnQALLlftm4lDOZA8CZCdPZAON4Sc5bBxoP0wwDatMVgCD8rIZAZCo8JVb5qROb7WQXpacrlkI4ZCILYlo4gbTHUsnjI8Q8EWCC4wp7BziBlBBfmbYAteHfdc4Yrie95bpnjXY9nXDuv6m1mRDZCDUfl16YZBsYhafOjyw42kviDvHtnapF2WXUEITyU4AVScCIdOrXyydrZBH7QWDOak5ZAZBmE4xD7OV%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344776607
+---
+2016/04/22 13:12:22 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111109410710819065571_1461344776608&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAMiPZBZChQZCgZBaIPOa64SO6srN83D6ZAiEBMAXjtL2WkhIZBgiyn5CRw7SEHsnLZCjj1svavDIv85izuPr3juJgH2KKE2CMwad6r4M0tBg6z7KzwT7tPIZAD0pnbbqghsqCpB5AcepkkMaH1vR6IRZBZBB3kZBXAqJBcmBziz8sosBh8QO06RLUmyTcVa1ZB8KGc1rvidXZCmpjykfmjFPIXI9iP0FZBxZBQ4pm0NTqfxth0C%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAMiPZBZChQZCgZBaIPOa64SO6srN83D6ZAiEBMAXjtL2WkhIZBgiyn5CRw7SEHsnLZCjj1svavDIv85izuPr3juJgH2KKE2CMwad6r4M0tBg6z7KzwT7tPIZAD0pnbbqghsqCpB5AcepkkMaH1vR6IRZBZBB3kZBXAqJBcmBziz8sosBh8QO06RLUmyTcVa1ZB8KGc1rvidXZCmpjykfmjFPIXI9iP0FZBxZBQ4pm0NTqfxth0C%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461344776609
+---
+2016/04/22 13:14:00 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111107155064181424677_1461345236680&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAF37GxJ5MCkDI3X65Weo2lxp75tGYNucZCbUy1zNDPS6PWY4o7GGgmNWgWb3ZAeqKN0K2xC8fkzC3khCxFjDZAZCL8WZA3fxcBHg0A6FYW0c4cSmR9JRARyTrxDFnxbK0JZCUR8tBb20t479TMwrOzQOPjxuE4cD99qeB2UyMVaCeGF3ADpAKkG1bJ6cnR0IihJFdpRjQ6TAb4Ts9lRoETtfLqZAZCGQ05aI5G0xFZBl3%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAF37GxJ5MCkDI3X65Weo2lxp75tGYNucZCbUy1zNDPS6PWY4o7GGgmNWgWb3ZAeqKN0K2xC8fkzC3khCxFjDZAZCL8WZA3fxcBHg0A6FYW0c4cSmR9JRARyTrxDFnxbK0JZCUR8tBb20t479TMwrOzQOPjxuE4cD99qeB2UyMVaCeGF3ADpAKkG1bJ6cnR0IihJFdpRjQ6TAb4Ts9lRoETtfLqZAZCGQ05aI5G0xFZBl3%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461345236681
+---
+2016/04/22 13:14:06 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111107155064181424677_1461345236682&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAKrwrjmEUICJeQqT5eTy8iOClilZAQgpqXs7boHVNZCVX3hICxfwCF6Ij9W0zqDTtNfer8GHAa2HyGKGHmToYBbR4byKZCt8SZBA2WxK7AgsiyKtOU4zSQuH46ZCpTvtcZBJN1sNE1WYlBoBjwVlKH9VKZBCoLKgF8iD9EY6ZCLzhpFYjpTnZCsFEPTBqEv6lsA7vZAL8cQYEyzsyCg6gz9LBwOPVIgLFMMcjBWkAg8S5c%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAKrwrjmEUICJeQqT5eTy8iOClilZAQgpqXs7boHVNZCVX3hICxfwCF6Ij9W0zqDTtNfer8GHAa2HyGKGHmToYBbR4byKZCt8SZBA2WxK7AgsiyKtOU4zSQuH46ZCpTvtcZBJN1sNE1WYlBoBjwVlKH9VKZBCoLKgF8iD9EY6ZCLzhpFYjpTnZCsFEPTBqEv6lsA7vZAL8cQYEyzsyCg6gz9LBwOPVIgLFMMcjBWkAg8S5c%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461345236683
+---
+2016/04/22 13:15:04 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111107155064181424677_1461345236684&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAGHlABCiSyEnMmcTa11Am4wZByTeWVlHkaqOXSTSxZAFGApReBxZCZBURY8ehVkCZBI8KaaOvSNrLyNnkyw6EqbvsRiUDco9ZBCZCOp4yrkQUA64l4MpZBs8RwJKHcEusaTRhTEWMAuvzZCZBxmGxpsI4R9JZBr3aWgWwK5njS1qyAFM6lSSahxXQvZBeIx8GMtAEg6efZAWcOD6vdELk64ZAW9OgRsvQm8S0h4NhOup7NnoP4%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAGHlABCiSyEnMmcTa11Am4wZByTeWVlHkaqOXSTSxZAFGApReBxZCZBURY8ehVkCZBI8KaaOvSNrLyNnkyw6EqbvsRiUDco9ZBCZCOp4yrkQUA64l4MpZBs8RwJKHcEusaTRhTEWMAuvzZCZBxmGxpsI4R9JZBr3aWgWwK5njS1qyAFM6lSSahxXQvZBeIx8GMtAEg6efZAWcOD6vdELk64ZAW9OgRsvQm8S0h4NhOup7NnoP4%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461345236685
+---
+2016/04/22 13:15:28 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(75): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?callback=jQuery111107478979574516416_1461345321247&selfData=%7B%22accessToken%22%3A%22CAAYDK8HZAzicBAOz0kZALZCGDpiNzbMl2XDWPKalA43OBwmmEDlM2XTEBCj74EvDI5ee35vlX8iFTTkaZB04MWDWDZBNAmqeZBpaZCcBYCRS4setLVCoPpjTZC1WMrcaEJOw69vLFw5bHAb7sj7gt1xjc7qPFW2dqC3cQYQjBtP2NoifZCa2FZBZCsrX7wHoGGcEFycOyszZBzMhpyLjcy4WueeNRdWdoXr77TMfyQ9zm7wHMZAUN7NNfO10g%22%2C%22userId%22%3A%221045616112161455%22%2C%22email%22%3A%22ray.xiao92%40gmail.com%22%2C%22name%22%3A%22Ray+Xiao%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1536%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Rayray+Xiao%22%2C%22id%22%3A%22103309853410014%22%7D%5D%2C%22paging%22%3A%7B%22next%22%3A%22https%3A%5C%2F%5C%2Fgraph.facebook.com%5C%2Fv2.6%5C%2F1045616112161455%5C%2Ffriends%3Faccess_token%3DCAAYDK8HZAzicBAOz0kZALZCGDpiNzbMl2XDWPKalA43OBwmmEDlM2XTEBCj74EvDI5ee35vlX8iFTTkaZB04MWDWDZBNAmqeZBpaZCcBYCRS4setLVCoPpjTZC1WMrcaEJOw69vLFw5bHAb7sj7gt1xjc7qPFW2dqC3cQYQjBtP2NoifZCa2FZBZCsrX7wHoGGcEFycOyszZBzMhpyLjcy4WueeNRdWdoXr77TMfyQ9zm7wHMZAUN7NNfO10g%26limit%3D25%26offset%3D25%26__after_id%3Denc_AdCVsHO2nhevquvfZB4pZCPjeZBBVW2xfjMRwU2E0A2Y96779qudFWgjAN5W99nwfSiMLPmFL95LXpzykXL5nHzB7rq%22%7D%7D%7D&_=1461345321248
+---
+2016/04/22 13:16:02 [error] [exception.CException] exception 'CException' with message 'Property "Users.whatsup" is not defined.' in /var/www/html/yii/framework/base/CComponent.php:130
+Stack trace:
+#0 /var/www/html/yii/framework/db/ar/CActiveRecord.php(145): CComponent->__get('whatsup')
+#1 /var/www/html/yii/framework/validators/CStringValidator.php(79): CActiveRecord->__get('whatsup')
+#2 /var/www/html/yii/framework/validators/CValidator.php(201): CStringValidator->validateAttribute(Object(Users), 'whatsup')
+#3 /var/www/html/yii/framework/base/CModel.php(159): CValidator->validate(Object(Users), NULL)
+#4 /var/www/html/yii/framework/db/ar/CActiveRecord.php(808): CModel->validate(NULL)
+#5 /var/www/html/webapp/protected/controllers/SiteController.php(72): CActiveRecord->save()
+#6 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionFacebookLogin()
+#7 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#8 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#9 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('facebooklogin')
+#11 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#12 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#13 /var/www/html/webapp/index.php(13): CApplication->run()
+#14 {main}
+REQUEST_URI=/site/facebookLogin?selfData=%7b%2522accessToken%2522:%2522CAAYDK8HZAzicBADv67EKSF4Jx2MhXg6R9ZC5DBxqboxmQSAOZCi673nb5K09IFGA05APOXpp5NUEM5Ah1ZCCcdpSuvIkFqlZB5ZBHCgE17pGMJ28knJi8lYLDogmh7eHT23BZAVZAzJ5vUFbdiUqu5CVWXdA0ZBsYrti2AvSY1ZCaSrwgIZAgwwZCGJrDEbbsWkp33b9ZBiwOy955kmaM0GemQJDc5HEhRqtOINtIowX4dPCBLCFPg6s0CWzW%2522,%2522userId%2522:%25221045616112161455%2522,%2522email%2522:%2522mailto:ray.xiao92@gmail.com%2522,%2522name%2522:%2522Ray%2520Xiao%2522,%2522friends%2522:%7b%2522summary%2522:%7b%2522total_count%2522:1534%7d,%2522data%2522:%5b%7b%2522name%2522:%2522Jiaming%2520Zhong%2522,%2522id%2522:%25221155566484477457%2522%7d%5d%7d%7d
+---
+2016/04/22 13:16:56 [error] [php] Invalid argument supplied for foreach() (/var/www/html/webapp/protected/models/Users.php:118)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?selfData=%7b%2522accessToken%2522:%2522CAAYDK8HZAzicBADv67EKSF4Jx2MhXg6R9ZC5DBxqboxmQSAOZCi673nb5K09IFGA05APOXpp5NUEM5Ah1ZCCcdpSuvIkFqlZB5ZBHCgE17pGMJ28knJi8lYLDogmh7eHT23BZAVZAzJ5vUFbdiUqu5CVWXdA0ZBsYrti2AvSY1ZCaSrwgIZAgwwZCGJrDEbbsWkp33b9ZBiwOy955kmaM0GemQJDc5HEhRqtOINtIowX4dPCBLCFPg6s0CWzW%2522,%2522userId%2522:%25221045616112161455%2522,%2522email%2522:%2522mailto:ray.xiao92@gmail.com%2522,%2522name%2522:%2522Ray%2520Xiao%2522,%2522friends%2522:%7b%2522summary%2522:%7b%2522total_count%2522:1534%7d,%2522data%2522:%5b%7b%2522name%2522:%2522Jiaming%2520Zhong%2522,%2522id%2522:%25221155566484477457%2522%7d%5d%7d%7d
+in /var/www/html/webapp/protected/models/Users.php (118)
+in /var/www/html/webapp/protected/controllers/SiteController.php (78)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 13:17:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "site/facebookLogin".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/facebookLo...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/site/facebookLogin?selfData=%7b%2522accessToken%2522:%2522CAAYDK8HZAzicBADv67EKSF4Jx2MhXg6R9ZC5DBxqboxmQSAOZCi673nb5K09IFGA05APOXpp5NUEM5Ah1ZCCcdpSuvIkFqlZB5ZBHCgE17pGMJ28knJi8lYLDogmh7eHT23BZAVZAzJ5vUFbdiUqu5CVWXdA0ZBsYrti2AvSY1ZCaSrwgIZAgwwZCGJrDEbbsWkp33b9ZBiwOy955kmaM0GemQJDc5HEhRqtOINtIowX4dPCBLCFPg6s0CWzW%2522,%2522userId%2522:%25221045616112161455%2522,%2522email%2522:%2522mailto:ray.xiao92@gmail.com%2522,%2522name%2522:%2522Ray%2520Xiao%2522,%2522friends%2522:%7b%2522summary%2522:%7b%2522total_count%2522:1534%7d,%2522data%2522:%5b%7b%2522name%2522:%2522Jiaming%2520Zhong%2522,%2522id%2522:%25221155566484477457%2522%7d%5d%7d%7d
+---
+2016/04/22 13:54:21 [error] [php] Invalid argument supplied for foreach() (/var/www/html/webapp/protected/controllers/SiteController.php:123)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact?callback=1&user_token=34e760735a29876e2d95cd9c99d38b51&list=
+in /var/www/html/webapp/protected/controllers/SiteController.php (123)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 13:57:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "site/TakePhoneContact".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/TakePhoneC...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/site/TakePhoneContact?callback=1&user_token=34e760735a29876e2d95cd9c99d38b51&list=%22[{%22name%22:%22ZM%20%E5%BC%A0%E5%BF%9E%22,%22number%22:[%22+8615810272529%22],%22email%22:[]},{%22name%22:%22ZY%20%E5%BC%A0%E6%80%A1%22,%22number%22:[%22+8615110147586%22],%22email%22:[]},{%22name%22:%22ZYQ%20%E5%BC%A0%E8%89%BA%E7%90%BC%22,%22number%22:[%22+8615011417504%22],%22email%22:[]},{%22name%22:%22ZZR%20%E5%BC%A0%E8%8A%9D%E7%9D%BF%22,%22number%22:[%22+8615298381330%22],%22email%22:[]},{%22name%22:%22boyu%20ai%22,%22number%22:[%227813339708%22],%22email%22:[]},{%22name%22:%22zhengliang%20gong%22,%22number%22:[%22+17816058577%22],%22email%22:[]}]%22
+---
+2016/04/22 13:59:00 [error] [php] Undefined variable: contact (/var/www/html/webapp/protected/controllers/SiteController.php:127)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact?callback=1&user_token=34e760735a29876e2d95cd9c99d38b51&list=[{%22name%22:%22ZM%20%E5%BC%A0%E5%BF%9E%22,%22number%22:[%22+8615810272529%22],%22email%22:[]},{%22name%22:%22ZY%20%E5%BC%A0%E6%80%A1%22,%22number%22:[%22+8615110147586%22],%22email%22:[]},{%22name%22:%22ZYQ%20%E5%BC%A0%E8%89%BA%E7%90%BC%22,%22number%22:[%22+8615011417504%22],%22email%22:[]},{%22name%22:%22ZZR%20%E5%BC%A0%E8%8A%9D%E7%9D%BF%22,%22number%22:[%22+8615298381330%22],%22email%22:[]},{%22name%22:%22boyu%20ai%22,%22number%22:[%227813339708%22],%22email%22:[]},{%22name%22:%22zhengliang%20gong%22,%22number%22:[%22+17816058577%22],%22email%22:[]}]
+in /var/www/html/webapp/protected/controllers/SiteController.php (127)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 14:11:17 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/site/TakePhoneContact?callback=1&user_token=34e760735a29876e2d95cd9c99d38b51&list=[{%22name%22:%22ZM%20%E5%BC%A0%E5%BF%9E%22,%22number%22:[%22+8615810272529%22],%22email%22:[]},{%22name%22:%22ZY%20%E5%BC%A0%E6%80%A1%22,%22number%22:[%22+8615110147586%22],%22email%22:[]},{%22name%22:%22ZYQ%20%E5%BC%A0%E8%89%BA%E7%90%BC%22,%22number%22:[%22+8615011417504%22],%22email%22:[]},{%22name%22:%22ZZR%20%E5%BC%A0%E8%8A%9D%E7%9D%BF%22,%22number%22:[%22+8615298381330%22],%22email%22:[]},{%22name%22:%22boyu%20ai%22,%22number%22:[%227813339708%22],%22email%22:[]},{%22name%22:%22zhengliang%20gong%22,%22number%22:[%22+17816058577%22],%22email%22:[]}]
+---
+2016/04/22 14:31:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/site/TakePhoneContact?callback=1&user_token=34e760735a29876e2d95cd9c99d38b51&list=[{%22name%22:%22ZM%20%E5%BC%A0%E5%BF%9E%22,%22number%22:[%22+8615810272529%22],%22email%22:[]},{%22name%22:%22ZY%20%E5%BC%A0%E6%80%A1%22,%22number%22:[%22+8615110147586%22],%22email%22:[]},{%22name%22:%22ZYQ%20%E5%BC%A0%E8%89%BA%E7%90%BC%22,%22number%22:[%22+8615011417504%22],%22email%22:[]},{%22name%22:%22ZZR%20%E5%BC%A0%E8%8A%9D%E7%9D%BF%22,%22number%22:[%22+8615298381330%22],%22email%22:[]},{%22name%22:%22boyu%20ai%22,%22number%22:[%227813339708%22],%22email%22:[]},{%22name%22:%22zhengliang%20gong%22,%22number%22:[%22+17816058577%22],%22email%22:[]}]
+---
+2016/04/22 14:44:59 [error] [php] json_decode() expects parameter 1 to be string, array given (/var/www/html/webapp/protected/controllers/SiteController.php:122)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (122)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 14:46:16 [error] [php] json_decode() expects parameter 1 to be string, array given (/var/www/html/webapp/protected/controllers/SiteController.php:127)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (127)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 14:46:24 [error] [php] json_decode() expects parameter 1 to be string, array given (/var/www/html/webapp/protected/controllers/SiteController.php:127)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (127)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 14:48:19 [error] [php] json_decode() expects parameter 1 to be string, array given (/var/www/html/webapp/protected/controllers/SiteController.php:127)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (127)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 14:51:10 [error] [php] json_decode() expects parameter 1 to be string, array given (/var/www/html/webapp/protected/controllers/SiteController.php:127)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (127)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 14:54:02 [error] [php] json_decode() expects parameter 1 to be string, array given (/var/www/html/webapp/protected/controllers/SiteController.php:127)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (127)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 14:54:18 [error] [php] json_decode() expects parameter 1 to be string, array given (/var/www/html/webapp/protected/controllers/SiteController.php:127)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (127)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 15:24:56 [error] [php] Undefined variable: exist (/var/www/html/webapp/protected/controllers/SiteController.php:158)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (158)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 15:28:28 [error] [php] Undefined variable: exist (/var/www/html/webapp/protected/controllers/SiteController.php:158)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/TakePhoneContact
+in /var/www/html/webapp/protected/controllers/SiteController.php (158)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 15:41:00 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: SELECT * FROM `tbl_phone_contacts` `t` WHERE user_id = :uid AND (invited > 0 OR signed_up > 0).
+in /var/www/html/webapp/protected/controllers/SiteController.php (200)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 15:41:00 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: SELECT * FROM `tbl_phone_contacts` `t` WHERE user_id = :uid AND (invited > 0 OR signed_up > 0)' in /var/www/html/yii/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /var/www/html/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/yii/framework/db/ar/CActiveRecord.php(1356): CDbCommand->queryAll()
+#2 /var/www/html/yii/framework/db/ar/CActiveRecord.php(1475): CActiveRecord->query(Object(CDbCriteria), true)
+#3 /var/www/html/webapp/protected/controllers/SiteController.php(200): CActiveRecord->findAll('user_id = :uid ...')
+#4 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionReturnInvitedSignedup()
+#5 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#6 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#7 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('returninvitedsi...')
+#9 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/ReturnInvi...')
+#10 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /var/www/html/webapp/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/site/ReturnInvitedSignedup?user_token=34e760735a29876e2d95cd9c99d38b51&callback=jQuery11110014998639413968062_1461351029245&_=1461351029248
+---
+2016/04/22 15:41:25 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: SELECT * FROM `tbl_phone_contacts` `t` WHERE user_id = :uid AND (invited > 0 OR signed_up > 0).
+in /var/www/html/webapp/protected/controllers/SiteController.php (200)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 15:41:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: SELECT * FROM `tbl_phone_contacts` `t` WHERE user_id = :uid AND (invited > 0 OR signed_up > 0)' in /var/www/html/yii/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /var/www/html/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/yii/framework/db/ar/CActiveRecord.php(1356): CDbCommand->queryAll()
+#2 /var/www/html/yii/framework/db/ar/CActiveRecord.php(1475): CActiveRecord->query(Object(CDbCriteria), true)
+#3 /var/www/html/webapp/protected/controllers/SiteController.php(200): CActiveRecord->findAll('user_id = :uid ...')
+#4 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionReturnInvitedSignedup()
+#5 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#6 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#7 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('returninvitedsi...')
+#9 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/ReturnInvi...')
+#10 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /var/www/html/webapp/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/site/ReturnInvitedSignedup?user_token=34e760735a29876e2d95cd9c99d38b51&callback=jQuery11110014998639413968062_1461351029245&_=1461351029248
+---
+2016/04/22 15:42:03 [error] [php] Undefined variable: json (/var/www/html/webapp/protected/controllers/SiteController.php:205)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/ReturnInvitedSignedup?user_token=34e760735a29876e2d95cd9c99d38b51&callback=jQuery11110014998639413968062_1461351029249&_=1461351029251
+in /var/www/html/webapp/protected/controllers/SiteController.php (205)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 15:42:08 [error] [php] Undefined variable: json (/var/www/html/webapp/protected/controllers/SiteController.php:205)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/ReturnInvitedSignedup?user_token=34e760735a29876e2d95cd9c99d38b51&callback=jQuery11110014998639413968062_1461351029249&_=1461351029251
+in /var/www/html/webapp/protected/controllers/SiteController.php (205)
+in /var/www/html/webapp/index.php (13)
+2016/04/22 19:16:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp5.mielno.lubin.pl/testproxy.php
+---
+2016/04/22 19:25:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp1.piwo.pila.pl/testproxy.php
+---
+2016/04/23 00:08:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/04/23 10:00:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/23 16:54:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/site/getfriendsfreeslots?user_token=fc14487e19bc119e5e1115994bf094df&_=14610923447589&callback=1
+---
+2016/04/23 18:52:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "cache/global/img/gs.gif".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('cache/global/im...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://www.baidu.com/cache/global/img/gs.gif
+---
+2016/04/23 22:51:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/04/24 03:42:26 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/24 04:24:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/24 05:28:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/24 12:35:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/24 15:08:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "mntorsjob/index.html".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('mntorsjob/index...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/mntorsjob/index.html
+---
+2016/04/24 15:46:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "mntorsjob/images/SIG_A_white.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('mntorsjob/image...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/mntorsjob/images/SIG_A_white.png
+HTTP_REFERER=http://gettimi.com/mntorsjob/index.html
+---
+2016/04/24 15:53:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "mntorsjob/index.html".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('mntorsjob/index...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/mntorsjob/index.html
+---
+2016/04/24 17:53:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/24 18:02:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "apple-touch-icon-precomposed.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('apple-touch-ico...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/apple-touch-icon-precomposed.png
+---
+2016/04/24 18:02:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "apple-touch-icon.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('apple-touch-ico...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/apple-touch-icon.png
+---
+2016/04/24 18:43:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/04/24 20:09:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "zecmd/zecmd.jsp".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('zecmd/zecmd.jsp')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/zecmd/zecmd.jsp?comment=id
+---
+2016/04/24 21:40:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp3.pospr.waw.pl/testproxy.php
+---
+2016/04/24 21:47:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp5.mielno.lubin.pl/testproxy.php
+---
+2016/04/25 01:46:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/04/25 03:31:23 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/25 04:23:13 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "8.8.8.8:53".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('8.8.8.8:53')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=8.8.8.8:53
+---
+2016/04/25 05:34:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/25 11:46:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/25 17:33:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "sitemap.xml".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('sitemap.xml')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/sitemap.xml
+---
+2016/04/25 23:41:13 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "wp-content/plugins/revslider/js/rev_admin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('wp-content/plug...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/wp-content/plugins/revslider/js/rev_admin.js
+---
+2016/04/28 01:12:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/G/01/x-locale/common/transparent-pixel._CB386942464_.gif".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('images/G/01/x-l...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://g-ecx.images-amazon.com/images/G/01/x-locale/common/transparent-pixel._CB386942464_.gif
+---
+2016/04/28 01:17:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "administrator".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('administrator')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/administrator/
+HTTP_REFERER=http://gettimi.com/administrator/
+---
+2016/04/28 05:21:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/28 08:45:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "www.baidu.com:443".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('www.baidu.com:4...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=www.baidu.com:443
+---
+2016/04/28 09:01:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "www.baidu.com:443".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('www.baidu.com:4...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=www.baidu.com:443
+---
+2016/04/28 12:30:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+HTTP_REFERER=http://gettimi.com/
+---
+2016/04/28 12:30:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/index.html".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/index.html')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/index.html
+---
+2016/04/28 12:30:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/app/index.html
+---
+2016/04/28 12:30:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "mntors/index.html".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('mntors/index.ht...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/mntors/index.html
+---
+2016/04/28 12:45:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "mntorsjob/index.html".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('mntorsjob/index...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/mntorsjob/index.html
+---
+2016/04/28 17:36:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/28 21:10:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "xmlrpc.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('xmlrpc.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/xmlrpc.php
+---
+2016/04/28 22:42:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/04/29 01:41:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "admin".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('admin')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/admin
+---
+2016/04/29 06:05:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "pgpro/getheaders1.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('pgpro/getheader...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://impuls.name/pgpro/getheaders1.php
+---
+2016/04/29 06:20:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "www.baidu.com:443".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('www.baidu.com:4...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=www.baidu.com:443
+---
+2016/04/29 08:09:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/04/29 15:45:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "pgpro/getheaders1.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('pgpro/getheader...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://impuls.name/pgpro/getheaders1.php
+---
+2016/04/30 04:06:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "skin/error.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('skin/error.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/skin/error.php
+---
+2016/04/30 04:31:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "s/ref=nb_sb_noss_2".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('s/ref=nb_sb_nos...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=iphone&rh=i%3Aaps%2Ck%3Aiphone
+---
+2016/04/30 09:54:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "cache/global/img/gs.gif".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('cache/global/im...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://www.baidu.com/cache/global/img/gs.gif
+---
+2016/04/30 14:06:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "search/complete".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('search/complete')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/search/complete?method=completion&mkt=3&client=amazon-search-ui&x=String&search-alias=aps&q=ip&qs=&cf=1&noCacheIE=1462039585495&fb=1&sc=1&
+---
+2016/04/30 22:23:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "xmlrpc.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('xmlrpc.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/xmlrpc.php
+---
