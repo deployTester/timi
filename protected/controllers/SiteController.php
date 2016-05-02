@@ -177,6 +177,15 @@ class SiteController extends Controller
 							$friends->save(false);
 						}
 						$contact->signed_up = 1;	//means your friend signed up already and you added him
+
+						//send notification to the your friend and tell them you just signed up.
+						$data = array(
+							'title'=>'Your friend '.$user->username.' just signed up on Timi!';
+							'type'=>1,
+							'user_id'=>$exist->id,
+						);
+						$user->sendiOSNotification($data);
+
 					}
 					$contact->create_time = time();
 					$contact->save();
@@ -277,6 +286,25 @@ class SiteController extends Controller
 		$this->sendJSONResponse(array(
 			'result'=>$result
 		));
+	}
+
+
+	protected function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+	  $theta = $lon1 - $lon2;
+	  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+	  $dist = acos($dist);
+	  $dist = rad2deg($dist);
+	  $miles = $dist * 60 * 1.1515;
+	  $unit = strtoupper($unit);
+
+	  if ($unit == "K") {
+	      return ($miles * 1.609344);
+	  } else if ($unit == "N") {
+	      return ($miles * 0.8684);
+	  } else {
+	      return $miles;
+	  }
 	}
 
 
@@ -713,7 +741,19 @@ class SiteController extends Controller
 		$status = "sent";
 		$decision = $_GET['decision'];	//1 for approve, 2 for reject
 
+
+		$time_word = "today";
+
+		if($_GET['request_time'] == 0){
+			$time_word = "this noon";
+		}else if($_GET['request_time'] == 1){
+			$time_word = "this evening";
+		}else if($_GET['request_time'] == 0){
+			$time_word = "tonight";
+		}
+
 		//you are always the receiver, since you are ACCEPTING the request
+		//this request means someone else requested to meet with you already. so they are the sender.
 		$request = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND sender = :uid AND receiver = :me', 
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 
@@ -736,6 +776,14 @@ class SiteController extends Controller
 
 			$status = "matched";
 
+			//send notification to the other party and tell them they are matched with you.
+			$data = array(
+				'title'=>'You have been matched with '.$user->username.' for '.$time_word.'!';
+				'type'=>1,
+				'user_id'=>$request->sender,
+			);
+			$user->sendiOSNotification($data);
+
 		}else if($decision == 1){	//no request sent to me, i sent out request
 
 			$old = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND receiver = :uid AND sender = :me', 
@@ -753,6 +801,18 @@ class SiteController extends Controller
 
 			$status = "sent";
 
+			//double check if the other party has been matched with someone else (check_if_busy)
+			$check_if_busy = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
+					array(":uid"=>$request->receiver, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+			if(!$check_if_busy){
+				//if not busy, send notification to your FRIEND(the one you requested) and tell him someone liked him!
+				$data = array(
+					'title'=>'Someone wants to hang out with you '.$time_word.'! Tap to find him/her out.';
+					'type'=>1,
+					'user_id'=>$request->receiver,	//send to your friend
+				);
+				$user->sendiOSNotification($data);
+			}
 		}else if($request && $decision == 2){	//request sent to me, i turned it down
 			$request->status = 2;
 			$request->save(false);

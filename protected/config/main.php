@@ -140,6 +140,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
+		'globalURL'=>'http://gettimi.com',
 		'adminEmail'=>'webmaster@example.com',
 	),
 );

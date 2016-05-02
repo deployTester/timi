@@ -40,11 +40,11 @@ $title = "";
 if(isset($_GET['title']) && $_GET['title']){
 	$title = strip_tags($_GET['title']);
 } else {
-	$title = "没六儿";
+	$title = "Timi";
 }
 
 // Put your private key's passphrase here:
-$passphrase = 'xiaorui';
+$passphrase = 'timi123';	//empty for now
 
 // Put your alert message here:
 $message = $title;
@@ -52,14 +52,14 @@ $message = $title;
 ////////////////////////////////////////////////////////////////////////////////
 
 $ctx = stream_context_create();
-stream_context_set_option($ctx, 'ssl', 'local_cert', 'MeiliuerProductionCertificates.pem');
+stream_context_set_option($ctx, 'ssl', 'local_cert', 'TimiDevPush.pem');
 stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
 // production: ssl://gateway.push.apple.com:2195
 // sandbox: ssl://gateway.sandbox.push.apple.com:2195
 $fp = stream_socket_client(
-	'ssl://gateway.push.apple.com:2195', $err,
+	'ssl://gateway.sandbox.push.apple.com:2195', $err,
 	$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
 if (!$fp)

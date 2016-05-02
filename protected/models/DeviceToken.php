@@ -66,15 +66,14 @@ class DeviceToken extends CActiveRecord
 
 	public function addNewToken($user_id){
 		if(isset($_GET['device_token']) && isset($_GET['device_type'])){
-			$token = DeviceToken::model()->findByAttributes(array('device'=>$_GET['device_type'], 'token'=>$_GET['device_token']));
+			$token = DeviceToken::model()->findByAttributes(array('device'=>$_GET['device_type'], 'user_id'=>$user_id));
 			//$token = DeviceToken::model()->findByAttributes(array('user_id'=>$user_id));
 			if(!$token){
 				$token = new DeviceToken;
 				$token->device = $_GET['device_type'];
-				$token->token = $_GET['device_token'];
+				$token->user_id = $user_id;
 			}
-			
-			$token->user_id = $user_id;
+			$token->token = $_GET['device_token'];
 			$token->save();
 		}
 	}

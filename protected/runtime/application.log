@@ -10855,3 +10855,122 @@ Stack trace:
 #3 {main}
 REQUEST_URI=/xmlrpc.php
 ---
+2016/05/01 10:12:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "cache/global/img/gs.gif".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('cache/global/im...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://www.baidu.com/cache/global/img/gs.gif
+---
+2016/05/01 14:24:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "CFIDE/administrator".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('CFIDE/administr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/CFIDE/administrator/
+---
+2016/05/01 15:27:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "web-console/ServerInfo.jsp".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('web-console/Ser...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/web-console/ServerInfo.jsp
+HTTP_REFERER=52.9.2.100/web-console/ServerInfo.jsp
+---
+2016/05/01 15:28:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "jmx-console/HtmlAdaptor".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('jmx-console/Htm...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss.system:type=ServerInfo
+HTTP_REFERER=http://52.9.2.100/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss.system:type=ServerInfo
+---
+2016/05/01 15:28:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "invoker/JMXInvokerServlet".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('invoker/JMXInvo...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/invoker/JMXInvokerServlet
+HTTP_REFERER=52.9.2.100/invoker/JMXInvokerServlet
+---
+2016/05/01 15:35:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "web-console/ServerInfo.jsp".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('web-console/Ser...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/web-console/ServerInfo.jsp
+HTTP_REFERER=52.9.2.100/web-console/ServerInfo.jsp
+---
+2016/05/01 15:35:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "jmx-console/HtmlAdaptor".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('jmx-console/Htm...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss.system:type=ServerInfo
+HTTP_REFERER=http://52.9.2.100/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss.system:type=ServerInfo
+---
+2016/05/01 15:36:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "invoker/JMXInvokerServlet".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('invoker/JMXInvo...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/invoker/JMXInvokerServlet
+HTTP_REFERER=52.9.2.100/invoker/JMXInvokerServlet
+---
+2016/05/01 22:45:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "xmlrpc.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('xmlrpc.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/xmlrpc.php
+---
+2016/05/02 10:12:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index.action".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('index.action')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.action
+---
+2016/05/02 10:46:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/05/02 11:07:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "wp-content/plugins/gravityforms/js/gravityforms.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('wp-content/plug...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/wp-content/plugins/gravityforms/js/gravityforms.js
+---
+2016/05/02 11:20:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/05/02 13:56:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/simplepush/iospush.php
+---

@@ -89,27 +89,6 @@ class Users extends CActiveRecord
 	}
 
 
-	/**
-	* This function updates the friend list of a user - INPUT array of cell phone numbers
-	*/	
-	public function updateFriendsViaPhone($array){
-		foreach($array as $key=>$value){
-			$user = Users::model()->findByAttributes(array('phone'=>$value));
-			if($user){	//should be able to find him since FB only returns friends that use this app already.
-				$friends = Friends::model()->find('(sender = :uid AND receiver = :myid) OR (sender = :myid AND receiver = :uid)',array(':uid'=>$user->id, ':myid'=>$this->id));
-				if(!$friends){
-					$friends = new Friends;
-					$friends->sender = $this->id;
-					$friends->receiver = $user->id;
-					$friends->create_time = time();
-					$friends->save(false);
-				}
-			}
-		}
-		return;
-	}
-
-
 
 	/**
 	* This function updates the friend list of a user - INPUT array of facebook IDs
@@ -125,6 +104,14 @@ class Users extends CActiveRecord
 					$friends->receiver = $user->id;
 					$friends->create_time = time();
 					$friends->save(false);
+
+					//send notification to the your friend and tell them you just signed up.
+					$data = array(
+						'title'=>'Your friend '.$this->username.' just signed up on Timi!';	//your own username
+						'type'=>1,
+						'user_id'=>$user->id,	//your friend's id
+					);
+					$this->sendiOSNotification($data);
 				}
 			}
 		}
