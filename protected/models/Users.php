@@ -42,11 +42,11 @@ class Users extends CActiveRecord
 			array('social_token_type, create_time, lastaction, status, gender', 'numerical', 'integerOnly'=>true),
 			array('username, user_token', 'length', 'max'=>200),
 			array('password, social_token, email', 'length', 'max'=>300),
-			array('avatar', 'length', 'max'=>500),
+			array('avatar, geolocation, favorites', 'length', 'max'=>500),
 			array('social_id, ip', 'length', 'max'=>100),
 			array('whatsup', 'length', 'max'=>200),
 			array('phone', 'length', 'max'=>30),
-			array('city, country', 'length', 'max'=>50),
+			array('city, country, range', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, username, password, social_id, social_token, user_token, social_token_type, email, phone, create_time, lastaction, status, city, country, gender', 'safe', 'on'=>'search'),
@@ -107,7 +107,7 @@ class Users extends CActiveRecord
 
 					//send notification to the your friend and tell them you just signed up.
 					$data = array(
-						'title'=>'Your friend '.$this->username.' just signed up on Timi!';	//your own username
+						'title'=>'Your friend '.$this->username.' just signed up on Timi!',	//your own username
 						'type'=>1,
 						'user_id'=>$user->id,	//your friend's id
 					);

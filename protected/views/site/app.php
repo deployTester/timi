@@ -12,7 +12,7 @@
   <meta name="author" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="apple-touch-icon" href="/app/assets/img/apple-touch-icon.png">
-  <link rel="icon" href="/app/assets/img/favicon.ico">
+  <link rel="icon" href="/app/favicon.ico">
   <link rel='stylesheet' href='/app/assets/css/bootstrap.min.css'>
   <link rel='stylesheet' href='/app/assets/css/vendor.css'>
   <link rel='stylesheet' href='/app/assets/css/style.css'>
@@ -51,7 +51,10 @@
               <div class="col-sm-6">
                 <div class="col-inner" data-sr="left">
                   <div class="section-heading">
-                    <h1 style="font-size:65px;">Timi</h1>
+                    <h1 style="font-size:65px;">
+                      Timi
+                      <img src="/images/timi.png" style="width:75px; margin-bottom:0px; margin-top:-9px;">
+                    </h1>
                     <p>a fox jumps over the lazy dog a fox jumps over the lazy dog</p>
                   </div> <!-- .section-heading -->
                   <div class="section-content">
@@ -71,9 +74,9 @@
 
 
       </main> <!-- .site-main -->
-      <footer class="site-footer block-invert">
+      <footer class="site-footer block-invert" style="padding:50px;">
         <div class="container">
-          <img class="site-footer-logo img-responsive" src="/app/assets/img/site-footer-logo.png" data-sr="bottom">
+          <img class="site-footer-logo img-responsive" src="/images/timi.png" style="width:80px; margin-bottom:0px;" data-sr="bottom">
         <!--
           <ul class="site-footer-social-list">
             <li><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>

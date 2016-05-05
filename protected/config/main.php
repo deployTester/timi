@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'Timi',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -141,6 +141,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'globalURL'=>'http://gettimi.com',
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'contact@gettimi.com',
 	),
 );

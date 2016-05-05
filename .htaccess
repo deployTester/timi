@@ -20,7 +20,7 @@
 </ifModule>
 
 RewriteEngine on
-RewriteCond %{HTTP_HOST} ^52\.9\.2\.100$ [OR]
+RewriteCond %{HTTP_HOST} ^104\.41\.148\.236$ [OR]
 RewriteCond %{HTTP_HOST} ^www.gettimi\.com$ [NC]
 RewriteRule ^(.*)$ http://gettimi.com/$1 [R=301,L]
 

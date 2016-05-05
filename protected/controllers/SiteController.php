@@ -180,7 +180,7 @@ class SiteController extends Controller
 
 						//send notification to the your friend and tell them you just signed up.
 						$data = array(
-							'title'=>'Your friend '.$user->username.' just signed up on Timi!';
+							'title'=>'Your friend '.$user->username.' just signed up on Timi!',
 							'type'=>1,
 							'user_id'=>$exist->id,
 						);
@@ -288,8 +288,15 @@ class SiteController extends Controller
 		));
 	}
 
+	/*
+	*	This function calculats the distance of 2 GEO location addresses
+	*/
 
-	protected function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+	protected function getDistance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+	  if($lat1 == $lat2 && $lon1 == $lon2){
+	  	return 0;
+	  }
 
 	  $theta = $lon1 - $lon2;
 	  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
@@ -320,7 +327,7 @@ class SiteController extends Controller
 	}
 
 	/*
-	*	Returns all your friends free slots on the SAME day in the SAME city
+	*	Returns all your friends free slots on the SAME day within certain range....
 	*/
 	public function actionGetFriendsFreeSlots(){
 
@@ -339,16 +346,20 @@ class SiteController extends Controller
 			}
 		}
 
+		if(!isset($_GET['day']) || !$_GET['day']){
+			$this->sendJSONResponse(array(
+				'error'=>'no specific days'
+			));
+			exit();	
+		}
+
 		$user->lastaction = time();
 		$user->save(false);
 
-		date_default_timezone_set("America/New_York");	//set it to NEW YORK FOR NOW
-		$jd_day = cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
-		$day = (jddayofweek($jd_day,0)); 
-
+		$day = $_GET['day']; 
 
 		$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
-				where s.matched = 0 and (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$user->id.' and s.day = '.$day.' and u.city = "'.$user->city.'" group by sid')->queryAll();
+				where s.matched = 0 and (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$user->id.' and s.day = '.$day.' group by sid')->queryAll();
 
 		$final = array();
 
@@ -358,6 +369,29 @@ class SiteController extends Controller
 				$friend = $entry['receiver'];
 			}else{
 				$friend = $entry['sender'];
+			}
+
+			$friendObj = Users::model()->findByPk($friend);
+			$range = 20;
+			if($friendObj){
+				//get the minimum of either u or ur friend's range, in miles (geo location)
+				$range = min($user->range, $friendObj->range);
+			}
+
+			$userLocation = array();
+			$friendLocation = array();
+
+			if($user->geolocation && $friendObj->geolocation){
+				$userLocation = explode(",", $user->geolocation);
+				$friendLocation = explode(",", $friendObj->geolocation);
+			}
+
+			if(isset($userLocation[0]) && isset($userLocation[1]) && isset($friendLocation[0]) && isset($friendLocation[1])){
+				//$lat1, $lon1, $lat2, $lon2, $unit, return in miles, "K" return in Kilometers.
+				$distance = $this->getDistance($userLocation[0], $userLocation[1], $friendLocation[0], $friendLocation[1], "M");
+				if($distance > $range){
+					continue;		//have to ignore this long distance friend :(
+				}
 			}
 
 			if(!isset($final[$friend])){
@@ -408,8 +442,12 @@ class SiteController extends Controller
 			$result[] = array(
 				'user_id'=>$key,
 				'username'=>$friend->username,
-				'avatar'=>$friend->avatar,
-				'availability'=>$value
+				'avatar'=>Yii::app()->params['globalURL'].$friend->avatar,
+				'availability'=>$value,
+				'favorites'=>$friend->favorites,
+				'whatsup'=>$friend->whatsup,
+				'geolocation'=>$friend->geolocation,
+				'phone'=>$friend->phone,
 			);
 
 		endforeach;
@@ -546,9 +584,13 @@ class SiteController extends Controller
 		$user->lastaction = time();
 		$user->save(false);
 
-		date_default_timezone_set("America/New_York");	//set it to NEW YORK FOR NOW
-		$jd_day = cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
-		$day = (jddayofweek($jd_day,0)); 
+		if(!isset($_GET['day']) || !$_GET['day']){
+			$this->sendJSONResponse(array(
+				'error'=>'no specific days'
+			));
+			exit();	
+		}
+		$day = $_GET['day'];
 
 		$slots = FreeTimeSlot::model()->findAllByAttributes(array('user_id'=>$user->id, 'day'=>$day), array('order'=>'slot ASC'));
 		$result = array(0, 0, 0);
@@ -564,8 +606,10 @@ class SiteController extends Controller
 				$result[$slot->slot] = array(
 					'user_id'=>$other->id, //friend’s id 
 					'username'=>$other->username, //friend’s usnerame
-					'avatar'=>$other->avatar, //friend’s profile pic
+					'avatar'=>Yii::app()->params['globalURL'].$other->avatar, //friend’s profile pic
 					'whatsup'=>$other->whatsup, //friend’s status
+					'favorites'=>$other->favorites,
+					'geolocation'=>$other->geolocation,
 					'phone'=>$other->phone, //friend’s phone
 				);
 			}else{
@@ -775,12 +819,25 @@ class SiteController extends Controller
 			}
 
 			$status = "matched";
+			$friend = Users::model()->findByPk($request->sender);
 
 			//send notification to the other party and tell them they are matched with you.
 			$data = array(
-				'title'=>'You have been matched with '.$user->username.' for '.$time_word.'!';
-				'type'=>1,
-				'user_id'=>$request->sender,
+				'title'=>'You have been matched with '.$user->username.' for '.$time_word.'!',
+				'type'=>3,						//3 for match
+				'user_id'=>$friend->id,
+				'username'=>$friend->username,
+				'avatar'=>Yii::app()->params['globalURL'].$friend->avatar,
+				'email'=>$friend->email,
+				'phone'=>$friend->phone,
+				'country'=>$friend->country,
+				'city'=>$friend->city,
+				'geolocation'=>$friend->geolocation,
+				'favorites'=>$friend->favorites,
+				'whatsup'=>$friend->whatsup,
+				'range'=>$friend->range,
+				'day'=>$_GET['request_day'],
+				'time'=>$_GET['request_time'],
 			);
 			$user->sendiOSNotification($data);
 
@@ -797,6 +854,8 @@ class SiteController extends Controller
 				$request->receiver = $_GET['receiver'];
 				$request->status = 0;
 				$request->save(false);
+			}else{
+				$request = $old;
 			}
 
 			$status = "sent";
@@ -807,8 +866,8 @@ class SiteController extends Controller
 			if(!$check_if_busy){
 				//if not busy, send notification to your FRIEND(the one you requested) and tell him someone liked him!
 				$data = array(
-					'title'=>'Someone wants to hang out with you '.$time_word.'! Tap to find him/her out.';
-					'type'=>1,
+					'title'=>'Your friend wants to go out with you '.$time_word.'!',
+					'type'=>2,
 					'user_id'=>$request->receiver,	//send to your friend
 				);
 				$user->sendiOSNotification($data);
@@ -842,13 +901,10 @@ class SiteController extends Controller
 
 	}
 
-
-
 	/*
-	*	This function handles change avatar for students.
-	*   And update whatsup (optional)
+	*	This function returns your personal information (edit if passed param)
 	*/
-	public function actionChangeAvatar(){
+	public function actionReturnInfo(){
 
 		if(!isset($_GET['user_token'])){
 			$this->sendJSONResponse(array(
@@ -865,13 +921,75 @@ class SiteController extends Controller
 			}
 		}
 
+		if(isset($_GET['email'])){
+			$user->email = $_GET['email'];
+		}
+		if(isset($_GET['phone'])){
+			$user->phone = $_GET['phone'];
+		}
+		if(isset($_GET['country'])){
+			$user->city = $_GET['country'];
+		}
+		if(isset($_GET['city'])){
+			$user->city = $_GET['city'];
+		}
+		if(isset($_GET['geolocation'])){
+			$user->geolocation = $_GET['geolocation'];
+		}
+		if(isset($_GET['favorites'])){
+			$user->favorites = $_GET['favorites'];
+		}
+		if(isset($_GET['whatsup'])){
+			$user->whatsup = strip_tags($_GET['whatsup']);
+		}
+		if(isset($_GET['range'])){
+			$user->range = strip_tags($_GET['range']);
+		}
+		
+		$user->lastaction = time();
+		$user->save(false);
 
-		if(isset($_FILES['file']) || isset($_GET['whatsup']))
-		{
+		$this->sendJSONResponse(array(
+			'username'=>$user->username,
+			'avatar'=>Yii::app()->params['globalURL'].$user->avatar,
+			'email'=>$user->email,
+			'phone'=>$user->phone,
+			'country'=>$user->country,
+			'city'=>$user->city,
+			'geolocation'=>$user->geolocation,
+			'favorites'=>$user->favorites,
+			'whatsup'=>$user->whatsup,
+			'range'=>$user->range,
+		));
 
-			if(isset($_GET['whatsup'])){
-				$user->whatsup = strip_tags($_GET['whatsup']);
+	}
+
+
+
+	/*
+	*	This function handles change avatar for students.
+	*   And update whatsup (optional)
+	*/
+	public function actionChangeAvatar(){
+
+		if(!isset($_POST['user_token'])){
+			$this->sendJSONPost(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_POST['user_token']));
+			if(!$user){
+				$this->sendJSONPost(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
 			}
+		}
+
+
+		if(isset($_FILES['file']))
+		{
 
 			if(isset($_FILES['file'])){
 						$filename = "avatar" . time() . rand(1, 999) . ".jpg";
@@ -889,14 +1007,16 @@ class SiteController extends Controller
 						if (!file_exists($fileSavePath)) {
 							mkdir($fileSavePath, 0777, true);
 						}
+						move_uploaded_file($_FILES["file"]["tmp_name"], $fileSavePath.$new_image_name);
+
 						$user->avatar = "/".$fileSavePath.$new_image_name;
+
 			}
 
 			$user->save();
 
 			$this->sendJSONPost(array(
-				'avatar' => $user->avatar,
-				'whatsup' => $user->whatsup,
+				'avatar' => Yii::app()->params['globalURL'].$user->avatar,
 			));
 
 		}else{

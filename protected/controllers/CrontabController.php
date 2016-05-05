@@ -3,9 +3,13 @@
 class CrontabController extends Controller
 {
 
+
+	//do not use this function for now we curertly pass all free slots
+
+	/*
 	public function actionUpdateTimeSlot(){
         //prevent anyone else from using our cron
-        if ($_SERVER['REMOTE_ADDR'] !== '52.9.2.100' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '52.9.2.100')) {
+        if ($_SERVER['REMOTE_ADDR'] !== '104.41.148.236' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '104.41.148.236')) {
             throw new CHttpException(404, "The requested link does not exist.");
         }
 
@@ -41,10 +45,10 @@ where matched = 0 AND slot = 0 AND day = ".$day)->queryAll();
 		echo 200;
 	}
 
-
+	//do not use this function for now
 	public function actionResetTimeSlot(){
         //prevent anyone else from using our cron
-        if ($_SERVER['REMOTE_ADDR'] !== '52.9.2.100' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '52.9.2.100')) {
+        if ($_SERVER['REMOTE_ADDR'] !== '104.41.148.236' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '104.41.148.236')) {
            throw new CHttpException(404, "The requested link does not exist.");
         }
 
@@ -57,7 +61,7 @@ where matched = 0 AND slot = 0 AND day = ".$day)->queryAll();
 
 		echo 200;
 	}
-
+	*/
 
 
  

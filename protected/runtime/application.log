@@ -10974,3 +10974,1048 @@ Stack trace:
 REQUEST_URI=/favicon.ico
 HTTP_REFERER=http://gettimi.com/simplepush/iospush.php
 ---
+2016/05/02 15:13:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/
+---
+2016/05/02 15:13:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "apple-touch-icon-precomposed.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('apple-touch-ico...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/apple-touch-icon-precomposed.png
+---
+2016/05/02 15:13:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "apple-touch-icon.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('apple-touch-ico...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/apple-touch-icon.png
+---
+2016/05/02 17:55:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "haha".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('haha')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/haha
+---
+2016/05/02 17:55:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "haha".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('haha')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/haha
+---
+2016/05/02 18:00:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "view".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('view')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('view')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/view')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/site/123
+---
+2016/05/02 18:05:55 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=33&decision=1&callback=jQuery111106381021530833095_1462226749061&_=1462226749065
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 18:05:56 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=32&decision=1&callback=jQuery111106381021530833095_1462226749063&_=1462226749066
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 18:05:58 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=31&decision=1&callback=jQuery111106381021530833095_1462226749067&_=1462226749068
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 21:29:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index.action".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('index.action')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.action
+---
+2016/05/02 22:23:00 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=33&decision=1&callback=jQuery111109449450755491853_1462242171384&_=1462242171389
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:00 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=32&decision=1&callback=jQuery111109449450755491853_1462242171386&_=1462242171390
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:00 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=31&decision=1&callback=jQuery111109449450755491853_1462242171391&_=1462242171392
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:03 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=30&decision=1&callback=jQuery111109449450755491853_1462242171393&_=1462242171394
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:03 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=29&decision=1&callback=jQuery111109449450755491853_1462242171395&_=1462242171396
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:03 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=22&decision=1&callback=jQuery111109449450755491853_1462242171397&_=1462242171398
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:16 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=33&decision=1&callback=jQuery1111008052409952506423_1462242191246&_=1462242191250
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:17 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=32&decision=1&callback=jQuery1111008052409952506423_1462242191248&_=1462242191251
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:18 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=31&decision=1&callback=jQuery1111008052409952506423_1462242191252&_=1462242191253
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:19 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=30&decision=1&callback=jQuery1111008052409952506423_1462242191254&_=1462242191255
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:20 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=29&decision=1&callback=jQuery1111008052409952506423_1462242191256&_=1462242191257
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/02 22:23:21 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=1&request_time=0&receiver=22&decision=1&callback=jQuery1111008052409952506423_1462242191258&_=1462242191259
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/03 03:55:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "cache/global/img/gs.gif".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('cache/global/im...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://www.baidu.com/cache/global/img/gs.gif
+---
+2016/05/03 04:53:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "www.baidu.com:443".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('www.baidu.com:4...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=www.baidu.com:443
+---
+2016/05/03 04:57:52 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "www.baidu.com:443".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('www.baidu.com:4...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=www.baidu.com:443
+---
+2016/05/03 05:33:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "m".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('m')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/m/
+---
+2016/05/03 12:15:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "admin/Cms_Wysiwyg/directive/index".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('admin/Cms_Wysiw...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/admin/Cms_Wysiwyg/directive/index/?___directive=&filter=&forwarded=1
+---
+2016/05/03 15:05:53 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=2&request_time=0&receiver=33&decision=1&callback=jQuery1111036201756891187764_1462302316203&_=1462302316205
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/03 15:05:56 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=2&request_time=0&receiver=32&decision=1&callback=jQuery1111036201756891187764_1462302316206&_=1462302316207
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/03 15:06:41 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=2&request_time=0&receiver=33&decision=1&callback=jQuery1111036201756891187764_1462302316203&_=1462302316205
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/03 15:06:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=2&request_time=0&receiver=33&decision=1&callback=jQuery1111036201756891187764_1462302316203&_=1462302316205
+---
+2016/05/03 15:07:01 [error] [php] Trying to get property of non-object (/var/www/html/webapp/protected/controllers/SiteController.php:822)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/SendRequest?user_token=fc14487e19bc119e5e1115994bf094df&request_day=2&request_time=0&receiver=33&decision=1&callback=jQuery1111036201756891187764_1462302316203&_=1462302316205
+in /var/www/html/webapp/protected/controllers/SiteController.php (822)
+in /var/www/html/webapp/index.php (13)
+2016/05/03 16:05:03 [error] [php] mkdir(): Permission denied (/var/www/html/webapp/protected/controllers/SiteController.php:908)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#2 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#6 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/changeAvatar
+in /var/www/html/webapp/protected/controllers/SiteController.php (908)
+in /var/www/html/webapp/index.php (13)
+2016/05/03 16:13:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "uploads/avatar/23/avatar1462305969968.jpg".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('uploads/avatar/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/uploads/avatar/23/avatar1462305969968.jpg
+---
+2016/05/03 16:16:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "changeavatar".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('changeavatar')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('changeavatar')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/changeAvat...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/site/changeAvatar
+---
+2016/05/03 16:18:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "changeavatar".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('changeavatar')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('changeavatar')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/changeAvat...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/site/changeAvatar
+---
+2016/05/03 16:18:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "changeavatar".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('changeavatar')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('changeavatar')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/changeAvat...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/site/changeAvatar
+---
+2016/05/03 16:24:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "uploads/avatar/23/avatar1462305969968.jpg".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('uploads/avatar/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/uploads/avatar/23/avatar1462305969968.jpg
+---
+2016/05/03 17:14:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "webdav".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('webdav')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/webdav/
+---
+2016/05/04 05:00:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "images/G/01/x-locale/common/transparent-pixel._CB386942464_.gif".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('images/G/01/x-l...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://g-ecx.images-amazon.com/images/G/01/x-locale/common/transparent-pixel._CB386942464_.gif
+---
+2016/05/04 05:10:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "m".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('m')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/m/
+---
+2016/05/04 05:23:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+HTTP_REFERER=http://gettimi.com/
+---
+2016/05/04 08:53:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp1.piwo.pila.pl/testproxy.php
+---
+2016/05/04 13:01:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "jmx-console".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('jmx-console')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jmx-console/
+---
+2016/05/04 15:17:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "m".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('m')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/m/
+---
+2016/05/04 15:44:44 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by sid' at line 2. The SQL statement executed was: select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
+				where s.matched = 0 and (f.sender = 23 OR f.receiver = 23) and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != 23 and s.day =  group by sid.
+in /var/www/html/webapp/protected/controllers/SiteController.php (358)
+in /var/www/html/webapp/index.php (13)
+2016/05/04 15:44:44 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by sid' at line 2. The SQL statement executed was: select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
+				where s.matched = 0 and (f.sender = 23 OR f.receiver = 23) and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != 23 and s.day =  group by sid' in /var/www/html/yii/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /var/www/html/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/webapp/protected/controllers/SiteController.php(358): CDbCommand->queryAll()
+#2 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionGetFriendsFreeSlots()
+#3 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('getfriendsfrees...')
+#7 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/GetFriends...')
+#8 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#9 /var/www/html/webapp/index.php(13): CApplication->run()
+#10 {main}
+REQUEST_URI=/site/GetFriendsFreeSlots?user_token=fc14487e19bc119e5e1115994bf094df&callback=1&day=
+---
+2016/05/04 15:44:51 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by sid' at line 2. The SQL statement executed was: select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
+				where s.matched = 0 and (f.sender = 23 OR f.receiver = 23) and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != 23 and s.day =  group by sid.
+in /var/www/html/webapp/protected/controllers/SiteController.php (358)
+in /var/www/html/webapp/index.php (13)
+2016/05/04 15:44:51 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by sid' at line 2. The SQL statement executed was: select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
+				where s.matched = 0 and (f.sender = 23 OR f.receiver = 23) and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != 23 and s.day =  group by sid' in /var/www/html/yii/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /var/www/html/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/webapp/protected/controllers/SiteController.php(358): CDbCommand->queryAll()
+#2 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionGetFriendsFreeSlots()
+#3 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('getfriendsfrees...')
+#7 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/GetFriends...')
+#8 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#9 /var/www/html/webapp/index.php(13): CApplication->run()
+#10 {main}
+REQUEST_URI=/site/GetFriendsFreeSlots?user_token=fc14487e19bc119e5e1115994bf094df&callback=1&day=
+---
+2016/05/04 15:44:53 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by sid' at line 2. The SQL statement executed was: select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
+				where s.matched = 0 and (f.sender = 23 OR f.receiver = 23) and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != 23 and s.day =  group by sid.
+in /var/www/html/webapp/protected/controllers/SiteController.php (358)
+in /var/www/html/webapp/index.php (13)
+2016/05/04 15:44:53 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by sid' at line 2. The SQL statement executed was: select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
+				where s.matched = 0 and (f.sender = 23 OR f.receiver = 23) and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != 23 and s.day =  group by sid' in /var/www/html/yii/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /var/www/html/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /var/www/html/webapp/protected/controllers/SiteController.php(358): CDbCommand->queryAll()
+#2 /var/www/html/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionGetFriendsFreeSlots()
+#3 /var/www/html/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /var/www/html/yii/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#5 /var/www/html/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('getfriendsfrees...')
+#7 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/GetFriends...')
+#8 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#9 /var/www/html/webapp/index.php(13): CApplication->run()
+#10 {main}
+REQUEST_URI=/site/GetFriendsFreeSlots?user_token=fc14487e19bc119e5e1115994bf094df&callback=1&day=
+---
+2016/05/04 15:45:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 15:50:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 15:50:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 15:54:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "site/getfriendsfreeslots".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/getfriends...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/site/getfriendsfreeslots?user_token=fc14487e19bc119e5e1115994bf094df&_=14610923447589&callback=1&day=3
+---
+2016/05/04 15:55:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:00:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:00:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 16:05:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:10:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 16:10:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:15:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:20:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:20:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 16:25:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:30:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:30:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 16:35:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:40:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:40:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 16:45:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:50:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 16:50:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 16:55:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:00:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:00:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 17:05:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:10:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:10:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 17:15:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:20:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:20:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 17:25:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:30:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:30:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 17:35:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:40:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:40:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 17:45:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:50:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "resettimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('resettimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('resettimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/ResetTi...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/ResetTimeSlot
+---
+2016/05/04 17:50:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 17:55:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "updatetimeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('updatetimeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('updatetimeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('crontab/UpdateT...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/crontab/UpdateTimeSlot
+---
+2016/05/04 22:58:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "info.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('info.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/info.php
+---
+2016/05/04 22:58:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "getfreeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('getfreeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('getfreeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/getfreeslo...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/site/getfreeslot
+---
+2016/05/04 23:01:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "azenv.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('azenv.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://check.proxyradar.com/azenv.php?auth=146240288911&a=PSCMN&i=1747555564&p=80
+HTTP_REFERER=https://proxyradar.com/
+---
+2016/05/04 23:03:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "getfreeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('getfreeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('getfreeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/getfreeslo...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/site/getfreeslot
+---
+2016/05/04 23:03:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "getfreeslot".' in /var/www/html/yii/framework/web/CController.php:483
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(270): CController->missingAction('getfreeslot')
+#1 /var/www/html/yii/framework/web/CWebApplication.php(282): CController->run('getfreeslot')
+#2 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('site/getfreeslo...')
+#3 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#4 /var/www/html/webapp/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/site/getfreeslot
+---
+2016/05/04 23:18:46 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "smtp.mail.yahoo.com:25".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('smtp.mail.yahoo...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=smtp.mail.yahoo.com:25
+---
+2016/05/05 00:11:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "google2145f6a768ddee1a.html".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('google2145f6a76...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/google2145f6a768ddee1a.html
+---
+2016/05/05 02:16:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2016/05/05 02:20:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+HTTP_REFERER=http://gettimi.com/ios/
+---
+2016/05/05 03:26:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "azenv.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('azenv.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://check.proxyradar.com/azenv.php?auth=146241880521&a=PSCMN&i=1747555564&p=80
+HTTP_REFERER=https://proxyradar.com/
+---
+2016/05/05 03:36:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+---
+2016/05/05 03:37:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+---
+2016/05/05 03:37:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+---
+2016/05/05 03:39:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+---
+2016/05/05 03:39:52 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+---
+2016/05/05 03:42:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+---
+2016/05/05 03:47:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "app/assets/css/bootstrap.min.css.map".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('app/assets/css/...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/app/assets/css/bootstrap.min.css.map
+---
