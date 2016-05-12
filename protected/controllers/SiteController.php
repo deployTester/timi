@@ -32,9 +32,95 @@ class SiteController extends Controller
 	}
 
 
+
 	public function sendJSONPost($arr) {
 		header('content-type: application/json; charset=utf-8');
 		echo json_encode($arr);
+	}
+
+
+	/*
+	*	Handles regular sign up
+	*/
+	public function actionSignup(){
+		if(!isset($_GET['name']) || !isset($_GET['email']) || !isset($_GET['password'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no name or email or password'
+			));
+			exit();
+		}
+		$user = Users::model()->findByAttributes(array('email'=>$_GET['email']));
+		if($user){
+			$this->sendJSONResponse(array(
+				'error'=>'user with the same email exists'
+			));
+			exit();		
+		}else{
+			$user = new Users;
+			$user->username = $_GET['name'];
+			$user->email = $_GET['email'];
+			$user->password = hash('sha256', $user->password);
+			$user->user_token = md5(time() . $user->password);
+			$user->social_token_type = 0;	//regular
+			$user->create_time = time();
+			$user->status = 1;
+			$user->avatar = $avatar;
+			$user->save();
+		}
+		$user->userActed();
+		if($user->phone){
+			$this->sendJSONResponse(array(
+				'user_token' => $user->user_token,
+				'phone'=>$user->phone,
+			));
+		}else{
+			$this->sendJSONResponse(array(
+				'user_token' => $user->user_token,
+				'phone'=>false,
+			));
+		}
+	}
+
+
+	/*
+	*	Handles regular login
+	*/
+	public function actionLogin(){
+
+		if(isset($_GET['email']) && isset($_GET['password'])){
+			$user=Users::model()->findByAttributes(array('email'=>$_GET['email']));
+			if($user){
+				if(hash('sha256', $_GET['password']) === $user->password){
+					
+					$user->userActed();
+
+					if($user->phone){
+						$this->sendJSONResponse(array(
+							'user_token' => $user->user_token,
+							'phone'=>$user->phone,
+						));
+					}else{
+						$this->sendJSONResponse(array(
+							'user_token' => $user->user_token,
+							'phone'=>false,
+						));
+					}
+				}else{
+					$this->sendJSONResponse(array(
+						'error'=>'incorrect password',
+					));
+				}
+			}else{
+				$this->sendJSONResponse(array(
+					'error'=>'incorrect email address',
+				));
+			}
+		}else{
+			$this->sendJSONResponse(array(
+				'error'=>'no email or password',
+			));
+		}
+
 	}
 
 
@@ -57,6 +143,7 @@ class SiteController extends Controller
 		$email = $array['email'];
 		$name = $array['name'];
 		$friends = $array['friends']['data'];	//friends array
+		$avatar = "https://graph.facebook.com/".$fbID."/picture?type=large";
 
 		$user = Users::model()->findByAttributes(array('social_id'=>$fbID));
 		if(!$user){
@@ -69,6 +156,7 @@ class SiteController extends Controller
 			$user->email = $email;
 			$user->create_time = time();
 			$user->status = 1;
+			$user->avatar = $avatar;
 			$user->save();
 		}else{
 			$user->social_token = $social_token;
@@ -79,7 +167,7 @@ class SiteController extends Controller
 			$user->updateFriendsViaFB($friends);
 		}
 		$user->userActed();
-		DeviceToken::model()->addNewToken($user->id);
+
 
 		if($user->phone){
 			$this->sendJSONResponse(array(
@@ -94,6 +182,82 @@ class SiteController extends Controller
 		}
 	}
 
+
+	public function actionAddfriends(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		if(isset($_GET['number'])){
+			$number = $this->cleanPhoneNumber($_GET['number']);
+			$friend = Users::model()->findByAttributes(array('phone'=>$number));
+			if($friend){
+				$friends = Friends::model()->find('(sender = :uid AND receiver = :myid) OR (sender = :myid AND receiver = :uid)',array(':uid'=>$friend->id, ':myid'=>$user->id));
+					if(!$friends){
+						$friends = new Friends;
+						$friends->sender = $user->id;
+						$friends->receiver = $friend->id;
+						$friends->create_time = time();
+						$friends->save(false);
+						$this->sendJSONResponse(array(
+							'success'=>'Added!'
+						));
+					}else{
+						$this->sendJSONResponse(array(
+							'error'=>'You guys are friends already!'
+						));
+						exit();						
+					}
+			}else{
+				$this->sendJSONResponse(array(
+					'error'=>'Sorry, we can not find the user you are looking for.'
+				));
+				exit();	
+			}
+		}else{
+			$this->sendJSONResponse(array(
+				'error'=>'No number'
+			));
+			exit();	
+		}
+
+	}
+
+
+
+	public function actionTakeDeviceToken(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		DeviceToken::model()->addNewToken($user->id);
+		$this->sendJSONResponse(array(
+			'success' => 'success',
+		));		
+
+	}
 
 	/*
 	*	Save contact list friends
@@ -149,9 +313,7 @@ class SiteController extends Controller
 					if(isset($arr['number'][0])){
 						$contact->number1 = $this->cleanPhoneNumber($arr['number'][0]);
 						$exist = Users::model()->findByAttributes(array('phone'=>$contact->number1));
-					}
-
-					if(!$contact->number1 && !$contact->email){
+					}else{
 						continue;
 					}
 
@@ -442,7 +604,7 @@ class SiteController extends Controller
 			$result[] = array(
 				'user_id'=>$key,
 				'username'=>$friend->username,
-				'avatar'=>Yii::app()->params['globalURL'].$friend->avatar,
+				'avatar'=>$friend->avatar,
 				'availability'=>$value,
 				'favorites'=>$friend->favorites,
 				'whatsup'=>$friend->whatsup,
@@ -606,7 +768,7 @@ class SiteController extends Controller
 				$result[$slot->slot] = array(
 					'user_id'=>$other->id, //friend’s id 
 					'username'=>$other->username, //friend’s usnerame
-					'avatar'=>Yii::app()->params['globalURL'].$other->avatar, //friend’s profile pic
+					'avatar'=>$other->avatar, //friend’s profile pic
 					'whatsup'=>$other->whatsup, //friend’s status
 					'favorites'=>$other->favorites,
 					'geolocation'=>$other->geolocation,
@@ -801,6 +963,17 @@ class SiteController extends Controller
 		$request = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND sender = :uid AND receiver = :me', 
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 
+		//check the other party to make sure they are not booked already!
+		$check_if_busy = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
+					array(":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+
+		if($check_if_busy){
+			$this->sendJSONResponse(array(
+				'error'=>'the other party is busy!'
+			));
+			exit();
+		}
+
 		if($request && $decision == 1){	//i approve a request
 
 			$request->status = 1;	//approve, since it's mutual!
@@ -826,16 +999,16 @@ class SiteController extends Controller
 				'title'=>'You have been matched with '.$user->username.' for '.$time_word.'!',
 				'type'=>3,						//3 for match
 				'user_id'=>$friend->id,
-				'username'=>$friend->username,
-				'avatar'=>Yii::app()->params['globalURL'].$friend->avatar,
-				'email'=>$friend->email,
-				'phone'=>$friend->phone,
-				'country'=>$friend->country,
-				'city'=>$friend->city,
-				'geolocation'=>$friend->geolocation,
-				'favorites'=>$friend->favorites,
-				'whatsup'=>$friend->whatsup,
-				'range'=>$friend->range,
+				'username'=>$user->username,
+				'avatar'=>$user->avatar,
+				'email'=>$user->email,
+				'phone'=>$user->phone,
+				'country'=>$user->country,
+				'city'=>$user->city,
+				'geolocation'=>$user->geolocation,
+				'favorites'=>$user->favorites,
+				'whatsup'=>$user->whatsup,
+				'range'=>$user->range,
 				'day'=>$_GET['request_day'],
 				'time'=>$_GET['request_time'],
 			);
@@ -951,7 +1124,7 @@ class SiteController extends Controller
 
 		$this->sendJSONResponse(array(
 			'username'=>$user->username,
-			'avatar'=>Yii::app()->params['globalURL'].$user->avatar,
+			'avatar'=>$user->avatar,
 			'email'=>$user->email,
 			'phone'=>$user->phone,
 			'country'=>$user->country,
@@ -963,6 +1136,126 @@ class SiteController extends Controller
 		));
 
 	}
+
+
+	/*
+	*	Cancel a match
+	*/
+	public function actionCancelMatch(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(!isset($_GET['request_id'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no request id'
+			));
+			exit();
+			$request = Requests::model()->findByPk($_GET['request_id']);
+			if(!$request){
+				$this->sendJSONResponse(array(
+					'error'=>'no request found'
+				));
+				exit();
+			}
+		}
+		
+		$total_cancel = Cancel::count('owner_id = :uid AND unix_timestamp() - create_time < 86400 * 30', array(":uid"=>$user->id));
+		if($total_cancel > 3){
+			$this->sendJSONResponse(array(
+				'error'=>'more than 3 in a month'
+			));
+			exit();		
+		}
+
+		$cancel = new Cancel;
+		$cancel->request_id = $request->id;
+		$cancel->owner_id = $user->id;
+		$cancel->create_time = time();
+		$cancel->save();
+
+		$request->delete();
+
+		$time_word = "today";
+
+		if($request->request_time == 0){
+			$time_word = "this noon";
+		}else if($request->request_time == 1){
+			$time_word = "this evening";
+		}else if($request->request_time == 2){
+			$time_word = "tonight";
+		}
+
+		if($user->id == $request->receiver){	//if i am receiver, the other guy is sender. 
+			$friend = Users::model()->findByPk($request->sender);
+		}else{
+			$friend = Users::model()->findByPk($request->receiver);
+		}
+
+			//send notification to the other party and tell them they are matched with you.
+			$data = array(
+				'title'=>'Sorry! Your match with '.$user->username.' for '.$time_word.' has been cancelled.',
+				'type'=>4,						//4 for cancel
+				'user_id'=>$friend->id,
+				'username'=>$user->username,
+				'avatar'=>$user->avatar,
+				'email'=>$user->email,
+				'phone'=>$user->phone,
+				'country'=>$user->country,
+				'city'=>$user->city,
+				'geolocation'=>$user->geolocation,
+				'favorites'=>$user->favorites,
+				'whatsup'=>$user->whatsup,
+				'range'=>$user->range,
+				'day'=>$request->request_day,
+				'time'=>$request->request_time,
+			);
+			$user->sendiOSNotification($data);
+
+		$this->sendJSONResponse(array(
+			'success'=>'cancelled',
+		));	
+	}
+
+
+	/*
+	*	Returns the # of cancels you request in the last 30 days
+	*/
+	public function actionGetCancelCount(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		$total_cancel = Cancel::count('owner_id = :uid AND unix_timestamp() - create_time < 86400 * 30', array(":uid"=>$user->id));
+
+		$this->sendJSONResponse(array(
+			'total'=>$total_cancel,
+		));	
+
+	}
+
 
 
 
@@ -1009,14 +1302,14 @@ class SiteController extends Controller
 						}
 						move_uploaded_file($_FILES["file"]["tmp_name"], $fileSavePath.$new_image_name);
 
-						$user->avatar = "/".$fileSavePath.$new_image_name;
+						$user->avatar = Yii::app()->params['globalURL']."/".$fileSavePath.$new_image_name;
 
 			}
 
 			$user->save();
 
 			$this->sendJSONPost(array(
-				'avatar' => Yii::app()->params['globalURL'].$user->avatar,
+				'avatar' => $user->avatar,
 			));
 
 		}else{
@@ -1081,33 +1374,6 @@ class SiteController extends Controller
 	}
 
 
-
-
-	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
-	}
 
 	/**
 	 * Logs out the current user and redirect to homepage.

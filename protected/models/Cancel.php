@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "tbl_device_token".
+ * This is the model class for table "tbl_cancel".
  *
- * The followings are the available columns in table 'tbl_device_token':
+ * The followings are the available columns in table 'tbl_cancel':
  * @property integer $id
- * @property integer $user_id
- * @property string $device
- * @property string $token
+ * @property integer $request_id
+ * @property integer $owner_id
+ * @property integer $create_time
  */
-class DeviceToken extends CActiveRecord
+class Cancel extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_device_token';
+		return 'tbl_cancel';
 	}
 
 	/**
@@ -27,13 +27,11 @@ class DeviceToken extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id', 'required'),
-			array('user_id', 'numerical', 'integerOnly'=>true),
-			array('device', 'length', 'max'=>50),
-			array('token', 'length', 'max'=>500),
+			array('request_id, owner_id, create_time', 'required'),
+			array('request_id, owner_id, create_time', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, device, token', 'safe', 'on'=>'search'),
+			array('id, request_id, owner_id, create_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,7 +43,6 @@ class DeviceToken extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'Users', 'user_id'),
 		);
 	}
 
@@ -56,26 +53,10 @@ class DeviceToken extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
-			'device' => 'Device',
-			'token' => 'Token',
+			'request_id' => 'Request',
+			'owner_id' => 'Owner',
+			'create_time' => 'Create Time',
 		);
-	}
-
-
-
-	public function addNewToken($user_id){
-		if(isset($_GET['device_token']) && isset($_GET['device_type'])){
-			$token = DeviceToken::model()->findByAttributes(array('device'=>$_GET['device_type'], 'user_id'=>$user_id));
-			//$token = DeviceToken::model()->findByAttributes(array('user_id'=>$user_id));
-			if(!$token){
-				$token = new DeviceToken;
-				$token->device = $_GET['device_type'];
-				$token->user_id = $user_id;
-			}
-			$token->token = $_GET['device_token'];
-			$token->save(false);
-		}
 	}
 
 	/**
@@ -97,9 +78,9 @@ class DeviceToken extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('device',$this->device,true);
-		$criteria->compare('token',$this->token,true);
+		$criteria->compare('request_id',$this->request_id);
+		$criteria->compare('owner_id',$this->owner_id);
+		$criteria->compare('create_time',$this->create_time);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -110,7 +91,7 @@ class DeviceToken extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return DeviceToken the static model class
+	 * @return Cancel the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

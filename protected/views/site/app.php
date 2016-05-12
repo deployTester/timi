@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Timi</title>
+  <title>Timi - Easily hang out with friends</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="">
@@ -55,7 +55,7 @@
                       Timi
                       <img src="/images/timi.png" style="width:75px; margin-bottom:0px; margin-top:-9px;">
                     </h1>
-                    <p>a fox jumps over the lazy dog a fox jumps over the lazy dog</p>
+                    <p style="font-size:18px;">Easily hang out with friends</p>
                   </div> <!-- .section-heading -->
                   <div class="section-content">
                     <a class="btn btn-invert m-y-5">&nbsp;&nbsp;&nbsp;<i class="fa fa-apple"></i>App Store&nbsp;&nbsp;&nbsp;</a>

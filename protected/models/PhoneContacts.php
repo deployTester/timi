@@ -31,7 +31,7 @@ class PhoneContacts extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, create_time, name', 'required'),
+			array('user_id, create_time, name, number1', 'required'),
 			array('user_id, create_time, invited, signed_up', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('email', 'length', 'max'=>300),

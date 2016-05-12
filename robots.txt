@@ -8,3 +8,6 @@ Disallow: /images/
 Disallow: /themes/
 Disallow: /font-awesome/
 Disallow: /geoip.php
+Disallow: /ios
+Disallow: /mntorsjob
+
