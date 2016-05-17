@@ -29,6 +29,7 @@ class Cancel extends CActiveRecord
 		return array(
 			array('request_id, owner_id, create_time', 'required'),
 			array('request_id, owner_id, create_time', 'numerical', 'integerOnly'=>true),
+			array('reason', 'length', 'max'=>500),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, request_id, owner_id, create_time', 'safe', 'on'=>'search'),

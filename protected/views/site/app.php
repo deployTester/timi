@@ -7,9 +7,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Timi - Easily hang out with friends</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Timi - The easiest way to find out who's free to hang out">
+  <meta name="keywords" content="timi">
+  <meta name="apple-itunes-app" content="app-id=1111783063">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="apple-touch-icon" href="/app/assets/img/apple-touch-icon.png">
   <link rel="icon" href="/app/favicon.ico">
@@ -23,28 +23,37 @@
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic" />
 </head>
-<body>
+<body class="is-loaded">
+
+  <!--for wechat share-->
+  <div id='wx_logo' style='margin:0 auto; position: absolute;opacity: 0;filter: alpha(opacity=0); '>
+    <img src="/images/timmi300.png" />
+  </div>
 
   <div class="site">
-    <div class="site-loader">
-      <div class="site-loader-spinner"></div>
-    </div> <!-- .site-loader -->
+    <!--
+      <div class="site-loader" style="display:none;">
+        <div class="site-loader-spinner"></div>
+      </div>
+    -->
 
     <div class="site-canvas">
-      <main class="site-main">
+      <main class="site-main" style="display:block;">
         <div id="home" class="section block-pink position-r align-c-xs-max">
           <!--
               <ul style="color:#fff; font-size:30px; position:absolute; right:40px; top:40px;">
                 <li class="audio-toggle" style="list-style-type: none;"><a href="#"><i class="fa fa-volume-up"></i></a></li>
               </ul>
           -->
+          
           <div id="particles-js" class="site-bg">
             <div class="site-bg-img"></div>
             <div class="site-bg-video"></div>
             <div class="site-bg-overlay"></div>
             <div class="site-bg-effect layer" data-depth=".30"></div>
             <canvas class="site-bg-canvas layer" data-depth=".30"></canvas>
-          </div> <!-- .site-bg -->
+          </div>
+        
 
           <div class="container">
             <div class="row row-table">
@@ -55,11 +64,11 @@
                       Timi
                       <img src="/images/timi.png" style="width:75px; margin-bottom:0px; margin-top:-9px;">
                     </h1>
-                    <p style="font-size:18px;">Easily hang out with friends</p>
+                    <p style="font-size:18px;">The easiest way to find out who's free to hang out</p>
                   </div> <!-- .section-heading -->
                   <div class="section-content">
-                    <a class="btn btn-invert m-y-5">&nbsp;&nbsp;&nbsp;<i class="fa fa-apple"></i>App Store&nbsp;&nbsp;&nbsp;</a>
-                    <a class="btn btn-warning m-y-5"><i class="fa fa-android"></i>Google Play</a>
+                    <a class="btn btn-invert m-y-5" href="/site/downloadios">&nbsp;&nbsp;&nbsp;<i class="fa fa-apple"></i>App Store&nbsp;&nbsp;&nbsp;</a>
+                    <a class="btn btn-warning m-y-5" onclick="alert('Sorry, the Android version is not ready yet! But it is coming out soon!'); return false;"><i class="fa fa-android"></i>Google Play</a>
                   </div> <!-- .section-content -->
                 </div>
               </div>

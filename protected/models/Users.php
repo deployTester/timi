@@ -155,7 +155,7 @@ class Users extends CActiveRecord
 			$this->ip = $_SERVER['REMOTE_ADDR'];
 		}
 
-		$this->save(false);
+		$this->save();
 	}
 
 

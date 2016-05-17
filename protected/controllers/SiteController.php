@@ -39,6 +39,12 @@ class SiteController extends Controller
 	}
 
 
+
+	public function actionDownloadios(){
+		echo "<h1 style='font-size:35px; font-weight:300; padding:25px; line-height:80px;'>If you did not get redirected to app store, please open this page in Safari/Chrome and try again!</h1>";
+		echo "<script>setTimeout(function () {	location.href = 'https://itunes.apple.com/us/app/timi-easiest-way-to-find-out/id1111783063?mt=8';}, 10);</script>";
+	}
+
 	/*
 	*	Handles regular sign up
 	*/
@@ -143,7 +149,7 @@ class SiteController extends Controller
 		$email = $array['email'];
 		$name = $array['name'];
 		$friends = $array['friends']['data'];	//friends array
-		$avatar = "https://graph.facebook.com/".$fbID."/picture?type=large";
+		$avatar = "https://graph.facebook.com/".$fbID."/picture?type=large&redirect=true&width=1024";
 
 		$user = Users::model()->findByAttributes(array('social_id'=>$fbID));
 		if(!$user){
@@ -204,6 +210,12 @@ class SiteController extends Controller
 			$number = $this->cleanPhoneNumber($_GET['number']);
 			$friend = Users::model()->findByAttributes(array('phone'=>$number));
 			if($friend){
+				if($friend->id == $user->id){
+					$this->sendJSONResponse(array(
+						'error'=>'You can not add yourself!'
+						));
+					exit();	
+				}
 				$friends = Friends::model()->find('(sender = :uid AND receiver = :myid) OR (sender = :myid AND receiver = :uid)',array(':uid'=>$friend->id, ':myid'=>$user->id));
 					if(!$friends){
 						$friends = new Friends;
@@ -284,7 +296,7 @@ class SiteController extends Controller
 		}	
 
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
 		if(!isset($_POST['list'])){
 			$this->sendJSONPost(array(
@@ -401,7 +413,7 @@ class SiteController extends Controller
         $message = $client->account->messages->sendMessage(
                  '+16282226190', // From a valid Twilio number
                   '+'.$newNumber, // Text this number
-                  "Hi, ".$user->username." wants you to go out together! Join Timi at :gettimi.com and respond!"	//message
+                  "Hi, ".$user->username." invited you to Join Timi - The easiest way to hangout with friends. Check out: gettimi.com and respond!"	//message
         );
 
 		$contact = PhoneContacts::model()->find('number1 = :number OR number2 = :number OR number3 = :number', array(':number'=>$newNumber));
@@ -436,7 +448,7 @@ class SiteController extends Controller
 		}
 
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
 		$contacts = PhoneContacts::model()->findAll("user_id = :uid AND (invited > 0 OR signed_up > 0)", array(":uid"=>$user->id));
 		$result = array();
@@ -508,7 +520,7 @@ class SiteController extends Controller
 			}
 		}
 
-		if(!isset($_GET['day']) || !$_GET['day']){
+		if(!isset($_GET['day'])){
 			$this->sendJSONResponse(array(
 				'error'=>'no specific days'
 			));
@@ -520,17 +532,52 @@ class SiteController extends Controller
 
 		$day = $_GET['day']; 
 
-		$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u 
-				where s.matched = 0 and (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$user->id.' and s.day = '.$day.' group by sid')->queryAll();
 
-		$final = array();
+		$my_friends = array();	//list of your friends
+		$final_list = array();	//the final list of people
 
+		//get my friends
+		$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u where s.matched = 0 and (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$user->id.' and s.day = '.$day.' group by sid')->queryAll();
 		foreach($slots as $entry):
-
 			if($user->id == $entry['sender']){
 				$friend = $entry['receiver'];
 			}else{
 				$friend = $entry['sender'];
+			}
+			if (!in_array($friend, $my_friends) && $friend != $user->id) {	//check duplicates
+				array_push($my_friends, $friend);
+			}
+			if (!in_array($friend, $final_list) && $friend != $user->id) {	//check duplicates
+				array_push($final_list, $friend);
+			}
+		endforeach;
+
+
+		//COMMENT OUT THIS PART IF WE NEED TO DISBALE THIS FEATURE
+		//get friends' friends
+		foreach($my_friends as $value):
+			$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u where s.matched = 0 and (f.sender = '.$value.' OR f.receiver = '.$value.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$value.' and s.day = '.$day.' group by sid')->queryAll();
+			foreach($slots as $entry):
+				if($value == $entry['sender']){
+					$friend = $entry['receiver'];
+				}else{
+					$friend = $entry['sender'];
+				}
+				if (!in_array($friend, $final_list) && $friend != $user->id) {	//check duplicates
+					array_push($final_list, $friend);
+				}
+			endforeach;
+		endforeach;
+
+
+		$final = array();	//the final JSON
+
+		foreach($final_list as $value):
+
+			if($user->id == $value){
+				$friend = $value;
+			}else{
+				$friend = $value;
 			}
 
 			$friendObj = Users::model()->findByPk($friend);
@@ -563,16 +610,16 @@ class SiteController extends Controller
 			$slot = FreeTimeSlot::model()->findByPk($entry['sid']);
 			if($slot){
 
-				$check_if_busy = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
+				$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 					array(":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
-				$check_if_reject = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 2', 
+				$check_if_reject = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 2', 
 					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
-				$check_if_sent = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND sender = :me AND receiver = :uid AND status = 0', 
+				$check_if_sent = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND sender = :me AND receiver = :uid AND status = 0', 
 					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
-				$check_if_matched = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 1', 
+				$check_if_matched = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 1', 
 					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
 				if($check_if_busy){
@@ -642,7 +689,7 @@ class SiteController extends Controller
 		}
 
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
 		$json = $_GET['free_time'];
 		$array = json_decode($json);
@@ -707,7 +754,7 @@ class SiteController extends Controller
 		}
 
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
 		$slots = FreeTimeSlot::model()->findAllByAttributes(array('user_id'=>$user->id), array('order'=>'day ASC'));
 		$result = array();
@@ -744,9 +791,9 @@ class SiteController extends Controller
 		}
 
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
-		if(!isset($_GET['day']) || !$_GET['day']){
+		if(!isset($_GET['day'])){
 			$this->sendJSONResponse(array(
 				'error'=>'no specific days'
 			));
@@ -757,7 +804,7 @@ class SiteController extends Controller
 		$slots = FreeTimeSlot::model()->findAllByAttributes(array('user_id'=>$user->id, 'day'=>$day), array('order'=>'slot ASC'));
 		$result = array(0, 0, 0);
 		foreach($slots as $slot){
-			$check_if_matched = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (receiver = :me OR sender = :me) AND status = 1', 
+			$check_if_matched = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (receiver = :me OR sender = :me) AND status = 1', 
 					array(":me"=>$user->id, ":request_day"=>$day, "request_time"=>$slot->slot));
 			if($check_if_matched){
 				if($user->id == $check_if_matched->receiver){	//if i am receiver, the other guy is sender. 
@@ -766,6 +813,7 @@ class SiteController extends Controller
 					$other = Users::model()->findByPk($check_if_matched->receiver);
 				}
 				$result[$slot->slot] = array(
+					'request_id'=>$check_if_matched->id, 
 					'user_id'=>$other->id, //friend’s id 
 					'username'=>$other->username, //friend’s usnerame
 					'avatar'=>$other->avatar, //friend’s profile pic
@@ -879,8 +927,8 @@ class SiteController extends Controller
 				'error'=>"wrong code",
 			));
         }else{
-        	$user->phone = $verify->number;
-        	$user->save(false);
+        	$user->phone = trim($verify->number);
+        	$user->save();
         }
 
 		$this->sendJSONResponse(array(
@@ -913,7 +961,7 @@ class SiteController extends Controller
 		}
 
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
 		if(!isset($_GET['receiver'])){
 			$this->sendJSONResponse(array(
@@ -937,12 +985,14 @@ class SiteController extends Controller
 		}		
 
 		$friends = Friends::model()->find('(sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)', array(":me"=>$user->id, ":uid"=>$_GET['receiver']));
+		/*
 		if(!$friends){
 			$this->sendJSONResponse(array(
 				'error'=>'no friendship exists'
 			));
 			exit();
 		}
+		*/
 
 		$status = "sent";
 		$decision = $_GET['decision'];	//1 for approve, 2 for reject
@@ -960,11 +1010,11 @@ class SiteController extends Controller
 
 		//you are always the receiver, since you are ACCEPTING the request
 		//this request means someone else requested to meet with you already. so they are the sender.
-		$request = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND sender = :uid AND receiver = :me', 
+		$request = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND sender = :uid AND receiver = :me', 
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 
 		//check the other party to make sure they are not booked already!
-		$check_if_busy = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
+		$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 					array(":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 
 		if($check_if_busy){
@@ -979,9 +1029,11 @@ class SiteController extends Controller
 			$request->status = 1;	//approve, since it's mutual!
 			$request->save(false);
 
-			//if approve, deny all other requests during the same time
+			//if approve, deny all other requests during the same time -> actually this is not necessary
+			//we have to take it out since after cacelling the match, users still want to keep looking for others, if possible.
+			/*
 			if($request->status == 1){
-				$requests = Requests::model()->findAll('id != :rid AND status = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :me', 
+				$requests = Requests::model()->findAll('trash = 0 AND id != :rid AND status = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :me', 
 						array(':rid'=>$request->id,':me'=>$user->id, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 				if($requests){
 					foreach($requests as $req){
@@ -990,6 +1042,7 @@ class SiteController extends Controller
 					}
 				}
 			}
+			*/
 
 			$status = "matched";
 			$friend = Users::model()->findByPk($request->sender);
@@ -1016,7 +1069,7 @@ class SiteController extends Controller
 
 		}else if($decision == 1){	//no request sent to me, i sent out request
 
-			$old = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND receiver = :uid AND sender = :me', 
+			$old = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :uid AND sender = :me', 
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 			if(!$old){
 				$request = new Requests;
@@ -1034,7 +1087,7 @@ class SiteController extends Controller
 			$status = "sent";
 
 			//double check if the other party has been matched with someone else (check_if_busy)
-			$check_if_busy = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
+			$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 					array(":uid"=>$request->receiver, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 			if(!$check_if_busy){
 				//if not busy, send notification to your FRIEND(the one you requested) and tell him someone liked him!
@@ -1053,7 +1106,7 @@ class SiteController extends Controller
 
 		}else if($decision == 2){	//no request sent to me, i just clicked dislike
 
-			$old = Requests::model()->find('request_day = :request_day AND request_time = :request_time AND receiver = :uid AND sender = :me', 
+			$old = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :uid AND sender = :me', 
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 			if(!$old){
 				$request = new Requests;
@@ -1071,6 +1124,50 @@ class SiteController extends Controller
 		$this->sendJSONResponse(array(
 			'status'=>$status,
 		));		
+
+	}
+
+
+	public function actionReturnFriendInfo(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(isset($_GET['number'])){
+			$number = $this->cleanPhoneNumber($_GET['number']);
+			$friend = Users::model()->findByAttributes(array('phone'=>$number));
+			if($friend){
+				$this->sendJSONResponse(array(
+					'username'=>$friend->username,
+					'avatar'=>$friend->avatar,
+					'phone'=>$friend->phone,
+					'country'=>$friend->country,
+					'favorites'=>$friend->favorites,
+					'whatsup'=>$friend->whatsup,
+				));
+			}else{
+				$this->sendJSONResponse(array(
+					'error'=>'Sorry, we can not find the user you are looking for.'
+				));
+				exit();	
+			}
+		}else{
+			$this->sendJSONResponse(array(
+				'error'=>'No number'
+			));
+			exit();	
+		}
+
 
 	}
 
@@ -1098,7 +1195,7 @@ class SiteController extends Controller
 			$user->email = $_GET['email'];
 		}
 		if(isset($_GET['phone'])){
-			$user->phone = $_GET['phone'];
+			$user->phone = trim($_GET['phone']);
 		}
 		if(isset($_GET['country'])){
 			$user->city = $_GET['country'];
@@ -1120,7 +1217,7 @@ class SiteController extends Controller
 		}
 		
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
 		$this->sendJSONResponse(array(
 			'username'=>$user->username,
@@ -1161,6 +1258,7 @@ class SiteController extends Controller
 				'error'=>'no request id'
 			));
 			exit();
+		}else{
 			$request = Requests::model()->findByPk($_GET['request_id']);
 			if(!$request){
 				$this->sendJSONResponse(array(
@@ -1169,7 +1267,7 @@ class SiteController extends Controller
 				exit();
 			}
 		}
-		
+		/*
 		$total_cancel = Cancel::count('owner_id = :uid AND unix_timestamp() - create_time < 86400 * 30', array(":uid"=>$user->id));
 		if($total_cancel > 3){
 			$this->sendJSONResponse(array(
@@ -1177,11 +1275,15 @@ class SiteController extends Controller
 			));
 			exit();		
 		}
+		*/
 
 		$cancel = new Cancel;
 		$cancel->request_id = $request->id;
 		$cancel->owner_id = $user->id;
 		$cancel->create_time = time();
+		if(isset($_GET['reason'])){
+			$cancel->reason = $_GET['reason'];
+		}
 		$cancel->save();
 
 		$request->delete();

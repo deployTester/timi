@@ -34,26 +34,43 @@ for (var i = 0 ; i < 7; i++) {
         avail [i][j] = 1; 
     }
 }
-// localStorage = window.localStorage; 
-var push_notification;
+// localStorage.usertoken = "cf40d87a845c66efbbe3a73205de5029"
+var push_notification = null;
 var favoriteFoodList = ["Pizza", "Tex-Mex", "Ramen", "Sushi", "French", "American", "Coffee", "Burger", "Chinese/Spicy", "Chinese", "Indian", "Sandwich"].sort(cSort)
 var currentIndex = [ null, null, null]; 
 var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 var d = new Date()
-var queryDay = ( d.getHours() <= 1 ) ? ((d.getDay() - 1) % 7 ): d.getDay()
+var currentHours = d.getHours()
+// var currentHours = 18
+var queryDay; 
+
+
+function getQueryDay () {
+    if (currentHours <= 1) {
+        queryDay = d.getDay() - 1
+    } else {
+        queryDay = d.getDay()
+    }
+    if (queryDay < 0) {
+        queryDay += 7
+    }    
+}
+
+getQueryDay ()
+// var queryDay = ( currentHours <= 1 ) ? ((d.getDay() - 1) % 7 ): d.getDay()
 // localStorage.allowedPush = "0"
 var timeAvail; 
 
 function updateTimeAvail () {
-    if ( d.getHours() < 2) {
+    if ( currentHours < 2) {
         timeAvail = [0,0,1]
         // t-1 night life
         // midnight
         // d.getHours 
-    } else if ( d.getHours() < 15) {
+    } else if ( currentHours < 15) {
         // lunch dinner night available
         timeAvail = [1,1,1]
-    } else if ( d.getHours() < 21) {
+    } else if ( currentHours < 21) {
         // dinner, night avialable
         timeAvail = [0,1,1]
     } else {
@@ -103,8 +120,8 @@ strVar += "          <\/div>";
 strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"home\">";
 strVar += "";
-strVar += "            <div class=\"center\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Explore                     ";
-strVar += "            <\/div>   ";
+strVar += "            <div id=\"home-page-navbar-left\" class=\"left\"></div><div class=\"\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Explore                     ";
+strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"right\"></div>   ";
 strVar += "        <div class=\"subnavbar\">";
 strVar += "          <div class=\"buttons-row\">";
 strVar += "            <a href=\"#tab1\" class=\"button lunch-tab tab-link active\">Lunch<\/a>";
@@ -214,11 +231,11 @@ strVar += "                    <\/div>";
 strVar += "                  <\/li>                ";
 strVar += "                <\/ul>";
 strVar += "              <\/form>";
-strVar += "              <div class=\"button one-line-button\" onclick=\"verifyPhone()\">";
+strVar += "              <div class=\"button one-line-button color-pink\" onclick=\"verifyPhone()\">";
 strVar += "                TEXT ME! ";
 strVar += "              <\/div>";
 strVar += "              <div class= \"one-line-prompt\"> ";
-strVar += "                Please let timi verify your number to find friends for you";
+strVar += "                Please let Timi verify your number to find friends for you";
 strVar += "              <\/div>                              ";
 strVar += "            <\/div>";
 strVar += "          <\/div>";
@@ -268,7 +285,7 @@ strVar += "              <div id=\"availability-tab\" class=\"tab\">";
 strVar += "                <div class=\"content-block\">";
 strVar += "                  <div class=\"page-content\">";
 strVar += "                    <div class=\"one-line-prompt\">";
-strVar += "                      let timi know when you are available! ";
+strVar += "                      let Timi know when you are available! ";
 strVar += "                    <\/div>                     ";
 strVar += "                    <div class=\"calendar-table\">       ";
 strVar += "                    <\/div>";
@@ -305,16 +322,18 @@ strVar += "                <div class=\"content-block\">";
 strVar += "                  <div class=\"page-content\">";
 strVar += "                  <form data-search-list=\".list-block-search\" data-search-in=\".item-title\" class=\"searchbar searchbar-init\">";
 strVar += "                    <div class=\"searchbar-input\">";
-strVar += "                      <input type=\"search\" placeholder=\"Search\"><a href=\"#\" class=\"searchbar-clear\"><\/a>";
+strVar += "                      <input type=\"search\" id=\"searchbar-input-box\" placeholder=\"Search or Add Friend\"><a href=\"#\" class=\"searchbar-clear\"><\/a>";
 strVar += "                    <\/div><a href=\"#\" class=\"searchbar-cancel\">Cancel<\/a>";
 strVar += "                  <\/form>          ";
 strVar += "                  <div class=\"searchbar-overlay\"><\/div>            ";
 strVar += "                    <div class=\"content-block searchbar-not-found\">";
-strVar += "                      <div class=\"content-block-inner\">Nothing found<\/div>";
+strVar += "                      <div class=\"content-block-inner one-line-prompt\" style=\"color:#929292;\">Nothing found<\/div>";
+strVar += "                      <div class=\"button color-pink one-line-button\" onclick = \"searchByThisNumber ()\"> Add Friend by this number? <\/div>";
 strVar += "                    <\/div>            ";
 strVar += "                    <div class=\"list-block media-list list-block-search searchbar-found\" id=\"friend-list-form\">";
 strVar += "                      <div class=\"one-line-prompt\" style=\"color:#929292;\">There is no friend yet. <\/div>";
-strVar += "                      <div class=\"button one-line-button\" onclick = \"loadFriendsFromContact ()\"> Let Timi find friends for you? <\/div>";
+strVar += "                      <div class=\"button color-pink one-line-button\" onclick = \"loadFriendsFromContact ()\"> Let Timi find friends for you? <\/div>";
+
 strVar += "                    <\/div>   ";
 strVar += "                  <\/div>";
 strVar += "                <\/div>";
@@ -332,7 +351,7 @@ strVar += "                    <div class=\"user-name\" id=\"profile-name\">";
 strVar += "";
 strVar += "                    <\/div>";
 strVar += "";
-strVar += "                    <div class=\"edit-profile-text\"> ";
+strVar += "                    <div class=\"edit-profile-text\" onclick=\"changePicture()\"> ";
 strVar += "                      Edit Profile Picture";
 strVar += "                    <\/div>";
 strVar += "                    ";
@@ -497,7 +516,7 @@ strVar += "          <\/div>";
 strVar += "          <div class=\"page cached\" data-page=\"ask-calendar\">";
 strVar += "            <div class=\"page-content\">";
 strVar += "              <div class=\"one-line-prompt\">";
-strVar += "                let timi know when to match you with your friends! ";
+strVar += "                let Timi know when to match you with your friends! ";
 strVar += "              <\/div>                     ";
 strVar += "              <div class=\"calendar-table\">       ";
 strVar += "              <\/div>";
@@ -608,11 +627,26 @@ document.getElementById("body-html").innerHTML += strVar + scriptHTML
 
 function appReturnedFromBackground () {
     console.log("returned")
-    // getFriendFreeTime()
+    d = new Date()
+    currentHours = d.getHours()
+    getQueryDay ()
     updateTimeAvail ()
-    afterClickTab(timeFrame)
+
     if ( localStorage.usertoken == "null" || localStorage.usertoken == null) {
-        getGeolocation()
+        // non user
+    } else {
+        // user
+        getFriendFreeTime()
+        afterClickTab(timeFrame)        
+        getGeolocation() 
+        if (push_notification) {
+            push_notification.setApplicationIconBadgeNumber(function() {
+                console.log('success');
+            }, function() {
+                console.log('error');
+            }, 0);            
+        }       
+
     }
 }
 
@@ -643,7 +677,7 @@ $$('#invitation-tab').on('show', function () {
     if ( localStorage.allowedContact == 1 ) {
         loadFriendsFromContact()
     }
-    changeNavbarTitle("Invite friends to Timi"); 
+    changeNavbarTitle("Invite friends to Timi", "<i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i>", "<i class=\"fa fa-search\" onclick='searchUser()'></i>"); 
     console.log('Tab 4 is visible');
 });    
 
@@ -652,6 +686,12 @@ $$('#invitation-tab').on('show', function () {
 $$('#more-tab').on('show', function () {
     $(".subnavbar").css("display", "none")
     changeNavbarTitle("More");
+    
+    getPersonalInfo (function () {
+        updatePersonalPage ()   
+        document.getElementById("profile-pic").src = personalData.avatar;
+        document.getElementById("profile-name").innerHTML = personalData.username             
+    })
     document.getElementById("profile-pic").src = personalData.avatar;
     document.getElementById("profile-name").innerHTML = personalData.username
     $("#profile-pic-background").css("background", ('linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(' + personalData.avatar + ')'  ))
@@ -665,10 +705,14 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 
 // center the given title in the navbar
-function changeNavbarTitle (title) {
+function changeNavbarTitle (title, left, right) {
+    left = left || ""
+    right = right || ""
     $("#home-page-navbar-center").html(title)
-    var left = ($(window).width() - $("#home-page-navbar-center").width()) / 2 - 8
-    $("#home-page-navbar-center").css("left", left+"px")      
+    var left_margin = ($(window).width() - $("#home-page-navbar-center").width()) / 2 
+    $("#home-page-navbar-center").css("left", left_margin+"px")    
+    $("#home-page-navbar-right").html(right)
+    $("#home-page-navbar-left").html(left)
 } 
 
 function switchTime () {
@@ -692,9 +736,9 @@ function changePicture () {
                     quality: 50,
                     allowEdit : true,
                     destinationType: Camera.DestinationType.DATA_URI, 
-                    targetWidth: 360,
+                    targetWidth: 640,
                     encodingType: Camera.EncodingType.JPEG,
-                    targetHeight: 360,
+                    targetHeight: 640,
 
                 });
             }
@@ -706,9 +750,9 @@ function changePicture () {
                     quality: 50,
                     allowEdit : true,
                     destinationType: Camera.DestinationType.DATA_URI, 
-                    targetWidth: 360,
+                    targetWidth: 640,
                     encodingType: Camera.EncodingType.JPEG,
-                    targetHeight: 360,
+                    targetHeight: 640,
                     sourceType: Camera.PictureSourceType.PHOTOLIBRARY
 
                 });
@@ -725,12 +769,132 @@ function changePicture () {
 
 }
 
+function searchUser () {
+    $("#searchbar-input-box").focus()
+    // myApp.
+    // myApp.prompt("What's the phone number of your friend", function(queryNumber) {
+    //     setTimeout(function () {
+    //         $("input .modal-text-input")[0].focus()
+    //     }, 400)
+    //     var ajaxUrl = "http://gettimi.com/site/ReturnFriendInfo?user_token=" + localStorage.usertoken + "&number=" + queryNumber
+    //     console.log(ajaxUrl)
+    //     $.ajax({
+    //         url: ajaxUrl,
+    //         type: "GET",
+    //         dataType: "jsonp",
+    //         success: function(results) {
+    //             // myApp.alert("good")
+    //             // myApp.confirm ()
+                
+    //             if ( results.username == null ) {
+    //                 // not found
+    //                 myApp.alert("Timi did not find this user:(")
+    //             } else {
+    //                 myApp.confirm("Would you like to add " + results.username + "? ", function () {
+    //                     addByNumber () 
+    //                 })
+    //             }
+    //         }, 
+    //         error: function (results) {
+    //             // myApp.hideIndicator()
+    //             console.log(results)
+    //             // myApp.alert("Network error. Please try again later? ")
+    //         }
+    //     });    
+    // })
+}
+
+function addByNumber() {
+    var queryNumber = document.getElementById("searchbar-input-box").value
+    var ajaxUrl = "http://gettimi.com/site/Addfriends?user_token=" + localStorage.usertoken + "&number=" + queryNumber
+    console.log(ajaxUrl)
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // myApp.alert("good")
+            if ( results.error == null ) {
+                myApp.alert("You just added your friend!")
+            } else {
+                myApp.alert(results.error)
+            }
+            
+
+            // console.log(results)
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });         
+}
+
+function searchByThisNumber () {
+    var queryNumber = document.getElementById("searchbar-input-box").value
+    var ajaxUrl = "http://gettimi.com/site/ReturnFriendInfo?user_token=" + localStorage.usertoken + "&number=" + queryNumber
+    console.log(ajaxUrl)
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // myApp.alert("good")
+            // myApp.confirm ()
+            
+            if ( results.username == null ) {
+                // not found
+                myApp.alert("Timi did not find this user:(")
+            } else {
+                myApp.confirm("Would you like to add " + results.username + "? ", function () {
+                    addByNumber () 
+                })
+            }
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });         
+
+}
+
 function availableTime () {
     var d = new Date(); 
     var n = d.getHours()
     console.log(n)
 
 
+}
+
+function cancelRequest () {
+    myApp.confirm("Are you sure? ", "Timi", function () {
+        // cancelRequest ()
+        var ajaxUrl = "http://gettimi.com/site/CancelMatch?user_token=" + localStorage.usertoken + "&request_id=" + myAvail[timeFrame].request_id
+        console.log(ajaxUrl)
+        $.ajax({
+            url: ajaxUrl,
+            type: "GET",
+            dataType: "jsonp",
+            success: function(results) {
+                // myApp.alert("good")
+                getMySchedule(function () {
+                    afterClickTab(timeFrame)                        
+                })
+                
+                console.log(results)
+            }, 
+            error: function (results) {
+                // myApp.hideIndicator()
+                console.log(results)
+                // myApp.alert("Network error. Please try again later? ")
+            }
+        });           
+    })    
+     
+    
 }
 
 
@@ -752,6 +916,11 @@ function updateProfilePic (fileURL) {
     var ft = new FileTransfer;
     var win = function(r) {
         myApp.hideIndicator();
+        // document.getElementById("profile-pic").src = 
+
+        getPersonalInfo( function () {
+            document.getElementById("profile-pic").src = personalData.avatar
+        })
         // myApp.alert("\u592a6\u4e86\uff01\u53d1\u9001\u6210\u529f");
         console.log(r);
         // myApp.closeModal(".popup-post-image")
@@ -788,6 +957,7 @@ function postGeolocation () {
         type: "GET",
         dataType: "jsonp",
         success: function(results) {
+            localStorage.allowedLocation = 1
             // myApp.alert("good")
             console.log(results)
             // myApp.hideIndicator()
@@ -796,7 +966,7 @@ function postGeolocation () {
         error: function (results) {
             // myApp.hideIndicator()
             console.log(results)
-            myApp.alert("Network error. Please try again later? ")
+            // myApp.alert("Network error. Please try again later? ")
         }
     });      
 }
@@ -838,12 +1008,12 @@ function postPersonalInfo () {
         error: function (results) {
             // myApp.hideIndicator()
             console.log(results)
-            myApp.alert("Network error. Please try again later? ")
+            // myApp.alert("Network error. Please try again later? ")
         }
     });        
 }
 
-function getPersonalInfo () {
+function getPersonalInfo (callback) {
     var ajaxUrl = "http://gettimi.com/site/returnInfo?user_token=" + localStorage.usertoken
     $.ajax({
         url: ajaxUrl,
@@ -853,7 +1023,14 @@ function getPersonalInfo () {
             // myApp.alert("good")
             console.log(results)
             personalData = results
-            updatePersonalPage ()
+            if (personalData.whatsup != "") {
+                localStorage.hasChangedPref = 1                
+            }
+            if (callback != null) {
+                callback()
+            }
+            document.getElementById("profile-pic").src = personalData.avatar;
+            // updatePersonalPage ()
 
             // myApp.hideIndicator()
 
@@ -861,7 +1038,7 @@ function getPersonalInfo () {
         error: function (results) {
             // myApp.hideIndicator()
             console.log(results)
-            myApp.alert("Network error. Please try again later? ")
+            // myApp.alert("Network error. Please try again later? ")
         }
     });      
 }
@@ -910,7 +1087,7 @@ function updateContactList () {
         error: function (results) {
             // myApp.hideIndicator()
             console.log(results)
-            myApp.alert("Network error. Please try again later? ")
+            // myApp.alert("Network error. Please try again later? ")
         }
     });  
 }
@@ -937,7 +1114,8 @@ function updateInvitationStatus () {
             console.log(results)
         }, 
         error: function (results) {
-            myApp.alert("Network error. Please try again later? ")
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
         }
     });  
 }
@@ -951,11 +1129,31 @@ function cleanWhatsUp () {
     document.getElementById("whatsup").value = ""
 }
 
+function inviteByPersonalText () {
+    console.log("personal")
+    var number = 6178005220;
+    var message = "Hey Join me at Timi!";
+    console.log("number=" + number + ", message= " + message);
+
+    //CONFIGURATION
+    var options = {
+        replaceLineBreaks: false, // true to replace \n by a new line, false by default
+        android: {
+            intent: 'INTENT'  // send SMS with the native android SMS messaging
+            //intent: '' // send SMS without open any other app
+        }
+    };
+
+    var success = function () { myApp.alert('Message sent successfully'); };
+    var error = function (e) { myApp.alert('Message Failed:' + e); };
+    sms.send(number, message, options, success, error);    
+}
+
 // fired once the user invited their friend. Invite friends by sending sms on the backend. 
 // If success, change the style of the button
 // If not, change it back
 function inviteFriend (number, html) {
-    myApp.showIndicator()
+    // myApp.showIndicator()
     var ajaxUrl = "http://gettimi.com/site/Invitefriends?user_token=" + 
      localStorage.usertoken + 
      "&number=" + number
@@ -964,11 +1162,14 @@ function inviteFriend (number, html) {
      // $(this).html("adding..")
      // console.log(html)
      // lol = html
-     $(html).removeClass("button"); 
-     $(html).removeClass("color-green");
-     $(html).addClass("color-gray"); 
-     $(html).addClass("text-holder");       
-     $(html).html('<div class="">Adding</div>')
+     if ( html != "" ) {
+         $(html).removeClass("button"); 
+         $(html).removeClass("color-green");
+         $(html).addClass("color-gray"); 
+         $(html).addClass("text-holder");       
+         $(html).html('<div class="">Adding</div>')        
+     }
+
      // $(html).removeClass("button"); 
      // $(html).removeClass("color-green");
      // $(html).addClass("color-gray"); 
@@ -983,17 +1184,19 @@ function inviteFriend (number, html) {
             $(html).html('<div class="">Added</div>')
 
             console.log("invite F good ")
-            myApp.hideIndicator()
+            // myApp.hideIndicator()
         }, 
         error: function (results) {
-             $(html).addClass("button"); 
-             $(html).addClass("color-green");
-             $(html).removeClass("color-gray"); 
-             $(html).removeClass("text-holder");       
-             $(html).html('<div class="">Add</div>')            
+             if ( html != "" ) {            
+                 $(html).addClass("button"); 
+                 $(html).addClass("color-green");
+                 $(html).removeClass("color-gray"); 
+                 $(html).removeClass("text-holder");       
+                 $(html).html('<div class="">Add</div>')    
+             }                     
             console.log("invite F bad")
-            myApp.hideIndicator()
-            myApp.alert("Network error. Please try again later? ")
+            // myApp.hideIndicator()
+            // myApp.alert("Network error. Please try again later? ")
         }, 
         timeout: timeOutValue
     });      
@@ -1013,6 +1216,8 @@ function updateDistanceValue () {
 
 function getGeolocation () {  
     var onSuccess = function(position) {
+        // localStorage.allowedLocation = 1
+        // localStorage.
         // myApp.alert('Latitude: '          + position.coords.latitude          + '\n' +
         //       'Longitude: '         + position.coords.longitude         + '\n' +
         //       'Altitude: '          + position.coords.altitude          + '\n' +
@@ -1028,13 +1233,17 @@ function getGeolocation () {
     // onError Callback receives a PositionError object
     //
     function onError(error) {
+        console.log("get location err")
+        localStorage.allowedLocation = 0
         // myApp.alert('code: '    + error.code    + '\n' +
         //       'message: ' + error.message + '\n');
     }    
     if ( localStorage.allowedLocation != 1 ) {
-        myApp.confirm("Allow us to get your location to help you find friends? ", "Timi", function (){
+        myApp.confirm("Geolocation is required for us to help you find friends. Allow location access?  ", "Timi", function (){
             navigator.geolocation.getCurrentPosition(onSuccess, onError);    
-            localStorage.allowedLocation = 1
+            
+        }, function () {
+            getGeolocation ()
         })        
     } else {
         navigator.geolocation.getCurrentPosition(onSuccess, onError);    
@@ -1068,6 +1277,7 @@ function loadFriendsFromContact () {
 
 
     if ( (localStorage.allowedContact == null || localStorage.allowedContact == "null") ) {
+        // if has never accessed contact list
         myApp.confirm("Allow us to access your Contacts to find friends for you? ", "Timi ", function () {
             localStorage.allowedContact = "1"
             if (!contactedLoaded) {
@@ -1082,14 +1292,24 @@ function loadFriendsFromContact () {
             return; 
         })
     } else {
-        if (!contactedLoaded) {
+        // if has ever accessed contact list
+        console.log(contactedLoaded)
+        try {
             var options = new ContactFindOptions();
             options.filter="";
             options.multiple=true; 
+            contactedLoaded = true; 
             var fields = ["displayName", "phoneNumbers"];
             navigator.contacts.find(fields, onSuccess, onError, options);
-            document.getElementById("progressbar").style.display = "block"
-        }        
+            document.getElementById("progressbar").style.display = "block"            
+        } catch(err) {
+
+        }
+
+        // if (!contactedLoaded) {
+
+        // }        
+        // onSuccess()
         // return;
     }
 
@@ -1099,7 +1319,7 @@ function loadFriendsFromContact () {
     function onSuccess(contacts) {
         document.getElementById("progressbar").style.display = "none"
 
-        contactedLoaded = true; 
+        contactedLoaded = false; 
 
         // sort the names alphabetically
         contacts = contacts.sort(cSort);
@@ -1148,7 +1368,7 @@ function loadFriendsFromContact () {
                     '      <a href="#" class=" item-content"> '+
                     '        <div class="item-inner"> '+
                     '          <div class="item-title-row"> '+
-                    '            <div class="item-title">'+ userUnit.name.formatted +'</div> '+
+                    '            <div class="item-title">'+ userUnit.name.formatted +'<span class="hidden-number"> ' + userUnit.phoneNumbers[j].value.replace(/[^\d]/g,'') + '</span></div> '+
                     '            <div class="item-after">' + text + '</div> '+
                     '          </div> '+
                     '          <div class="item-subtitle color-gray">'+ userUnit.phoneNumbers[j].value +'</div> '+
@@ -1156,7 +1376,11 @@ function loadFriendsFromContact () {
                     '        </div> '+
                     '      </a> '+
                     '    </li> '
-                }                
+                }    
+                contactsList.push({
+                    "name": userUnit.name.formatted, 
+                    "number": number
+                });                                   
             } 
             // deal with email
             if (userUnit.emails != null) {
@@ -1165,17 +1389,15 @@ function loadFriendsFromContact () {
                 }                     
             }
             // add to contact list
-            contactsList.push({
-                "name": userUnit.name.formatted, 
-                "number": number, 
-                "email":email
-            });           
+   
+
 
         })
-        // localStorage.contacts = JSON.stringify(contactsList) 
-        console.log(contactsList)
+        localStorage.contacts = JSON.stringify(contactsList)
+        // console.log(localStorage.contacts)
         updateContactList()
         document.getElementById("friend-list-form").innerHTML = htmlString + '</ul>'
+        contactedLoaded = false
 
     }
 
@@ -1183,6 +1405,79 @@ function loadFriendsFromContact () {
         document.getElementById("progressbar").style.display = "none"
         alert("Some Error Occured");
     }          
+}
+
+function popupToAskContact () {
+    if ( (localStorage.allowedContact == null || localStorage.allowedContact == "null") ) {
+        myApp.confirm("Allow us to access your Contacts to find friends for you? ", "Timi ", function () {
+            localStorage.allowedContact = "1"
+            if (!contactedLoaded) {
+                var options = new ContactFindOptions();
+                options.filter="";
+                options.multiple=true; 
+                var fields = ["displayName", "phoneNumbers"];
+                navigator.contacts.find(fields, onSuccess, onError, options);
+            }                    
+        }, function () {
+            return; 
+        })
+    } else {
+        if (!contactedLoaded) {
+            var options = new ContactFindOptions();
+            options.filter="";
+            options.multiple=true; 
+            var fields = ["displayName", "phoneNumbers"];
+            navigator.contacts.find(fields, onSuccess, onError, options);
+        }        
+        // return;
+    }
+
+
+
+
+    function onSuccess(contacts) {
+        document.getElementById("progressbar").style.display = "none"
+
+        contactedLoaded = true; 
+        // sort the names alphabetically
+        contacts = contacts.sort(cSort);
+
+        // generate the list of data
+        contactsList = []; 
+        var htmlString = "<ul>"
+
+        contacts.map(function (userUnit) {
+            var number = [], email = []
+            // deal with phone number
+            if (userUnit.phoneNumbers != null) {
+                for (var j = 0; j < Math.min(userUnit.phoneNumbers.length, 3) ; j ++) {
+                    number.push(userUnit.phoneNumbers[j].value)  
+                }    
+                contactsList.push({
+                    "name": userUnit.name.formatted, 
+                    "number": number
+                });                                   
+            } 
+            // deal with email
+            if (userUnit.emails != null) {
+                for (var j = 0; j < Math.min(userUnit.emails.length, 3) ; j ++) {
+                    email.push(userUnit.emails[j].value)
+                }                     
+            }
+            // add to contact list
+        })
+        localStorage.contacts = JSON.stringify(contactsList)
+        console.log("loaded")
+        afterClickTab(timeFrame)
+        // myApp.alert("loaded!")
+        // updateContactList()
+
+    }
+
+    function onError() {
+        document.getElementById("progressbar").style.display = "none"
+        alert("Some Error Occured");
+    }            
 }
 
 // used with placePulse
@@ -1264,26 +1559,48 @@ function updateFrontPage (timeFrame) {
 }
 
 function inviteNextFriend () {
-    // console.log()
-    var index = Math.round(Math.random() * contactsList.length)
-    document.getElementById("invite-friend-name").innerHTML = contactsList[index].name
+    // console.log(localStorage.contacts)
+    var list = JSON.parse(localStorage.contacts)
+    // console.log(list)
+    if (list.length == 0) {
+        console.log("empty list")
+        return; 
+    }
+    console.log("not empty list")
+    var index = Math.round(Math.random() * list.length)
+    console.log(index)
+    console.log(list[index])
+    console.log(list[index]["name"])
+    console.log(list[index]["number"][0])
+    document.getElementById("invite-friend-name").innerHTML = list[index]["name"]
+    document.getElementById("invite-button").onclick = function () {
+        console.log(list[index]["number"][0])
+        // inviteByPersonalText()
+        inviteFriend(list[index]["number"][0])
+        inviteNextFriend()
+    }
     
 }
 
 function initShuffleInvite () {
-    $("#invitation-tab-button")[0].click()
+    console.log("changed")
+    myApp.showTab("#invitation-tab")
+    // document.getElementById("invitation-tab-button").click()
+    // $("#invitation-tab-button")[0].click()
 }
 
 // Place the pulse effect
 function placePulse () {
     var pulseHTML = ''
+
     if ( localStorage.allowedContact == "1" ) {
+        console.log("allowed contact")
         // if contact is allowed
         pulseHTML = 
         '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' + 
         '   <div class="gps-ring"></div>' + 
         '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#929292">It looks like no friend is nearby. Invite more friends by sending them FREE text!</div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#929292">It looks like no friends are nearby. Invite more friends by sending them a FREE text!</div>' + 
         '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;">Invite <span id="invite-friend-name"></span> !</div>' +     
 
         '   <div class="row"> ' +
@@ -1291,19 +1608,30 @@ function placePulse () {
         '            <div class="button button-fill color-gray no-friend" style="height:44px;line-height:44px;" onclick="inviteNextFriend()">Skip</div> ' +
         '        </div> ' +
         '        <div class="col-50"> ' +
-        '            <div class="button button-fill color-pink no-friend" style="height:44px;line-height:44px;" onclick="sendInvite()">Invite</div> ' +
+        '            <div class="button button-fill color-pink no-friend" style="height:44px;line-height:44px;" onclick="sendInvite()" id="invite-button">Invite</div> ' +
         '        </div> ' +
-        '    </div>'
-        inviteNextFriend ()
+        '    </div>' + 
+        '   <div class="row"> ' +
+        '        <div class="col-100"> ' +
+        '            <div class="button button-fill color-green no-friend" style="height:44px;line-height:44px;" onclick="inviteViaWechat()"><i class="fa fa-weixin color-white" style="margin-right: 6px;" aria-hidden="true"></i>Invite friends from WeChat</div> ' +
+        '        </div> ' +        
+        '   </div>'
+        document.getElementById("tinderslide").innerHTML = pulseHTML
+        document.getElementById("tinderslide").style.display = "block"
+        if (isCordova) {
+            inviteNextFriend ()
+        }
+        
         // '   <div class="button color-pink one-line-button no-friend" onclick="">Invite More friends to Timi? </div>' + 
         // '   <div class="one-line-prompt no-friend" style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
     } else {
+        console.log("not allowed contact")
         // if contact is not allowed yet
         pulseHTML = 
         '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' + 
         '   <div class="gps-ring"></div>' + 
         '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#929292">It looks like no friend is nearby. Invite more friends by sending them FREE text!</div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#929292">It looks like no friends are nearby. Invite more friends by sending them a FREE text!</div>' + 
         // '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;">Invite <span id="invite-friend-name">Ray Xiao</span>!</div>' +     
 
         // '   <div class="row"> ' +
@@ -1316,17 +1644,19 @@ function placePulse () {
         // '    </div>'
         '   <div class="button color-pink one-line-button no-friend" onclick="initShuffleInvite ()">Invite More friends to Timi? </div>' + 
         '   <div class="one-line-prompt no-friend" style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
+        document.getElementById("tinderslide").innerHTML = pulseHTML
+        document.getElementById("tinderslide").style.display = "block"
     }
 
-    document.getElementById("tinderslide").innerHTML = pulseHTML
-    document.getElementById("tinderslide").style.display = "block"
+    // document.getElementById("tinderslide").innerHTML = pulseHTML
+    
 }
 
 function sendInvite () {
 
 }
 // several cases
-// past the time
+// passed the time
 //  timeAvail[timeFrame]
 // if gets 0, meaning that the person set him/herself to be busy
 
@@ -1349,7 +1679,7 @@ function placeBusy (unit) {
         '   <img src="' + "img/timi.png" + '" class="matched-portrait animated bounceIn "  />' + 
         // '   <div class="gps-ring"></div>' + 
         // '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt " style="color:#929292">It looks like the time has past already. ' + mealIndicator + ' </div>' 
+        '   <div class="one-line-prompt " style="color:#929292">It looks like the time has passed already. ' + mealIndicator + ' </div>' 
         // '   <div class="button color-pink one-line-button " onclick=\'myApp.showTab(\"#availability-tab\");\'>Turn on the slot? </div>' 
         // '   <div class="one-line-prompt " style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
         document.getElementById("tinderslide").innerHTML = pulseHTML
@@ -1373,7 +1703,8 @@ function placeBusy (unit) {
         '   <img src="' + unit.avatar + '" class="pulse-portrait animated bounceIn"  />' +
         // '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' +        
         '   <div class="one-line-prompt " style="color:#929292">You are matched with ' + unit.username + ' </div>' + 
-        '   <div class="button color-pink one-line-button " onclick="textTo(' + unit.phone + ')">Text '+ unit.username +'</div>' 
+        '   <div class="button color-pink one-line-button " onclick="textTo(' + unit.phone + ')">Text '+ unit.username +'</div>'  + 
+        '   <div class="button color-gray one-line-button " onclick="cancelRequest()">I can\'t make it. I\'ll explain to my friend</div>'         
         // '   <div class="one-line-prompt " style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
         document.getElementById("tinderslide").innerHTML = pulseHTML
         document.getElementById("tinderslide").style.display = "block"          
@@ -1381,38 +1712,51 @@ function placeBusy (unit) {
   
 }
 
+function inviteViaWechat () {
+    try {
+        var shareURL = "http://gettimi.com"
+        window.plugins.socialsharing.share(null, "Join me at Timi - Find out who's free to hang out! ", null, shareURL);
+        // window.plugins.socialsharing.shareVia('com.tencent.mm.ui.tools.ShareToTimeLineUI', workingList[index].title + " - 没六儿 最火热的话题与信息 ", null, null, shareURL, function(){myApp.alert("分享成功")}, function(msg) {myApp.alert("太不6了，再试试看？")})          
+    } catch (err) {
+
+        // var buttons = [{
+        //     text: "复制到剪贴板",
+        //     onClick: function() {
+        //         try {
+        //             var text = workingList[index].title + " - 没六儿: " + shareURL
+        //             cordova.plugins.clipboard.copy(text)
+        //             var appToast = new Framework7(); 
+        //             var toast = appToast.toast("已复制", '<i class="fa fa-check"></i>', {})
+        //             toast.show()                    
+                    
+        //         } catch (err) {
+        //             // myApp.alert(text)
+        //         }
+        //     }
+        // }];
+        // myApp.actions(buttons)
+        // myApp.alert("好像没法启用系统分享，请更新软件！")
+    }    
+}
+
 
 // Initiate the tinder swipe page, called when the home page is loaded
 function initTinderSwipe (object) {
     $(object).jTinder({
         onLike: function(item) {
-            console.log(item)
-            console.log(availFriend[timeFrame][currentIndex[timeFrame]].username)
-            var d = new Date();
-            var n = d.getDay();
-            console.log(n,timeFrame,availFriend[timeFrame][currentIndex[timeFrame]].user_id)
-            requestFriend(localStorage.usertoken, n, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
+            requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
             currentIndex[timeFrame]--
             if (currentIndex[timeFrame] < 0) {
                 placePulse()
-                showNoFriendBlock ()
-                // getFriendFreeTime ()
-                
+                showNoFriendBlock ()                
             }
         }, 
         onDislike: function (item) {
-            console.log(item)
-            console.log(availFriend[timeFrame][currentIndex[timeFrame]].username)
-            var d = new Date();
-            var n = d.getDay();
-            console.log(n,timeFrame,availFriend[timeFrame][currentIndex[timeFrame]].user_id)
-
-            requestFriend(localStorage.usertoken, n, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
+            requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
             currentIndex[timeFrame]--
             if (currentIndex[timeFrame] < 0) {
                 placePulse()
-                showNoFriendBlock ()      
-                // getFriendFreeTime ()      
+                showNoFriendBlock ()          
             }
         }
     });    
@@ -1493,9 +1837,28 @@ return '                <li> ' +
 '                  </label> ' +
 '                </li> '   
 }
+var app = {
+    sendSms: function() {
+
+    }
+};
+
+// function
 
 var myApp = new Framework7({
     swipeBackPage: false, 
+    modalTitle:"Timi", 
+    onPageBeforeAnimation: function (app, page) {
+        if (page.name == "home") {
+            console.log("home")
+            $("#home-page-navbar-center").css("visibility", "visible") 
+
+            // popupTutorial()
+        }      
+        else if (page.name == "personal-setting-page" )   {
+            $("#home-page-navbar-center").css("visibility", "hidden") 
+        }
+    }, 
     onPageInit: function (app, page) {
         a = app; 
         b = page; 
@@ -1508,6 +1871,8 @@ var myApp = new Framework7({
 
             // popupTutorial()
         } else if (page.name == "home") {
+            console.log("wtf")
+
             if ( !((localStorage.usertoken) == null || (localStorage.usertoken == "null")) ) {
                 // getFriendFreeTime ()       
                 afterClickTab(timeFrame)
@@ -1524,10 +1889,14 @@ var myApp = new Framework7({
                     }
                 }                
             }
+            setTimeout(function () {
+                
+            }, 300)
+            // $("#home-page-navbar-center").css("visibility", "visible") 
 
             // getMySchedule()       
         } else if (page.name == "personal-setting-page") {
-
+            $("#home-page-navbar-center").css("visibility", "hidden")  
             // build fav food list
             var htmlString = "<ul>"
             favoriteFoodList.map(function (unit) {
@@ -1535,7 +1904,9 @@ var myApp = new Framework7({
                 return; 
             })
             document.getElementById("favorite-food").innerHTML = htmlString + "</ul>"
-            getPersonalInfo()
+            getPersonalInfo( function () {
+                updatePersonalPage()
+            })
             
         } else if (page.name == "ask-calendar") {
             updateForm()
@@ -1637,6 +2008,7 @@ function onDeviceReady () {
         $("#explore-tab-button")[0].click()
         $(currentTab())[0].click()
         afterClickTab(timeFrame)
+        popupToAskContact ()
         document.addEventListener("resume", appReturnedFromBackground, false);      
         updateInvitationStatus ()   
     } 
@@ -1693,7 +2065,8 @@ function initPush () {
             // go to home
         }
         else if (data.additionalData.type == "3") {
-
+            console.log("matched")
+            // matched
 
 // 'title'=>'You have been matched with '.$user->username.' for '.$time_word.'!',
 // 'type'=>3,//3 for match
@@ -1728,10 +2101,16 @@ function initPush () {
                 "username":data.additionalData.username,
                 "phone":data.additionalData.phene
             }         
+            console.log("matched2")
             // post confirmation box
             matched( data.additionalData.username, data.additionalData.phone )
             // therefore occupied
             placeBusy (unit)
+        } else if ( data.additionalData.type == "4" ) {
+            getMySchedule(function () {
+                afterClickTab(data.additionalData.time)                        
+            })            
+            // cancallation
         }
 
         // window.cache.clear(clearCacheSuccess, clearCacheError);
@@ -1797,7 +2176,8 @@ function requestFriend(token, day, time, receiver, decision) {
         }, 
         error: function (results) {
             myApp.hideIndicator()
-            myApp.alert("Network error. Please try again later? ")
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
         }
     });  
 }
@@ -1809,15 +2189,22 @@ function requestFriend(token, day, time, receiver, decision) {
 // compare with my avil and update the front page
 
 function getFriendFreeTime (user_token) {
+    console.log(0)
     user_token = user_token || localStorage.usertoken
     placePulse(); 
+    console.log(1)
+    console.log(queryDay)
     var ajaxUrl = "http://gettimi.com/site/GetFriendsFreeSlots?user_token=" + user_token + "&day=" + queryDay
+    console.log(ajaxUrl)
     $.ajax({
         url: ajaxUrl,
         type: "GET",
         dataType: "jsonp",
         success: function(results) {
+            console.log(2)
+            console.log(results)
             userList = JSON.parse(results.result)
+            console.log(3)
             // addDetail(); 
             availFriend = [[], [], []]
             userList.map(function (unit) {
@@ -1840,7 +2227,8 @@ function getFriendFreeTime (user_token) {
             
         }, 
         error: function (results) {
-            myApp.alert("Network error. Please try again later? ")
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
         }
     });       
 }
@@ -1860,9 +2248,10 @@ function addDetail () {
 
 function getMySchedule (callbackFunction) {
     console.log("get my schedule")
+    console.log("q day:" + queryDay)
     var user_token = localStorage.usertoken
     var ajaxUrl = "http://gettimi.com/site/GetMySchedule?user_token=" + user_token + "&day=" + queryDay
-    
+    console.log(ajaxUrl)
     $.ajax({
         url: ajaxUrl,
         type: "GET",
@@ -1879,7 +2268,8 @@ function getMySchedule (callbackFunction) {
             }
         }, 
         error: function (results) {
-            myApp.alert("Network error. Please try again later? ")
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
         }
     });        
 }
@@ -1909,7 +2299,8 @@ function updateFreeTime () {
             updateForm()
         }, 
         error: function (results) {
-            myApp.alert("Network error. Please try again later? ")
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
         }
     });      
 }
@@ -2162,12 +2553,16 @@ function verifyCode () {
         type: "GET",
         dataType: "jsonp",
         success: function(results) {
+
+            // first first time login
             myApp.hideIndicator()
             localStorage.checkedPhone = true; 
+            getPersonalInfo ()            
             mainView.router.loadPage({"pageName":"home"})
             $("#explore-tab-button")[0].click()
             $(currentTab())[0].click(); 
-            getPersonalInfo ()
+
+            popupToAskContact ()
             document.getElementById("ask-calendar-back").style.display = "none"
             console.log(results)                
         }, 
@@ -2182,7 +2577,7 @@ function verifyCode () {
 // Get data from Facebook
 function getFriendsAndPersonalData () { 
     console.log("api")
-    facebookConnectPlugin.api( "me/?fields=name,id,email,friends", ["user_birthday", "user_friends"],
+    facebookConnectPlugin.api( "me/?fields=name,id,email,friends", ["user_friends"],
         function (response) { 
             console.log("success api")
             console.log(response)
@@ -2203,7 +2598,7 @@ function getFriendsAndPersonalData () {
                     // localStorage 
                     console.log(JSON.stringify(results))
                     localStorage.usertoken = results["user_token"]
-                    console.log(results["phone"].length)
+                    console.log("phone length: "+results["phone"].length)
                     if (!results["phone"].length) {
                         // not verified verified users
                         submitCalendar ()
@@ -2224,7 +2619,7 @@ function getFriendsAndPersonalData () {
                         console.log("Phone verified users logged in")
                         //  recurring user
                         localStorage.checkedPhone = true; 
-                        getGeolocation ()
+                        
                         mainView.router.loadPage({
                             "pageName":"home"
                         })          
@@ -2234,7 +2629,15 @@ function getFriendsAndPersonalData () {
                             $("#explore-tab-button")[0].click()
                             $(currentTab())[0].click()
                         }, 400) 
+                        getPersonalInfo( function () {
+                            // document.getElementById("profile-pic").src= 
+                            updatePersonalPage()
+                        })
 
+                        
+
+                        popupToAskContact ()
+                        getGeolocation ()
                         updatePreferencePrompt ()
     
 

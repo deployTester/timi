@@ -15,6 +15,10 @@ body {
     -khtml-user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
+    /*-webkit-transform: translate3d(0px,0px,0px);*/
+}
+.left i.fa.fa-chevron-left {
+    margin-top: 2px;
 }
 input, textarea {
     user-select: auto;
@@ -27,12 +31,16 @@ html, body {
     /*padding: 1px; */
     /*width: calc(100% - 3px);*/
 }
+
+#invitation-tab .content-block-inner:before, #invitation-tab .content-block-inner:after {
+    height:0px;
+}
 .pulse-portrait {
     width: 100px;
     border-radius: 1000px;
     height: 100px;
     display: block;
-    margin-top: calc( 50% + 50px );
+    margin-top: calc( 45% + 0px );
     margin-left: auto;
     margin-right: auto;
 }
@@ -41,7 +49,7 @@ html, body {
     border-radius: 1000px;
     height: 100px;
     display: block;
-    margin-top: calc( 50% + 50px );
+    margin-top: calc( 45% + 0px );
     margin-left: auto;
     margin-right: auto;
     /*margin-bottom: 50px;    */
@@ -55,8 +63,8 @@ html, body {
 .gps-ring {
     border: 3px solid #fc62a8;
     -webkit-border-radius: 30px;
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     background: rgba(252, 98, 168, 0.2);
     margin-left: auto;
     border-radius: 1000px;
@@ -64,13 +72,13 @@ html, body {
     -webkit-animation: pulsate 2.3s ease-out;
     -webkit-animation-iteration-count: infinite;
     /* opacity: 0.7; */
-    margin-top: -153px;
+    margin-top: -128px;
 }
 .gps-ring-2 {
     border: 3px solid #fc62a8;
     -webkit-border-radius: 30px;
-    height: 252px;
-    width: 252px;
+    height: 200px;
+    width: 200px;
     background: rgba(252, 98, 168, 0.2);
     margin-left: auto;
     border-radius: 1000px;
@@ -79,7 +87,7 @@ html, body {
     -webkit-animation: pulsate 1.3s ease-out;
     -webkit-animation-iteration-count: infinite;
     /* opacity: 0.7; */
-    margin-top: -228px;
+    margin-top: -178px;
 }
 #favorite-food label.label-checkbox input[type=checkbox]:checked+.item-media i.icon-form-checkbox, label.label-checkbox input[type=radio]:checked+.item-media i.icon-form-checkbox {
     border: none;
@@ -429,11 +437,12 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 input[type=range]::-webkit-slider-thumb {
   box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0px 0px 3px rgba(0,0,0,0.15);
-  border: none;
+  /*border: 3px solid rgba(0,0,0,0.0);*/
   /*border: 1px solid #000000;*/
-  height: 24px;
-  width: 24px;
-  border-radius: 24px;
+  height: 28px;
+  padding: 10px;
+  width: 28px;
+  border-radius: 100%;
   background: #ffffff;
   cursor: pointer;
   /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
@@ -708,6 +717,17 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
     background: transparent;
     color: #ec5298;
 }
+#home-page-navbar-center {
+    /*position: absolute;*/
+    /*top: 8px;*/
+}
+[data-page="personal-setting-page"] .list-block ul {
+    background: transparent;
+    color: #222;
+}
+[data-page="personal-setting-page"] textarea {
+    color:#222!important;
+}
 .navbar {
     background: #ec5298;
     color: #fff;
@@ -722,6 +742,18 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
 }
 .button.button-fill.color-pink, .theme-pink .button.button-fill {
     background: #ec5298;
+    /*ff2d55*/
+    color: #fff;
+}
+
+.color-green {
+    color: #7bb32e;
+}
+.color-green.button:not(.button-fill), .color-green.buttons-row .button, .theme-pink .button:not(.button-fill) {
+    border-color: #7bb32e;
+}
+.button.button-fill.color-green, .theme-pink .button.button-fill {
+    background: #7bb32e;
     /*ff2d55*/
     color: #fff;
 }
@@ -773,11 +805,14 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
     padding: 10px 0px;
     border: 1px solid #ec5298;
     margin: 20px auto; 
-    color: #ec5298;
+    /*color: #ec5298;*/
     height: auto;
 }
 .one-line-button.active-state {
     background: rgba(236,82,152, 0.15);
+}
+.hidden-number{
+    color: white;
 }
 
 .submit-button {
@@ -859,7 +894,7 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
 
 .one-line-prompt {
     margin-top: 12px;
-    padding: 0px 35px;
+    padding: 0px 15px;
     text-align: center;
     margin-bottom: 12px;
 }
