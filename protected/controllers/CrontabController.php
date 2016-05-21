@@ -3,6 +3,59 @@
 class CrontabController extends Controller
 {
 
+
+	public function actionLoop(){
+		$users = Users::model()->findAll();
+		foreach($users as $user){
+			$user->saveFacebookProfilePicture();
+			echo $user->avatar." ";
+		}
+	}
+
+	public function actionDailyPush(){
+
+        //prevent anyone else from using our cron
+        if ($_SERVER['REMOTE_ADDR'] !== '104.41.148.236' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '104.41.148.236')) {
+            throw new CHttpException(404, "The requested link does not exist.");
+        }
+
+		$notifs = DeviceToken::model()->findAll();
+		foreach($notifs as $notif){
+			if ($notif && $notif->token) {
+				$data["user_id"] = $notif->user_id;
+				$array = array(
+					"Someone wants to go out with you! Check it out on Timi",
+					"Lunch time, dinner time, this time, that time, Timi time!",
+					"Summer is the best. Waking up late & more time to chill with friends on Timi!",
+					"I love summer, I love music, I love food & I love Timi!",
+					"A true friend is someone who swipes right for you on Timi!",
+					"God made us best friends because I swiped right for you on Timi",
+					"My dinner stomach is full, but my dessert stomach still has room.",
+					"You don't really truly know someone until you get ridiculously drunk with them.",
+					"Food is my favorite. If I ever share it with you, then you're pretty damn special.",
+					"Need Love...? Let's get on Timi and find some!",
+				);
+				$random = rand(0, 9);
+				$result = $array[$random];
+				$data["title"] = $result;
+				$data["token"] = $notif->token;
+				$data["unread"] = 1;
+				$data["type"] = 5;				// is to homepage
+			 	$url = Yii::app()->params['globalURL'].'/simplepush/iospush.php?'.http_build_query($data);
+				$ch  = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //this prevent printing the 200json code
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1); //timeout 1s
+				curl_setopt($ch, CURLOPT_TIMEOUT, 1); //timeout 1s
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+		}
+		echo 200;
+	}
+
+
 	//trash the request from 3-4 days ago.  THIS IS SUPER IMPORTANT.	
 	public function actionTrashRequest(){
         //prevent anyone else from using our cron

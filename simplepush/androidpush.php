@@ -5,42 +5,48 @@ try {
 define( 'API_ACCESS_KEY', 'AIzaSyCG6h26FVre33C4dOokBSjd4atzvUA1epg' );
 //define('API_ACCESS_KEY', 'AIzaSyB9j6PvfMtoIODRopOJvP81J4YzxMRmZ54');
 
-$user = "";
-
-if(isset($_GET['user']) && $_GET['user']){
-	$user = $_GET['user'];
-}
-
-if($user == '1055590000'){
-	throw new Exception('You hit the right ID');
-}
-
 if(isset($_GET['token'])){
-	$registrationId = $_GET['token'];
+  $deviceToken = $_GET['token'];
 }else{
-	exit();
+  exit();
+}
+
+if(isset($_GET['type'])){
+  $type = $_GET['type'];
+}else{
+  $type = 1;
+}
+
+if(isset($_GET['unread']) && $_GET['unread']){
+  $num = intval($_GET['unread']);
+}else{
+  $num = 1;
 }
 
 $title = "";
 
 if(isset($_GET['title']) && $_GET['title']){
-	$title = $_GET['title'];
+  $title = strip_tags($_GET['title']);
+} else {
+  $title = "Timi";
 }
+
+$message = $title;
  
 // prep the bundle
 $msg = array
 (
-    'message'     => "You've received a new answer to your question: ".$title,
-  'title'     => 'Studypool',
+  'message'     => $message,
+  'title'     => 'Timi',
   'subtitle'    => '',
-  'tickerText'  => "You've received a new answer to your question: ".$title,
+  'tickerText'  => $message,
   'vibrate' => 1,
   'sound'   => 1
 );
  
 $fields = array
 (
-  'registration_ids'  => array($registrationId),
+  'registration_ids'  => array($deviceToken),
   'data'        => $msg
 );
  
@@ -65,5 +71,5 @@ file_put_contents($file, $current);
 echo $result;
 
 }catch (Exception $e) {
-	echo('<strong>'.$e->getMessage().'</strong>');
+  echo('<strong>'.$e->getMessage().'</strong>');
 }

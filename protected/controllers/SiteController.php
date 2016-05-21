@@ -173,7 +173,7 @@ class SiteController extends Controller
 			$user->updateFriendsViaFB($friends);
 		}
 		$user->userActed();
-
+		//$user->saveFacebookProfilePicture();
 
 		if($user->phone){
 			$this->sendJSONResponse(array(
@@ -352,9 +352,9 @@ class SiteController extends Controller
 						}
 						$contact->signed_up = 1;	//means your friend signed up already and you added him
 
-						//send notification to the your friend and tell them you just signed up.
+						//send notification to the your friend and tell them you just joined.
 						$data = array(
-							'title'=>'Your friend '.$user->username.' just signed up on Timi!',
+							'title'=>'Your friend '.$user->username.' just joined Timi!',
 							'type'=>1,
 							'user_id'=>$exist->id,
 						);
@@ -406,14 +406,14 @@ class SiteController extends Controller
         require_once '/var/www/html/webapp/protected/extensions/twilio/Services/Twilio.php';
         spl_autoload_register(array('YiiBase', 'autoload'));
 
-        $sid = "AC0c903dd4a822025fe1ea9e9d069c5ee8"; // Your Account SID from www.twilio.com/user/account
-        $token = "31b5c426f5a0570b3d53ef8f368c6703"; // Your Auth Token from www.twilio.com/user/account
+        $sid = "AC619e2e0259cedfa2be0cce4aef50bd57"; // Your Account SID from www.twilio.com/user/account
+        $token = "b8eeb3138dbde40f096c47d62eb36a14"; // Your Auth Token from www.twilio.com/user/account
 
         $client = new Services_Twilio($sid, $token);
         $message = $client->account->messages->sendMessage(
-                 '+16282226190', // From a valid Twilio number
+                 '+13472208626', // From a valid Twilio number
                   '+'.$newNumber, // Text this number
-                  "Hi, ".$user->username." invited you to Join Timi - The easiest way to hangout with friends. Check out: gettimi.com and respond!"	//message
+                  "Hi, ".$user->username." invited you to Join Timi! At Timi, you can invite your friends to hang out at your fingertips. No more texting around or feeling awkward to initiate/reject an invitation! Check out Timi at: gettimi.com"
         );
 
 		$contact = PhoneContacts::model()->find('number1 = :number OR number2 = :number OR number3 = :number', array(':number'=>$newNumber));
@@ -497,8 +497,9 @@ class SiteController extends Controller
 	   if(strlen($string) == 10){
 	   	   $string = "1".$string;
 	   }
-	   return preg_replace('/[^A-Za-z0-9]/', '', $string); // Removes special chars.
+	   return trim(preg_replace('/[^A-Za-z0-9]/', '', $string)); // Removes special chars.
 	}
+
 
 	/*
 	*	Returns all your friends free slots on the SAME day within certain range....
@@ -570,6 +571,16 @@ class SiteController extends Controller
 		endforeach;
 
 
+		if(($key = array_search($user->id, $final_list)) !== false) {
+	    	unset($final_list[$key]);	//delete yourself from the list
+		}
+
+		if($user->id == 73){	//delete user 93 from 73... lol check database and ask jimmy, he wil tell you why
+			if(($key = array_search(93, $final_list)) !== false) {
+		    	unset($final_list[$key]);	//delete yourself from the list
+			}
+		}
+
 		$final = array();	//the final JSON
 
 		foreach($final_list as $value):
@@ -595,6 +606,10 @@ class SiteController extends Controller
 				$friendLocation = explode(",", $friendObj->geolocation);
 			}
 
+			if(!$friendObj->phone){
+				continue;
+			}
+
 			if(isset($userLocation[0]) && isset($userLocation[1]) && isset($friendLocation[0]) && isset($friendLocation[1])){
 				//$lat1, $lon1, $lat2, $lon2, $unit, return in miles, "K" return in Kilometers.
 				$distance = $this->getDistance($userLocation[0], $userLocation[1], $friendLocation[0], $friendLocation[1], "M");
@@ -607,36 +622,38 @@ class SiteController extends Controller
 				$final[$friend] = array(0, 0, 0);
 			}
 
-			$slot = FreeTimeSlot::model()->findByPk($entry['sid']);
-			if($slot){
+			$slots = FreeTimeSlot::model()->findAllByAttributes(array('day'=>$day, 'user_id'=>$friend));
+			foreach($slots as $slot):
+				if($slot){
 
-				$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
-					array(":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+					$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
+						array(":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
-				$check_if_reject = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 2', 
-					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+					$check_if_reject = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 2', 
+						array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
-				$check_if_sent = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND sender = :me AND receiver = :uid AND status = 0', 
-					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+					$check_if_sent = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND sender = :me AND receiver = :uid AND status = 0', 
+						array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
-				$check_if_matched = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 1', 
-					array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+					$check_if_matched = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 1', 
+						array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
-				if($check_if_busy){
-					$final[$friend][$slot->slot] = "matched others";	//she matched someone else.
+					if($check_if_busy){
+						$final[$friend][$slot->slot] = "matched others";	//she matched someone else.
+					}
+					else if($check_if_reject){
+						$final[$friend][$slot->slot] = "one rejected";	//either you rejected her, or vice versa.
+					}
+					else if($check_if_sent){
+						$final[$friend][$slot->slot] = "request sent";	//you sent the request already
+					}
+					else if($check_if_matched){
+						$final[$friend][$slot->slot] = "matched";	//you guys have been matched.
+					}else{
+						$final[$friend][$slot->slot] = $slot->free;	//see if they are actually free
+					}
 				}
-				else if($check_if_reject){
-					$final[$friend][$slot->slot] = "one rejected";	//either you rejected her, or vice versa.
-				}
-				else if($check_if_sent){
-					$final[$friend][$slot->slot] = "request sent";	//you sent the request already
-				}
-				else if($check_if_matched){
-					$final[$friend][$slot->slot] = "matched";	//you guys have been matched.
-				}else{
-					$final[$friend][$slot->slot] = $slot->free;	//see if they are actually free
-				}
-			}
+			endforeach;
 		endforeach;
 
 		$result = array();
@@ -648,6 +665,15 @@ class SiteController extends Controller
 			}
 
 			$friend = Users::model()->findByPk($key);	//get friend details
+			$mutual = Users::model()->getMutualFriends($user->id, $friend->id);
+
+			$check_friends = Friends::model()->find('(sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid)', array(":uid"=>$user->id, ":fid"=>$friend->id));
+			if($check_friends){
+				$check_friends = true;
+			}else{
+				$check_friends = false;
+			}
+
 			$result[] = array(
 				'user_id'=>$key,
 				'username'=>$friend->username,
@@ -657,6 +683,8 @@ class SiteController extends Controller
 				'whatsup'=>$friend->whatsup,
 				'geolocation'=>$friend->geolocation,
 				'phone'=>$friend->phone,
+				'mutual'=>$mutual,
+				'check_friendship'=>$check_friends,
 			);
 
 		endforeach;
@@ -864,19 +892,26 @@ class SiteController extends Controller
         require_once '/var/www/html/webapp/protected/extensions/twilio/Services/Twilio.php';
         spl_autoload_register(array('YiiBase', 'autoload'));
 
-        $sid = "AC0c903dd4a822025fe1ea9e9d069c5ee8"; // Your Account SID from www.twilio.com/user/account
-        $token = "31b5c426f5a0570b3d53ef8f368c6703"; // Your Auth Token from www.twilio.com/user/account
+        $sid = "AC619e2e0259cedfa2be0cce4aef50bd57"; // Your Account SID from www.twilio.com/user/account
+        $token = "b8eeb3138dbde40f096c47d62eb36a14"; // Your Auth Token from www.twilio.com/user/account
 
-        $newNumber = $_GET['number'];
+        $newNumber = trim($_GET['number']);
 
         $valid_code = rand(1000, 9999);
 
-        $client = new Services_Twilio($sid, $token);
-        $message = $client->account->messages->sendMessage(
-                 '+16282226190', // From a valid Twilio number
-                  $newNumber, // Text this number
-                  "Verification code: ".$valid_code//message
-        );
+
+        try{
+	        $client = new Services_Twilio($sid, $token);
+	        $message = $client->account->messages->sendMessage(
+	                 '+13472208626 ', // From a valid Twilio number
+	                  '+'.$newNumber, // Text this number
+	                  "Verification code: ".$valid_code//message
+	        );
+        }catch(Exception $e){
+        	$this->sendJSONResponse(array(
+				'error'=>"invalid number",
+			));
+        }
 
         $verify = Verify::model()->findByAttributes(array('user_id'=>$user->id));
         if(!$verify){
@@ -884,7 +919,7 @@ class SiteController extends Controller
 	        $verify->user_id = $user->id;
         }
 	    $verify->code = $valid_code;
-	    $verify->number = $newNumber;
+	    $verify->number = trim($newNumber);
 	    $verify->create_time = time();
 	    $verify->save(false);
 
@@ -1004,7 +1039,7 @@ class SiteController extends Controller
 			$time_word = "this noon";
 		}else if($_GET['request_time'] == 1){
 			$time_word = "this evening";
-		}else if($_GET['request_time'] == 0){
+		}else if($_GET['request_time'] == 2){
 			$time_word = "tonight";
 		}
 
@@ -1056,12 +1091,6 @@ class SiteController extends Controller
 				'avatar'=>$user->avatar,
 				'email'=>$user->email,
 				'phone'=>$user->phone,
-				'country'=>$user->country,
-				'city'=>$user->city,
-				'geolocation'=>$user->geolocation,
-				'favorites'=>$user->favorites,
-				'whatsup'=>$user->whatsup,
-				'range'=>$user->range,
 				'day'=>$_GET['request_day'],
 				'time'=>$_GET['request_time'],
 			);
@@ -1316,9 +1345,6 @@ class SiteController extends Controller
 				'country'=>$user->country,
 				'city'=>$user->city,
 				'geolocation'=>$user->geolocation,
-				'favorites'=>$user->favorites,
-				'whatsup'=>$user->whatsup,
-				'range'=>$user->range,
 				'day'=>$request->request_day,
 				'time'=>$request->request_time,
 			);

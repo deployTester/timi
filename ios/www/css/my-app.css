@@ -94,21 +94,38 @@ html, body {
     background-color: #ec5298;
 }
 
-a.link {
-     color: white !important; 
+.close-picker {
+    color: #ec5298 !important;
 }
+a.link {
+    color: white !important; 
+}
+
 @-webkit-keyframes pulsate {
     0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
     50% {opacity: 1.0;}
     100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
 }
-
+.right-link {
+    padding-left: 18px; 
+}
+.left-link {
+    padding-right: 18px;
+}
 #friend-list-form .button.color-gray.button-fill {
-    margin-top: 5px;
+    margin-top: 7px;
     font-size: 15px;
-    line-height: 37px; 
-    height: 37px; 
+    line-height: 30px; 
+    height: 32px; 
     padding: 0px 10px;
+    background: #f6f7f9;
+    color: #8b8f96;
+    border: 1px solid #cccccc;
+}
+
+#friend-list-form .fa {
+    margin-right: 4px; 
+    margin-bottom: 2px;
 }
 #friend-list-form .text-holder {
     font-size: 15px;
@@ -137,6 +154,7 @@ a.link {
     height: 100%;
     /*color: #6d6d72;*/
     box-sizing: border-box;
+
 }
 .tab, .tabs {
     height: 100%;
@@ -531,6 +549,16 @@ input[type=range]:focus::-ms-fill-upper {
     font-size: 12px;
     /*word-break: break-all;*/
 }
+input#country-code-input {
+    color: #ec5298;
+    font-size: 17px;
+    width: 100%;
+    text-align: center;
+    border:none; 
+    box-shadow:none; 
+    text-shadow: none;
+}
+
 .card-content i.fa.color-pink {
     margin-right: 5px;
 }
@@ -545,6 +573,9 @@ a.link.button.col-50.color-gray {
 #explore-tab .card-footer, .card-header {
     min-height: 22px;
     padding: 10px 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;    
 }
 #explore-tab .card-footer {
     min-height: 50px;
@@ -699,8 +730,12 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
 [data-page="personal-setting-page"] .page-content, [data-page="home"] .page-content {
     background: #fefefe;
     color: #ec5298;
-    padding-bottom: 50px;
-    
+    padding-bottom: 50px;    
+}
+
+[data-page="personal-setting-page"] .page-content {
+    overflow-x: hidden;
+    width: 100%;        
 }
 #explore-tab .page-content {
     overflow: hidden;
@@ -742,6 +777,18 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
 }
 .button.button-fill.color-pink, .theme-pink .button.button-fill {
     background: #ec5298;
+    /*ff2d55*/
+    color: #fff;
+}
+.color-blue {
+    color: #3B5998;
+}
+
+.color-blue.button:not(.button-fill), .color-blue.buttons-row .button, .theme-blue .button:not(.button-fill) {
+    border-color: #3B5998;
+}
+.button.button-fill.color-blue, .theme-blue .button.button-fill {
+    background: #3B5998;
     /*ff2d55*/
     color: #fff;
 }
@@ -801,7 +848,7 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
 }
 
 .one-line-button {
-    width: 80%;
+    width: 90%;
     padding: 10px 0px;
     border: 1px solid #ec5298;
     margin: 20px auto; 

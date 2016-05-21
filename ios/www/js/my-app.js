@@ -13,6 +13,9 @@ var xhr;
 var isCordova = false;
 var device_token = "";
 var loadingCard; 
+var phoneNumber 
+var emojify
+// emojify.setConfig({tag_type : 'div'});
 
 var ray_token = "fc14487e19bc119e5e1115994bf094df"
 
@@ -36,7 +39,7 @@ for (var i = 0 ; i < 7; i++) {
 }
 // localStorage.usertoken = "cf40d87a845c66efbbe3a73205de5029"
 var push_notification = null;
-var favoriteFoodList = ["Pizza", "Tex-Mex", "Ramen", "Sushi", "French", "American", "Coffee", "Burger", "Chinese/Spicy", "Chinese", "Indian", "Sandwich"].sort(cSort)
+var favoriteFoodList = ["Pizza", "Tex-Mex", "Ramen", "Sushi", "French", "American", "Coffee", "Burger", "Chinese/Spicy", "Chinese", "Indian", "Sandwich", "Pasta", "Italian", "Thai", "Southeast Asian", "Dim Sum", "Mediterranean", "Korean"].sort(cSort)
 var currentIndex = [ null, null, null]; 
 var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 var d = new Date()
@@ -57,8 +60,7 @@ function getQueryDay () {
 }
 
 getQueryDay ()
-// var queryDay = ( currentHours <= 1 ) ? ((d.getDay() - 1) % 7 ): d.getDay()
-// localStorage.allowedPush = "0"
+
 var timeAvail; 
 
 function updateTimeAvail () {
@@ -120,8 +122,8 @@ strVar += "          <\/div>";
 strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"home\">";
 strVar += "";
-strVar += "            <div id=\"home-page-navbar-left\" class=\"left\"></div><div class=\"\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Explore                     ";
-strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"right\"></div>   ";
+strVar += "            <div id=\"home-page-navbar-left\" class=\"home-nav\"><a class=\"link left-link\"><i class=\"fa fa-user-plus\" style=\"visibility:hidden;\"></i></a></div><div class=\"home-nav\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Friends Nearby                     ";
+strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"home-nav\"><a class=\"link right-link\" onclick=\"inviteViaWechat()\"><i class=\"fa fa-user-plus\" ></i></a></div>   ";
 strVar += "        <div class=\"subnavbar\">";
 strVar += "          <div class=\"buttons-row\">";
 strVar += "            <a href=\"#tab1\" class=\"button lunch-tab tab-link active\">Lunch<\/a>";
@@ -162,15 +164,15 @@ strVar += "          <\/div>        ";
 strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"personal-setting-page\" >";
 strVar += "            <div class=\"left\" onclick=\"postPersonalInfo () \"> ";
-strVar += "              <a class=\"link back-link\">               ";
+strVar += "              <a class=\"link \">               ";
 strVar += "                <i class=\"fa fa-chevron-left\"><\/i>";
 strVar += "                <span>Back<\/span>";
 strVar += "              <\/a>";
 strVar += "            <\/div>          ";
 strVar += "            <div class=\"center\" >Personal Settings<\/div>";
 strVar += "            <div class=\"right\" >";
-strVar += "              <a class=\"link\">               ";
-// strVar += "                <span>Save<\/span>";
+strVar += "              <a class=\"link\" onclick=\"postPersonalInfo () \">               ";
+strVar += "                <span>Save<\/span>";
 strVar += "              <\/a>            ";
 strVar += "            <\/div>";
 strVar += "          <\/div>        ";
@@ -202,7 +204,7 @@ strVar += "                        <div class=\"item-title label\">";
 strVar += "                          <i class=\"fa fa-user\"><\/i>";
 strVar += "                        <\/div>";
 strVar += "                        <div class=\"item-input\">";
-strVar += "                          <input type=\"text\" name=\"name\" placeholder=\"( your name )\">";
+strVar += "                          <input  id=\"user-name-input\" type=\"text\" name=\"name\" placeholder=\"( your name )\">";
 strVar += "                        <\/div>";
 strVar += "                      <\/div>";
 strVar += "                    <\/div>";
@@ -214,7 +216,7 @@ strVar += "                        <div class=\"item-title label\">";
 strVar += "                          <i class=\"fa fa-envelope\"><\/i>";
 strVar += "                        <\/div>";
 strVar += "                        <div class=\"item-input\">";
-strVar += "                          <input type=\"text\" name=\"email\" placeholder=\"( your email )\">";
+strVar += "                          <input id=\"user-email-input\" type=\"text\" name=\"email\" placeholder=\"( your email )\">";
 strVar += "                        <\/div>";
 strVar += "                      <\/div>";
 strVar += "                    <\/div>";
@@ -222,7 +224,7 @@ strVar += "                  <\/li>";
 strVar += "                  <li>";
 strVar += "                    <div class=\"item-content\">";
 strVar += "                      <div class=\"item-inner\">";
-strVar += "                        <div class=\"item-title label\" id=\"country-code\">+1<\/div>";
+strVar += "                        <div class=\"item-title label\" id=\"country-code\"><span><\/span><input id=\"country-code-input\" placeholder=\"+1\" value=\"+1\"><\/div>";
 strVar += "                        <div class=\"item-input\">";
 strVar += "                          <input id=\"phone-number-input\" type=\"tel\" name=\"phone\" placeholder=\"( your phone # )\">";
 strVar += "                        <\/div>";
@@ -257,7 +259,7 @@ strVar += "                <\/a>";
 // strVar += "                    <!-- <span class=\"tabbar-label\">Messenger<\/span> -->";
 // strVar += "                <\/a>";
 strVar += "                <a href=\"#invitation-tab\" id=\"invitation-tab-button\" class=\"tab-link\">";
-strVar += "                    <i class=\"fa fa-user-plus\"><\/i>";
+strVar += "                    <i class=\"fa fa-users\"><\/i>";
 strVar += "                    <!-- <span class=\"tabbar-label\">Invite<\/span> -->";
 strVar += "                <\/a>";
 strVar += "                <a href=\"#more-tab\" class=\"tab-link\">";
@@ -352,7 +354,7 @@ strVar += "";
 strVar += "                    <\/div>";
 strVar += "";
 strVar += "                    <div class=\"edit-profile-text\" onclick=\"changePicture()\"> ";
-strVar += "                      Edit Profile Picture";
+strVar += "                      <b>Edit Profile Picture</b>";
 strVar += "                    <\/div>";
 strVar += "                    ";
 strVar += "                    <div class=\"list-block media-list\">";
@@ -426,7 +428,7 @@ strVar += "";
 strVar += "          <div class=\"page cached \" data-page=\"personal-setting-page\">";
 strVar += "            <div class=\"page-content\" >";
 strVar += "              <div class=\"content-block-title\">";
-strVar += "                <span>What's in your mind <a class=\"clear-whatsup\" onclick=\"cleanWhatsUp()\">clear all</a><\/span>";
+strVar += "                <span>What's in your mind <a class=\"clear-whatsup\" onclick=\"cleanWhatsUp()\">clear all</a><a class=\"clear-whatsup\" onclick=\"randomWhatsup()\">No much?</a><\/span>";
 strVar += "              <\/div> ";
 strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
 strVar += "                <ul>";
@@ -509,6 +511,9 @@ strVar += "                <\/ul>";
 strVar += "              <\/form>         ";
 strVar += "              <div class=\"button one-line-button color-pink \" onclick=\"verifyCode()\">";
 strVar += "                SUBMIT";
+strVar += "              <\/div>               ";
+strVar += "              <div class=\"button one-line-button color-gray \" onclick=\"resendCode()\">";
+strVar += "                Resend";
 strVar += "              <\/div>               ";
 strVar += "            <\/div>";
 strVar += "";
@@ -636,18 +641,32 @@ function appReturnedFromBackground () {
         // non user
     } else {
         // user
-        getFriendFreeTime()
-        afterClickTab(timeFrame)        
+        getMySchedule(function () {
+            afterClickTab(timeFrame)  
+        })
+              
         getGeolocation() 
-        if (push_notification) {
+        if (push_notification != null) {
             push_notification.setApplicationIconBadgeNumber(function() {
-                console.log('success');
+                console.log('success clearBadge');
             }, function() {
-                console.log('error');
+                console.log('error clearBadge');
             }, 0);            
-        }       
+        }     
 
     }
+}
+
+function clearBadge() {
+        if (push_notification != null ) {
+            push_notification.setApplicationIconBadgeNumber(function() {
+                console.log('success clearBadge');
+            }, function() {
+                console.log('error clearBadge');
+            }, 0);            
+        }      else {
+            console.log('no badge')
+        }    
 }
 
 function tos() {
@@ -657,27 +676,31 @@ function tos() {
 $$('#explore-tab').on('show', function () {
     console.log('Tab 1 is visible');
     $(".subnavbar").css("display", "flex")
-    changeNavbarTitle("Explore"); 
+    changeNavbarTitle("Friends Nearby", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
+    getPersonalInfo()
+    getMySchedule(function () {
+        afterClickTab(timeFrame)                        
+    })    
 });
  
 $$('#availability-tab').on('show', function () {
     console.log('Tab 2 is visible');
     updateFreeTime ()
     $(".subnavbar").css("display", "none")
-    changeNavbarTitle("Availability");  
+    changeNavbarTitle("Availability", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");  
     updateForm()
 });
  
 $$('#messenger-tab').on('show', function () {
     $(".subnavbar").css("display", "none")
-    changeNavbarTitle("Past dates"); 
+    changeNavbarTitle("Past dates", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
 });    
 $$('#invitation-tab').on('show', function () {
     $(".subnavbar").css("display", "none")
     if ( localStorage.allowedContact == 1 ) {
         loadFriendsFromContact()
     }
-    changeNavbarTitle("Invite friends to Timi", "<i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i>", "<i class=\"fa fa-search\" onclick='searchUser()'></i>"); 
+    changeNavbarTitle("Invite friends to Timi", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='searchUser()'><i class=\"fa fa-user-plus\" ></i></a>"); 
     console.log('Tab 4 is visible');
 });    
 
@@ -685,7 +708,7 @@ $$('#invitation-tab').on('show', function () {
 
 $$('#more-tab').on('show', function () {
     $(".subnavbar").css("display", "none")
-    changeNavbarTitle("More");
+    changeNavbarTitle("More", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");
     
     getPersonalInfo (function () {
         updatePersonalPage ()   
@@ -696,6 +719,7 @@ $$('#more-tab').on('show', function () {
     document.getElementById("profile-name").innerHTML = personalData.username
     $("#profile-pic-background").css("background", ('linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(' + personalData.avatar + ')'  ))
     console.log(localStorage.usertoken)
+    clearBadge()
     // change background too
     console.log('Tab 5 is visible');
 });   
@@ -716,8 +740,7 @@ function changeNavbarTitle (title, left, right) {
 } 
 
 function switchTime () {
-    localStorage.allowedContact = null; 
-    localStorage.allowedPush = null;
+    // clearBadge()
 }
 
 function initIntro () {
@@ -946,6 +969,10 @@ function serializeObject (obj)  {
 }
 
 function postGeolocation () {
+    if (userLocation == null || userLocation.length == 0 ) {
+        localStorage.allowedLocation = 0
+        return 
+    }
     var infoObject = {
         "user_token": localStorage.usertoken, 
         "geolocation": userLocation, 
@@ -972,6 +999,7 @@ function postGeolocation () {
 }
 
 function postPersonalInfo () {
+
 // 'username'=>$user->username,
 // 'avatar'=>Yii::app()->params['globalURL'].$user->avatar,
 // 'email'=>$user->email,
@@ -984,9 +1012,20 @@ function postPersonalInfo () {
 // 'range'=>$user->range,  
     // myApp.showIndicator()
 
-    if (document.getElementById("whatsup").value != "") {
-        localStorage.hasChangedPref = 1
+    if (document.getElementById("whatsup").value == "") {
+        myApp.alert("Please fill in whatsup! ")
+        return
     }
+    if (usersFavoriteList.length < 3) {
+        myApp.alert("Please choose at least 3 items.")
+        return
+    }    
+    // .replace(/\ud83d[\ude00-\ude4f]/g, '<span class="emoji" data-emoji="$&"></span>');
+    // if (document.getElementById("whatsup").value.indexOf(/\ud83d[\ude00-\ude4f]/g) == -1) {
+    //     console.log("no emoji")
+    // } else {
+    //     console.log("emoji")
+    // }
     var infoObject = {
         "user_token": localStorage.usertoken, 
         "favorites": usersFavoriteList,
@@ -995,22 +1034,30 @@ function postPersonalInfo () {
     }
     // serializeObject(infoObject)
     var ajaxUrl = "http://gettimi.com/site/returnInfo?" + serializeObject(infoObject)
-    $.ajax({
-        url: ajaxUrl,
-        type: "GET",
-        dataType: "jsonp",
-        success: function(results) {
-            // myApp.alert("good")
-            console.log(results)
-            // myApp.hideIndicator()
+    try {
+        $.ajax({
+            url: ajaxUrl,
+            type: "GET",
+            dataType: "jsonp",
+            success: function(results) {
+                localStorage.hasChangedPref = 1
+                // mainView
+                mainView.router.back()
+                // myApp.alert("good")
+                console.log(results)
+                // myApp.hideIndicator()
 
-        }, 
-        error: function (results) {
-            // myApp.hideIndicator()
-            console.log(results)
-            // myApp.alert("Network error. Please try again later? ")
-        }
-    });        
+            }, 
+            error: function (results) {
+                // myApp.hideIndicator()
+                console.log(results)
+                myApp.alert("It might be network error..or your status is too complicated for us.. Please try again later? ")
+            }
+        });   
+    } catch (err) {
+        myApp.alert("It might be network error..or your status is too complicated for us.. Please try again later? ")
+    }
+     
 }
 
 function getPersonalInfo (callback) {
@@ -1023,17 +1070,64 @@ function getPersonalInfo (callback) {
             // myApp.alert("good")
             console.log(results)
             personalData = results
-            if (personalData.whatsup != "") {
-                localStorage.hasChangedPref = 1                
+            usersFavoriteList = personalData.favorites.split(",")
+            document.getElementById("profile-pic").src = personalData.avatar;
+            if (personalData.phone == undefined || personalData.phone == "" ) {
+                localStorage.checkedPhone = 0
+                
+                mainView.router.loadPage({"pageName":"phone-number"})
+                setTimeout(function() {
+                    document.getElementById("user-name-input").value = personalData.username
+                    document.getElementById("user-email-input").value = personalData.email
+                    document.getElementById("phone-number-input").focus()
+                    // popupTutorial ()
+                }, 400);
+                return; 
+            }                   
+            if (personalData.geolocation == "") {
+                localStorage.allowedLocation = 0
+                getGeolocation ()                
+            } else {
+                getGeolocation ()
+            }         
+            if (localStorage.allowedContact == null || 
+                localStorage.allowedContact == "null" || 
+                localStorage.allowedContact == 0) {
+                popupToAskContact ()
+                // return; 
             }
+   
+            if (personalData.whatsup == "") {
+                localStorage.hasChangedPref = 0
+                setTimeout(function () {
+                    if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
+                        myApp.alert("Please update your whatsup:) ", function () {
+                            setTimeout(function () {
+                                mainView.router.loadPage({"pageName": "personal-setting-page"}); 
+                            }, 400)
+                        })                 
+                    }     
+                }, 600)                   
+                // updatePreferencePrompt()
+                return; 
+            }
+            if (usersFavoriteList.length < 3) {
+                localStorage.hasChangedPref = 0
+                setTimeout(function () {
+                    if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
+                        myApp.alert("Please update your favorite food:) ", function () {
+                            setTimeout(function () {
+                                mainView.router.loadPage({"pageName": "personal-setting-page"}); 
+                            }, 400)
+                            
+                        })                 
+                    }     
+                }, 600)    
+                return; 
+            }    
             if (callback != null) {
                 callback()
-            }
-            document.getElementById("profile-pic").src = personalData.avatar;
-            // updatePersonalPage ()
-
-            // myApp.hideIndicator()
-
+            }                                  
         }, 
         error: function (results) {
             // myApp.hideIndicator()
@@ -1056,6 +1150,7 @@ function onCameraSuccess(imageData) {
 }
 
 function onCameraFail(message) {
+    myApp.alert("Please go to Settings - Timi - and turn on Cameras/Photos access! ")
     // myAalert('Failed because: ' + message);
 }
 
@@ -1159,29 +1254,21 @@ function inviteFriend (number, html) {
      "&number=" + number
      console.log(ajaxUrl)
      console.log("invite F")
-     // $(this).html("adding..")
-     // console.log(html)
-     // lol = html
      if ( html != "" ) {
          $(html).removeClass("button"); 
          $(html).removeClass("color-green");
          $(html).addClass("color-gray"); 
          $(html).addClass("text-holder");       
-         $(html).html('<div class="">Adding</div>')        
+         $(html).html('<div class="">Inviting</div>')        
      }
-
-     // $(html).removeClass("button"); 
-     // $(html).removeClass("color-green");
-     // $(html).addClass("color-gray"); 
-     // $(html).addClass("text-holder");  
 
     $.ajax({
         url: ajaxUrl,
         type: "GET",
         dataType: "jsonp",
         success: function(results) {
-            // $(this).html("Added")
-            $(html).html('<div class="">Added</div>')
+
+            $(html).html('<div class="">Invited</div>')
 
             console.log("invite F good ")
             // myApp.hideIndicator()
@@ -1192,7 +1279,7 @@ function inviteFriend (number, html) {
                  $(html).addClass("color-green");
                  $(html).removeClass("color-gray"); 
                  $(html).removeClass("text-holder");       
-                 $(html).html('<div class="">Add</div>')    
+                 $(html).html('<div class="">Invite</div>')    
              }                     
             console.log("invite F bad")
             // myApp.hideIndicator()
@@ -1235,6 +1322,7 @@ function getGeolocation () {
     function onError(error) {
         console.log("get location err")
         localStorage.allowedLocation = 0
+        myApp.alert("Please go to Settings - Timi - and turn on Location access! ")
         // myApp.alert('code: '    + error.code    + '\n' +
         //       'message: ' + error.message + '\n');
     }    
@@ -1248,6 +1336,7 @@ function getGeolocation () {
     } else {
         navigator.geolocation.getCurrentPosition(onSuccess, onError);    
     }
+    // navigator.geolocation.getCurrentPosition(onSuccess, onError);    
 
 
 
@@ -1347,7 +1436,7 @@ function loadFriendsFromContact () {
                     }
                     if ( arr == null ) {
                         // the user is yet to be invited
-                        text = "<div class='button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this) \">Add</div>"
+                        text = "<div class='button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this) \"><i class='fa fa-envelope-o'></i>Invite</div>"
 
                     } else {
                         // The suer is invited or has signed up
@@ -1355,11 +1444,11 @@ function loadFriendsFromContact () {
                         var hasSignedUp = arr[1]
 
                         if (isInvited == 1 && hasSignedUp == 0) {
-                            text = "<div class='text-holder color-gray'>Added</div>"
+                            text = "<div class='text-holder color-gray'>Invited</div>"
                         } else if ( hasSignedUp == 1 ){
                             text = "<div class='text-holder color-gray'>Friend</div>"
                         } else {
-                            text = "<div class=' button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this) \">Add</div>"
+                            text = "<div class=' button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this) \"><i class='fa fa-envelope-o'></i>Invite</div>"
                         }                
                     }    
 
@@ -1379,7 +1468,8 @@ function loadFriendsFromContact () {
                 }    
                 contactsList.push({
                     "name": userUnit.name.formatted, 
-                    "number": number
+                    "number": number, 
+                    "status": ""
                 });                                   
             } 
             // deal with email
@@ -1403,13 +1493,14 @@ function loadFriendsFromContact () {
 
     function onError() {
         document.getElementById("progressbar").style.display = "none"
-        alert("Some Error Occured");
+        myApp.alert("Please go to Settings - Timi - and turn on Contacts access! ")
+        // alert("Some Error Occured");
     }          
 }
 
 function popupToAskContact () {
-    if ( (localStorage.allowedContact == null || localStorage.allowedContact == "null") ) {
-        myApp.confirm("Allow us to access your Contacts to find friends for you? ", "Timi ", function () {
+    if ( (localStorage.allowedContact == null || localStorage.allowedContact == "null" || localStorage.allowedContact == 0) ) {
+        myApp.confirm("Allow Timi to access your Contacts to find friends for you? ", "Timi ", function () {
             localStorage.allowedContact = "1"
             if (!contactedLoaded) {
                 var options = new ContactFindOptions();
@@ -1419,7 +1510,8 @@ function popupToAskContact () {
                 navigator.contacts.find(fields, onSuccess, onError, options);
             }                    
         }, function () {
-            return; 
+            // popupToAskContact ()
+            // return; 
         })
     } else {
         if (!contactedLoaded) {
@@ -1476,7 +1568,8 @@ function popupToAskContact () {
 
     function onError() {
         document.getElementById("progressbar").style.display = "none"
-        alert("Some Error Occured");
+        localStorage.allowedContact = 0
+        myApp.alert("Please go to Settings - Timi - Contacts to allow Timi to access contact information:) ");
     }            
 }
 
@@ -1508,29 +1601,43 @@ function reportUser () {
     myApp.actions(buttons);
 }
 
-// update the front page of the user's page given the userList
-// timeFrame can be 0, 1, or 2
-function updateFrontPage (timeFrame) {
-    
-    // if (loading) 
-    console.log("update fornt page")
-
-    if ( availFriend[timeFrame].length == 0 ) {
-        console.log("has no stuff")
-        placePulse(); 
-        showNoFriendBlock ()
-        return; 
+function generateTopN (array) {
+    var unitLength = 3; 
+    var total = []
+    if (array.length < unitLength) {
+        return array; 
     } else {
-        $(".no-friend").css("display", "none")
-        console.log("has stuff")
-        placePulse (); 
-        loadingCard = setTimeout(function () {
+        for (var i = 0; i <= array.length-unitLength; i++) {
+            var unitList = []
+            var unitEnd = i+unitLength
+            console.log("united End is: "+unitEnd)
+            for (var j = i; j < unitEnd; j++) {
+                unitList.push(j)
+            }
+            total.push(unitList)
+        }
+    }
+    return total; 
+}
+
+var indexList; 
+
+function placeTinderSwipe () {
+
             document.getElementById("tinderslide").innerHTML = ""
-            var tinderListHTML = "<div id='tinder-contain'><ul>"
-            availFriend[timeFrame].map(function(item) {
-                tinderListHTML += 
-                '      <li> ' + 
-                '            <div class="card demo-card-header-pic"> ' + 
+            var tinderListHTML = "<div id='tinder-contain'><ul id='tinder-list-ul'></ul></div>"
+            document.getElementById("tinderslide").innerHTML = tinderListHTML;
+            insertNewCard()
+}
+
+
+function insertNewCard () {
+
+            var item = availFriend[timeFrame][currentIndex[timeFrame]]
+
+            var newCardHtml = 
+                '      <li class="new_card"> ' + 
+                '            <div class="card demo-card-header-pic" > ' + 
                 '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
                 '              <div style="" class="card-header no-border">' + item.username + '<div class="report-user color-gray" onclick="reportUser()"><i class="fa fa-ellipsis-h"></i></div></div> ' + 
                 '              <div class="card-content"> ' + 
@@ -1549,12 +1656,85 @@ function updateFrontPage (timeFrame) {
                 '            <div class="like" ></div> ' + 
                 '            <div class="dislike" onclick="$(\"#tinderslide\").jTinder(\'dislike\');"></div> ' + 
                 '          </li>'
-            })
-
-            document.getElementById("tinderslide").innerHTML = tinderListHTML + "</ul></div>"             
+                // length--;
+                 
+            document.getElementById("tinder-list-ul").innerHTML += newCardHtml;
 
             initTinderSwipe ("#tinder-contain"); 
-        }, 1000)
+
+            setTimeout(function(){ 
+                $(".new_card").show()
+                $(".new_card").removeClass('new_card')
+            }, 100);
+}
+
+
+// update the front page of the user's page given the userList
+// timeFrame can be 0, 1, or 2
+function updateFrontPage (timeFrame) {
+    
+    // if (loading) 
+    console.log("update fornt page")
+
+    if ( availFriend[timeFrame].length == 0 ) {
+        console.log("has no stuff")
+        placePulse(); 
+        showNoFriendBlock ()
+        return; 
+    } else {
+        $(".no-friend").css("display", "none")
+        console.log("has stuff")
+        placePulse ();        
+        // placeTinderSwipe ()
+        loadingCard = setTimeout(function () {
+                placeTinderSwipe ()
+        }, 1000);            
+        // $(".no-friend").css("display", "none")
+        // console.log("has stuff")
+        // placePulse ();
+        // loadingCard = setTimeout(function () {
+        //     document.getElementById("tinderslide").innerHTML = ""
+        //     var tinderListHTML = "<div id='tinder-contain'><ul>"
+
+        //     // indexList = generateTopN(availFriend[timeFrame]);
+
+        //     // availFriend[timeFrame]
+        //     // var length = availFriend[timeFrame].length + 1;
+            
+        //     // var mappedList = availFriend[timeFrame]
+        //     var preloadLength = 3
+        //     var mappedList = availFriend[timeFrame].slice(availFriend[timeFrame].length - currentIndex[timeFrame], preloadLength)
+        //     console.log(mappedList)
+        //     mappedList.map(function(item) {
+        //         tinderListHTML += 
+        //         '      <li> ' + 
+        //         '            <div class="card demo-card-header-pic" > ' + 
+        //         '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
+        //         '              <div style="" class="card-header no-border">' + item.username + '<div class="report-user color-gray" onclick="reportUser()"><i class="fa fa-ellipsis-h"></i></div></div> ' + 
+        //         '              <div class="card-content"> ' + 
+        //         '                <div class="card-content-inner"> ' + 
+        //         // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
+        //         '                   <div class="color-gray"><i class="fa fa-comments color-pink"></i>'+item.whatsup+'</div>' + 
+        //         // '                  <div class="color-pink">' +item.name+ ' likes: </div>' + 
+        //         '                   <div class="color-gray"><i class="fa fa-heart color-pink"></i>' + item.favorites.split(',').join(', ') + '</div> ' + 
+        //         '                </div> ' + 
+        //         '              </div> ' + 
+        //         '              <div class="card-footer no-gutter row"> ' + 
+        //         '                <a href="#" class="link button col-50 color-gray button-fill dislike-button">PASS</a> ' + 
+        //         '                <a href="#" class="link button col-50 color-pink button-fill like-button">I\'M DOWN! </a> ' + 
+        //         '              </div> ' + 
+        //         '            </div>    ' +
+        //         '            <div class="like" ></div> ' + 
+        //         '            <div class="dislike" onclick="$(\"#tinderslide\").jTinder(\'dislike\');"></div> ' + 
+        //         '          </li>'
+        //         // length--;
+        //     });
+
+
+        //     document.getElementById("tinderslide").innerHTML = tinderListHTML + "</ul></div>"             
+
+        //     initTinderSwipe ("#tinder-contain"); 
+        // }, 1000);
     } 
 }
 
@@ -1572,14 +1752,37 @@ function inviteNextFriend () {
     console.log(list[index])
     console.log(list[index]["name"])
     console.log(list[index]["number"][0])
+
     document.getElementById("invite-friend-name").innerHTML = list[index]["name"]
     document.getElementById("invite-button").onclick = function () {
         console.log(list[index]["number"][0])
         // inviteByPersonalText()
         inviteFriend(list[index]["number"][0])
+        // list[index]["status"] = "invited"
+        // localStorage.contacts = JSON.stringify(list)
         inviteNextFriend()
-    }
-    
+    }        
+}
+var whatsupList = ["Let's chipotle and chill?", 
+"Nomnomnom", "Eat like every day is Thanksgiving.", 
+"You cannot taste me, until you undress me. Sincerely, banana.", 
+"Everything sucks .. .. .. .. .. except FOOD !!!!", "Hungry as hell", 
+"I don't trust people that dislike tacos.", 
+"Of course size matters. No one wants a small pizza.", 
+"Accomplishing things before the microwave hits 00:00.", 
+"You can't buy happiness, but you can buy ice cream. And that's kind of the same thing.", 
+"I eat so much... I make fat kids look skinny!", 
+"Dear Vegetarians, If you love animals so much, then why do you keep eating all their food?", 
+"That moment when skinny people call themselves fat and your heavier than them.", 
+"Arizona 99 cent drinks are the shit. Period.", 
+"I want a hot body but I also want hot wings.", 
+"If life gives you lemons, just add vodka.", 
+"I live in a world of fantasy, so keep your reality away from me!", 
+"Never make eye contact while eating a banana."]
+function randomWhatsup () {
+    var index = Math.round(Math.random() * (whatsupList.length-1))
+    document.getElementById("whatsup").value = whatsupList[index]
+
 }
 
 function initShuffleInvite () {
@@ -1600,7 +1803,7 @@ function placePulse () {
         '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' + 
         '   <div class="gps-ring"></div>' + 
         '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#929292">It looks like no friends are nearby. Invite more friends by sending them a FREE text!</div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#929292">It seems that no friend is nearby. Invite friends by sending them a FREE text!</div>' + 
         '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;">Invite <span id="invite-friend-name"></span> !</div>' +     
 
         '   <div class="row"> ' +
@@ -1608,22 +1811,20 @@ function placePulse () {
         '            <div class="button button-fill color-gray no-friend" style="height:44px;line-height:44px;" onclick="inviteNextFriend()">Skip</div> ' +
         '        </div> ' +
         '        <div class="col-50"> ' +
-        '            <div class="button button-fill color-pink no-friend" style="height:44px;line-height:44px;" onclick="sendInvite()" id="invite-button">Invite</div> ' +
+        '            <div class="button button-fill color-pink no-friend" style="height:44px;line-height:44px;" onclick="sendInvite()" id="invite-button">Invite!</div> ' +
         '        </div> ' +
-        '    </div>' + 
-        '   <div class="row"> ' +
-        '        <div class="col-100"> ' +
-        '            <div class="button button-fill color-green no-friend" style="height:44px;line-height:44px;" onclick="inviteViaWechat()"><i class="fa fa-weixin color-white" style="margin-right: 6px;" aria-hidden="true"></i>Invite friends from WeChat</div> ' +
-        '        </div> ' +        
-        '   </div>'
+        '    </div>' 
+        // '   <div class="row"> ' +
+        // '        <div class="col-100"> ' +
+        // // '            <div class="button button-fill color-green no-friend" style="height:44px;line-height:44px;" onclick="inviteViaWechat()"><i class="fa fa-weixin color-white" style="margin-right: 6px;" aria-hidden="true"></i>Invite friends from WeChat/Facebook</div> ' +
+        // '        </div> ' +        
+        // '   </div>'
         document.getElementById("tinderslide").innerHTML = pulseHTML
         document.getElementById("tinderslide").style.display = "block"
         if (isCordova) {
             inviteNextFriend ()
         }
         
-        // '   <div class="button color-pink one-line-button no-friend" onclick="">Invite More friends to Timi? </div>' + 
-        // '   <div class="one-line-prompt no-friend" style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
     } else {
         console.log("not allowed contact")
         // if contact is not allowed yet
@@ -1631,7 +1832,7 @@ function placePulse () {
         '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' + 
         '   <div class="gps-ring"></div>' + 
         '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#929292">It looks like no friends are nearby. Invite more friends by sending them a FREE text!</div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#929292">It seems that no friend is nearby. Invite friends by sending them a FREE text!</div>' + 
         // '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;">Invite <span id="invite-friend-name">Ray Xiao</span>!</div>' +     
 
         // '   <div class="row"> ' +
@@ -1642,7 +1843,7 @@ function placePulse () {
         // '            <div class="button button-fill color-pink no-friend" style="height:44px;line-height:44px;" onclick="sendInvite()">Invite</div> ' +
         // '        </div> ' +
         // '    </div>'
-        '   <div class="button color-pink one-line-button no-friend" onclick="initShuffleInvite ()">Invite More friends to Timi? </div>' + 
+        '   <div class="button color-pink one-line-button no-friend" onclick="initShuffleInvite ()">Invite friends to Timi? </div>' + 
         '   <div class="one-line-prompt no-friend" style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
         document.getElementById("tinderslide").innerHTML = pulseHTML
         document.getElementById("tinderslide").style.display = "block"
@@ -1703,8 +1904,17 @@ function placeBusy (unit) {
         '   <img src="' + unit.avatar + '" class="pulse-portrait animated bounceIn"  />' +
         // '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' +        
         '   <div class="one-line-prompt " style="color:#929292">You are matched with ' + unit.username + ' </div>' + 
-        '   <div class="button color-pink one-line-button " onclick="textTo(' + unit.phone + ')">Text '+ unit.username +'</div>'  + 
-        '   <div class="button color-gray one-line-button " onclick="cancelRequest()">I can\'t make it. I\'ll explain to my friend</div>'         
+        '   <div class="button color-pink button-fill one-line-button " style="width: 100%;" onclick="textTo(' + unit.phone + ')"><i class="fa fa-comment color-white" style="margin-right: 6px;" aria-hidden="true"></i>Text '+ unit.username +'</div>'  + 
+        '   <div class="button color-gray button-fill one-line-button " style="width: 100%;" onclick="cancelRequest()"><i class="fa fa-times color-white" style="margin-right: 6px;" aria-hidden="true"></i>Sorry, I can\'t make it.</div>'  +
+        // '   <div class="button one-line-button color-green "  onclick="inviteViaWechat()"><i class="fa fa-weixin color-green" style="margin-right: 6px;" aria-hidden="true"></i><i class="fa fa-facebook color-blue" style="margin-right: 6px;" aria-hidden="true"></i>Share and Invite</div> '
+        '   <div class="row"> ' +
+        '        <div class="col-50"> ' +
+        '            <div class="button button-fill color-green " style="height:44px;line-height:44px;" onclick="inviteViaWechat()"><i class="fa fa-weixin color-white" style="margin-right: 6px;" aria-hidden="true"></i>Invite/Share</div> ' +
+        '        </div> ' +        
+        '        <div class="col-50"> ' +
+        '            <div class="button button-fill color-blue " style="height:44px;line-height:44px;" onclick="inviteViaWechat()"><i class="fa fa-facebook color-white" style="margin-right: 6px;" aria-hidden="true"></i>Invite/Share</div> ' +
+        '        </div> ' +          
+        '   </div>'               
         // '   <div class="one-line-prompt " style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
         document.getElementById("tinderslide").innerHTML = pulseHTML
         document.getElementById("tinderslide").style.display = "block"          
@@ -1746,30 +1956,41 @@ function initTinderSwipe (object) {
         onLike: function(item) {
             requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
             currentIndex[timeFrame]--
+            // [1,2,3; 2,3,4; 3,4,5; 4,5,6]
+            // do 123, 234, 345, 456, show nothing
             if (currentIndex[timeFrame] < 0) {
                 placePulse()
                 showNoFriendBlock ()                
+            } else {
+                console.log("load new")
+                //insertNewCard()
+                placeTinderSwipe ()
             }
         }, 
         onDislike: function (item) {
+            console.log(123123123)
             requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
             currentIndex[timeFrame]--
             if (currentIndex[timeFrame] < 0) {
                 placePulse()
                 showNoFriendBlock ()          
+            } else {
+                console.log("load new")
+                //insertNewCard()
+                placeTinderSwipe ()
+                // $("#tinder-contain li").css("display", "block")
             }
         }
     });    
     initTinderSwipeCSS()
     console.log("init")
     $(".like-button").on("click", function () {
-        console.log(123)
         $(object).jTinder('like');
     })
     $(".dislike-button").on("click", function () {
-        console.log(123)
         $(object).jTinder('dislike');
-    })               
+    })
+                  
 }
 
 // Initiate the tinder page css, called when the home page is loaded
@@ -1818,11 +2039,6 @@ function updateFavFood () {
     }
 }
 
-function updateNotificationId () {
-
-
-
-}
 
 function favoriteFoodUnitHTML (value) {
 return '                <li> ' +
@@ -1837,13 +2053,22 @@ return '                <li> ' +
 '                  </label> ' +
 '                </li> '   
 }
-var app = {
-    sendSms: function() {
-
-    }
-};
 
 // function
+
+function getPush () {
+    if ( (localStorage.allowedPush == "null") || (localStorage.allowedPush == 0) || (localStorage.allowedPush == null)) {
+        // not null and not 1
+        myApp.confirm("Allow Push Notification so that you know when you are matched?", "Timi ", function () {
+            localStorage.allowedPush = "1"
+            initPush ()
+        })
+    } else {
+        if ( isCordova ) {
+            initPush ()
+        }
+    }         
+}
 
 var myApp = new Framework7({
     swipeBackPage: false, 
@@ -1851,12 +2076,12 @@ var myApp = new Framework7({
     onPageBeforeAnimation: function (app, page) {
         if (page.name == "home") {
             console.log("home")
-            $("#home-page-navbar-center").css("visibility", "visible") 
+            $(".home-nav").css("visibility", "visible") 
 
             // popupTutorial()
         }      
         else if (page.name == "personal-setting-page" )   {
-            $("#home-page-navbar-center").css("visibility", "hidden") 
+            $(".home-nav").css("visibility", "hidden") 
         }
     }, 
     onPageInit: function (app, page) {
@@ -1873,10 +2098,8 @@ var myApp = new Framework7({
         } else if (page.name == "home") {
             console.log("wtf")
 
-            if ( !((localStorage.usertoken) == null || (localStorage.usertoken == "null")) ) {
-                // getFriendFreeTime ()       
+            if ( !((localStorage.usertoken) == null || (localStorage.usertoken == "null")) ) {     
                 afterClickTab(timeFrame)
-                // getPersonalInfo ()  
                 if ( (localStorage.allowedPush != "null") && (localStorage.allowedPush != 1) ) {
                     // not null and not 1
                     myApp.confirm("Allow Push Notification so that you know when you are matched?", "Timi ", function () {
@@ -1889,14 +2112,12 @@ var myApp = new Framework7({
                     }
                 }                
             }
+            // changeNavbarTitle("Explore", "<i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i>", "<i class=\"fa fa-user-plus\" onclick='inviteViaWechat()'></i>"); 
             setTimeout(function () {
                 
-            }, 300)
-            // $("#home-page-navbar-center").css("visibility", "visible") 
-
-            // getMySchedule()       
+            }, 300)      
         } else if (page.name == "personal-setting-page") {
-            $("#home-page-navbar-center").css("visibility", "hidden")  
+            $(".home-nav").css("visibility", "hidden")  
             // build fav food list
             var htmlString = "<ul>"
             favoriteFoodList.map(function (unit) {
@@ -1904,13 +2125,33 @@ var myApp = new Framework7({
                 return; 
             })
             document.getElementById("favorite-food").innerHTML = htmlString + "</ul>"
-            getPersonalInfo( function () {
-                updatePersonalPage()
-            })
+            updatePersonalPage()
+            // getPersonalInfo( function () {
+            //     updatePersonalPage()
+            // })
             
         } else if (page.name == "ask-calendar") {
             updateForm()
-        } 
+        } else if (page.name == "phone-number") {
+            // var pickerDevice = myApp.picker({
+            //     input: '#country-code-input',
+            //     cols: [
+            //         {
+            //             textAlign: 'center',
+                        
+            //             values: ['+1', '+86']
+            //         }
+            //     ], 
+            //     toolbarTemplate: '<div class="toolbar"> '+
+            //     '  <div class="toolbar-inner"> '+
+            //     '    <div class="left"></div> '+
+            //     '    <div class="right"> '+
+            //     '      <a href="#" class="link close-picker" style="color:#ec5298 !important">Done</a> '+
+            //     '    </div> '+
+            //     '  </div> '+
+            //     '</div> '
+            // });            
+        }
     }
 });
 function updatePersonalPage () {
@@ -1977,6 +2218,7 @@ var cSort = function(a, b) {
 
 
 function onDeviceReady () {
+    isCordova = true;
     if (localStorage.usertoken === undefined || localStorage.usertoken == null || localStorage.usertoken == '') {
         // not logged in 
         console.log("not logged in")
@@ -1987,49 +2229,51 @@ function onDeviceReady () {
     } else if (localStorage.checkedPhone == false) {
         // phone no good
         console.log("phone not good")
-        // mainView.router.loadPage({
-        //     "pageName": "phone-number", 
-        //     "reload" : true, 
-        //     "animatePages": true
-        // })             
-        setTimeout(function () {
-            popupTutorial ()
-        }, 200)               
+        getPersonalInfo(function () {
+
+        })             
     } else {
-        console.log("good")
-        mainView.router.loadPage({
-            "pageName": "home", 
-            "reload" : true, 
-            "animatePages": true
-        })
-        getMySchedule()
-        // getFriendFreeTime ()
-        getPersonalInfo ()
-        $("#explore-tab-button")[0].click()
-        $(currentTab())[0].click()
-        afterClickTab(timeFrame)
-        popupToAskContact ()
-        document.addEventListener("resume", appReturnedFromBackground, false);      
-        updateInvitationStatus ()   
+        initAfterLogin ()
+       
     } 
-    isCordova = true;
-
-
+}
+function initAfterLogin () {
+    mainView.router.loadPage({
+        "pageName": "home", 
+        "reload" : true, 
+        "animatePages": true
+    })
+    getMySchedule()
+    getPersonalInfo ()
+    $("#explore-tab-button")[0].click()
+    $(currentTab())[0].click()
+    afterClickTab(timeFrame)
+    popupToAskContact ()
+    document.addEventListener("resume", appReturnedFromBackground, false);      
+    updateInvitationStatus ()   
+    getPush ()    
 }
 
 function initPush () {
+    console.log(isCordova)
+    // myApp.alert("init push")
     push_notification = PushNotification.init({
         android: {
             senderID: "12345679"
         },
         ios: {
             alert: "true",
-            badge: true,
-            sound: "false",
-            clearBadge: true
+            badge: "true",
+            sound: "true",
         },
         windows: {}
     });
+    push_notification.setApplicationIconBadgeNumber(function() {
+        console.log('success clearBadge');
+    }, function() {
+        console.log('error clearBadge');
+    }, 0);    
+
     push_notification.on("registration", function(data) {
         device_token = data.registrationId;
         console.log("get token")
@@ -2083,6 +2327,7 @@ function initPush () {
 // 'range'=>$friend->range,
 // 'day'=>$_GET['request_day'],
 // 'time'=>$_GET['request_time'],       
+            // myApp.alert(data)
             mainView.router.loadPage({"pageName":"home"})     
             $("#explore-tab-button")[0].click();
             
@@ -2096,10 +2341,12 @@ function initPush () {
                 timeFrame = 2
                 $(".night-tab")[0].click()
             }             
+            // alert(JSON.stringify(data.additionalData))
+            // myApp.alert(data.additionalData.username)
             var unit = {
                 "avatar":data.additionalData.avatar,
                 "username":data.additionalData.username,
-                "phone":data.additionalData.phene
+                "phone":data.additionalData.phone
             }         
             console.log("matched2")
             // post confirmation box
@@ -2107,6 +2354,9 @@ function initPush () {
             // therefore occupied
             placeBusy (unit)
         } else if ( data.additionalData.type == "4" ) {
+            // alert(data.additionalData)
+            myApp.alert("It looks like "+data.additionalData.username+" can\'t make it:( But don\'t worry we will find you another one:) ")
+            // alertt
             getMySchedule(function () {
                 afterClickTab(data.additionalData.time)                        
             })            
@@ -2126,8 +2376,8 @@ function initPush () {
     });
     push_notification.on("error", function(e) {
         console.log("push error")
+        myApp.alert("Please go to Settings - Timi - and turn on Push Notification access! ")
     })    
-    updateNotificationId ()
 }
 
 function popupTutorial () {
@@ -2181,6 +2431,15 @@ function requestFriend(token, day, time, receiver, decision) {
         }
     });  
 }
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length; i; i -= 1) {
+        j = Math.floor(Math.random() * i);
+        x = a[i - 1];
+        a[i - 1] = a[j];
+        a[j] = x;
+    }
+}
 
 // Load friends' free time to @userList
 // Query the users' friends availability
@@ -2188,13 +2447,12 @@ function requestFriend(token, day, time, receiver, decision) {
 // update currentIndex or different columns
 // compare with my avil and update the front page
 
-function getFriendFreeTime (user_token) {
+function getFriendFreeTime (callback) {
     console.log(0)
-    user_token = user_token || localStorage.usertoken
     placePulse(); 
     console.log(1)
     console.log(queryDay)
-    var ajaxUrl = "http://gettimi.com/site/GetFriendsFreeSlots?user_token=" + user_token + "&day=" + queryDay
+    var ajaxUrl = "http://gettimi.com/site/GetFriendsFreeSlots?user_token=" + localStorage.usertoken + "&day=" + queryDay
     console.log(ajaxUrl)
     $.ajax({
         url: ajaxUrl,
@@ -2219,11 +2477,18 @@ function getFriendFreeTime (user_token) {
                 availFriend[1].length - 1,
                 availFriend[2].length - 1,                
             ]
-            getMySchedule(
-                function () {
-                    updateFrontPage (timeFrame)    
-            }); 
-
+            shuffle(availFriend[0])
+            shuffle(availFriend[1])
+            shuffle(availFriend[2])
+            if ( myAvail[timeFrame] == 1 ) {
+                updateFrontPage (timeFrame)    
+            } else {
+                placeBusy (myAvail[timeFrame])
+            }            
+            // getMySchedule(
+            //     function () {
+            //         updateFrontPage (timeFrame)    
+            // }); 
             
         }, 
         error: function (results) {
@@ -2260,7 +2525,7 @@ function getMySchedule (callbackFunction) {
             myAvail = JSON.parse(results.result)
             console.log(myAvail)
             if ( myAvail[timeFrame] == 1 ) {
-                if (callbackFunction) {
+                if (callbackFunction != null) {
                     callbackFunction()
                 }
             } else {
@@ -2373,8 +2638,7 @@ function afterClickTab (timeFrame) {
         } else {
             console.log("heyo2")
             // if avail && with more users, show it
-            getFriendFreeTime()          
-            // updateFrontPage (timeFrame)         
+            getFriendFreeTime()                
         }    
     }
 }
@@ -2456,8 +2720,6 @@ function login () {
     facebookConnectPlugin.login( ["email", "user_friends"],
         function (response) {
             console.log(response)
-            // getGeolocation ()
-            // localStorage.usertoken = response
             selfData.accessToken = response.authResponse.accessToken; 
             console.log("here1")
             setTimeout(function () {
@@ -2489,8 +2751,8 @@ function numberIsValid (number) {
 
 // Verify phone number
 function verifyPhone () {
-    var countryCode = document.getElementById("country-code").innerHTML
-    var phoneNumber = document.getElementById("phone-number-input").value
+    countryCode = document.getElementById("country-code-input").value.replace("+", "")
+    phoneNumber = document.getElementById("phone-number-input").value
 
     if (numberIsValid(phoneNumber)) {
         myApp.showIndicator()
@@ -2509,8 +2771,10 @@ function verifyPhone () {
                     document.getElementById("verification-code-input").focus()
                 }, 800)
                 console.log(results)
-                // alert("sent")
-                // myApp.alert("\u8bf7\u67e5\u6536\u60a8\u7684\u90ae\u4ef6")
+            }, 
+            error: function (err) {
+                myApp.hideIndicator()
+                myApp.alert("Phone number is invalid. Please try again? ");
             }
         });         
     }
@@ -2532,15 +2796,47 @@ function currentTab () {
 }
 
 function updatePreferencePrompt () {
+    
     setTimeout(function () {
-        if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null") {
-            myApp.confirm("Update your preference to let your friend know what you want? ", 
-                "Timi", 
-                function () {
-                    mainView.router.loadPage({"pageName": "personal-setting-page"}); 
-                })                            
+        if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
+            myApp.alert("Update your preference to let your friend know what you want ", function () {
+                mainView.router.loadPage({"pageName": "personal-setting-page"}); 
+            })                 
         }     
-    }, 1000)     
+    }, 600)     
+}
+function resendCode () {
+    countryCode = document.getElementById("country-code").innerHTML
+    phoneNumber = document.getElementById("phone-number-input").value
+
+    if (numberIsValid(phoneNumber)) {
+        myApp.showIndicator()
+        var ajaxUrl = "http://gettimi.com/site/InputPhone?user_token=" + 
+            localStorage.usertoken + "&number=" + countryCode + phoneNumber                        
+        console.log(ajaxUrl)
+        $.ajax({
+            url: ajaxUrl,
+            type: "GET",
+            dataType: "jsonp",
+            success: function(results) {
+                // alert(results)
+                myApp.hideIndicator()
+                // mainView.router.loadPage({"pageName":"verification-code"})
+                setTimeout(function () {
+                    document.getElementById("verification-code-input").focus()
+                }, 800)
+                console.log(results)
+                // alert("sent")
+                // myApp.alert("\u8bf7\u67e5\u6536\u60a8\u7684\u90ae\u4ef6")
+            }, 
+            error: function (err) {
+                myApp.hideIndicator()
+                myApp.alert("Oops something went wrong");
+            }
+        });         
+    } else {
+        myApp.alert("it's not a valid number. ")
+    }
 }
 
 // Input verification code
@@ -2557,12 +2853,14 @@ function verifyCode () {
             // first first time login
             myApp.hideIndicator()
             localStorage.checkedPhone = true; 
-            getPersonalInfo ()            
             mainView.router.loadPage({"pageName":"home"})
             $("#explore-tab-button")[0].click()
-            $(currentTab())[0].click(); 
+            $(currentTab())[0].click();              
+            getPersonalInfo ()  
 
-            popupToAskContact ()
+
+
+            // popupToAskContact ()
             document.getElementById("ask-calendar-back").style.display = "none"
             console.log(results)                
         }, 
@@ -2598,19 +2896,30 @@ function getFriendsAndPersonalData () {
                     // localStorage 
                     console.log(JSON.stringify(results))
                     localStorage.usertoken = results["user_token"]
-                    console.log("phone length: "+results["phone"].length)
-                    if (!results["phone"].length) {
+                    // console.log("phone length: "+results["phone"].length)
+                    if (results["phone"] == false || results["phone"] == undefined || results["phone"] == null || results["phone"].length == 0) {
+                        localStorage.checkedPhone = 0
+                        console.log("no phone")
                         // not verified verified users
+
+
+                        // required, if not, calendar won't be initialized
                         submitCalendar ()
+                        // required, if not, the phone can't be filled in
                         myApp.closeModal(".popup-intro")   
+
+                        // go to phone number page                    
                         mainView.router.loadPage({"pageName":"phone-number"})
-                        myApp.formFromJSON("#my-form", {
-                            'name': selfData.name, 
-                            'email': selfData.email, 
-                            'phone' : ""
-                        })
+
+                        // fill in the name and email, focus on phone number
                         setTimeout(function () {
+                            myApp.formFromJSON("#my-form", {
+                                'name': selfData.name, 
+                                'email': selfData.email, 
+                                'phone' : ""
+                            })                            
                             document.getElementById("phone-number-input").focus()
+
                         }, 800);                             
 
                     } else {
@@ -2618,19 +2927,21 @@ function getFriendsAndPersonalData () {
                         //   phone verified users logged in
                         console.log("Phone verified users logged in")
                         //  recurring user
-                        localStorage.checkedPhone = true; 
+                        // localStorage.checkedPhone = true; 
                         
+
+                        // go home first
                         mainView.router.loadPage({
                             "pageName":"home"
                         })          
                         myApp.closeModal(".popup-intro")   
-                        // $(".statusbar-overlay").css("background", "#ec5298")
                         setTimeout(function () {
                             $("#explore-tab-button")[0].click()
                             $(currentTab())[0].click()
                         }, 400) 
+
+                        // check personal info
                         getPersonalInfo( function () {
-                            // document.getElementById("profile-pic").src= 
                             updatePersonalPage()
                         })
 
@@ -2638,7 +2949,7 @@ function getFriendsAndPersonalData () {
 
                         popupToAskContact ()
                         getGeolocation ()
-                        updatePreferencePrompt ()
+                        // updatePreferencePrompt ()
     
 
           

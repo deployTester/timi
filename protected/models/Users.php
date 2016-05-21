@@ -89,6 +89,31 @@ class Users extends CActiveRecord
 	}
 
 
+	// Save fb's profile picture to local.
+	public function saveFacebookProfilePicture(){
+
+		$url = $this->avatar;
+
+		if (strpos($url, 'facebook') !== false) {
+
+			$fbprofileimage = file_get_contents($url); 
+
+			$filename = "avatar" . time() . rand(1, 999) . ".jpg";
+			$new_image_name = $filename; //strtolower($_FILES['file']['name']);
+			$fileSavePath = "uploads/avatar/" . $this->id . "/";
+			if (!file_exists($fileSavePath)) {
+				mkdir($fileSavePath, 0777, true);
+			}
+			file_put_contents('/var/www/html/webapp/'.$fileSavePath.$new_image_name, $fbprofileimage);
+			$this->avatar = Yii::app()->params['globalURL']."/".$fileSavePath.$new_image_name;
+			$this->save();
+
+		}else{
+			return false;
+		}
+
+	}
+
 
 	/**
 	* This function updates the friend list of a user - INPUT array of facebook IDs
@@ -160,6 +185,49 @@ class Users extends CActiveRecord
 
 
 
+
+	//return mutual friend list (ids) of 2 users: user_id and friend_id
+	public function getMutualFriends($user_id, $friend_id){
+
+		$count_user = Friends::model()->count('sender = :uid OR receiver = :uid', array(":uid"=>$user_id));
+		$count_friend = Friends::model()->count('sender = :uid OR receiver = :uid', array(":uid"=>$friend_id));
+		if($count_user > $count_friend){	//swipe for user, we only loop for the one with fewer friends.
+			$tmp = $user_id;
+			$user_id = $friend_id;
+			$friend_id = $tmp;
+		}
+
+		$friends = Friends::model()->findAll('sender = :uid OR receiver = :uid', array(":uid"=>$user_id));
+		$mutual = array();
+		foreach($friends as $friend){
+			if($friend->sender == $user_id){
+				$other = $friend->receiver;
+			}else{
+				$other = $friend->sender;
+			}
+			$mut = Friends::model()->find('(sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid)', array(":uid"=>$other, ":fid"=>$friend_id));
+			if($mut){
+				if($mut->sender == $other){
+					$refer = $mut->sender;
+				}else{
+					$refer = $mut->receiver;
+				}
+				if (!in_array($refer, $mutual)) {	//check duplicates
+					$referObj = Users::model()->findByPk($refer);
+					$mutual[$refer] = array(
+						"username"=>$referObj->username,
+						"avatar"=>$referObj->avatar
+					);
+					array_push($mutual, $refer);
+				}
+			}
+		}
+
+		return $mutual;
+	}
+
+
+
 	public function sendiOSNotification($data){	//pass in ['title'], ['user_id'], ['type']
 		$notifs = DeviceToken::model()->findAllByAttributes(array("user_id"=>$data['user_id'], "device"=>"iOS"));
 		foreach($notifs as $notif){
@@ -178,6 +246,27 @@ class Users extends CActiveRecord
 			}
 		}
 	}
+
+
+	public function sendAndroidNotification($data){	//pass in ['title'], ['user_id'], ['type']
+		$notifs = DeviceToken::model()->findAllByAttributes(array("user_id"=>$data['user_id'], "device"=>"Android"));
+		foreach($notifs as $notif){
+			if ($notif && $notif->token) {
+				$data["token"] = $notif->token;
+				$data["unread"] = 1;	//1 for now
+			 	$url = Yii::app()->params['globalURL'].'/simplepush/androidpush.php?'.http_build_query($data);
+				$ch  = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //this prevent printing the 200json code
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1); //timeout 1s
+				curl_setopt($ch, CURLOPT_TIMEOUT, 1); //timeout 1s
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				$result = curl_exec($ch);
+				curl_close($ch);
+			}
+		}
+	}
+
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
