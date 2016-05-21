@@ -4,14 +4,6 @@ class CrontabController extends Controller
 {
 
 
-	public function actionLoop(){
-		$users = Users::model()->findAll();
-		foreach($users as $user){
-			$user->saveFacebookProfilePicture();
-			echo $user->avatar." ";
-		}
-	}
-
 	public function actionDailyPush(){
 
         //prevent anyone else from using our cron
@@ -68,49 +60,49 @@ class CrontabController extends Controller
 		$jd_day = cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
 		$day = (jddayofweek($jd_day,0));
 		if($day == 0){
-			$request = Requests::model()->findAll('(request_day = 3 OR request_day = 4 OR request_day = 5) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 2 OR request_day = 3 OR request_day = 4 OR request_day = 5) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 1){
-			$request = Requests::model()->findAll('(request_day = 4 OR request_day = 5 OR request_day = 6) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 3 OR request_day = 4 OR request_day = 5 OR request_day = 6) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 2){
-			$request = Requests::model()->findAll('(request_day = 5 OR request_day = 6 OR request_day = 0) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 4 OR request_day = 5 OR request_day = 6 OR request_day = 0) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 3){
-			$request = Requests::model()->findAll('(request_day = 6 OR request_day = 0) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 6 OR request_day = 0 OR request_day = 1) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 4){
-			$request = Requests::model()->findAll('(request_day = 0 OR request_day = 1) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 0 OR request_day = 1 OR request_day = 6) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 5){
-			$request = Requests::model()->findAll('(request_day = 0 OR request_day = 1 OR request_day = 2) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 0 OR request_day = 1 OR request_day = 2 OR request_day = 3) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 6){
-			$request = Requests::model()->findAll('(request_day = 1 OR request_day = 2 OR request_day = 3) AND trash = 0');	
+			$request = Requests::model()->findAll('(request_day = 1 OR request_day = 2 OR request_day = 3 OR request_day = 4) AND trash = 0');	
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);

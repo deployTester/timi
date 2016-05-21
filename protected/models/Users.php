@@ -214,11 +214,12 @@ class Users extends CActiveRecord
 				}
 				if (!in_array($refer, $mutual)) {	//check duplicates
 					$referObj = Users::model()->findByPk($refer);
-					$mutual[$refer] = array(
-						"username"=>$referObj->username,
-						"avatar"=>$referObj->avatar
-					);
-					array_push($mutual, $refer);
+					if($refer != $user_id && $refer != $friend_id){
+						$mutual[$refer] = array(
+							"username"=>$referObj->username,
+							"avatar"=>$referObj->avatar
+						);
+					}
 				}
 			}
 		}

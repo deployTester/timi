@@ -39,7 +39,7 @@ for (var i = 0 ; i < 7; i++) {
 }
 // localStorage.usertoken = "cf40d87a845c66efbbe3a73205de5029"
 var push_notification = null;
-var favoriteFoodList = ["Pizza", "Tex-Mex", "Ramen", "Sushi", "French", "American", "Coffee", "Burger", "Chinese/Spicy", "Chinese", "Indian", "Sandwich", "Pasta", "Italian", "Thai", "Southeast Asian", "Dim Sum", "Mediterranean", "Korean"].sort(cSort)
+var favoriteFoodList = ["Pizza", "Mexican", "French", "American", "Coffee", "Burger", "Ramen", "Sushi", "Chinese", "Korean", "Indian", "Sandwich", "Pasta", "Italian", "Thai", "Southeast Asian", "Dim Sum", "Mediterranean"].sort(cSort)
 var currentIndex = [ null, null, null]; 
 var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 var d = new Date()
@@ -1620,26 +1620,63 @@ function generateTopN (array) {
     return total; 
 }
 
-var indexList; 
 
 function placeTinderSwipe () {
 
-            document.getElementById("tinderslide").innerHTML = ""
-            var tinderListHTML = "<div id='tinder-contain'><ul id='tinder-list-ul'></ul></div>"
+            document.getElementById("tinderslide").innerHTML = "";
+            var tinderListHTML = "<div id='tinder-contain'><ul id='tinder-list-ul'></ul></div>";
             document.getElementById("tinderslide").innerHTML = tinderListHTML;
-            insertNewCard()
+            insertNewCard();
 }
 
 
 function insertNewCard () {
 
-            var item = availFriend[timeFrame][currentIndex[timeFrame]]
+            var item = availFriend[timeFrame][currentIndex[timeFrame]];
+
+            //item.check_friendship = true or false -> check direct friendship
+            var mutual_friends_count =  Object.keys(item.mutual).length;
+            var mutual_friends = item.mutual;
+            mutual_friends_string = "";
+
+            //if you guys are already friends.
+            //if(item.check_friendship){
+            //    mutual_friends_string = "You and "+item.username+" are friends. You guys have the following mutual friends: ";
+            //}else{
+            //    mutual_friends_string = "You and "+item.username+" are not friends yet. You have the following mutual friends: ";
+            //}
+            console.log(mutual_friends_count + " mutual friends");
+
+            //loop thru mutual friends
+            var j = 0;
+
+            $.each(item.mutual, function( i, val ) {
+                 //if more than 4, we get the first 4.
+                if(j <= 4){
+                    j++;
+                    mutual_friends_string += val.username+", ";
+                }
+            });
+            //remove the space and , at the end.
+            mutual_friends_string = mutual_friends_string.slice(0, -2);
+
+            var remind_friends = mutual_friends_count - j;
+
+            if(remind_friends == 0){
+                mutual_friends_string += ".";
+            }else if(remind_friends == 1){
+                mutual_friends_string += " and 1 other.";
+            }else{
+                mutual_friends_string += " and " + remind_friends + " others.";
+            }
+
+            mutual_friend_holder = mutual_friends_count + " mutual <i class='fa fa-users' aria-hidden='true'></i>";
 
             var newCardHtml = 
                 '      <li class="new_card"> ' + 
                 '            <div class="card demo-card-header-pic" > ' + 
                 '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
-                '              <div style="" class="card-header no-border">' + item.username + '<div class="report-user color-gray" onclick="reportUser()"><i class="fa fa-ellipsis-h"></i></div></div> ' + 
+                '              <div style="" class="card-header no-border">' + item.username + '<div class="color-gray"><a href="#" class="mutual-friends-click color-gray" rel="'+mutual_friends_string+'">'+ mutual_friend_holder +'</a></div></div> ' + 
                 '              <div class="card-content"> ' + 
                 '                <div class="card-content-inner"> ' + 
                 // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
@@ -1655,16 +1692,17 @@ function insertNewCard () {
                 '            </div>    ' +
                 '            <div class="like" ></div> ' + 
                 '            <div class="dislike" onclick="$(\"#tinderslide\").jTinder(\'dislike\');"></div> ' + 
-                '          </li>'
-                // length--;
-                 
+                '          </li>';
+
             document.getElementById("tinder-list-ul").innerHTML += newCardHtml;
 
             initTinderSwipe ("#tinder-contain"); 
 
+
+            //use time out to make sure the previous step (initTinderSwipe) has finished executing - not ideal.
             setTimeout(function(){ 
-                $(".new_card").show()
-                $(".new_card").removeClass('new_card')
+                $(".new_card").show();
+                $(".new_card").removeClass('new_card');
             }, 100);
 }
 
@@ -2648,6 +2686,19 @@ $$(".lunch-tab").on("click", function (e) {
     afterClickTab (timeFrame)
 })
 
+$$('.mutual-friends-click').on('click', function () {
+    console.log('clicked');
+    var clickedLink = this;
+    actual_string = this.attr('ref');
+    var popoverHTML = '<div class="popover">'+
+                                  '<div class="popover-inner">'+
+                                    '<div class="content-block">'+
+                                      '<p>'+actual_string+'</p>'+
+                                    '</div>'+
+                                  '</div>'+
+                                '</div>'
+    myApp.popover(popoverHTML, clickedLink);
+});
 
 $$(".dinner-tab").on("click", function (e) {
     timeFrame = 1

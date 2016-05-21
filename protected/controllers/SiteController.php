@@ -606,16 +606,14 @@ class SiteController extends Controller
 				$friendLocation = explode(",", $friendObj->geolocation);
 			}
 
-			if(!$friendObj->phone){
-				continue;
-			}
-
 			if(isset($userLocation[0]) && isset($userLocation[1]) && isset($friendLocation[0]) && isset($friendLocation[1])){
 				//$lat1, $lon1, $lat2, $lon2, $unit, return in miles, "K" return in Kilometers.
 				$distance = $this->getDistance($userLocation[0], $userLocation[1], $friendLocation[0], $friendLocation[1], "M");
 				if($distance > $range){
 					continue;		//have to ignore this long distance friend :(
 				}
+			}else{
+				continue;		//no location.
 			}
 
 			if(!isset($final[$friend])){

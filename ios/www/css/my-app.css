@@ -390,8 +390,9 @@ img.navbar-chatting-avatar {
     z-index: 30000;
     position: relative;
 }
-
-
+.mutual-friends-click{
+    font-size:12px;
+}
 .item-input input {
     width: 100%;
 }
