@@ -135,7 +135,7 @@ a.link {
 
 .card {
     /*margin: 24px;*/
-    border-radius: 12px;
+    border-radius: 6px;
     margin: 0px;
 }
 .card-pic {
@@ -144,8 +144,8 @@ a.link {
     width: 370px; 
     height: 370px;
     /*margin: 20px; */
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
 .content-block {
@@ -392,6 +392,8 @@ img.navbar-chatting-avatar {
 }
 .mutual-friends-click{
     font-size:12px;
+    text-decoration:none;
+    color:;
 }
 .item-input input {
     width: 100%;
@@ -565,11 +567,11 @@ input#country-code-input {
 }
 a.link.button.col-50.color-pink {
     border-radius: 0px;
-    border-bottom-right-radius: 12px;
+    border-bottom-right-radius: 6px;
 }
 a.link.button.col-50.color-gray {
     border-radius: 0px;
-    border-bottom-left-radius: 12px;
+    border-bottom-left-radius: 6px;
 }
 #explore-tab .card-footer, .card-header {
     min-height: 22px;
@@ -945,6 +947,13 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
     padding: 0px 15px;
     text-align: center;
     margin-bottom: 12px;
+}
+.popover{
+    width: 230px;
+}
+.popover-inner{
+    padding-left:15px;
+    padding-right:15px;
 }
 
 a {

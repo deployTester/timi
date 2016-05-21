@@ -1676,7 +1676,7 @@ function insertNewCard () {
                 '      <li class="new_card"> ' + 
                 '            <div class="card demo-card-header-pic" > ' + 
                 '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
-                '              <div style="" class="card-header no-border">' + item.username + '<div class="color-gray"><a href="#" class="mutual-friends-click color-gray" rel="'+mutual_friends_string+'">'+ mutual_friend_holder +'</a></div></div> ' + 
+                '              <div style="" class="card-header no-border">' + item.username + '<div class="color-gray"><a href="#" class="mutual-friends-click color-gray" onclick="showMutualFriends(mutual_friends_string)">'+ mutual_friend_holder +'</a></div></div> ' + 
                 '              <div class="card-content"> ' + 
                 '                <div class="card-content-inner"> ' + 
                 // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
@@ -1696,14 +1696,29 @@ function insertNewCard () {
 
             document.getElementById("tinder-list-ul").innerHTML += newCardHtml;
 
+
+
             initTinderSwipe ("#tinder-contain"); 
 
 
             //use time out to make sure the previous step (initTinderSwipe) has finished executing - not ideal.
             setTimeout(function(){ 
                 $(".new_card").show();
-                $(".new_card").removeClass('new_card');
+                $(".new_card").removeClass('new_card');                
             }, 100);
+}
+
+function showMutualFriends (actual_string) {
+    console.log('clicked');
+    var clickedLink = $('.mutual-friends-click');
+    var popoverHTML = '<div class="popover">'+
+                                  '<div class="popover-inner">'+
+                                    '<div class="content-block">'+
+                                      '<p>'+actual_string+'</p>'+
+                                    '</div>'+
+                                  '</div>'+
+                                '</div>'
+    myApp.popover(popoverHTML, clickedLink);    
 }
 
 
@@ -2686,19 +2701,7 @@ $$(".lunch-tab").on("click", function (e) {
     afterClickTab (timeFrame)
 })
 
-$$('.mutual-friends-click').on('click', function () {
-    console.log('clicked');
-    var clickedLink = this;
-    actual_string = this.attr('ref');
-    var popoverHTML = '<div class="popover">'+
-                                  '<div class="popover-inner">'+
-                                    '<div class="content-block">'+
-                                      '<p>'+actual_string+'</p>'+
-                                    '</div>'+
-                                  '</div>'+
-                                '</div>'
-    myApp.popover(popoverHTML, clickedLink);
-});
+
 
 $$(".dinner-tab").on("click", function (e) {
     timeFrame = 1
