@@ -8569,3 +8569,1081 @@ Stack trace:
 REQUEST_URI=/ios/www/img/timi.png
 HTTP_REFERER=http://gettimi.com/ios/www/index.html
 ---
+2016/05/21 23:43:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp1.piwo.pila.pl/testproxy.php
+---
+2016/05/22 00:59:55 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery1111029665722302161157_1463878769398&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAOrbgEDmsv23wUDc5oDGUiMt24rDqX2wL7ZAPuWAPZA7CPbFWG2aHE2P8PQOM0vhLxVqUcZAgNucZCqZBltQxYuWgtv1S5t79jeYqKSUQ7WmFuVRKWNZABQfZBW4ni83u4BNeLnxEDcPbl7OTZBUeivRjEKzm2moR4StAUxjYCqJ%22%2C%22userId%22%3A%22258117247876121%22%2C%22name%22%3A%22Ziqiu+Guo%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A851%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Bailey+Xiong%22%2C%22id%22%3A%2210206239681729248%22%7D%2C%7B%22name%22%3A%22Chucheng+Feng%22%2C%22id%22%3A%2210209952382274525%22%7D%2C%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Liu+Cong%22%2C%22id%22%3A%221010248882362402%22%7D%2C%7B%22name%22%3A%22Catherine+Y.+Zhai%22%2C%22id%22%3A%221034055036675166%22%7D%2C%7B%22name%22%3A%22Salinda+Sa+Wang%22%2C%22id%22%3A%221023752431041690%22%7D%2C%7B%22name%22%3A%22Derek+Guoshu+Li%22%2C%22id%22%3A%22959888547443076%22%7D%2C%7B%22name%22%3A%22Kelly+Siyao+Liu%22%2C%22id%22%3A%22854690064635920%22%7D%5D%2C%22paging%22%3A%7B%22cursors%22%3A%7B%22after%22%3A%22QVFIUkRmYXVESWc2TGg4ay12OVdWVjRTUnlTWDJwelhmQ0xGN0lxMUtmLVBDOWdtT2l1QTFNWFpBTHY5NzNaZAlQwX0l6bTJwcDRzMzI5c2Y1ZAC1OVDVlWWp3%22%2C%22before%22%3A%22QVFIUmhWbkI1eGFoSFJoeS1mTGNFYVpfWVAwaWhWb3UwNWVSa09EMDZAnNktpMVlsWEVoQjZACZA1QwUm1sNkR5WlNEZAnAZD%22%7D%7D%7D%7D&_=1463878769399
+2016/05/22 01:00:08 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery1111029665722302161157_1463878769400&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBANCPQb0FBiLfviXe6mW9zdmiPUNObBpEILqdpHZAjFp0RcuDMXvrfjR64xf6jGZBO0rFcNaDHPUCTVRCtR1a9KBCaZA5gLvwkYOkRzFDy7nK13uGwfNQRn3zHQqWsZC9Q02AWFVcYZB3CKM1Cl53SdoJWYtZAHsVyGDXUroSCvJI1BvWwM01hXZC6DmltBO2wggm1IOBoo6%22%2C%22userId%22%3A%22258117247876121%22%2C%22name%22%3A%22Ziqiu+Guo%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A851%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Bailey+Xiong%22%2C%22id%22%3A%2210206239681729248%22%7D%2C%7B%22name%22%3A%22Chucheng+Feng%22%2C%22id%22%3A%2210209952382274525%22%7D%2C%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Liu+Cong%22%2C%22id%22%3A%221010248882362402%22%7D%2C%7B%22name%22%3A%22Catherine+Y.+Zhai%22%2C%22id%22%3A%221034055036675166%22%7D%2C%7B%22name%22%3A%22Salinda+Sa+Wang%22%2C%22id%22%3A%221023752431041690%22%7D%2C%7B%22name%22%3A%22Derek+Guoshu+Li%22%2C%22id%22%3A%22959888547443076%22%7D%2C%7B%22name%22%3A%22Kelly+Siyao+Liu%22%2C%22id%22%3A%22854690064635920%22%7D%5D%2C%22paging%22%3A%7B%22cursors%22%3A%7B%22after%22%3A%22QVFIUnBlWG8wNllEZAnpEVERMZAk1sQ3hTaXhwZAk1oSzIwemVXQkplZA2tsYlZAEeWhqYjUta2ZASdEItM204NGJNWGNxTjNmdUNRdHZAlMUxvS3NTVmRTeGZATUUNR%22%2C%22before%22%3A%22QVFIUjMzdW5CRlhCYWJwbGdvX3c2ZAnVBTkxsckQ0M0o1eWZApU0VlY0ZAjTERnVDA3Q1RWaVA4Sk92TFg2TTRxV2ZAsQTgZD%22%7D%7D%7D%7D&_=1463878769401
+2016/05/22 01:00:24 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery1111029665722302161157_1463878769402&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAIX5WRigP6R827FIUQZCo8CoefFFdH5zF1HgrjgKd66wfQqc5N9CZBVd8ePCAOw9LjvlK0dteE20Di3YpfPTYUJ9sw3Rnayy5jtun2Yf0zGGQatZBwbKUBBoG59T67Nbkx6zNkyRBkeIY0ljD4g2syiZC3nZCPOhSg1X5fN3Ohp1P6EqXI3tZA1dIZCZByFWXgnfNE4xMbVl%22%2C%22userId%22%3A%22258117247876121%22%2C%22name%22%3A%22Ziqiu+Guo%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A851%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Bailey+Xiong%22%2C%22id%22%3A%2210206239681729248%22%7D%2C%7B%22name%22%3A%22Chucheng+Feng%22%2C%22id%22%3A%2210209952382274525%22%7D%2C%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Liu+Cong%22%2C%22id%22%3A%221010248882362402%22%7D%2C%7B%22name%22%3A%22Catherine+Y.+Zhai%22%2C%22id%22%3A%221034055036675166%22%7D%2C%7B%22name%22%3A%22Salinda+Sa+Wang%22%2C%22id%22%3A%221023752431041690%22%7D%2C%7B%22name%22%3A%22Derek+Guoshu+Li%22%2C%22id%22%3A%22959888547443076%22%7D%2C%7B%22name%22%3A%22Kelly+Siyao+Liu%22%2C%22id%22%3A%22854690064635920%22%7D%5D%2C%22paging%22%3A%7B%22cursors%22%3A%7B%22after%22%3A%22QVFIUm5iQjlrRUpOUGlJUVQ5cGJRWWtSTlFPMW53UUxPV1RhekVybDdiUGdJTi0yR1pKOFZATSWlHRWsyZA2RrWjd2VGQ1MC1sdFpkZAUdiVERvNkRxX2tFZAkpR%22%2C%22before%22%3A%22QVFIUmF1ZAUthNjdfdUFLMkV0YWtFRDFVbV8ySmdZAaThHWGNVLVJvU2UteTVOMTlSaC1NSXotTWhJbjlHa2cxU3QtTk0ZD%22%7D%7D%7D%7D&_=1463878769403
+2016/05/22 01:00:50 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery111107534501117188483_1463878838336&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAHCLBmKXpF7UEW04X9qyZCSk7muoPXbDzryfWcodBn7smqH4QLNbZCE7IhZCEQRRsMm9NbLGMulpmusERt53XSeLjL2hHSOnMf3aVSSxSBERWKnp4mhwwbSinXUSvzDjpZBGLUBwiDVnBNMHxw77vbZBelyoZBn2o1kkZCcRaZCWxuokkfwRymbiZAz3an00tjYvXIgVZBul4r%22%2C%22userId%22%3A%22258117247876121%22%2C%22name%22%3A%22Ziqiu+Guo%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A851%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Bailey+Xiong%22%2C%22id%22%3A%2210206239681729248%22%7D%2C%7B%22name%22%3A%22Chucheng+Feng%22%2C%22id%22%3A%2210209952382274525%22%7D%2C%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Liu+Cong%22%2C%22id%22%3A%221010248882362402%22%7D%2C%7B%22name%22%3A%22Catherine+Y.+Zhai%22%2C%22id%22%3A%221034055036675166%22%7D%2C%7B%22name%22%3A%22Salinda+Sa+Wang%22%2C%22id%22%3A%221023752431041690%22%7D%2C%7B%22name%22%3A%22Derek+Guoshu+Li%22%2C%22id%22%3A%22959888547443076%22%7D%2C%7B%22name%22%3A%22Kelly+Siyao+Liu%22%2C%22id%22%3A%22854690064635920%22%7D%5D%2C%22paging%22%3A%7B%22cursors%22%3A%7B%22after%22%3A%22QVFIUmlnSEltbmQzeS1rbnNrdWNEekw2elUwRmNyMm5ybkVWSGFMTzJTako3V21HelVZAQUtCaFhQT0s2SkVXdFNVZA1JLbE92cnk3UXpNZAUJWRVRiTy1fblBB%22%2C%22before%22%3A%22QVFIUkxEMkRuYUo4b2R1YWlPczMxWThvd1p4dFI0TnRMV2ZALNFNOd2FsUFpXck1reW1nVVJ4MVpwVXViaWRLbkE3U1kZD%22%7D%7D%7D%7D&_=1463878838337
+2016/05/22 01:01:04 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery111107534501117188483_1463878838338&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAD9gTcgYBAu1PbfE9IE0tjAW44StFEY6WGZC4FI2GDtWZC0J1GiZBG3azVW692duKH0T7gxDWHi8Td3libT5pZBAdyQcpZAAUJXvM3yMaa7PHS89zqFDro2bnJqteSnZAtZAl3nZCmymyS7EqTdsS0AaFCZB5mjYpPJY4x8mNbQ5e8vvZB894P3nmxzvff7UOEi9e4mgpRttQW%22%2C%22userId%22%3A%22258117247876121%22%2C%22name%22%3A%22Ziqiu+Guo%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A851%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Bailey+Xiong%22%2C%22id%22%3A%2210206239681729248%22%7D%2C%7B%22name%22%3A%22Chucheng+Feng%22%2C%22id%22%3A%2210209952382274525%22%7D%2C%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Liu+Cong%22%2C%22id%22%3A%221010248882362402%22%7D%2C%7B%22name%22%3A%22Catherine+Y.+Zhai%22%2C%22id%22%3A%221034055036675166%22%7D%2C%7B%22name%22%3A%22Salinda+Sa+Wang%22%2C%22id%22%3A%221023752431041690%22%7D%2C%7B%22name%22%3A%22Derek+Guoshu+Li%22%2C%22id%22%3A%22959888547443076%22%7D%2C%7B%22name%22%3A%22Kelly+Siyao+Liu%22%2C%22id%22%3A%22854690064635920%22%7D%5D%2C%22paging%22%3A%7B%22cursors%22%3A%7B%22after%22%3A%22QVFIUngtanRBTVZAGOE84RWZAXSUhYdW5ScC00dzNBaEVMQmd2cWVtSHZAMVEs3SWpDV2pjLWNQV0RNN1l5S1ZAWQUxkbWhUTm9GUTVMYjdIWTE2NEZATYWlMVmhR%22%2C%22before%22%3A%22QVFIUnc1S0hCQXotYXhIemFVdGxFTXhLa1BRb3FxZA1ktS1ZAkd1RZAZAnlfZAjhoNUdVY2txZA0VxMENqTUZAPX2Y0ZADRmcjAZD%22%7D%7D%7D%7D&_=1463878838339
+2016/05/22 01:02:49 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery1111015097019262611866_1463878957830&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAAlprVnl44avyyUb4kmRG3hnqRxiapO5b30AmfEKpSuTcRmniaUhgKFD3PueX7eayKQP0SZC4ZA5fx4YoBwAzQfUs6nbLo1x5mbs3YJn8hMoaiRWekh9Kws1MDZARmbobQZBZCQfaBtKYvgB0OtUqeCGwgZAVSFXcIerpkvIsWorXqhEQ5555MRFZA46FZChTnNHxdE2cQnT%22%2C%22userId%22%3A%22258117247876121%22%2C%22name%22%3A%22Ziqiu+Guo%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A851%7D%2C%22data%22%3A%5B%7B%22name%22%3A%22Bailey+Xiong%22%2C%22id%22%3A%2210206239681729248%22%7D%2C%7B%22name%22%3A%22Chucheng+Feng%22%2C%22id%22%3A%2210209952382274525%22%7D%2C%7B%22name%22%3A%22Jiaming+Zhong%22%2C%22id%22%3A%221155566484477457%22%7D%2C%7B%22name%22%3A%22Liu+Cong%22%2C%22id%22%3A%221010248882362402%22%7D%2C%7B%22name%22%3A%22Catherine+Y.+Zhai%22%2C%22id%22%3A%221034055036675166%22%7D%2C%7B%22name%22%3A%22Salinda+Sa+Wang%22%2C%22id%22%3A%221023752431041690%22%7D%2C%7B%22name%22%3A%22Derek+Guoshu+Li%22%2C%22id%22%3A%22959888547443076%22%7D%2C%7B%22name%22%3A%22Kelly+Siyao+Liu%22%2C%22id%22%3A%22854690064635920%22%7D%5D%2C%22paging%22%3A%7B%22cursors%22%3A%7B%22after%22%3A%22QVFIUnJUTThVWWZAzV0szNEp2RnVwMGhtd3Utd3hYeUxYLTlqeUdfc2RGV0lmcjdLWDZAGb3ppWlV4OEw0R3V2MjkzemsxSEMxM3ZApckpVb1pHZAFNRMGthUDRB%22%2C%22before%22%3A%22QVFIUmxRbXFvZAFhrVWxCaWRMT0pJLUpHamE4dE4wV0tyR25ibjVvV3pMS3NiM2p2ZA3d2RkNLX3ZAlNGRSNUZA3dXBvV0UZD%22%7D%7D%7D%7D&_=1463878957831
+2016/05/22 06:43:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "testproxy.php".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('testproxy.php')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=http://testp3.pospr.waw.pl/testproxy.php
+---
+2016/05/22 14:27:50 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery111108320646206848323_1463927245377&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAMS4hgqemvZAkfBDXTxCudNjY2SpvnrUQJlM1FlZCzODqu8G60zJQazTnEZCzrJiV3q9dZCMCzxNkDATiF5KZA1a6wf7ZBmZBiJ5ZCLzg6hVZACwOeppaZAPEkZCUW0Asjgv1ZBz0ArUZChvZAc6HaZBtG14ZAQRaMcuqD6HgZBSwqWht1MuG%22%2C%22userId%22%3A%22208600802866275%22%2C%22name%22%3A%22Dondi+DobanSa%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1271%7D%2C%22data%22%3A%5B%5D%7D%7D&_=1463927245378
+2016/05/22 14:27:57 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery111108320646206848323_1463927245379&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAAvAnecy5DmwOhU7uyLcnskFFr3LeYm4SZAj8ji7yZAXu6ZCAPSykekfFd0Bp3cEz4YVZA7ZC4ozUUnL5vBV0QzEIZB6L8LXlSKefipKEMr1AQGOPyMqcxtRPAr6VVr5oetW3LwN99ywlsV2O4nfyDEihnjTnN4mNqZBek3cd5I6UJOZAdP0fKsHxwiRLzvQBaLsa0DRN0Ak%22%2C%22userId%22%3A%22208600802866275%22%2C%22name%22%3A%22Dondi+DobanSa%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1271%7D%2C%22data%22%3A%5B%5D%7D%7D&_=1463927245380
+2016/05/22 14:58:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 14:58:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:03:54 [error] [php] Undefined index: email (/var/www/html/webapp/protected/controllers/SiteController.php:149)
+Stack trace:
+#0 /var/www/html/yii/framework/web/CController.php(286): SiteController->runAction()
+#1 /var/www/html/yii/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /var/www/html/yii/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#5 /var/www/html/webapp/index.php(13): CWebApplication->run()
+REQUEST_URI=/site/facebookLogin?callback=jQuery111108320646206848323_1463927245381&selfData=%7B%22accessToken%22%3A%22EAAYDK8HZAzicBAFnrA87I0TS5qZC4pe0nlLBXsJZCZAsr5iPurJKiEZB6R66RlTbzVFvEIwhAZAqAPFAsGHWLZA3OmlGuEyViWjbOImA92EtxBlb7M8NbBzQDZBEGqwcKbbSHgus6iXTy3UZCVeqgwgmnSLnxVlrDPv37gBZBwbKvIpk8e8HzxxobKMA2NRv3zeu5RBPqnSko7XePRYOggZCuio%22%2C%22userId%22%3A%22208600802866275%22%2C%22name%22%3A%22Dondi+DobanSa%22%2C%22friends%22%3A%7B%22summary%22%3A%7B%22total_count%22%3A1272%7D%2C%22data%22%3A%5B%5D%7D%7D&_=1463927245382
+2016/05/22 15:11:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:11:40 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:12:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:13:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:13:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:13:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:13:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:13:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:13:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:13:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:14:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:14:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:14:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:14:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:14:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:14:25 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:19:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:24:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:24:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:24:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:24:57 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:24:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:24:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:24:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:25:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:25:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:09 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:29:13 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:43 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:30:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:18 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:31:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:32:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/js/facebookConnectPlugin.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/js/face...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/js/facebookConnectPlugin.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/cordova.js".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/cordova...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/cordova.js
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-1.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-1.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-4.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-4.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-2.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-2.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/screenshot/5.5-inch-3.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/scr...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/screenshot/5.5-inch-3.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:34:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:37:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:37:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:37:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---
+2016/05/22 15:37:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ios/www/img/timi.png".' in /var/www/html/yii/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /var/www/html/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('ios/www/img/tim...')
+#1 /var/www/html/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#2 /var/www/html/webapp/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ios/www/img/timi.png
+HTTP_REFERER=http://gettimi.com/ios/www/index.html
+---

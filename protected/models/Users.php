@@ -39,12 +39,13 @@ class Users extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('social_id, user_token, create_time, username', 'required'),
+			array('social_id', 'unique'),
 			array('social_token_type, create_time, lastaction, status, gender', 'numerical', 'integerOnly'=>true),
 			array('username, user_token', 'length', 'max'=>200),
 			array('password, social_token, email', 'length', 'max'=>300),
 			array('avatar, geolocation, favorites', 'length', 'max'=>500),
 			array('social_id, ip', 'length', 'max'=>100),
-			array('whatsup', 'length', 'max'=>200),
+			array('whatsup, current', 'length', 'max'=>200),
 			array('phone', 'length', 'max'=>30),
 			array('city, country, range', 'length', 'max'=>50),
 			// The following rule is used by search().
@@ -136,7 +137,7 @@ class Users extends CActiveRecord
 						'type'=>1,
 						'user_id'=>$user->id,	//your friend's id
 					);
-					$this->sendiOSNotification($data);
+					$this->sendNotification($data);
 				}
 			}
 		}
@@ -229,33 +230,17 @@ class Users extends CActiveRecord
 
 
 
-	public function sendiOSNotification($data){	//pass in ['title'], ['user_id'], ['type']
-		$notifs = DeviceToken::model()->findAllByAttributes(array("user_id"=>$data['user_id'], "device"=>"iOS"));
+	public function sendNotification($data){	//pass in ['title'], ['user_id'], ['type']
+		$notifs = DeviceToken::model()->findAllByAttributes(array("user_id"=>$data['user_id']));
 		foreach($notifs as $notif){
 			if ($notif && $notif->token) {
 				$data["token"] = $notif->token;
 				$data["unread"] = 1;	//1 for now
-			 	$url = Yii::app()->params['globalURL'].'/simplepush/iospush.php?'.http_build_query($data);
-				$ch  = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //this prevent printing the 200json code
-				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1); //timeout 1s
-				curl_setopt($ch, CURLOPT_TIMEOUT, 1); //timeout 1s
-				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-				$result = curl_exec($ch);
-				curl_close($ch);
-			}
-		}
-	}
-
-
-	public function sendAndroidNotification($data){	//pass in ['title'], ['user_id'], ['type']
-		$notifs = DeviceToken::model()->findAllByAttributes(array("user_id"=>$data['user_id'], "device"=>"Android"));
-		foreach($notifs as $notif){
-			if ($notif && $notif->token) {
-				$data["token"] = $notif->token;
-				$data["unread"] = 1;	//1 for now
-			 	$url = Yii::app()->params['globalURL'].'/simplepush/androidpush.php?'.http_build_query($data);
+				if($notif->device == "iOS"){
+			 		$url = Yii::app()->params['globalURL'].'/simplepush/iospush.php?'.http_build_query($data);
+			 	}else{
+			 		$url = Yii::app()->params['globalURL'].'/simplepush/androidpush.php?'.http_build_query($data);
+			 	}
 				$ch  = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $url);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //this prevent printing the 200json code

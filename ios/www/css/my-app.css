@@ -683,8 +683,11 @@ a.link.button.col-50.color-gray {
     align-items: center;
 }*/
 .card-header {
-    color:#333333;
+    color:#fff;
     font-size: 20px;
+    margin-top:-48px; 
+    margin-bottom:12px;
+    background-color:rgba(0,0,0,0.5);
 }
 
 a.link.button.col-50 {
@@ -774,7 +777,9 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
 .color-pink {
     color: #ec5298;
 }
-
+.color-white{
+    color: #fff;
+}
 .color-pink.button:not(.button-fill), .color-pink.buttons-row .button, .theme-pink .button:not(.button-fill) {
     border-color: #ec5298;
 }

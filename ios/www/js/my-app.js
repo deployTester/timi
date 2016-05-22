@@ -436,7 +436,24 @@ strVar += "                  <li class=\"align-top\">";
 strVar += "                    <div class=\"item-content\">";
 strVar += "                      <div class=\"item-inner\">";
 strVar += "                        <div class=\"item-input\">";
-strVar += "                            <textarea class=\"resizable\" id=\"whatsup\" placeholder=\"Let your friend what's in your mind. E.g., Let's Chipotle and chill? \"><\/textarea>";
+strVar += "                            <textarea class=\"resizable\" id=\"whatsup\" placeholder=\"Let your friends know what's in your mind. E.g., Let's Chipotle and chill? \"><\/textarea>";
+strVar += "                        <\/div>";
+strVar += "                      <\/div>";
+strVar += "                    <\/div>";
+strVar += "                  <\/li>";
+strVar += "                <\/ul>";
+strVar += "              <\/div>                       ";
+strVar += "";
+strVar += "              <div class=\"content-block-title\">";
+strVar += "                <span>Work / Education (current)<\/span>";
+strVar += "              <\/div> ";
+strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
+strVar += "                <ul>";
+strVar += "                  <li class=\"align-top\">";
+strVar += "                    <div class=\"item-content\">";
+strVar += "                      <div class=\"item-inner\">";
+strVar += "                        <div class=\"item-input\">";
+strVar += "                            <textarea class=\"resizable\" id=\"current\" placeholder=\"Where do you work / where do you go to school? \"><\/textarea>";
 strVar += "                        <\/div>";
 strVar += "                      <\/div>";
 strVar += "                    <\/div>";
@@ -1013,11 +1030,15 @@ function postPersonalInfo () {
     // myApp.showIndicator()
 
     if (document.getElementById("whatsup").value == "") {
-        myApp.alert("Please fill in whatsup! ")
+        myApp.alert('Please fill in "what\'s in your mind".')
+        return
+    }
+    if (document.getElementById("current").value == "") {
+        myApp.alert('Please fill in "Work/Education".')
         return
     }
     if (usersFavoriteList.length < 3) {
-        myApp.alert("Please choose at least 3 items.")
+        myApp.alert("Please choose at least 3 favorite food.")
         return
     }    
     // .replace(/\ud83d[\ude00-\ude4f]/g, '<span class="emoji" data-emoji="$&"></span>');
@@ -1030,7 +1051,8 @@ function postPersonalInfo () {
         "user_token": localStorage.usertoken, 
         "favorites": usersFavoriteList,
         // "range": document.getElementById("distance-range").value, 
-        "whatsup": document.getElementById("whatsup").value
+        "whatsup": document.getElementById("whatsup").value,
+        "current": document.getElementById("current").value
     }
     // serializeObject(infoObject)
     var ajaxUrl = "http://gettimi.com/site/returnInfo?" + serializeObject(infoObject)
@@ -1081,7 +1103,7 @@ function getPersonalInfo (callback) {
                     document.getElementById("user-email-input").value = personalData.email
                     document.getElementById("phone-number-input").focus()
                     // popupTutorial ()
-                }, 400);
+                }, 200);
                 return; 
             }                   
             if (personalData.geolocation == "") {
@@ -1097,17 +1119,17 @@ function getPersonalInfo (callback) {
                 // return; 
             }
    
-            if (personalData.whatsup == "") {
+            if (personalData.whatsup == "" || personalData.current == "") {
                 localStorage.hasChangedPref = 0
                 setTimeout(function () {
                     if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
-                        myApp.alert("Please update your whatsup:) ", function () {
+                        myApp.alert("Please update your settings:) ", function () {
                             setTimeout(function () {
                                 mainView.router.loadPage({"pageName": "personal-setting-page"}); 
-                            }, 400)
+                            }, 200)
                         })                 
                     }     
-                }, 600)                   
+                }, 400)                   
                 // updatePreferencePrompt()
                 return; 
             }
@@ -1672,17 +1694,38 @@ function insertNewCard () {
 
             mutual_friend_holder = mutual_friends_count + " mutual <i class='fa fa-users' aria-hidden='true'></i>";
 
+            if(mutual_friends_count > 0){
+                mutual_friend_link = '<a href="#" class="mutual-friends-click color-white" onclick="showMutualFriends(mutual_friends_string)">'+ mutual_friend_holder +'</a>';
+            }else{
+                mutual_friend_link = "";
+            }
+
+            var current = item.current;
+            var whatsup = item.whatsup;
+            var favorites = item.favorites.split(',').join(', ');
+
+            if(!current){
+                current = "N/A";
+            }
+            if(!whatsup){
+                whatsup = "N/A";
+            }
+            if(!favorites){
+                favorites = "N/A";
+            }
+
             var newCardHtml = 
                 '      <li class="new_card"> ' + 
                 '            <div class="card demo-card-header-pic" > ' + 
                 '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
-                '              <div style="" class="card-header no-border">' + item.username + '<div class="color-gray"><a href="#" class="mutual-friends-click color-gray" onclick="showMutualFriends(mutual_friends_string)">'+ mutual_friend_holder +'</a></div></div> ' + 
+                '              <div style="" class="card-header no-border card-username-section">' + item.username + '<div class="color-white">'+mutual_friend_link+'</div></div> ' + 
                 '              <div class="card-content"> ' + 
                 '                <div class="card-content-inner"> ' + 
                 // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
-                '                   <div class="color-gray"><i class="fa fa-comments color-pink"></i>'+item.whatsup+'</div>' + 
+                '                   <div class="color-gray"><i class="fa fa-university color-pink"></i>'+current+'</div>' +
+                '                   <div class="color-gray"><i class="fa fa-comments color-pink"></i>'+whatsup+'</div>' + 
                 // '                  <div class="color-pink">' +item.name+ ' likes: </div>' + 
-                '                   <div class="color-gray"><i class="fa fa-heart color-pink"></i>' + item.favorites.split(',').join(', ') + '</div> ' + 
+                '                   <div class="color-gray"><i class="fa fa-heart color-pink"></i>' + favorites + '</div> ' + 
                 '                </div> ' + 
                 '              </div> ' + 
                 '              <div class="card-footer no-gutter row"> ' + 
@@ -1704,7 +1747,10 @@ function insertNewCard () {
             //use time out to make sure the previous step (initTinderSwipe) has finished executing - not ideal.
             setTimeout(function(){ 
                 $(".new_card").show();
-                $(".new_card").removeClass('new_card');                
+                $(".new_card").removeClass('new_card');  
+                if(mutual_friends_count == 0){
+                    $(".mutual-friends-click").hide();
+                }              
             }, 100);
 }
 
@@ -2059,7 +2105,7 @@ function initTinderSwipeCSS() {
         var statusH = 0; 
         var a = Math.round(($(window).height() - nav-tbH -statusH- $(".card.demo-card-header-pic").height())/2); 
         console.log(a)
-        a += 44        
+        a += 38        
         $("#tinderslide").css("margin-top", a + "px"); 
     } else {
         $(".card-pic").css("height", (Math.round($(window).width()*0.94)+1)+"px"); 
@@ -2069,7 +2115,7 @@ function initTinderSwipeCSS() {
          var statusH = 0; 
         var a = Math.round(($(window).height() - nav-tbH -statusH - $(".card.demo-card-header-pic").height())/2); 
         console.log(a)
-        a += 44        
+        a += 38        
         $("#tinderslide").css("margin-top", a + "px"); 
     }
 }
@@ -2208,7 +2254,8 @@ var myApp = new Framework7({
     }
 });
 function updatePersonalPage () {
-    document.getElementById("whatsup").value = personalData.whatsup
+    document.getElementById("whatsup").value = personalData.whatsup;
+    document.getElementById("current").value = personalData.current;
     // document.getElementById("distance-range").value = personalData.range
     // document.getElementById("distance-value").innerHTML = Math.round(personalData.range) + "mi."
     var formData = myApp.formToJSON('#favorite-food')

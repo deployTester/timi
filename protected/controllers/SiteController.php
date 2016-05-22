@@ -169,11 +169,15 @@ class SiteController extends Controller
 			$user->save();
 		}
 
-		if($friends){
-			$user->updateFriendsViaFB($friends);
+		try{
+			if($friends){
+				$user->updateFriendsViaFB($friends);
+			}
+			$user->userActed();
+			//$user->saveFacebookProfilePicture();
+		}catch(Exception $e){
+
 		}
-		$user->userActed();
-		//$user->saveFacebookProfilePicture();
 
 		if($user->phone){
 			$this->sendJSONResponse(array(
@@ -358,7 +362,7 @@ class SiteController extends Controller
 							'type'=>1,
 							'user_id'=>$exist->id,
 						);
-						$user->sendiOSNotification($data);
+						$user->sendNotification($data);
 
 					}
 					$contact->create_time = time();
@@ -529,7 +533,7 @@ class SiteController extends Controller
 		}
 
 		$user->lastaction = time();
-		$user->save(false);
+		$user->save();
 
 		$day = $_GET['day']; 
 
@@ -682,6 +686,7 @@ class SiteController extends Controller
 				'geolocation'=>$friend->geolocation,
 				'phone'=>$friend->phone,
 				'mutual'=>$mutual,
+				'current'=>$friend->current,
 				'check_friendship'=>$check_friends,
 			);
 
@@ -844,6 +849,7 @@ class SiteController extends Controller
 					'username'=>$other->username, //friend’s usnerame
 					'avatar'=>$other->avatar, //friend’s profile pic
 					'whatsup'=>$other->whatsup, //friend’s status
+					'current'=>$other->current,
 					'favorites'=>$other->favorites,
 					'geolocation'=>$other->geolocation,
 					'phone'=>$other->phone, //friend’s phone
@@ -1092,7 +1098,7 @@ class SiteController extends Controller
 				'day'=>$_GET['request_day'],
 				'time'=>$_GET['request_time'],
 			);
-			$user->sendiOSNotification($data);
+			$user->sendNotification($data);
 
 		}else if($decision == 1){	//no request sent to me, i sent out request
 
@@ -1123,7 +1129,7 @@ class SiteController extends Controller
 					'type'=>2,
 					'user_id'=>$request->receiver,	//send to your friend
 				);
-				$user->sendiOSNotification($data);
+				$user->sendNotification($data);
 			}
 		}else if($request && $decision == 2){	//request sent to me, i turned it down
 			$request->status = 2;
@@ -1181,6 +1187,7 @@ class SiteController extends Controller
 					'country'=>$friend->country,
 					'favorites'=>$friend->favorites,
 					'whatsup'=>$friend->whatsup,
+					'current'=>$friend->current,
 				));
 			}else{
 				$this->sendJSONResponse(array(
@@ -1239,6 +1246,9 @@ class SiteController extends Controller
 		if(isset($_GET['whatsup'])){
 			$user->whatsup = strip_tags($_GET['whatsup']);
 		}
+		if(isset($_GET['current'])){
+			$user->current = strip_tags($_GET['current']);
+		}
 		if(isset($_GET['range'])){
 			$user->range = strip_tags($_GET['range']);
 		}
@@ -1257,6 +1267,7 @@ class SiteController extends Controller
 			'favorites'=>$user->favorites,
 			'whatsup'=>$user->whatsup,
 			'range'=>$user->range,
+			'current'=>$user->current,
 		));
 
 	}
@@ -1346,7 +1357,7 @@ class SiteController extends Controller
 				'day'=>$request->request_day,
 				'time'=>$request->request_time,
 			);
-			$user->sendiOSNotification($data);
+			$user->sendNotification($data);
 
 		$this->sendJSONResponse(array(
 			'success'=>'cancelled',

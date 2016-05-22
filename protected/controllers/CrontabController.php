@@ -33,7 +33,13 @@ class CrontabController extends Controller
 				$data["token"] = $notif->token;
 				$data["unread"] = 1;
 				$data["type"] = 5;				// is to homepage
-			 	$url = Yii::app()->params['globalURL'].'/simplepush/iospush.php?'.http_build_query($data);
+
+				if($notif->device == "iOS"){
+			 		$url = Yii::app()->params['globalURL'].'/simplepush/iospush.php?'.http_build_query($data);
+			 	}else{	//android
+			 		$url = Yii::app()->params['globalURL'].'/simplepush/androidpush.php?'.http_build_query($data);
+			 	}
+
 				$ch  = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $url);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //this prevent printing the 200json code
