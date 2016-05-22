@@ -538,7 +538,7 @@ strVar += "          <\/div>";
 strVar += "          <div class=\"page cached\" data-page=\"ask-calendar\">";
 strVar += "            <div class=\"page-content\">";
 strVar += "              <div class=\"one-line-prompt\">";
-strVar += "                let Timi know when to match you with your friends! ";
+strVar += "                Let Timi know when to match you with your friends! ";
 strVar += "              <\/div>                     ";
 strVar += "              <div class=\"calendar-table\">       ";
 strVar += "              <\/div>";
@@ -1123,7 +1123,7 @@ function getPersonalInfo (callback) {
                 localStorage.hasChangedPref = 0
                 setTimeout(function () {
                     if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
-                        myApp.alert("Please update your settings:) ", function () {
+                        myApp.alert("Please update your personal settings :) ", function () {
                             setTimeout(function () {
                                 mainView.router.loadPage({"pageName": "personal-setting-page"}); 
                             }, 200)
@@ -2900,7 +2900,7 @@ function updatePreferencePrompt () {
     
     setTimeout(function () {
         if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
-            myApp.alert("Update your preference to let your friend know what you want ", function () {
+            myApp.alert("Update your personal settings to let your friend know what you want!", function () {
                 mainView.router.loadPage({"pageName": "personal-setting-page"}); 
             })                 
         }     
