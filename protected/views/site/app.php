@@ -68,7 +68,7 @@
                   </div> <!-- .section-heading -->
                   <div class="section-content">
                     <a class="btn btn-invert m-y-5" href="/site/downloadios">&nbsp;&nbsp;&nbsp;<i class="fa fa-apple"></i>App Store&nbsp;&nbsp;&nbsp;</a>
-                    <a class="btn btn-warning m-y-5" onclick="alert('Sorry, the Android version is not ready yet! But it is coming out soon!'); return false;"><i class="fa fa-android"></i>Google Play</a>
+                    <a class="btn btn-warning m-y-5" href="/site/downloadAndroid"><i class="fa fa-android"></i>Google Play</a>
                   </div> <!-- .section-content -->
                 </div>
               </div>

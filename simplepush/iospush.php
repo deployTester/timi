@@ -28,6 +28,18 @@ if(isset($_GET['type'])){
 	$type = 1;
 }
 
+if(isset($_GET['sender_name'])){
+	$sender_name = $_GET['sender_name'];
+}else{
+	$sender_name = "";
+}
+
+if(isset($_GET['message_id'])){
+	$message_id = $_GET['message_id'];
+}else{
+	$message_id = "";
+}
+
 if(isset($_GET['user_id'])){
 	$user_id = $_GET['user_id'];
 }else{
@@ -97,6 +109,9 @@ $passphrase = 'timi123';	//empty for now
 // Put your alert message here:
 $message = $title;
 
+if($sender_name){
+	$message = $sender_name.": ".$title;
+}
 ////////////////////////////////////////////////////////////////////////////////
 
 $ctx = stream_context_create();
@@ -135,6 +150,8 @@ $body['aps'] = array(
     'geolocation'=>$geolocation,
     'day'=>$day,
     'time'=>$time,
+    'message_id'=>$message_id,
+    'sender_name'=>$sender_name
 	);
 
 // Encode the payload as JSON

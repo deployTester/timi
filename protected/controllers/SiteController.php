@@ -41,9 +41,15 @@ class SiteController extends Controller
 
 
 	public function actionDownloadios(){
-		echo "<h1 style='font-size:35px; font-weight:300; padding:25px; line-height:80px;'>If you did not get redirected to app store, please open this page in Safari/Chrome and try again!</h1>";
+		echo "<h1 style='font-size:35px; font-weight:300; padding:25px; line-height:80px;'>If you did not get redirected to App Store, please open this page in Safari/Chrome and try again!</h1>";
 		echo "<script>setTimeout(function () {	location.href = 'https://itunes.apple.com/us/app/timi-easiest-way-to-find-out/id1111783063?mt=8';}, 10);</script>";
 	}
+
+	public function actionDownloadAndroid(){
+		echo "<h1 style='font-size:35px; font-weight:300; padding:25px; line-height:80px;'>If you did not get redirected to Google Play, please open this page in Safari/Chrome and try again!</h1>";
+		echo "<script>setTimeout(function () {	location.href = 'https://play.google.com/store/apps/details?id=io.cordova.timi&hl=en';}, 10);</script>";
+	}
+
 
 	/*
 	*	Handles regular sign up
@@ -148,7 +154,17 @@ class SiteController extends Controller
 		$social_token = $array['accessToken'];
 		$email = $array['email'];
 		$name = $array['name'];
-		$friends = $array['friends']['data'];	//friends array
+
+		if(isset($array['friends']) || isset($array['friends']['data'])){
+			if(isset($array['friends'])){
+				$friends = $array['friends'];	//friends array
+			}else{
+				$friends = $array['friends']['data'];	//friends array
+			}
+		}else{
+			$friends = null;
+		}
+
 		$avatar = "https://graph.facebook.com/".$fbID."/picture?type=large&redirect=true&width=1024";
 
 		$user = Users::model()->findByAttributes(array('social_id'=>$fbID));
@@ -170,9 +186,9 @@ class SiteController extends Controller
 		}
 
 		try{
-			if($friends){
+			//if($friends){
 				$user->updateFriendsViaFB($friends);
-			}
+			//}
 			$user->userActed();
 			//$user->saveFacebookProfilePicture();
 		}catch(Exception $e){
@@ -189,6 +205,48 @@ class SiteController extends Controller
 				'user_token' => $user->user_token,
 				'phone'=>false,
 			));
+		}
+	}
+
+
+
+	public function actionUpdateFBfriends(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		$json = $_GET['friends'];
+		$array = json_decode($json, true);
+
+		if(isset($array['friends']) || isset($array['friends']['data'])){
+			if(isset($array['friends'])){
+				$friends = $array['friends'];	//friends array
+			}else{
+				$friends = $array['friends']['data'];	//friends array
+			}
+		}else{
+			$friends = null;
+		}
+
+		try{
+			if($friends){
+				$user->updateFriendsViaFB($friends);
+			}
+			$user->userActed();
+			//$user->saveFacebookProfilePicture();
+		}catch(Exception $e){
+
 		}
 	}
 
@@ -631,6 +689,8 @@ class SiteController extends Controller
 					$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 						array(":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
+					$check_if_busy = false; 	//we allow multiple match now.
+
 					$check_if_reject = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 2', 
 						array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
@@ -765,6 +825,207 @@ class SiteController extends Controller
 	}
 
 
+	public function actionSendMessage(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(!isset($_GET['message'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no message'
+			));
+			exit();
+		}
+		if(!isset($_GET['receiver'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no receiver'
+			));
+			exit();
+		}
+		$message = new Message;
+		$message->sender = $user->id;
+		$message->receiver = $_GET['receiver'];
+		$message->description = strip_tags($_GET['message']);
+		$message->create_time = time();
+		$message->save();
+
+		$sender = Users::model()->findByPk($message->sender);
+
+			//send notification to the other party and tell them they are matched with you.
+		$data = array(
+				'title'=>$message->description,
+				'type'=>5,						//5 for message
+				'user_id'=>$message->receiver,
+				'sender_name'=>$sender->username,		//need to customize the message in /simplepush
+				'message_id'=>$message->id,
+		);
+		$user->sendNotification($data);
+
+		$this->sendJSONResponse(array(
+			'result'=>'success',
+		));
+	}
+
+
+	public function actionMarkAsDelivered(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(!isset($_GET['message_id'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no message_id'
+			));
+			exit();
+		}
+		$message = Message::model()->findByPk($_GET['message_id']);
+		if(!$message->delivered){
+			$message->delivered = 1;
+			$message->save(false);
+		}
+
+		$this->sendJSONResponse(array(
+			'result'=>'success',
+		));
+
+	}
+
+
+
+	public function actionLoadMessageHistory(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(!isset($_GET['receiver'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no receiver'
+			));
+			exit();
+		}
+		if(!isset($_GET['offset'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no offset'
+			));
+			exit();
+		}
+
+		$offset = $_GET['offset'];
+
+		$result = array();
+
+        $messages = Message::model()->find(array(
+            'condition' => '((sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid)) AND delivered = 0',
+            'params' => array(
+                ':uid'=>$user->id, 
+                ':fid'=>$_GET['receiver']
+            ),
+            'order'=>'create_time DESC',
+            'offset'=>$offet,
+        ));
+
+
+
+		foreach($messages as $message){
+			$result[$message->id] = array(
+				'message_id'=>$message->id,
+				'title'=>$message->description,
+				'sender'=>$message->sender,
+				'receiver'=>$message->receiver,
+				'create_time'=>$message->create_time,
+			);
+			if(!$message->delivered){
+				$message->delivered = 1;
+				$message->save(false);
+			}
+		}
+
+		$result = json_encode($result);
+
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+
+
+	public function actionLoadNewMessage(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(!isset($_GET['receiver'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no receiver'
+			));
+			exit();
+		}
+
+		$result = array();
+
+		$messages = Message::model()->findAll('((sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid)) AND delivered = 0', array(':uid'=>$user->id, ':fid'=>$_GET['receiver']));
+		foreach($messages as $message){
+			$result[$message->id] = array(
+				'title'=>$message->description,
+				'sender'=>$message->sender,
+				'receiver'=>$message->receiver,
+				'create_time'=>$message->create_time,
+			);
+			if(!$message->delivered){
+				$message->delivered = 1;
+				$message->save(false);
+			}
+		}
+
+		$result = json_encode($result);
+
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+
 	/*
 	*	Update / create your own free time slot
 	*/
@@ -835,8 +1096,10 @@ class SiteController extends Controller
 		$slots = FreeTimeSlot::model()->findAllByAttributes(array('user_id'=>$user->id, 'day'=>$day), array('order'=>'slot ASC'));
 		$result = array(0, 0, 0);
 		foreach($slots as $slot){
-			$check_if_matched = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (receiver = :me OR sender = :me) AND status = 1', 
+			$check_if_matched = Requests::model()->findAll('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (receiver = :me OR sender = :me) AND status = 1', 
 					array(":me"=>$user->id, ":request_day"=>$day, "request_time"=>$slot->slot));
+			$check_if_matched = false;
+			
 			if($check_if_matched){
 				if($user->id == $check_if_matched->receiver){	//if i am receiver, the other guy is sender. 
 					$other = Users::model()->findByPk($check_if_matched->sender);
@@ -864,6 +1127,138 @@ class SiteController extends Controller
 		));
 	}
 
+	/*
+	*	This function tells you if you have a match or not
+	*/
+	public function actionGetUnreadMatchList(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		$result = array();
+		$check_if_matched = Requests::model()->findAll('trash = 0 AND (receiver = :me OR sender = :me) AND status = 1 AND (sender_read = 0 OR receiver_read = 0)', array(":me"=>$user->id));
+		foreach($check_if_matched as $cc){
+			if($cc->sender == $user->id && !$cc->sender_read){
+				$friend = Users::model()->findByPk($cc->receiver);
+				$result[] = array(
+					'user_id'=>$friend->id,
+					'username'=>$friend->username,
+					'avatar'=>$friend->avatar,
+					'email'=>$friend->email,
+					'phone'=>$friend->phone,
+					'day'=>$cc->request_day,
+					'time'=>$cc->request_time,
+				);
+			}
+			if($cc->receiver == $user->id && !$cc->receiver_read){
+				$friend = Users::model()->findByPk($cc->sender);
+				$result[] = array(
+					'user_id'=>$friend->id,
+					'username'=>$friend->username,
+					'avatar'=>$friend->avatar,
+					'email'=>$friend->email,
+					'phone'=>$friend->phone,
+					'day'=>$cc->request_day,
+					'time'=>$cc->request_time,
+				);
+			}
+		}
+		$result = json_encode($result);
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+	/*
+	*	Mark all as read
+	*/
+	public function actionMarkAllMatchListAsRead(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		$result = array();
+		$check_if_matched = Requests::model()->findAll('trash = 0 AND (receiver = :me OR sender = :me) AND status = 1 AND (sender_read = 0 OR receiver_read = 0)', array(":me"=>$user->id));
+		foreach($check_if_matched as $cc){
+			if($cc->sender == $user->id && !$cc->sender_read){
+				$cc->sender_read = 1;
+				$cc->save(false);
+			}
+			if($cc->receiver == $user->id && !$cc->receiver_read){
+				$cc->receiver_read = 1;
+				$cc->save(false);
+			}
+		}
+		$result = json_encode($result);
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+	/*
+	*	Mark a match as read
+	*/
+	public function actionMarkMatchAsRead(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(!isset($_GET['request_id'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no request id'
+			));
+			exit();
+		}else{
+			$request = Requests::model()->findByPk($_GET['request_id']);
+			if(!$request){
+				$this->sendJSONResponse(array(
+					'error'=>'no request found'
+				));
+				exit();
+			}
+		}
+		if($user->id == $request->sender){
+			$request->sender_read = 1;
+			$request->save(false);
+		}else if($user->id == $request->receiver){
+			$request->receiver_read = 1;
+			$request->save(false);
+		}
+
+		$this->sendJSONResponse(array(
+			'success'=>"sucess"
+		));
+	}
 
 	/*
 	*	take phone number, output verification code
@@ -1056,6 +1451,8 @@ class SiteController extends Controller
 		$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 					array(":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 
+		$check_if_busy = false; 	//we allow multiple match now.
+
 		if($check_if_busy){
 			$this->sendJSONResponse(array(
 				'error'=>'the other party is busy!'
@@ -1122,12 +1519,21 @@ class SiteController extends Controller
 			//double check if the other party has been matched with someone else (check_if_busy)
 			$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 					array(":uid"=>$request->receiver, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+			
+			$check_if_busy = false; 	//we allow multiple match now.
+
 			if(!$check_if_busy){
 				//if not busy, send notification to your FRIEND(the one you requested) and tell him someone liked him!
 				$data = array(
-					'title'=>'Your friend wants to go out with you '.$time_word.'!',
+					'title'=>"You've got a friend that wants to hang out with you ".$time_word."! Swipe to find out.",
 					'type'=>2,
-					'user_id'=>$request->receiver,	//send to your friend
+					'user_id'=>$request->receiver,
+					'username'=>$user->username,
+					'avatar'=>$user->avatar,
+					'email'=>$user->email,
+					'phone'=>$user->phone,
+					'day'=>$_GET['request_day'],
+					'time'=>$_GET['request_time'],
 				);
 				$user->sendNotification($data);
 			}

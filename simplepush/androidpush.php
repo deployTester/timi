@@ -2,7 +2,7 @@
 
 try {
 // API access key from Google API's Console
-define( 'API_ACCESS_KEY', 'AIzaSyCG6h26FVre33C4dOokBSjd4atzvUA1epg' );
+define( 'API_ACCESS_KEY', 'AIzaSyCvPuqV871HMl1uZAzVlH84U_8GwZUMJyQ' );
 //define('API_ACCESS_KEY', 'AIzaSyB9j6PvfMtoIODRopOJvP81J4YzxMRmZ54');
 
 if(isset($_GET['token'])){
@@ -23,6 +23,17 @@ if(isset($_GET['user_id'])){
   $user_id = null;
 }
 
+if(isset($_GET['sender_name'])){
+  $sender_name = $_GET['sender_name'];
+}else{
+  $sender_name = "";
+}
+
+if(isset($_GET['message_id'])){
+  $message_id = $_GET['message_id'];
+}else{
+  $message_id = "";
+}
 
 if(isset($_GET['username'])){
   $username = $_GET['username'];
@@ -81,7 +92,9 @@ if(isset($_GET['title']) && $_GET['title']){
 }
 
 $message = $title;
- 
+if($sender_name){
+  $message = $sender_name.": ".$title; 
+} 
 // prep the bundle
 $msg = array
 (
@@ -100,6 +113,8 @@ $msg = array
   'geolocation'=>$geolocation,
   'day'=>$day,
   'time'=>$time,
+  'sender_name'=>$sender_name,
+  'message_id'=>$message_id
 );
  
 $fields = array

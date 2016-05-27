@@ -31,9 +31,73 @@ html, body {
     /*padding: 1px; */
     /*width: calc(100% - 3px);*/
 }
+.fullscreen-popup .content-block {
+    color: white;
+    padding: 25px !important;
+}
+.fullscreen-popup .popup-icon {
+    font-size: 40px; 
+    margin-bottom: 15px;
+}
+.fullscreen-popup .popup-title {
+    font-size: 28px; 
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+.fullscreen-popup .popup-text {
+    font-size: 15px; 
+    margin-bottom: 25px;
+}
+.fullscreen-popup .button {
+    font-size: 16px;
+    line-height: 44px;
+    height: 44px;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    padding: 0px 22px;
+    display: inline-block;
+}
+.bg-pink, .button.button-fill.bg-pink, .list-block .swipeout-actions-left a.bg-pink, .list-block .swipeout-actions-right a.bg-pink, a.bg-pink {
+    background-color: #ec5298;
+}
 
-#invitation-tab .content-block-inner:before, #invitation-tab .content-block-inner:after {
-    height:0px;
+#messenger-list :after, #messenger-list :before, #invitation-tab .content-block-inner:before, #invitation-tab .content-block-inner:after {
+    /*height:0px;*/
+}
+.tab-link .badge {
+    font-size: 13px;
+    display: block;
+    color: #fff;
+    background: #ff3b30;
+    border-radius: 20px;
+     padding: 0; 
+    height: 6px;
+    width: 6px;
+    margin-left: 9px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.match-profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin: 0px -20px;
+    padding: 0px 0px;
+    vertical-align: text-bottom;
+    border: 2px solid white;
+}
+.you-are-matched-title {
+    font-size: 36px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: -75px;
+    /* color: #222; */
+    font-family: fantasy;
+}
+.facebook-login-button-tutorial .preloader {
+    display: block;
+    margin: 3px auto 4px;
 }
 .pulse-portrait {
     width: 100px;
@@ -60,6 +124,32 @@ html, body {
     margin-bottom: 10px !important;
 }
 
+.gps-ring-startscreen {
+    border: 3px solid #fc62a8;
+    -webkit-border-radius: 30px;
+    height: 160px;
+    width: 160px;
+    background: rgba(252, 98, 168, 0.2);
+    margin-left: auto;
+    border-radius: 1000px;
+    margin-right: auto;
+    -webkit-animation: pulsate 1.3s ease-out;
+    -webkit-animation-iteration-count: infinite;
+    top: calc( 50% - 83px );
+    position: absolute;
+    left: calc( 50% - 83px );
+}
+.front-page-logo {
+    height: 80px;
+    width: 80px;
+    display: block;
+    margin: 0px auto;
+    /* margin-top: 100px; */
+    /* margin-bottom: 60px; */
+    top: calc( 50% - 40px );
+    position: absolute;
+    left: calc( 50% - 40px );
+}
 .gps-ring {
     border: 3px solid #fc62a8;
     -webkit-border-radius: 30px;
@@ -93,7 +183,10 @@ html, body {
     border: none;
     background-color: #ec5298;
 }
-
+.navbar a.link i+i, .navbar a.link i+span, .navbar a.link span+i, .navbar a.link span+span, .subnavbar a.link i+i, .subnavbar a.link i+span, .subnavbar a.link span+i, .subnavbar a.link span+span, .toolbar a.link i+i, .toolbar a.link i+span, .toolbar a.link span+i, .toolbar a.link span+span {
+    /* margin-left: 7px; */
+    /*margin-top: 4px;*/
+}
 .close-picker {
     color: #ec5298 !important;
 }
@@ -189,17 +282,10 @@ a.link {
     background: rgba(255,255,255,0.15)
 }
 
-.front-page-logo {
-    height: 160px; 
-    width: 160px; 
-    display: block; 
-    margin: 0px auto;
-    margin-top: 100px;
-    margin-bottom: 60px;
-}
+
 
 .first-page {
-    background: #ec5298;
+    background: white;
     color: white;
 }
 
@@ -214,14 +300,14 @@ a.link {
     padding: 0px 33px;
 }
 a.tab-link .fa {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: 22px;
 }
 [data-page="home"] .toolbar-inner {
     padding: 0 0;
 }
 a.tab-link.active {
-    background: #d2d2d2;
+    /*background: #d2d2d2;*/
 }
 .facebook-login-button {
     background: #3b5998;
@@ -473,6 +559,9 @@ input[type=range]::-webkit-slider-thumb {
 input[type=range]:focus::-webkit-slider-runnable-track {
   background: #367ebd;
 }
+#tinderslide li {
+    box-shadow: #bab 0px 1px 5px 1px;
+}
 /*input[type=range]::-moz-range-track {
   width: 100%;
   height: 8.4px;
@@ -543,13 +632,16 @@ input[type=range]:focus::-ms-fill-upper {
     line-height: 50px;
     height: 50px;
 }
+.tabbar-labels {
+    height: 44px;
+}
 .card-content .color-gray {
     margin-bottom: 8px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    height: 18px;
-    font-size: 12px;
+    height: 20px;
+    font-size: 14px;
     /*word-break: break-all;*/
 }
 input#country-code-input {
@@ -563,7 +655,10 @@ input#country-code-input {
 }
 
 .card-content i.fa.color-pink {
-    margin-right: 5px;
+    margin-right: 10px;
+}
+.fa {
+    margin: 0 5px;
 }
 a.link.button.col-50.color-pink {
     border-radius: 0px;
@@ -600,7 +695,17 @@ a.link.button.col-50.color-gray {
     /*text-align: center;*/
     /*margin: 60px;    */
 }
-
+#underline-border {
+    width: 33.33%;
+    border-bottom: 3px solid #ec5298;
+    /*transform: translate(-300%,0);*/
+    position: absolute;
+    bottom: 0px;
+    transition: transform .2s ease-in-out;
+}
+.subnavbar {
+    padding: 0px;
+}
 
 .subnavbar .buttons-row .button, .subnavbar .buttons-row .button:first-child, .subnavbar .buttons-row .button:last-child {
     border-radius: 0px 0 0 0px;
@@ -614,6 +719,7 @@ a.link.button.col-50.color-gray {
 .subnavbar a.tab-link.active {
     color:#ec5298 !important; 
     background: transparent;
+    /*border-bottom: 2px solid #ec5298 !important;*/
 }
 .subnavbar a.tab-link.active-state {
     /*color:#ec5298 !important; */
@@ -813,6 +919,10 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
     color: #fff;
 }
 
+ .button {
+    font-size: 17px;
+}
+
 .pin-button {
     border: 1px #fff solid;
     width: 60px;
@@ -930,6 +1040,7 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
     /*background: rgba(236, 82, 152, 0.15);*/
     width: calc((100% - 1px*3)/ 4);
     border-radius: 7px;
+    box-shadow: #ccc 1px 1px 1px 0px
 }
 .calendar-table {
     /*height: 100%;*/

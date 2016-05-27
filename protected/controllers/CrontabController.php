@@ -11,12 +11,13 @@ class CrontabController extends Controller
             throw new CHttpException(404, "The requested link does not exist.");
         }
 
+        exit();	//paused for now
+
 		$notifs = DeviceToken::model()->findAll();
 		foreach($notifs as $notif){
 			if ($notif && $notif->token) {
 				$data["user_id"] = $notif->user_id;
 				$array = array(
-					"Someone wants to go out with you! Check it out on Timi",
 					"Lunch time, dinner time, this time, that time, Timi time!",
 					"Summer is the best. Waking up late & more time to chill with friends on Timi!",
 					"I love summer, I love music, I love food & I love Timi!",
