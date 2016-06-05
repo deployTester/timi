@@ -33,7 +33,7 @@ class PhoneContacts extends CActiveRecord
 		return array(
 			array('user_id, create_time, name, number1', 'required'),
 			array('user_id, create_time, invited, signed_up', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>100),
+			array('name, from', 'length', 'max'=>100),
 			array('email', 'length', 'max'=>300),
 			array('number1, number2, number3', 'length', 'max'=>200),
 			// The following rule is used by search().

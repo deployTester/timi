@@ -40,7 +40,7 @@ class Users extends CActiveRecord
 		return array(
 			array('social_id, user_token, create_time, username', 'required'),
 			array('social_id', 'unique'),
-			array('social_token_type, create_time, lastaction, status, gender', 'numerical', 'integerOnly'=>true),
+			array('social_token_type, create_time, lastaction, status, gender, friend_friend', 'numerical', 'integerOnly'=>true),
 			array('username, user_token', 'length', 'max'=>200),
 			array('password, social_token, email', 'length', 'max'=>300),
 			array('avatar, geolocation, favorites', 'length', 'max'=>500),

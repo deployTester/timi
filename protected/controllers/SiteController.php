@@ -437,6 +437,44 @@ class SiteController extends Controller
 
 
 	/*
+	*	Returns a list of invited friends (based on contact count order)
+	*/
+	public function actionReturnFriendsInviteList(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+        $lists = Yii::app()->db->createCommand('select *, count(*) as count from tbl_phone_contacts where number1 != "" and signed_up = 0 and id in(select id from tbl_phone_contacts where user_id = '.$user->id.') group by number1 order by count desc')->queryAll();
+        $result = array();
+
+        foreach($lists as $entry){
+            $result[] = array(
+            	'name'=>$entry['name'],
+            	'number1'=>$entry['number1'],
+            	'count'=>$entry['count']
+            );
+        }
+		$result = json_encode($result);
+
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+
+	}
+
+
+	/*
 	*	Pass a number, this will invite your friend to join Timi.
 	*/
 	public function actionInvitefriends(){
@@ -481,6 +519,9 @@ class SiteController extends Controller
 		$contact = PhoneContacts::model()->find('number1 = :number OR number2 = :number OR number3 = :number', array(':number'=>$newNumber));
 		if($contact){
 			$contact->invited = 1;
+			if(isset($_GET['from'])){
+				$contact->from = $_GET['from'];
+			}
 			$contact->save(false);
 		}
 
@@ -489,6 +530,8 @@ class SiteController extends Controller
 		));
 
 	}
+
+
 
 	/*
 	*	return signed up or friends that already got invited (list of friends)
@@ -595,9 +638,19 @@ class SiteController extends Controller
 
 		$day = $_GET['day']; 
 
-
+		$like_list = array();
 		$my_friends = array();	//list of your friends
 		$final_list = array();	//the final list of people
+
+
+		//get the list of people who swiped YES to you first!
+		$slots = Yii::app()->db->createCommand('select sender, receiver from tbl_requests where super = 1 AND receiver = '.$user->id.' AND status = 0 AND request_day = '.$day.' and trash = 0')->queryAll();
+		foreach($slots as $entry):
+			$friend = $entry['sender'];
+			if (!in_array($friend, $like_list) && $friend != $user->id) {	//check duplicates
+				array_push($like_list, $friend);
+			}
+		endforeach;
 
 		//get my friends
 		$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u where s.matched = 0 and (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$user->id.' and s.day = '.$day.' group by sid')->queryAll();
@@ -618,29 +671,28 @@ class SiteController extends Controller
 
 		//COMMENT OUT THIS PART IF WE NEED TO DISBALE THIS FEATURE
 		//get friends' friends
-		foreach($my_friends as $value):
-			$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u where s.matched = 0 and (f.sender = '.$value.' OR f.receiver = '.$value.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$value.' and s.day = '.$day.' group by sid')->queryAll();
-			foreach($slots as $entry):
-				if($value == $entry['sender']){
-					$friend = $entry['receiver'];
-				}else{
-					$friend = $entry['sender'];
-				}
-				if (!in_array($friend, $final_list) && $friend != $user->id) {	//check duplicates
-					array_push($final_list, $friend);
-				}
+		if($user->friend_friend):
+			foreach($my_friends as $value):
+				$slots = Yii::app()->db->createCommand('select s.id as sid, f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_free_time_slot s, tbl_users u where s.matched = 0 and (f.sender = '.$value.' OR f.receiver = '.$value.') and (s.user_id = f.sender OR s.user_id = f.receiver) AND s.user_id != '.$value.' and s.day = '.$day.' group by sid')->queryAll();
+				foreach($slots as $entry):
+					if($value == $entry['sender']){
+						$friend = $entry['receiver'];
+					}else{
+						$friend = $entry['sender'];
+					}
+					if (!in_array($friend, $final_list) && $friend != $user->id) {	//check duplicates
+						array_push($final_list, $friend);
+					}
+				endforeach;
 			endforeach;
-		endforeach;
+		endif;
 
+		shuffle($like_list);
+		shuffle($final_list);
+		array_merge($like_list, $final_list); //merge people who liked you and others...
 
 		if(($key = array_search($user->id, $final_list)) !== false) {
 	    	unset($final_list[$key]);	//delete yourself from the list
-		}
-
-		if($user->id == 73){	//delete user 93 from 73... lol check database and ask jimmy, he wil tell you why
-			if(($key = array_search(93, $final_list)) !== false) {
-		    	unset($final_list[$key]);	//delete yourself from the list
-			}
 		}
 
 		$final = array();	//the final JSON
@@ -653,31 +705,6 @@ class SiteController extends Controller
 				$friend = $value;
 			}
 
-			$friendObj = Users::model()->findByPk($friend);
-			$range = 20;
-			if($friendObj){
-				//get the minimum of either u or ur friend's range, in miles (geo location)
-				$range = min($user->range, $friendObj->range);
-			}
-
-			$userLocation = array();
-			$friendLocation = array();
-
-			if($user->geolocation && $friendObj->geolocation){
-				$userLocation = explode(",", $user->geolocation);
-				$friendLocation = explode(",", $friendObj->geolocation);
-			}
-
-			if(isset($userLocation[0]) && isset($userLocation[1]) && isset($friendLocation[0]) && isset($friendLocation[1])){
-				//$lat1, $lon1, $lat2, $lon2, $unit, return in miles, "K" return in Kilometers.
-				$distance = $this->getDistance($userLocation[0], $userLocation[1], $friendLocation[0], $friendLocation[1], "M");
-				if($distance > $range){
-					continue;		//have to ignore this long distance friend :(
-				}
-			}else{
-				continue;		//no location.
-			}
-
 			if(!isset($final[$friend])){
 				$final[$friend] = array(0, 0, 0);
 			}
@@ -686,12 +713,14 @@ class SiteController extends Controller
 			foreach($slots as $slot):
 				if($slot){
 
+/*
 					$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 						array(":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+*/
 
 					$check_if_busy = false; 	//we allow multiple match now.
 
-					$check_if_reject = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 2', 
+					$check_if_reject = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status >= 2', 
 						array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
 
 					$check_if_sent = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND sender = :me AND receiver = :uid AND status = 0', 
@@ -699,6 +728,9 @@ class SiteController extends Controller
 
 					$check_if_matched = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND ((sender = :uid AND receiver = :me) OR (sender = :me AND receiver = :uid)) AND status = 1', 
 						array(":me"=>$user->id, ":uid"=>$friend, ":request_day"=>$day, "request_time"=>$slot->slot));
+
+					$check_super = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND sender = :uid AND receiver = :me AND status = 0 AND super = 1', 
+						array(":me"=>$user->id, ":uid"=>$key, ":request_day"=>$day, "request_time"=>$slot->slot));
 
 					if($check_if_busy){
 						$final[$friend][$slot->slot] = "matched others";	//she matched someone else.
@@ -711,7 +743,11 @@ class SiteController extends Controller
 					}
 					else if($check_if_matched){
 						$final[$friend][$slot->slot] = "matched";	//you guys have been matched.
-					}else{
+					}
+					else if($check_super){
+						$final[$friend][$slot->slot] = "super";	//someone super liked you!!!
+					}
+					else{
 						$final[$friend][$slot->slot] = $slot->free;	//see if they are actually free
 					}
 				}
@@ -726,15 +762,44 @@ class SiteController extends Controller
 				continue; //busy ->0, 0, 0
 			}
 
-			$friend = Users::model()->findByPk($key);	//get friend details
-			$mutual = Users::model()->getMutualFriends($user->id, $friend->id);
+			$friendObj = Users::model()->findByPk($key);	//get friend details
+			$range = 20;
+			if($friendObj){
+				//get the minimum of either u or ur friend's range, in miles (geo location)
+				$range = min($user->range, $friendObj->range);
+			}
 
-			$check_friends = Friends::model()->find('(sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid)', array(":uid"=>$user->id, ":fid"=>$friend->id));
+			$userLocation = array();
+			$friendLocation = array();
+
+			if($user->geolocation && $friendObj->geolocation){
+				$userLocation = explode(",", $user->geolocation);
+				$friendLocation = explode(",", $friendObj->geolocation);
+			}
+
+			$distance = 0;
+			
+			if(isset($userLocation[0]) && isset($userLocation[1]) && isset($friendLocation[0]) && isset($friendLocation[1])){
+				//$lat1, $lon1, $lat2, $lon2, $unit, return in miles, "K" return in Kilometers.
+				$distance = $this->getDistance($userLocation[0], $userLocation[1], $friendLocation[0], $friendLocation[1], "M");
+				if($distance > $range){
+					continue;		//have to ignore this long distance friend :(
+				}
+			}else{
+				continue;		//no location.
+			}
+
+			$check_friends = Friends::model()->find('(sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid)', array(":uid"=>$user->id, ":fid"=>$friendObj->id));
 			if($check_friends){
 				$check_friends = true;
 			}else{
 				$check_friends = false;
 			}
+
+			$friend = $friendObj;	//get friend details
+			$mutual = Users::model()->getMutualFriends($user->id, $friend->id);
+
+			$super = 0;
 
 			$result[] = array(
 				'user_id'=>$key,
@@ -748,6 +813,7 @@ class SiteController extends Controller
 				'mutual'=>$mutual,
 				'current'=>$friend->current,
 				'check_friendship'=>$check_friends,
+				'distance'=>$distance,
 			);
 
 		endforeach;
@@ -1372,6 +1438,59 @@ class SiteController extends Controller
 	}
 
 	/*
+	*	Rewind!!! for people you clicked dislike!
+	*	if you send the request and the other party did not send it, just send request
+	*/
+	public function actionRewind(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		$user->lastaction = time();
+		$user->save();
+
+		if(!isset($_GET['request_day']) || !isset($_GET['request_time'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no request day or time'
+			));
+			exit();
+		}
+
+		$requests = Requests::model()->findAll('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status >= 2', 
+					array(':uid'=>$user->id, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+		
+		foreach($requests as $request){
+			if($user->id == $request->sender){
+				if($request->status == 2){
+					$request->trash = 1;
+					$request->save();
+				}
+			}else{	//receiver
+				if($request->status == 3){
+					$request->trash = 1;
+					$request->save();
+				}
+			}
+		}
+		$this->sendJSONResponse(array(
+			'success'=>"rewind",
+		));
+	}
+
+
+	/*
 	*	Request event (from friend 1-> friend 2), need receiver, request_day, request_time
 	*	if you send the request and the other party did not send it, just send request
 	*   if both party has the request, match it!
@@ -1448,8 +1567,10 @@ class SiteController extends Controller
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 
 		//check the other party to make sure they are not booked already!
+		/*
 		$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 					array(":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+		*/
 
 		$check_if_busy = false; 	//we allow multiple match now.
 
@@ -1503,6 +1624,9 @@ class SiteController extends Controller
 					array(':me'=>$user->id, ":uid"=>$_GET['receiver'], ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
 			if(!$old){
 				$request = new Requests;
+				if(isset($_GET['super'])){
+					$request->super = $_GET['super'];
+				}
 				$request->create_time = time();
 				$request->sender = $user->id;
 				$request->request_day = $_GET['request_day'];	//0 for sunday, 1 for monday...
@@ -1517,16 +1641,30 @@ class SiteController extends Controller
 			$status = "sent";
 
 			//double check if the other party has been matched with someone else (check_if_busy)
+			/*
 			$check_if_busy = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND (sender = :uid OR receiver = :uid) AND status = 1', 
 					array(":uid"=>$request->receiver, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
-			
+			*/
+
 			$check_if_busy = false; 	//we allow multiple match now.
 
-			if(!$check_if_busy){
+			//if the other party disliked you already, do not bother them anymore...
+			$check_if_denied = Requests::model()->find('trash = 0 AND request_day = :request_day AND request_time = :request_time AND sender = :fid AND receiver = :uid AND status > 1', 
+					array(":fid"=>$request->receiver, ":uid"=>$user->id, ":request_day"=>$_GET['request_day'], "request_time"=>$_GET['request_time']));
+
+			if(!$check_if_busy){	//&& !$check_if_denied
 				//if not busy, send notification to your FRIEND(the one you requested) and tell him someone liked him!
+				if($request->super && !$check_if_denied){	//super like or denied, if denied by the other party, we do not want to tell them that it's you that want to go out?
+					$friend = Users::model()->findByPk($request->sender);
+					$type = 6;		//6 for super like
+					$title = $friend->username." wants to hang out with you ".$time_word."! Click to respond!";
+				}else{
+					$type = 2;
+					$title = "You've got a friend that wants to hang out with you ".$time_word."! Swipe to find out.";
+				}
 				$data = array(
-					'title'=>"You've got a friend that wants to hang out with you ".$time_word."! Swipe to find out.",
-					'type'=>2,
+					'title'=>$title,
+					'type'=>$type,
 					'user_id'=>$request->receiver,
 					'username'=>$user->username,
 					'avatar'=>$user->avatar,
@@ -1538,9 +1676,10 @@ class SiteController extends Controller
 				$user->sendNotification($data);
 			}
 		}else if($request && $decision == 2){	//request sent to me, i turned it down
-			$request->status = 2;
+			if($request->status != 2){		//if they turned you down, we keep it as 2...
+				$request->status = 3;		//if you turn down someone, you are always the receiver of the request!!!
+			}
 			$request->save(false);
-
 			$status = "rejected";
 
 		}else if($decision == 2){	//no request sent to me, i just clicked dislike
@@ -1652,6 +1791,9 @@ class SiteController extends Controller
 		if(isset($_GET['whatsup'])){
 			$user->whatsup = strip_tags($_GET['whatsup']);
 		}
+		if(isset($_GET['friend_friend'])){
+			$user->friend_friend = $_GET['friend_friend'];
+		}
 		if(isset($_GET['current'])){
 			$user->current = strip_tags($_GET['current']);
 		}
@@ -1674,6 +1816,60 @@ class SiteController extends Controller
 			'whatsup'=>$user->whatsup,
 			'range'=>$user->range,
 			'current'=>$user->current,
+			'friend_friend'=>$user->friend_friend
+		));
+
+	}
+
+
+	/*
+	*	Return 
+	*/
+
+	public function actionUnprocessedSwipe(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		if(!isset($_GET['day'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no specific days'
+			));
+			exit();	
+		}
+
+		$day = $_GET['day'];
+
+		$user->lastaction = time();
+		$user->save();
+
+		$noon = Requests::model()->count('trash = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :me AND status = 0', 
+						array(":me"=>$user->id, ":request_day"=>$day, "request_time"=>0));
+
+		$evening = Requests::model()->count('trash = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :me AND status = 0', 
+						array(":me"=>$user->id, ":request_day"=>$day, "request_time"=>1));
+
+		$night = Requests::model()->count('trash = 0 AND request_day = :request_day AND request_time = :request_time AND receiver = :me AND status = 0', 
+						array(":me"=>$user->id, ":request_day"=>$day, "request_time"=>2));
+
+		$result = array($noon,$evening,$night);
+
+		$result = json_encode($result);
+
+		$this->sendJSONResponse(array(
+			'result'=>$result
 		));
 
 	}

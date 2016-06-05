@@ -44,14 +44,16 @@ for (var i = 0 ; i < 7; i++) {
 }
 // localStorage.usertoken = "cf40d87a845c66efbbe3a73205de5029"
 var push_notification = null;
-var favoriteFoodList = ["Pizza", "Mexican", "French", "American", "Coffee", "Burger", "Ramen", "Sushi", "Chinese", "Korean", "Indian", "Sandwich", "Pasta", "Italian", "Thai", "Southeast Asian", "Dim Sum", "Mediterranean"].sort(cSort)
+var favoriteFoodList = ["Food", "Coffee", "Shopping", "Clubbing", "Party", "Chatting", "Drinking", "Workout", "Video Games", "Running", "Golf", "Swimming", "Basketball", "Soccer", "Sports", "Cooking", "Road Trip", "Concerts/Events", "Movie", "Board Games"].sort(cSort)
 var currentIndex = [ null, null, null]; 
 var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 var d = new Date()
 var currentHours = d.getHours()
 // var currentHours = 18
 var queryDay; 
+// new Element("script", {src: "http://gettimi.com/ios/www/js/GALocalStorage.js?ns=1", type: "text/javascript"});
 
+var barIconHTML = '<a class=\"  open-panel link left-link\" style="visibility:hidden"><i class=\"fa fa-bars \"></i></a>';
 
 function getQueryDay () {
     if (currentHours <= 1) {
@@ -113,9 +115,27 @@ strVar += "          }";
 strVar += "        });      ";
 strVar += "      };  ";
 strVar += "    <\/script>    ";
+
+strVar += "<script>"
+strVar += "  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
+strVar += "  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
+strVar += "  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)"
+strVar += "  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');"
+strVar += "  ga('create', 'UA-78465279-1', 'auto');"
+strVar += "  ga('send', 'pageview');"
+
+strVar += "</script>"
+
 strVar += "";
 strVar += "    <div class=\"statusbar-overlay\" >";
 strVar += "    <\/div>";
+
+strVar += '   <div class="panel-overlay"></div>'
+ 
+
+strVar += '   <div class="panel panel-left panel-reveal" id="left-panel-html"><div id="left-panel-html-background"></div>'
+
+strVar += '   </div>'
 strVar += "    <div class=\"views\">";
 strVar += "      <!-- Your main view -->";
 strVar += "      <div class=\"view view-main\">";
@@ -127,13 +147,13 @@ strVar += "          <\/div>";
 strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"home\">";
 strVar += "";
-strVar += "            <div id=\"home-page-navbar-left\" class=\"home-nav\"><a class=\"link left-link\"><i class=\"fa fa-user-plus\" style=\"visibility:hidden;\"></i></a></div><div class=\"home-nav\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Friends Nearby                     ";
-strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"home-nav\"><a class=\"link right-link\" onclick=\"inviteViaWechat()\"><i class=\"fa fa-user-plus\" ></i></a></div>   ";
+strVar += "            <div id=\"home-page-navbar-left\" class=\"home-nav\">" + barIconHTML + "</div><div class=\"home-nav\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Friends Nearby                     ";
+strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"home-nav\"><a class=\"link right-link\" onclick=\"inviteViaWechat()\"><i class=\"fa fa-share-alt \" ></i></a></div>   ";
 strVar += "        <div class=\"subnavbar\">";
 strVar += "          <div class=\"buttons-row\">";
-strVar += "            <a href=\"#tab1\" class=\"button lunch-tab tab-link active\">Noon<\/a>";
-strVar += "            <a href=\"#tab2\" class=\"button dinner-tab tab-link\">Evening<\/a>";
-strVar += "            <a href=\"#tab3\" class=\"button night-tab tab-link\">Night<\/a>";
+strVar += "            <a href=\"#tab1\" class=\"button time-tab lunch-tab tab-link active\">Noon<\/a>";
+strVar += "            <a href=\"#tab2\" class=\"button time-tab dinner-tab tab-link\">Evening<\/a>";
+strVar += "            <a href=\"#tab3\" class=\"button time-tab night-tab tab-link\">Night<\/a>";
 strVar += "            <div id=\"underline-border\"></div>";
 strVar += "          <\/div>";
 strVar += "        <\/div>                              ";
@@ -308,21 +328,6 @@ strVar += "              <div id=\"messenger-tab\" class=\"tab\">";
 strVar += "                <div class=\"content-block\">";
 strVar += "                  <div class=\"page-content\">";
 strVar += "                    <div id=\"messenger-list\" class=\"list-block media-list\">";
-strVar += "                      <ul>";
-strVar += "                        <li>";
-strVar += "                          <a href=\"#\" class=\"item-link item-content\" onclick=\"goToChattingPage()\">";
-strVar += "                            <div class=\"item-media\"><img src=\"https:\/\/scontent-lga3-1.xx.fbcdn.net\/hphotos-xpt1\/v\/t1.0-9\/10600360_10153439561687143_5185744258781611244_n.jpg?oh=f1474ca7e812482eb2cf6b9b5a2505d0&oe=57AEED71\" width=\"60\"><\/div>";
-strVar += "                            <div class=\"item-inner\" >";
-strVar += "                              <div class=\"item-title-row\">";
-strVar += "                                <div class=\"item-title\">Yellow Submarine<\/div>";
-strVar += "                                <div class=\"item-after\">7:39PM<\/div>";
-strVar += "                              <\/div>";
-strVar += "                              <!-- <div class=\"item-subtitle\">Beatles<\/div> -->";
-strVar += "                              <div class=\"item-text\">Lorem ipsum dolor sit amet...<\/div>";
-strVar += "                            <\/div>";
-strVar += "                          <\/a>";
-strVar += "                        <\/li>           ";
-strVar += "                      <\/ul>";
 strVar += "                    <\/div>";
 strVar += "                  <\/div>";
 strVar += "                <\/div>";
@@ -343,7 +348,7 @@ strVar += "                      <div class=\"button color-pink one-line-button\
 strVar += "                    <\/div>            ";
 strVar += "                    <div class=\"list-block media-list list-block-search searchbar-found\" id=\"friend-list-form\">";
 strVar += "                      <div class=\"one-line-prompt\" style=\"color:#929292;\">There is no friend yet. <\/div>";
-strVar += "                      <div class=\"button color-pink button-fill one-line-button\" onclick = \"loadFriendsFromContact ()\"> Let Timi find friends for you? <\/div>";
+strVar += "                      <div class=\"button color-pink button-fill one-line-button\" onclick = \"popupToAskContact ()\"> Let Timi find friends for you? <\/div>";
 
 strVar += "                    <\/div>   ";
 strVar += "                  <\/div>";
@@ -377,7 +382,7 @@ strVar += "                            <div class=\"item-inner\">";
 strVar += "                              <div class=\"item-title-row\">";
 strVar += "                                <div class=\"item-title\">Personal Setting<\/div>";
 strVar += "                              <\/div>";
-strVar += "                              <div class=\"item-subtitle\">Favorite Food, Prompt, and more<\/div>";
+strVar += "                              <div class=\"item-subtitle\">Favorite Activities, Prompt, and more<\/div>";
 strVar += "                            <\/div>";
 strVar += "                          <\/div>";
 strVar += "                        <\/li>";
@@ -471,6 +476,26 @@ strVar += "                  <\/li>";
 strVar += "                <\/ul>";
 strVar += "              <\/div>                       ";
 strVar += "";
+strVar += "              <div class=\"content-block-title\">";
+strVar += "                <span>Show 2nd Degree Friend<\/span>";
+strVar += "              <\/div> ";
+strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
+strVar += "                <ul>";
+strVar += '                 <li> ';
+strVar += '                   <div class="item-content"> ';
+strVar += '                     <div class="item-inner"> ';
+strVar += '                       <div class="item-title label" style="width:80%;">Show Friends\'s friends</div> ';
+strVar += '                       <div class="item-input"> ';
+strVar += '                         <label class="label-switch" style="position: absolute;right: 20px; top: 8px;"> ';
+strVar += '                           <input type="checkbox" id="allowFoF"> ';
+strVar += '                           <div class="checkbox"></div> ';
+strVar += '                         </label> ';
+strVar += '                       </div> ';
+strVar += '                     </div> ';
+strVar += '                   </div> ';
+strVar += '                 </li> ';
+strVar += "                <\/ul>";
+strVar += "              <\/div>";
 strVar += "   ";
 strVar += "";
 // strVar += "              <div class=\"content-block-title\">";
@@ -502,7 +527,7 @@ strVar += "";
 // strVar += "                <\/ul>";
 // strVar += "              <\/div>";
 strVar += "              <div class=\"content-block-title\">";
-strVar += "                <span>Favorite Food <a id=\"favorite-food-prompt\" class=\"clear-whatsup\"></a><\/span>";
+strVar += "                <span>Favorite Activities <a id=\"favorite-food-prompt\" class=\"clear-whatsup\"></a><\/span>";
 strVar += "              <\/div>            ";
 strVar += "              <form class=\"list-block\" id=\"favorite-food\">";
 strVar += "                <ul>";
@@ -668,19 +693,24 @@ function appReturnedFromBackground () {
         // non user
     } else {
         // user
+        getGeolocation() 
+
         getMySchedule(function () {
             afterClickTab(timeFrame)  
-        })
-        getUnreadMatchList()
+        });
+        
+        getUnreadMatchList(function () {
+            popupMatchGeneral()
+        });
               
-        getGeolocation() 
         if ( push_notification != null ) {
             push_notification.setApplicationIconBadgeNumber(function() {
                 console.log('success clearBadge');
             }, function() {
                 console.log('error clearBadge');
             }, 0);            
-        }     
+        }   
+        getUnprocessedSwipe()  
 
     }
 }
@@ -771,10 +801,10 @@ function tos() {
 }
 
 $$('#explore-tab').on('show', function () {
-    currentTabPage = "explore-tab"
+    //currentTabPage = "explore-tab"
     console.log('Tab 1 is visible');
     $(".subnavbar").css("display", "flex")
-    changeNavbarTitle("Friends Nearby", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
+    changeNavbarTitle("Friends Nearby", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
     getPersonalInfo()
     getMySchedule(function () {
         afterClickTab(timeFrame)                        
@@ -786,7 +816,7 @@ $$('#availability-tab').on('show', function () {
     console.log('Tab 2 is visible');
     updateFreeTime ()
     $(".subnavbar").css("display", "none")
-    changeNavbarTitle("Availability", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");  
+    changeNavbarTitle("Availability", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");  
     updateForm()
 });
  
@@ -794,8 +824,11 @@ $$('#messenger-tab').on('show', function () {
     currentTabPage = "messenger-tab"
     $(".subnavbar").css("display", "none")
     markAllRequest()
-    changeNavbarTitle("Past dates", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
-    loadChattingList ()
+    changeNavbarTitle("Past dates", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
+    getUnreadMatchList(function () {
+        loadChattingList ()
+    })    
+    // loadChattingList ()
 });    
 $$('#invitation-tab').on('show', function () {
     currentTabPage = "invitation-tab"
@@ -803,7 +836,7 @@ $$('#invitation-tab').on('show', function () {
     if ( localStorage.allowedContact == 1 ) {
         loadFriendsFromContact()
     }
-    changeNavbarTitle("Invite friends to Timi", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='searchUser()'><i class=\"fa fa-user-plus\" ></i></a>"); 
+    changeNavbarTitle("Invite friends to Timi", barIconHTML, "<a class=\"link right-link\" onclick='searchUser()'><i class=\"fa fa-user-plus\" ></i></a>"); 
     console.log('Tab 4 is visible');
 });    
 
@@ -812,7 +845,7 @@ $$('#invitation-tab').on('show', function () {
 $$('#more-tab').on('show', function () {
     currentTabPage = "more-tab"
     $(".subnavbar").css("display", "none")
-    changeNavbarTitle("More", "<a class=\"link left-link\"><i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i></a>", "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");
+    changeNavbarTitle("More", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");
     
     getPersonalInfo (function () {
         updatePersonalPage ()   
@@ -865,6 +898,8 @@ function testScript () {
     }, 500); 
    
 }
+
+
 function loadChattingList () {
     loadList = getChatList()
     loadList.sort(tSort)
@@ -876,6 +911,17 @@ function loadChattingList () {
             var schedule = unit.schedule; 
             var activity = ["Noon", "Evening", "Night"]
             hehe = unit
+            var d = new Date(hehe.timeObject)
+            var raw_day = d.getDay()
+            var timiDay; 
+            if (d.getHours() <= 1) {
+                timiDay = d.getDay() - 1
+            } else {
+                timiDay = d.getDay()
+            }
+            if (raw_day < 0) {
+                timiDay += 7
+            }                
 
 
             var user = unit.user
@@ -888,7 +934,7 @@ function loadChattingList () {
             strVar += "        <div class=\"item-title\">"+user.username+"<\/div>";
             strVar += "        <div class=\"item-after\"><\/div>";
             strVar += "      <\/div>";
-            strVar += "      <div class=\"item-text\">Matched for " + activity[schedule] +" on " + days[(new Date(hehe.timeObject)).getDay()] + "<\/div>";
+            strVar += "      <div class=\"item-text\">Matched for " + activity[schedule] +" on " + days[timiDay] + "<\/div>";
             strVar += "    <\/div>";
             strVar += "  <\/a>";
             strVar += "<\/li>";  
@@ -897,9 +943,10 @@ function loadChattingList () {
         });          
         document.getElementById("messenger-list").innerHTML ="<ul>" +htmlString +"</ul>"
     }
+}
 
-   
-   
+function addRandomFriendPopup () {
+    addSuggestedFriends ()
 }
 
 // take selfie to change the profile picture
@@ -949,37 +996,7 @@ function changePicture () {
 
 function searchUser () {
     $("#searchbar-input-box").focus()
-    // myApp.
-    // myApp.prompt("What's the phone number of your friend", function(queryNumber) {
-    //     setTimeout(function () {
-    //         $("input .modal-text-input")[0].focus()
-    //     }, 400)
-    //     var ajaxUrl = "http://gettimi.com/site/ReturnFriendInfo?user_token=" + localStorage.usertoken + "&number=" + queryNumber
-    //     console.log(ajaxUrl)
-    //     $.ajax({
-    //         url: ajaxUrl,
-    //         type: "GET",
-    //         dataType: "jsonp",
-    //         success: function(results) {
-    //             // myApp.alert("good")
-    //             // myApp.confirm ()
-                
-    //             if ( results.username == null ) {
-    //                 // not found
-    //                 myApp.alert("Timi did not find this user:(")
-    //             } else {
-    //                 myApp.confirm("Would you like to add " + results.username + "? ", function () {
-    //                     addByNumber () 
-    //                 })
-    //             }
-    //         }, 
-    //         error: function (results) {
-    //             // myApp.hideIndicator()
-    //             console.log(results)
-    //             // myApp.alert("Network error. Please try again later? ")
-    //         }
-    //     });    
-    // })
+     // var ajaxUrl = "http://gettimi.com/site/ReturnFriendInfo?user_token=" + localStorage.usertoken + "&number=" + queryNumber
 }
 
 function sendMessageAjax (receiver_id, text) {
@@ -1003,10 +1020,19 @@ function sendMessageAjax (receiver_id, text) {
     });     
 }
 
-function addByNumber() {
-    var queryNumber = document.getElementById("searchbar-input-box").value
+function addByNumber(queryNumber, html) {
     var ajaxUrl = "http://gettimi.com/site/Addfriends?user_token=" + localStorage.usertoken + "&number=" + queryNumber
     console.log(ajaxUrl)
+    console.log(html)
+    html = html || ""
+
+     if ( html != "" ) {
+         $(html).removeClass("button"); 
+         $(html).removeClass("color-green");
+         $(html).addClass("color-gray"); 
+         $(html).addClass("text-holder");       
+         $(html).html('<div class="friends-added">Adding</div>')        
+     }    
     $.ajax({
         url: ajaxUrl,
         type: "GET",
@@ -1014,9 +1040,13 @@ function addByNumber() {
         success: function(results) {
             // myApp.alert("good")
             if ( results.error == null ) {
-                myApp.alert("You just added your friend!")
+                $(html).html('<div class="friends-added">Added</div>')
+                // myApp.alert("You just added your friend!")
             } else {
                 myApp.alert(results.error)
+                if (results.error == "You guys are friends already!") {
+                    $(html).html('<div class="friends-added">Added</div>')
+                }
             }
             
 
@@ -1047,7 +1077,7 @@ function searchByThisNumber () {
                 myApp.alert("Timi did not find this user:(")
             } else {
                 myApp.confirm("Would you like to add " + results.username + "? ", function () {
-                    addByNumber () 
+                    addByNumber (queryNumber) 
                 })
             }
         }, 
@@ -1133,6 +1163,93 @@ function updateProfilePic (fileURL) {
     ft.upload(fileURL, encodeURI("http://gettimi.com/site/changeAvatar"), win, fail, options, true)
 }
 
+
+function loadPanel () {
+    var settingList = [{
+        icon: "",
+        title: "Calendar"
+    }, {
+        icon: "",
+        title: "Friends"
+    }, {
+        icon: "",
+        title: "Chat"
+    }, {
+        icon: "",
+        title: "Settings"
+    }, {
+        icon: "",
+        title: "Help"
+    }, {
+        icon: "",
+        title: "Log out"
+    }]
+    var panelStrVar = ""
+// panelStrVar += "                <div class=\"content-block\">";
+// panelStrVar += "                  <div class=\"page-content\" >";
+// panelStrVar += "                    <div class=\"profile-image-container\" id=\"profile-pic-background\">";
+// panelStrVar += "                    <\/div>";
+// panelStrVar += "                    <div class=\"\">";
+// panelStrVar += "                      <img onclick=\"changePicture()\" id=\"profile-pic\"class=\"profile-pic\" src=''>";
+// panelStrVar += "                    <\/div>";
+// panelStrVar += "                    <div class=\"user-name\" id=\"profile-name\">";
+// panelStrVar += "";
+// panelStrVar += "                    <\/div>";
+// panelStrVar += "";
+// panelStrVar += "                    <div class=\"edit-profile-text\" onclick=\"changePicture()\"> ";
+// panelStrVar += "                      <b>Edit Profile Picture</b>";
+// panelStrVar += "                    <\/div>";
+// panelStrVar += "                    ";
+panelStrVar += "                    <div class=\"list-block media-list\">";
+panelStrVar += "                      <ul>";
+panelStrVar += "                        <li onclick='mainView.router.loadPage({\"pageName\":\"personal-setting-page\"})'>";
+panelStrVar += "                          <div class=\"item-content\">";
+panelStrVar += "                            <div class=\"item-media\">";
+panelStrVar += "                              <i class=\"fa fa-heart\"><\/i>";
+panelStrVar += "                            <\/div>";
+panelStrVar += "                            <div class=\"item-inner\">";
+panelStrVar += "                              <div class=\"item-title-row\">";
+panelStrVar += "                                <div class=\"item-title\">Personal Setting<\/div>";
+panelStrVar += "                              <\/div>";
+panelStrVar += "                              <div class=\"item-subtitle\">Favorite Activities, Prompt, and more<\/div>";
+panelStrVar += "                            <\/div>";
+panelStrVar += "                          <\/div>";
+panelStrVar += "                        <\/li>";
+panelStrVar += "                        <li onclick='window.open(\"sms:6178005220&body=Hi I have a question about Timi:\")'>";
+panelStrVar += "                          <div class=\"item-content\">";
+panelStrVar += "                            <div class=\"item-media\">";
+panelStrVar += "                              <i class=\"fa  fa-question-circle\"><\/i>";
+panelStrVar += "                            <\/div>";
+panelStrVar += "                            <div class=\"item-inner\">";
+panelStrVar += "                              <div class=\"item-title-row\">";
+panelStrVar += "                                <div class=\"item-title\">Help<\/div>";
+panelStrVar += "                              <\/div>";
+panelStrVar += "                              <div class=\"item-subtitle\">FAQ, contact, and more<\/div>";
+panelStrVar += "                            <\/div>";
+panelStrVar += "                          <\/div>";
+panelStrVar += "                        <\/li>    ";
+panelStrVar += "                        <li>";
+panelStrVar += "                          <div class=\"item-content\" onclick=\"logout()\">";
+panelStrVar += "                            <div class=\"item-media\">";
+panelStrVar += "                              <i class=\"fa  fa-sign-out\"><\/i>";
+panelStrVar += "                            <\/div>";
+panelStrVar += "                            <div class=\"item-inner\">";
+panelStrVar += "                              <div class=\"item-title-row\">";
+panelStrVar += "                                <div class=\"item-title\">Log out<\/div>";
+panelStrVar += "                              <\/div>";
+panelStrVar += "                              <div class=\"item-subtitle\">No, No, and more<\/div>";
+panelStrVar += "                            <\/div>";
+panelStrVar += "                          <\/div>";
+panelStrVar += "                        <\/li>                                                                          ";
+panelStrVar += "                      <\/ul>";
+panelStrVar += "                    <\/div>";
+// panelStrVar += "                  <\/div>";
+// panelStrVar += "                <\/div>";    
+$("#left-panel-html").html(panelStrVar)
+}
+
+
+
 function serializeObject (obj)  {
     var str = "";
     for (var key in obj) {
@@ -1154,7 +1271,7 @@ function postGeolocation () {
         "geolocation": userLocation, 
     }
     // serializeObject(infoObject)
-    var ajaxUrl = "http://gettimi.com/site/returnInfo?" + serializeObject(infoObject)
+    var ajaxUrl = "http://gettimi.com/site/returnInfo?" + serializeObject(infoObject) + "&random=" +Math.random()
     $.ajax({
         url: ajaxUrl,
         type: "GET",
@@ -1163,9 +1280,12 @@ function postGeolocation () {
             localStorage.allowedLocation = 1
             // myApp.alert("good")
             console.log(results)
-            getMySchedule(function () {
-                afterClickTab(timeFrame)
-            })
+            if ( localStorage.allowedLocation == "null" || localStorage.allowedLocation == null || !localStorage.allowedLocation) {  //first time geolocation
+                getMySchedule(function () {
+                    afterClickTab(timeFrame)
+                })
+            }
+            localStorage.allowedLocation = 1
             // myApp.hideIndicator()
 
         }, 
@@ -1209,12 +1329,14 @@ function postPersonalInfo () {
     // } else {
     //     console.log("emoji")
     // }
+
     var infoObject = {
         "user_token": localStorage.usertoken, 
         "favorites": usersFavoriteList,
         // "range": document.getElementById("distance-range").value, 
         "whatsup": document.getElementById("whatsup").value,
-        "current": document.getElementById("current").value
+        "current": document.getElementById("current").value, 
+        "friend_friend" : (document.getElementById("allowFoF").checked ? 1 : 0)
     }
     // serializeObject(infoObject)
     var ajaxUrl = "http://gettimi.com/site/returnInfo?" + serializeObject(infoObject)
@@ -1256,6 +1378,12 @@ function getPersonalInfo (callback) {
             personalData = results
             usersFavoriteList = personalData.favorites.split(",")
             document.getElementById("profile-pic").src = personalData.avatar;
+            if (personalData.geolocation == "") {
+                localStorage.allowedLocation = 0
+                getGeolocation ()                
+            } else {
+                getGeolocation ()
+            } 
             if (personalData.phone == undefined || personalData.phone == "" ) {
                 localStorage.checkedPhone = 0
                 
@@ -1266,13 +1394,7 @@ function getPersonalInfo (callback) {
                     document.getElementById("phone-number-input").focus()
                 }, 200);
                 return; 
-            }                   
-            if (personalData.geolocation == "") {
-                localStorage.allowedLocation = 0
-                getGeolocation ()                
-            } else {
-                getGeolocation ()
-            }         
+            }                           
             if ( localStorage.allowedContact == null || 
                 localStorage.allowedContact == "null" || 
                 localStorage.allowedContact == 0 ) {
@@ -1284,13 +1406,13 @@ function getPersonalInfo (callback) {
                 localStorage.hasChangedPref = 0
                 setTimeout(function () {
                     if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
-                        myApp.alert("Please update your personal settings :) ", function () {
+                        myApp.alert("Please update your personal settings! ", function () {
                             setTimeout(function () {
                                 mainView.router.loadPage({"pageName": "personal-setting-page"}); 
-                            }, 200)
+                            }, 100)
                         })                 
                     }     
-                }, 400)                   
+                }, 200)                   
                 // updatePreferencePrompt()
                 return; 
             }
@@ -1298,14 +1420,14 @@ function getPersonalInfo (callback) {
                 localStorage.hasChangedPref = 0
                 setTimeout(function () {
                     if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
-                        myApp.alert("Please update your favorite food:) ", function () {
+                        myApp.alert("Please update your favorite activities! ", function () {
                             setTimeout(function () {
                                 mainView.router.loadPage({"pageName": "personal-setting-page"}); 
-                            }, 400)
+                            }, 100)
                             
                         })                 
                     }     
-                }, 600)    
+                }, 300)    
                 return; 
             }    
             if (callback != null) {
@@ -1370,6 +1492,28 @@ function updateContactList () {
     });  
 }
 
+function rewindInvitation () {
+    var ajaxUrl = "http://gettimi.com/site/rewind?user_token=" + 
+     localStorage.usertoken +"&request_day=" + queryDay + "&request_time=" +timeFrame
+     currentIndex[timeFrame] = 1 //dirty practice, it gets reset in afterClickTab()
+     // setting to 1 makes it refresh and reload data.
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            getMySchedule(function () {
+                afterClickTab(timeFrame)
+            });
+
+        }, 
+        error: function (results) {
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });     
+}
+
 // get a list of users whose status are either isInvited, or isSignedup
 function updateInvitationStatus () {
     // [ isInvited, isSignedUp ]
@@ -1427,41 +1571,56 @@ function inviteByPersonalText () {
 // fired once the user invited their friend. Invite friends by sending sms on the backend. 
 // If success, change the style of the button
 // If not, change it back
-function inviteFriend (number, html) {
-    // myApp.showIndicator()
-    var ajaxUrl = "http://gettimi.com/site/Invitefriends?user_token=" + 
-     localStorage.usertoken + 
-     "&number=" + number
-     console.log(ajaxUrl)
-     console.log("invite F")
-     if ( html != "" ) {
-         $(html).removeClass("button"); 
-         $(html).removeClass("color-green");
-         $(html).addClass("color-gray"); 
-         $(html).addClass("text-holder");       
-         $(html).html('<div class="">Inviting</div>')        
-     }
+function inviteFriend (number, html, from) {
+    if (localStorage.sendTextToInvite != 1) {
+        myApp.confirm("You will be sending a free message to invite your friends to join Timi. Continue? ", "", 
+            function () {
+                localStorage.sendTextToInvite = 1
+                inviteFriendAJAX(number, html, from)
+            }, function () {
 
-    $.ajax({
-        url: ajaxUrl,
-        type: "GET",
-        dataType: "jsonp",
-        success: function(results) {
+            })
+    }
 
-            $(html).html('<div class="">Invited</div>')
+    function inviteFriendAJAX(number, html, from) {
+        from = from || ""
+        var ajaxUrl = "http://gettimi.com/site/Invitefriends?user_token=" + 
+         localStorage.usertoken + 
+         "&number=" + number + "&from=" + from
+         console.log(ajaxUrl)
+         console.log("invite F")
+         if ( html != "" ) {
+             $(html).removeClass("button"); 
+             $(html).removeClass("color-green");
+             $(html).addClass("color-gray"); 
+             $(html).addClass("text-holder");       
+             $(html).html('<div class="friends-added">Inviting</div>')        
+         }
 
-            console.log("invite F good ")
-            // myApp.hideIndicator()
-        }, 
-        error: function (results) {
-             
-            myApp.alert(results);
-            console.log("invite F bad")
-            // myApp.hideIndicator()
-            // myApp.alert("Network error. Please try again later? ")
-        }, 
-        timeout: timeOutValue
-    });      
+        $.ajax({
+            url: ajaxUrl,
+            type: "GET",
+            dataType: "jsonp",
+            success: function(results) {
+
+                $(html).html('<div class="friends-added">Invited</div>')
+
+                console.log("invite F good ")
+                // myApp.hideIndicator()
+            }, 
+            error: function (results) {
+                 
+                myApp.alert(results);
+                console.log("invite F bad")
+                // myApp.hideIndicator()
+                // myApp.alert("Network error. Please try again later? ")
+            }, 
+            timeout: timeOutValue
+        });           
+    }
+ 
+
+   
 }
 
 function updateDistanceValue () {
@@ -1527,11 +1686,131 @@ function getGeolocation () {
 }
 
 
-
 // popupQueue.push(popupElem)
 // popupQueue.push(popupElem)
 
 var onFullScreenPopup = false;
+var onHalfScreenPopup = false;
+var halfScreenPopup = [];
+
+function addSuggestedFriends () { 
+    
+    var suggestFriendList = [
+        {
+            "name" : "Ray Xiao", 
+            "avatar": "http://gettimi.com/uploads/avatar/23/avatar1464335266484.jpg", 
+            "phone": "16178005220"
+        }, 
+        {
+            "name" : "Jiaming Zhong", 
+            "avatar" :"http://gettimi.com/uploads/avatar/49/avatar1463785412102.jpg", 
+            "phone" :"12126410987"
+        }, 
+        {
+            "name" : "Sa Wang", 
+            "avatar" :"http://gettimi.com/uploads/avatar/67/avatar1463785727153.jpg", 
+            "phone" :"15129837196"
+        }, 
+        {
+            "name" : "Binsong Zhao", 
+            "avatar" :"http://gettimi.com/uploads/avatar/165/avatar1464123595418.jpg", 
+            "phone" :"13392037990"
+        }        
+    ];
+    shuffle(suggestFriendList)
+
+    var listHTML = ""
+    suggestFriendList.map (function (unit) {
+        var text = "<div class='button button-fill color-gray ' onclick = \"addByNumber(\'"+ unit.phone +"\', this, 'contact-list') \"><i class='fa fa-user-plus'></i>Add</div>"
+        var listUnitHTML =                     '<li>'+
+                    '      <a href="#" class=" item-content"> '+
+                    '        <div class="item-media"><img src="' + unit.avatar + '" width="28px" style="border-radius:100%;"></div>' + 
+                    '        <div class="item-inner"> '+
+                    '          <div class="item-title-row"> '+
+                    '            <div class="item-title">'+ unit.name +'<span class="hidden-number"> ' + "" + '</span></div> '+
+                    '            <div class="item-after">' + text + '</div> '+
+                    '          </div> '+
+                    // '          <div class="item-subtitle color-gray">'+ "" +'</div> '+
+                    // '          <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> --> '+
+                    '        </div> '+
+                    '      </a> '+
+                    '    </li> '
+        listHTML += listUnitHTML
+    })
+    var htmlString = '<div class="list-block media-list" id="suggest-frined-list"><ul>'+
+                        listHTML + 
+                    '</ul></div>'          
+                    console.log(htmlString)                                             
+
+
+    var popupElem = {
+        title: "Friends You May Know", 
+        contentHTML: htmlString, 
+        buttonHTML: "Continue", 
+
+        callbackYes:function () {
+            currentIndex[timeFrame] = 1;
+            getMySchedule(function () {
+                afterClickTab(timeFrame)
+            });            
+            // navigator.geolocation.getCurrentPosition(onSuccess, onError);    
+        }, 
+        onload: function () {
+            // document.getElementById("")
+
+        }
+    }
+    halfScreenPopup.push(popupElem)
+    HalfScreenConfirm ()      
+}
+
+
+
+function HalfScreenConfirm () {
+
+    if ( (halfScreenPopup == null) || (halfScreenPopup.length == 0) ) return;  
+    if (onHalfScreenPopup) return; 
+    onHalfScreenPopup = true; 
+
+    elem = halfScreenPopup.pop()
+    // elem.iconHTML = elem.iconHTML || "<i class='fa fa-comments'></i>";
+    // elem.title = elem.title || "Title";
+    // elem.text = elem.text || "from accessing a frame with origin .  The frame requesting access has a protocol of , the frame being accessed has a protocol of . Protocols must match.";
+    // elem.confirmText = elem.confirmText || "Yes, notify me";
+    // elem.cancelText = elem.cancelText || "Skip";
+
+
+    var popupHTML = '<div class="popup half-screen-popup">'+
+                        '<div class="popup-title">'+elem.title+'</div>' +    
+                        elem.contentHTML +                                                                                   
+                        '<div class="popup-continue-button button button-fill color-gray">'+ elem.buttonHTML +'</div>' + 
+                      '</div>'
+
+
+
+    myApp.popup(popupHTML);
+    setTimeout(function () {
+        elem.onload()
+    }, 400)
+    $(".popup-continue-button").click(function () {
+        // console.log("confirm cliked")
+        myApp.closeModal (".half-screen-popup")
+        elem.callbackYes ()
+
+    }); 
+    $$('.half-screen-popup').on('close', function () {
+        
+        
+        onHalfScreenPopup = false;
+        if (halfScreenPopup.length != 0) {
+            
+            HalfScreenConfirm()
+        }        
+      // console.log('About Popup is closing')
+    });
+}
+
+
 function fullScreenConfirm () {
 
     if ( (popupQueue == null) || (popupQueue.length == 0) ) return;  
@@ -1556,8 +1835,8 @@ function fullScreenConfirm () {
     myApp.popup(popupHTML);
     $(".popup-confirm-button").click(function () {
         console.log("confirm cliked")
-        elem.callbackYes ()
         myApp.closeModal (".fullscreen-popup")
+        elem.callbackYes ()
         onFullScreenPopup = false;
         if (popupQueue.length != 0) {
             
@@ -1566,17 +1845,32 @@ function fullScreenConfirm () {
     });
     $(".popup-cancel-button").click(function () {
         console.log("cancel cliked")
-        elem.callbackNo ()
         myApp.closeModal (".fullscreen-popup")
+        elem.callbackNo ()
         onFullScreenPopup = false;
         if (popupQueue.length != 0) {
             
             fullScreenConfirm()
         }
     });    
-
 }
+function superLikePopup (user) {
+    var popupElem = {
+        title: user.username + " likes you! ", 
+        text:'Congrats! ' + user.username + ' wants to hang out with you. ' , 
+        iconHTML:'<img style="margin-left: 0px; margin-top: 20px;" class="match-profile-pic" src="'+user.avatar+'"><img class="match-profile-pic" src="'+personalData.avatar+'">', 
+        confirmText:"Yes, send a message", 
+        cancelText:"Keep playing", 
+        callbackYes:function () {
+            textTo(user.phone)
+        }, 
+        callbackNo:function (){
 
+        }
+    }
+    popupQueue.push(popupElem)
+    fullScreenConfirm ()       
+}
 
 function matched (user) {
     // name = name || "someone"
@@ -1595,16 +1889,6 @@ function matched (user) {
     }
     popupQueue.push(popupElem)
     fullScreenConfirm ()    
-
-    // myApp.confirm('Congrats! ' + name + ' says YES to you, too! Send him/her a message to grab a meal', "MATCHED",
-    //   function () {
-    //     textTo(number)
-    //     // myApp.alert('You clicked Ok button');
-    //   },
-    //   function () {
-    //     // myApp.alert('You clicked Cancel button');
-    //   }
-    // );
 }
 function textTo (number) {
     try {
@@ -1666,7 +1950,7 @@ function loadFriendsFromContact () {
                     }
                     if ( arr == null ) {
                         // the user is yet to be invited
-                        text = "<div class='button button-fill color-gray ' onclick = \"inviteFriend(\'"+ unit.number[num] +"\', this) \"><i class='fa fa-envelope-o'></i>Invite</div>"
+                        text = "<div class='button button-fill color-gray ' onclick = \"inviteFriend(\'"+ unit.number[num] +"\', this, 'contact-list') \"><i class='fa fa-envelope-o'></i>Invite</div>"
 
                     } else {
                         // The suer is invited or has signed up
@@ -1678,7 +1962,7 @@ function loadFriendsFromContact () {
                         } else if ( hasSignedUp == 1 ){
                             text = "<div class='text-holder color-gray'>Friend</div>"
                         } else {
-                            text = "<div class=' button button-fill color-gray ' onclick = \"inviteFriend(\'"+ unit.number[num] +"\', this) \"><i class='fa fa-envelope-o'></i>Invite</div>"
+                            text = "<div class=' button button-fill color-gray ' onclick = \"inviteFriend(\'"+ unit.number[num] +"\', this, 'contact-list') \"><i class='fa fa-envelope-o'></i>Invite</div>"
                         }                
                     }                    
                     htmlString += '<li>'+
@@ -1788,7 +2072,7 @@ function loadFriendsFromContact () {
                     }
                     if ( arr == null ) {
                         // the user is yet to be invited
-                        text = "<div class='button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this) \"><i class='fa fa-envelope-o'></i>Invite</div>"
+                        text = "<div class='button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this, 'contact-list') \"><i class='fa fa-envelope-o'></i>Invite</div>"
 
                     } else {
                         // The suer is invited or has signed up
@@ -1800,7 +2084,7 @@ function loadFriendsFromContact () {
                         } else if ( hasSignedUp == 1 ){
                             text = "<div class='text-holder color-gray'>Friend</div>"
                         } else {
-                            text = "<div class=' button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this) \"><i class='fa fa-envelope-o'></i>Invite</div>"
+                            text = "<div class=' button button-fill color-gray ' onclick = \"inviteFriend(\'"+ userUnit.phoneNumbers[j].value +"\', this, 'contact-list') \"><i class='fa fa-envelope-o'></i>Invite</div>"
                         }                
                     }    
 
@@ -1957,6 +2241,7 @@ function showNoFriendBlock () {
         setTimeout(function () {
             $(".no-friend").removeClass("animated bounceIn")
         }, 1000)
+        getUnprocessedSwipe () 
     }, 1500)        
 }
 
@@ -1998,113 +2283,127 @@ function generateTopN (array) {
 
 function placeTinderSwipe () {
 
-            document.getElementById("tinderslide").innerHTML = "";
-            var tinderListHTML = "<div id='tinder-contain'><ul id='tinder-list-ul'></ul></div>";
-            document.getElementById("tinderslide").innerHTML = tinderListHTML;
-            insertNewCard();
+    document.getElementById("tinderslide").innerHTML = "";
+    var tinderListHTML = "<div id='tinder-contain'><ul id='tinder-list-ul'></ul></div>";
+    document.getElementById("tinderslide").innerHTML = tinderListHTML;
+    insertNewCard();
 }
 
 
 function insertNewCard () {
 
-            var item = availFriend[timeFrame][currentIndex[timeFrame]];
+    var item = availFriend[timeFrame][currentIndex[timeFrame]];
 
-            //item.check_friendship = true or false -> check direct friendship
-            var mutual_friends_count =  Object.keys(item.mutual).length;
-            var mutual_friends = item.mutual;
-            mutual_friends_string = "";
+    //item.check_friendship = true or false -> check direct friendship
+    var mutual_friends_count =  Object.keys(item.mutual).length;
+    var mutual_friends = item.mutual;
+    mutual_friends_string = "";
 
-            //if you guys are already friends.
-            //if(item.check_friendship){
-            //    mutual_friends_string = "You and "+item.username+" are friends. You guys have the following mutual friends: ";
-            //}else{
-            //    mutual_friends_string = "You and "+item.username+" are not friends yet. You have the following mutual friends: ";
-            //}
-            console.log(mutual_friends_count + " mutual friends");
+    //if you guys are already friends.
+    //if(item.check_friendship){
+    //    mutual_friends_string = "You and "+item.username+" are friends. You guys have the following mutual friends: ";
+    //}else{
+    //    mutual_friends_string = "You and "+item.username+" are not friends yet. You have the following mutual friends: ";
+    //}
+    console.log(mutual_friends_count + " mutual friends");
 
-            //loop thru mutual friends
-            var j = 0;
+    //loop thru mutual friends
+    var j = 0;
 
-            $.each(item.mutual, function( i, val ) {
-                 //if more than 4, we get the first 4.
-                if(j <= 4){
-                    j++;
-                    mutual_friends_string += val.username+", ";
-                }
-            });
-            //remove the space and , at the end.
-            mutual_friends_string = mutual_friends_string.slice(0, -2);
+    $.each(item.mutual, function( i, val ) {
+         //if more than 4, we get the first 4.
+        if(j <= 4){
+            j++;
+            mutual_friends_string += val.username+", ";
+        }
+    });
+    //remove the space and , at the end.
+    mutual_friends_string = mutual_friends_string.slice(0, -2);
 
-            var remind_friends = mutual_friends_count - j;
+    var remind_friends = mutual_friends_count - j;
 
-            if(remind_friends == 0){
-                mutual_friends_string += ".";
-            }else if(remind_friends == 1){
-                mutual_friends_string += " and 1 other.";
-            }else{
-                mutual_friends_string += " and " + remind_friends + " others.";
-            }
+    if(remind_friends == 0){
+        mutual_friends_string += ".";
+    }else if(remind_friends == 1){
+        mutual_friends_string += " and 1 other.";
+    }else{
+        mutual_friends_string += " and " + remind_friends + " others.";
+    }
 
-            mutual_friend_holder = mutual_friends_count + " mutual <i class='fa fa-users' aria-hidden='true'></i>";
+    mutual_friend_holder = mutual_friends_count + " mutual <i class='fa fa-users' aria-hidden='true'></i>";
 
-            if(mutual_friends_count > 0){
-                mutual_friend_link = '<a href="#" class="mutual-friends-click color-white" onclick="showMutualFriends(mutual_friends_string)">'+ mutual_friend_holder +'</a>';
-            }else{
-                mutual_friend_link = "";
-            }
+    if(mutual_friends_count > 0){
+        mutual_friend_link = '<a href="#" class="mutual-friends-click color-white" onclick="showMutualFriends(mutual_friends_string)">'+ mutual_friend_holder +'</a>';
+    }else{
+        mutual_friend_link = "";
+    }
 
-            var current = item.current;
-            var whatsup = item.whatsup;
-            var favorites = item.favorites.split(',').join(', ');
+    var current = item.current;
+    var whatsup = item.whatsup;
+    var favorites = item.favorites.split(',').join(', ');
 
-            if(!current){
-                current = "N/A";
-            }
-            if(!whatsup){
-                whatsup = "N/A";
-            }
-            if(!favorites){
-                favorites = "N/A";
-            }
+    if(!current){
+        current = "N/A";
+    }
+    if(!whatsup){
+        whatsup = "N/A";
+    }
+    if(!favorites){
+        favorites = "N/A";
+    }
 
-            var newCardHtml = 
-                '      <li class="new_card"> ' + 
-                '            <div class="card demo-card-header-pic" > ' + 
-                '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
-                '              <div style="" class="card-header no-border card-username-section">' + item.username + '<div class="color-white">'+mutual_friend_link+'</div></div> ' + 
-                '              <div class="card-content"> ' + 
-                '                <div class="card-content-inner"> ' + 
-                // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
-                '                   <div class="color-gray"><i class="fa fa-university color-pink"></i>'+current+'</div>' +
-                '                   <div class="color-gray"><i class="fa fa-comments color-pink"></i>'+whatsup+'</div>' + 
-                // '                  <div class="color-pink">' +item.name+ ' likes: </div>' + 
-                '                   <div class="color-gray"><i class="fa fa-heart color-pink"></i>' + favorites + '</div> ' + 
-                '                </div> ' + 
-                '              </div> ' + 
-                '              <div class="card-footer no-gutter row"> ' + 
-                '                <a href="#" class="link button col-50 color-gray button-fill dislike-button">PASS</a> ' + 
-                '                <a href="#" class="link button col-50 color-pink button-fill like-button">I\'M DOWN! </a> ' + 
-                '              </div> ' + 
-                '            </div>    ' +
-                '            <div class="like" ></div> ' + 
-                '            <div class="dislike" onclick="$(\"#tinderslide\").jTinder(\'dislike\');"></div> ' + 
-                '          </li>';
+    var newCardHtml = 
+        '      <li class="new_card"> ' + 
+        '            <div class="card demo-card-header-pic" > ' + 
+        '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
+        '              <div style="" class="card-header no-border card-username-section">' + item.username + '<div class="color-white">'+mutual_friend_link+'</div></div> ' + 
+        '              <div class="card-content"> ' + 
+        '                <div class="card-content-inner"> ' + 
+        // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
+        '                   <div class="color-gray"><div class="card-pic-title">School / Occupation</div><div class="card-pic-content">'+current+'</div></div>' +
+        // '                   <div class="color-gray"><i class="fa fa-comments color-pink"></i>'+whatsup+'</div>' + 
+        // '                  <div class="color-pink">' +item.name+ ' likes: </div>' + 
+        '                   <div class="color-gray"><div class="card-pic-title">Activities</div><div class="card-pic-content">'+favorites+'</div></div> ' + 
+        '                </div> ' + 
+        '              </div> ' + 
+        // '              <div class="card-footer no-gutter row"> ' + 
+        // '                <a href="#" class="link button col-50 color-gray button-fill dislike-button">PASS</a> ' + 
+        // '                <a href="#" class="link button col-50 color-pink button-fill like-button">I\'M DOWN! </a> ' + 
+        // '              </div> ' + 
+        '            </div>    ' +
+        '            <div class="like" >LIKE</div> ' + 
+        '            <div class="dislike" >PASS</div> ' + 
+        '            <div class="superlike" >SUPERLIKE</div> ' +         
+        '          </li>';
 
-            document.getElementById("tinder-list-ul").innerHTML += newCardHtml;
+    document.getElementById("tinder-list-ul").innerHTML += newCardHtml;
+
+    document.getElementById("tinderslide").innerHTML += ""+ 
+    "<div class='row decision-button-row'>" + 
+        "<div class='col-33 button dislike-button button-fill color-gray' style='background-color:#2cb3c9;'>" + 
+            "<i class='fa fa-times' id='times-icon'></i>" + 
+        "</div>" + 
+        "<div class='col-33 button superlike-button button-fill color-gray' style='background-color:#63de9a;'>" + 
+            "<div class='heart-combo'><i class='fa fa-heart left-heart' ></i><i class='fa fa-heart right-heart' ></i></div>" +         
+        "</div>" + 
+        "<div class='col-33 button like-button button-fill color-gray' style='background-color:#ec5298;'>" + 
+            "<i class='fa fa-heart' id='heart-icon'></i>" +         
+        "</div>" +                 
+    "</div>"
 
 
 
-            initTinderSwipe ("#tinder-contain"); 
+    initTinderSwipe ("#tinder-contain"); 
 
 
-            //use time out to make sure the previous step (initTinderSwipe) has finished executing - not ideal.
-            setTimeout(function(){ 
-                $(".new_card").show();
-                $(".new_card").removeClass('new_card');  
-                if(mutual_friends_count == 0){
-                    $(".mutual-friends-click").hide();
-                }              
-            }, 100);
+    //use time out to make sure the previous step (initTinderSwipe) has finished executing - not ideal.
+    setTimeout(function(){ 
+        $(".new_card").show();
+        $(".new_card").removeClass('new_card');  
+        if(mutual_friends_count == 0){
+            $(".mutual-friends-click").hide();
+        }              
+    }, 100);
 }
 
 function showMutualFriends (actual_string) {
@@ -2140,7 +2439,7 @@ function updateFrontPage (timeFrame) {
         // placeTinderSwipe ()
         loadingCard = setTimeout(function () {
                 placeTinderSwipe ()
-        }, 1000);            
+        }, 100);            
         // $(".no-friend").css("display", "none")
         // console.log("has stuff")
         // placePulse ();
@@ -2190,6 +2489,10 @@ function updateFrontPage (timeFrame) {
     } 
 }
 
+function skipInvitingThisFriend () {
+    // list[index]["status"] = "skiped"
+    inviteNextFriend()
+}
 function inviteNextFriend () {
     // console.log(localStorage.contacts)
     var list = JSON.parse(localStorage.contacts)
@@ -2199,7 +2502,10 @@ function inviteNextFriend () {
         return; 
     }
     console.log("not empty list")
+
     var index = Math.round(Math.random() * list.length)
+
+
     console.log(index)
     console.log(list[index])
     console.log(list[index]["name"])
@@ -2208,10 +2514,9 @@ function inviteNextFriend () {
     document.getElementById("invite-friend-name").innerHTML = list[index]["name"]
     document.getElementById("invite-button").onclick = function () {
         console.log(list[index]["number"][0])
-        // inviteByPersonalText()
-        inviteFriend(list[index]["number"][0])
-        // list[index]["status"] = "invited"
-        // localStorage.contacts = JSON.stringify(list)
+        inviteFriend(list[index]["number"][0], "", "random")
+        // list[index].status = "invited"
+        localStorage.contacts = JSON.stringify(list)
         inviteNextFriend()
     }        
 }
@@ -2240,8 +2545,6 @@ function randomWhatsup () {
 function initShuffleInvite () {
     console.log("changed")
     myApp.showTab("#invitation-tab")
-    // document.getElementById("invitation-tab-button").click()
-    // $("#invitation-tab-button")[0].click()
 }
 
 // Place the pulse effect
@@ -2254,18 +2557,28 @@ function placePulse () {
         pulseHTML = 
         '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' + 
         '   <div class="gps-ring"></div>' + 
-        '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#929292;font-size:17px;">It seems that <span class="color-black">no friend</span> is nearby<i class="fa fa-frown-o" aria-hidden="true"></i>. Invite friends by sending them a <span class="color-pink">FREE text!<i class="fa fa-smile-o" aria-hidden="true"></i></span></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;">Invite <span id="invite-friend-name"></span> !</div>' +     
+        // '   <div class="gps-ring-2"></div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#929292;font-size:17px;">It seems that <span class="color-black">no friend</span> is nearby<i class="fa fa-frown-o" aria-hidden="true"></i>. Invite friends by sending them a <span class="color-pink">FREE text!<i class="fa fa-smile-o" aria-hidden="true"></i></span>Easily get friends to hang out now!</div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;font-weight:700">Invite <span id="invite-friend-name"></span> !</div>' +     
 
         '   <div class="row"> ' +
         '        <div class="col-50"> ' +
-        '            <div class="button button-fill color-gray no-friend" style="height:50px;line-height:50px;" onclick="inviteNextFriend()">Skip</div> ' +
+        '            <div class="button button-fill color-gray no-friend" style="height:50px;line-height:50px;" onclick="skipInvitingThisFriend()">Skip</div> ' +
         '        </div> ' +
         '        <div class="col-50"> ' +
         '            <div class="button button-fill color-pink no-friend" style="height:50px;line-height:50px;" onclick="sendInvite()" id="invite-button">Invite!</div> ' +
         '        </div> ' +
-        '    </div>' 
+        '    </div>' + 
+        '   <div class="row"> ' +
+        '        <div class="col-100"> ' +
+        '            <div class="button button-fill color-light-gray no-friend" style="height:50px;line-height:50px;" onclick="addRandomFriendPopup()">Friends You May Know</div> ' +
+        '        </div> ' +
+        '    </div>' + 
+        '   <div class="row"> ' +
+        '        <div class="col-100"> ' +
+        '            <div class="button button-fill color-light-gray no-friend" style="height:50px;line-height:50px;" onclick="rewindInvitation()">Rewind and Start Over</div> ' +
+        '        </div> ' +
+        '    </div>'          
         // '   <div class="row"> ' +
         // '        <div class="col-100"> ' +
         // // '            <div class="button button-fill color-green no-friend" style="height:44px;line-height:44px;" onclick="inviteViaWechat()"><i class="fa fa-weixin color-white" style="margin-right: 6px;" aria-hidden="true"></i>Invite friends from WeChat/Facebook</div> ' +
@@ -2283,8 +2596,8 @@ function placePulse () {
         pulseHTML = 
         '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' + 
         '   <div class="gps-ring"></div>' + 
-        '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#929292">It seems that no friendis nearby. Invite friends by sending them a FREE text!</div>' + 
+        // '   <div class="gps-ring-2"></div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#929292">It seems that no friend is nearby. Invite friends to Timi by sending them a FREE text!</div>' + 
         // '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;">Invite <span id="invite-friend-name">Ray Xiao</span>!</div>' +     
 
         // '   <div class="row"> ' +
@@ -2295,7 +2608,17 @@ function placePulse () {
         // '            <div class="button button-fill color-pink no-friend" style="height:44px;line-height:44px;" onclick="sendInvite()">Invite</div> ' +
         // '        </div> ' +
         // '    </div>'
-        '   <div class="button color-pink one-line-button no-friend" onclick="initShuffleInvite ()">Invite friends to Timi? </div>' + 
+        // '   <div class="button color-pink one-line-button no-friend" onclick="initShuffleInvite ()">Invite friends to Timi? </div>' + 
+        '   <div class="row"> ' +
+        '        <div class="col-100"> ' +
+        '            <div class="button button-fill color-pink no-friend" style="height:50px;line-height:50px;" onclick="initShuffleInvite ()">Invite friends to Timi? </div> ' +
+        '        </div> ' +
+        '    </div>' +           
+        '   <div class="row"> ' +
+        '        <div class="col-100"> ' +
+        '            <div class="button button-fill color-light-gray no-friend" style="height:50px;line-height:50px;" onclick="rewindInvitation()">Start Over</div> ' +
+        '        </div> ' +
+        '    </div>' +        
         '   <div class="one-line-prompt no-friend" style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
         document.getElementById("tinderslide").innerHTML = pulseHTML
         document.getElementById("tinderslide").style.display = "block"
@@ -2306,6 +2629,7 @@ function placePulse () {
 }
 
 function sendInvite () {
+    console.log("empty")
 
 }
 // several cases
@@ -2413,43 +2737,148 @@ function inviteViaWechat () {
 // Initiate the tinder swipe page, called when the home page is loaded
 function initTinderSwipe (object) {
     $(object).jTinder({
-        onLike: function(item) {
-            requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
-            currentIndex[timeFrame]--
-            // [1,2,3; 2,3,4; 3,4,5; 4,5,6]
-            // do 123, 234, 345, 456, show nothing
-            if (currentIndex[timeFrame] < 0) {
-                placePulse()
-                showNoFriendBlock ()                
+        onSuperLike: function (item) {
+
+            if (localStorage.promptSuperLike != 1) {
+                myApp.confirm("By Swiping up, you are sending an direct \"invite\" to this user, and Timi will let this user know that you have invited her. Continue? ", "", function () {
+                    localStorage.promptSuperLike = 1
+                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 1);                         
+                    currentIndex[timeFrame]--
+                    if (currentIndex[timeFrame] < 0) {
+                        placePulse()
+                        showNoFriendBlock ()                
+                    } else {
+                        placeTinderSwipe ()
+                    }
+                }, function () {
+                    if (currentIndex[timeFrame] < 0) {
+                        placePulse()
+                        showNoFriendBlock ()                
+                    } else {
+                        placeTinderSwipe ()
+                    }                    
+                })
             } else {
-                console.log("load new")
-                //insertNewCard()
-                placeTinderSwipe ()
+                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 1);                         
+                currentIndex[timeFrame]--
+                if (currentIndex[timeFrame] < 0) {
+                    placePulse()
+                    showNoFriendBlock ()                
+                } else {
+                    placeTinderSwipe ()
+                }
+            }            
+
+        }, 
+        onLike: function(item) {
+            // placeTinderSwipe ()
+
+            if (localStorage.promptLike != 1) {
+                myApp.confirm("By Swiping right, you are sending an anonymous \"invite\" to this user, and Timi will let you know if you are a match. Continue? ", "", function () {
+                    localStorage.promptLike = 1
+                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
+                    currentIndex[timeFrame]--
+                    if (currentIndex[timeFrame] < 0) {
+                        placePulse()
+                        showNoFriendBlock ()                
+                    } else {
+                        placeTinderSwipe ()
+                    }
+                }, function () {
+                    if (currentIndex[timeFrame] < 0) {
+                        placePulse()
+                        showNoFriendBlock ()                
+                    } else {
+                        placeTinderSwipe ()
+                    }                    
+                })
+            } else {
+                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
+                currentIndex[timeFrame]--
+                if (currentIndex[timeFrame] < 0) {
+                    placePulse()
+                    showNoFriendBlock ()                
+                } else {
+                    placeTinderSwipe ()
+                }
             }
+
+
+
         }, 
         onDislike: function (item) {
-            console.log(123123123)
-            requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
-            currentIndex[timeFrame]--
-            if (currentIndex[timeFrame] < 0) {
-                placePulse()
-                showNoFriendBlock ()          
+            if (localStorage.promptDisLike != 1) {
+                myApp.confirm("By Swiping left, you are sending an anonymous \"pass\" to this user, and Timi won\'t let this user know that you say no. Continue? ", "", function () {
+                    localStorage.promptDisLike = 1
+                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
+                    currentIndex[timeFrame]--
+                    if (currentIndex[timeFrame] < 0) {
+                        placePulse()
+                        showNoFriendBlock ()          
+                    } else {
+                        placeTinderSwipe ()
+                    }                    
+                }, function () {
+                    if (currentIndex[timeFrame] < 0) {
+                        placePulse()
+                        showNoFriendBlock ()                
+                    } else {
+                        placeTinderSwipe ()
+                    }                                     
+                })
             } else {
-                console.log("load new")
-                //insertNewCard()
-                placeTinderSwipe ()
-                // $("#tinder-contain li").css("display", "block")
-            }
+                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
+                currentIndex[timeFrame]--
+                if (currentIndex[timeFrame] < 0) {
+                    placePulse()
+                    showNoFriendBlock ()          
+                } else {
+                    placeTinderSwipe ()
+                }
+            }            
+
         }
     });    
     initTinderSwipeCSS()
     console.log("init")
     $(".like-button").on("click", function () {
+        // if (localStorage.promptLike != 1) {
+        //     myApp.confirm("By Swiping right, you are sending an anonymous \"invite\" to this user, and Timi will let you know if you are a match. Continue? ", "", function () {
+        //         localStorage.promptLike = 1
+        //         $(object).jTinder('like');
+        //     })
+        // } else {
+        //     $(object).jTinder('like');
+        // }
         $(object).jTinder('like');
+        
     })
     $(".dislike-button").on("click", function () {
+        // if (localStorage.promptDisLike != 1) {
+        //     myApp.confirm("By Swiping left, you are sending an anonymous \"pass\" to this user, and Timi won\'t let this user know that you say no. Continue? ", "", function () {
+        //         localStorage.promptDisLike = 1
+        //         $(object).jTinder('dislike');
+        //     })
+        // } else {
+        //     $(object).jTinder('dislike');
+        // }
         $(object).jTinder('dislike');
+
+        
     })
+    $(".superlike-button").on("click", function () {
+        // if (localStorage.promptDisLike != 1) {
+        //     myApp.confirm("By Swiping left, you are sending an anonymous \"pass\" to this user, and Timi won\'t let this user know that you say no. Continue? ", "", function () {
+        //         localStorage.promptDisLike = 1
+        //         $(object).jTinder('dislike');
+        //     })
+        // } else {
+        //     $(object).jTinder('dislike');
+        // }
+        $(object).jTinder('superlike');
+
+        
+    })    
                   
 }
 
@@ -2457,27 +2886,67 @@ function initTinderSwipe (object) {
 function initTinderSwipeCSS() {
     // if ( currentIndex[timeFrame] < 0 ) return; 
     if ($(window).height() < 600 ) {
-        $(".card-pic").css("height", (Math.round($(window).width()*0.80)+1)+"px"); 
-        $(".card-pic").css("width", (Math.round($(window).width()*0.80)+1)+"px"); 
-        $("#tinderslide").css("width", (Math.round($(window).width()*0.80)+1)+"px"); 
-        $("#tinderslide").css("left", "10%"); 
-        var nav = 98; 
-        var tbH = 50; 
+        // iphone 5
+        var margin = 25
+        var marginV = 5; 
+        var marginH = margin;         
+        var cardWidth = (Math.round($(window).width()) - marginH * 2)
+        $(".card-pic").css("height", cardWidth+"px"); 
+        $(".card-pic").css("width", cardWidth+"px"); 
+        $("#tinderslide").css("width", cardWidth+"px"); 
+        $("#tinderslide").css("left", marginH + "px"); 
+        var nav = 44; 
+        var tbH = 44; 
         var statusH = 0; 
-        var a = Math.round(($(window).height() - nav-tbH -statusH- $(".card.demo-card-header-pic").height())/2); 
+        var topMargin = 44; // where relative css starts from
+        var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
         console.log(a)
-        a += 38        
+        a += tbH
+        a = topMargin + marginV
         $("#tinderslide").css("margin-top", a + "px"); 
-    } else {
-        $(".card-pic").css("height", (Math.round($(window).width()*0.94)+1)+"px"); 
-        $(".card-pic").css("width", (Math.round($(window).width()*0.94)+1)+"px"); 
-        var nav = 98; 
-        var tbH = 50; 
-         var statusH = 0; 
-        var a = Math.round(($(window).height() - nav-tbH -statusH - $(".card.demo-card-header-pic").height())/2); 
+        $(".card-header").css("margin-bottom", "0px");
+        $(".row.decision-button-row").css("bottom", "40px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "40px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "40px"); 
+
+    } else if ($(window).height() < 700 ) {
+        // iphone 6
+        var margin = 25
+        var cardWidth = (Math.round($(window).width()) - margin * 2)
+        $(".card-pic").css("height", cardWidth+"px"); 
+        $(".card-pic").css("width", cardWidth+"px"); 
+        $("#tinderslide").css("width", cardWidth+"px"); 
+        $("#tinderslide").css("left", margin + "px"); 
+        var nav = 44; 
+        var tbH = 44; 
+        var statusH = 0; 
+        var topMargin = 44; // where relative css starts from
+        var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
         console.log(a)
-        a += 38        
+        a += tbH
+        a = topMargin + margin
         $("#tinderslide").css("margin-top", a + "px"); 
+        $(".row.decision-button-row").css("bottom", "72px")
+    }
+
+    else {
+        // iphone 6+
+        var margin = 25
+        var cardWidth = (Math.round($(window).width()) - margin * 2)
+        $(".card-pic").css("height", cardWidth+"px"); 
+        $(".card-pic").css("width", cardWidth+"px"); 
+        $("#tinderslide").css("width", cardWidth+"px"); 
+        $("#tinderslide").css("left", margin + "px"); 
+        var nav = 44; 
+        var tbH = 44; 
+        var statusH = 0; 
+        var topMargin = 44; // where relative css starts from
+        var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
+        console.log(a)
+        a += tbH
+        a = topMargin + margin
+        $("#tinderslide").css("margin-top", a + "px"); 
+        $(".row.decision-button-row").css("bottom", "96px")
     }
 }
 function updateFavFood () {
@@ -2597,12 +3066,17 @@ var myApp = new Framework7({
             } else {
                 $(".tab-link .badge").css("display", "none")
             }
-            // changeNavbarTitle("Explore", "<i style=\"visibility:hidden\" class=\"fa fa-user-plus\"></i>", "<i class=\"fa fa-user-plus\" onclick='inviteViaWechat()'></i>"); 
+
             setTimeout(function () {
                 
             }, 300)      
         } else if (page.name == "personal-setting-page") {
-            Keyboard.hideFormAccessoryBar(false);
+            try {
+                Keyboard.hideFormAccessoryBar(false);
+            } catch (err) {
+
+            }
+            
             $(".home-nav").css("visibility", "hidden")  
             // build fav food list
             var htmlString = "<ul>"
@@ -2659,9 +3133,15 @@ var myApp = new Framework7({
 function openSystem () {
     cordova.plugins.settings.open(null, null);    
 }
+
 function updatePersonalPage () {
     document.getElementById("whatsup").value = personalData.whatsup;
     document.getElementById("current").value = personalData.current;
+    if(personalData.friend_friend > 0){
+        document.getElementById("allowFoF").checked = true;
+    }else{
+        document.getElementById("allowFoF").checked = false;
+    }
     // document.getElementById("distance-range").value = personalData.range
     // document.getElementById("distance-value").innerHTML = Math.round(personalData.range) + "mi."
     var formData = myApp.formToJSON('#favorite-food')
@@ -2763,19 +3243,21 @@ function initAfterLogin () {
         "reload" : true, 
         "animatePages": true
     })
+
     getMySchedule()
     getPersonalInfo ()
-    $("#explore-tab-button")[0].click()
+    myApp.showTab(".explore-tab")
     currentTabPage = "explore-tab"
     $(currentTimeTab())[0].click()
-    afterClickTab(timeFrame)
+    //afterClickTab(timeFrame)
     markRequestAsRead()
     // get contact 
     // get notification
     // get location     
 
     document.addEventListener("resume", appReturnedFromBackground, false);      
-    updateInvitationStatus ()   
+    updateInvitationStatus ()  
+    getUnprocessedSwipe () 
     getPush ()    
 }
 
@@ -2815,9 +3297,6 @@ function initPush () {
         } else {
             device_type = "iOS"
         }
-        // cordova.plugins.clipboard.copy(device_type)
-        // var devicePlatform = device.platform || "iOS";
-
         if ( device_token != "" ) {
             var ajaxUrl = "http://gettimi.com/site/takeDeviceToken?user_token=" + 
                 localStorage.usertoken + "&device_type=" + device_type + "&device_token=" + device_token
@@ -2836,7 +3315,6 @@ function initPush () {
         } else {
             console.log("device_token not found")
         }        
-        // cordova.plugins.clipboard.copy(data.registrationId)
     });
     push_notification.on("notification", function(data) {
         // 1 friend sign uo
@@ -2846,25 +3324,8 @@ function initPush () {
             // go to home
         }
         else if (data.additionalData.type == "2") {
+            hangoutRequestPopup(data.additionalData.time)
             // go to home
-            if ( data.additionalData.time == 0) {
-                timeFrame = 0
-                myApp.alert("Someone wants to hang out with you this noon:) Swipe to find out! ", function () {
-                    $(".lunch-tab")[0].click()
-                })
-                
-            } else if ( data.additionalData.time == 1) {
-                timeFrame = 1
-                myApp.alert("Someone wants to hang out with you this evening:) Swipe to find out! ", function () {
-                    $(".dinner-tab")[0].click()
-                })
-                
-            } else {
-                timeFrame = 2
-                myApp.alert("Someone wants hang out with you tonight. Swipe to find out! ", function () {
-                    $(".night-tab")[0].click()
-                })
-            }   
 
         }
         else if (data.additionalData.type == "3") {
@@ -2888,7 +3349,7 @@ function initPush () {
             // myApp.alert(data)
             mainView.router.loadPage({"pageName":"home"})     
             // 
-            myApp.showTab("#messenger-tab")
+            myApp.showTab("#explore-tab")
             
             if ( data.additionalData.time == 0) {
                 timeFrame = 0
@@ -2940,6 +3401,54 @@ function initPush () {
                 afterClickTab(data.additionalData.time)                        
             })            
             // cancallation
+        } else if ( data.additionalData.type == "6" ) {
+            
+
+            mainView.router.loadPage({"pageName":"home"})     
+            // 
+            myApp.showTab("#explore-tab")
+            
+            if ( data.additionalData.time == 0) {
+                timeFrame = 0
+                $(".lunch-tab")[0].click()
+            } else if ( data.additionalData.time == 1) {
+                timeFrame = 1
+                $(".dinner-tab")[0].click()
+            } else {
+                timeFrame = 2
+                $(".night-tab")[0].click()
+            }             
+            // alert(JSON.stringify(data.additionalData))
+            // myApp.alert(data.additionalData.username)
+            var user = {
+                "avatar": data.additionalData.avatar,
+                "username": data.additionalData.username,
+                "phone": data.additionalData.phone, 
+                "email": data.additionalData.email, 
+                "user_id": data.additionalData.user_id, 
+                "geolocation": data.additionalData.geolocation, 
+                "favorites": data.additionalData.favorites, 
+                "whatsup": data.additionalData.whatsup, 
+                "day": data.additionalData.day, 
+                "time": data.additionalData.time, 
+                "chat_history" : []
+                // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
+            }         
+            // post confirmation box
+            // matched( user );
+
+            // chatlist = getChatList()
+            // var elem = {
+            //     user: user, 
+            //     timeObject: (new Date()), 
+            //     schedule: data.additionalData.time
+            // }
+            // pushChatList(elem)  
+
+            // superLikePopup(user)
+
+
+
         }
 
         // window.cache.clear(clearCacheSuccess, clearCacheError);
@@ -2960,6 +3469,73 @@ function initPush () {
     })    
 }
 
+function getUnprocessedSwipe () {
+    var ajaxUrl = "http://gettimi.com/site/UnprocessedSwipe?user_token=" + localStorage.usertoken +"&day=" + queryDay
+    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab"]
+    var scheduleName = ["Noon", "Evening", "Night"]
+
+    console.log(ajaxUrl)
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            console.log(results.result)
+            requestList = JSON.parse(results.result)
+            for ( var i = 0; i < requestList.length; i++) {
+                if (requestList[i] > 0) {
+                    var html = $(cssClass[i]).html()
+                    $(cssClass[i]).html(scheduleName[i] + "<span class='request-badge'>" + "</span>")                    
+                } else {
+                    $(cssClass[i]).html(scheduleName[i])      
+                }
+
+            }
+            // requestList.map(function (num) {
+
+            // })
+            // for (var i = 0; i < )
+
+            // console.log(JSON.parse(results.results))
+        }, 
+        error: function (results) {
+            console.log(results)
+        }
+    });       
+}
+
+
+
+// [4:12] 
+// user_token
+
+// [4:12] 
+// day
+
+function hangoutRequestPopup (t) {
+    var scheduleName = ["this noon", "this evening", "tonight"]
+    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab"]
+    var popupElem = {
+        title: "Someone likes you!", 
+        text:"Someone wants to hang out with you "+ scheduleName[t] +" :) Swipe to find out! ", 
+        iconHTML:'<i class="fa fa-heart" aria-hidden="true"></i>', 
+        confirmText:"Yes, swipe now", 
+        cancelText:"Later", 
+        callbackYes:function () {
+            mainView.router.loadPage({"pageName": "home"}); 
+            myApp.showTab("#explore-tab");   
+            console.log(t)       
+            setTimeout(function () {
+                $(cssClass[t])[0].click()
+            }, 600)              
+            
+        }, 
+        callbackNo:function () {}
+    }
+    popupQueue.push(popupElem)
+    fullScreenConfirm ()                     
+}
+
 function loadPastDates () {
 
 }
@@ -2967,7 +3543,30 @@ function loadPastDates () {
 // get unread match list
 // mark as read after clicking 
 var unreadList =[]
-function getUnreadMatchList () {
+
+function popupMatchGeneral () {
+    if (localStorage.unread == 1) {
+        var popupElem = {
+            title: "You are matched! ", 
+            text:"Would you like to chat with them and hang out now? ", 
+            iconHTML:'<i class="fa fa-heart" aria-hidden="true"></i>', 
+            confirmText:"Yes, chat now", 
+            cancelText:"Later", 
+            callbackYes:function () {
+                localStorage.unread = 0 
+                myApp.showTab("#messenger-tab");                        
+            }, 
+            callbackNo:function () {
+                localStorage.unread = 0
+            }
+        }
+        popupQueue.push(popupElem)
+        fullScreenConfirm ()          
+    }
+    
+}
+
+function getUnreadMatchList (callback) {
      // user_token, request_Id
     var ajaxUrl = "http://gettimi.com/site/GetUnreadMatchList?user_token=" + 
         localStorage.usertoken
@@ -2980,6 +3579,7 @@ function getUnreadMatchList () {
             unreadList = JSON.parse(results.result);
             if (unreadList.length == 0) {
                 localStorage.unread = 0; 
+                callback()
             } else {
                 localStorage.unread = 1
                 unreadList.map(function (unit) {
@@ -2992,20 +3592,9 @@ function getUnreadMatchList () {
                         schedule: unit.time
                     }
                     pushChatList (elem)
-                }) 
-                var popupElem = {
-                    title: "You are matched! ", 
-                    text:"Would you like to chat with them and hang out now? ", 
-                    iconHTML:'<i class="fa fa-heart" aria-hidden="true"></i>', 
-                    confirmText:"Yes, chat now", 
-                    cancelText:"Later", 
-                    callbackYes:function () {
-                        myApp.showTab("#messenger-tab")
-                    }, 
-                    callbackNo:function (){}
-                }
-                popupQueue.push(popupElem)
-                fullScreenConfirm ()                                  
+                }); 
+                callback () 
+                                
             }
 
             console.log(results)
@@ -3104,10 +3693,11 @@ function pushChatList (elem) {
 // (0 for noon, 1 for evening, 2 for night)
 
 // request or turn down friends
-function requestFriend(token, day, time, receiver, decision) {
+function requestFriend(token, day, time, receiver, decision, superlike) {
+    superlike = superlike || 0
     var ajaxUrl = "http://gettimi.com/site/SendRequest?user_token=" + 
         token + "&request_day=" + 
-        day + "&request_time=" + time + "&receiver=" + receiver + "&decision=" + decision; 
+        day + "&request_time=" + time + "&receiver=" + receiver + "&decision=" + decision + "&super=" + superlike; 
         console.log(ajaxUrl)
     $.ajax({
         url: ajaxUrl,
@@ -3173,14 +3763,13 @@ function getFriendFreeTimeNoUI (callback) {
         dataType: "jsonp",
         success: function(results) {
             console.log(2)
-            console.log(results)
             userList = JSON.parse(results.result)
             console.log(3)
             // addDetail(); 
             availFriend = [[], [], []]
             userList.map(function (unit) {
                 for (var i = 0 ; i < 3; i ++) {
-                    if ( unit.availability[i] == 1 ) {
+                    if ( userListToAvailFriendBool (unit, i) ) {
                         availFriend[i].push(unit)
                     } 
                 }
@@ -3190,15 +3779,19 @@ function getFriendFreeTimeNoUI (callback) {
                 availFriend[1].length - 1,
                 availFriend[2].length - 1,                
             ]
-            shuffle(availFriend[0])
-            shuffle(availFriend[1])
-            shuffle(availFriend[2])           
+            // shuffle(availFriend[0])
+            // shuffle(availFriend[1])
+            // shuffle(availFriend[2])           
         }, 
         error: function (results) {
             console.log(results)
             // myApp.alert("Network error. Please try again later? ")
         }
     });       
+}
+
+function userListToAvailFriendBool (unit, i) {
+    return (unit.availability[i] == 1 || unit.availability[i] == "super")
 }
 
 function getFriendFreeTime (callback) {
@@ -3215,14 +3808,13 @@ function getFriendFreeTime (callback) {
         dataType: "jsonp",
         success: function(results) {
             console.log(2)
-            console.log(results)
             userList = JSON.parse(results.result)
             console.log(3)
             // addDetail(); 
             availFriend = [[], [], []]
             userList.map(function (unit) {
                 for (var i = 0 ; i < 3; i ++) {
-                    if ( unit.availability[i] == 1 ) {
+                    if ( userListToAvailFriendBool (unit, i) ) {
                         availFriend[i].push(unit)
                     } 
                 }
@@ -3232,9 +3824,9 @@ function getFriendFreeTime (callback) {
                 availFriend[1].length - 1,
                 availFriend[2].length - 1,                
             ]
-            shuffle(availFriend[0])
-            shuffle(availFriend[1])
-            shuffle(availFriend[2])
+            // shuffle(availFriend[0])
+            // shuffle(availFriend[1])
+            // shuffle(availFriend[2])
             if ( myAvail[timeFrame] == 1 ) {
                 updateFrontPage (timeFrame)    
             } else {
@@ -3265,7 +3857,7 @@ function getMySchedule (callbackFunction) {
     console.log("get my schedule")
     console.log("q day:" + queryDay)
     var user_token = localStorage.usertoken
-    var ajaxUrl = "http://gettimi.com/site/GetMySchedule?user_token=" + user_token + "&day=" + queryDay
+    var ajaxUrl = "http://gettimi.com/site/GetMySchedule?user_token=" + user_token + "&day=" + queryDay + "&random=" +Math.random()
     console.log(ajaxUrl)
     $.ajax({
         url: ajaxUrl,
@@ -3295,7 +3887,7 @@ function getMySchedule (callbackFunction) {
 function updateFreeTime () {
     // myApp.showIndicator()
     var user_token = localStorage.usertoken
-    var ajaxUrl = "http://gettimi.com/site/UpdateFreetime?user_token=" + user_token
+    var ajaxUrl = "http://gettimi.com/site/UpdateFreetime?user_token=" + user_token + "&random=" +Math.random()
     
     $.ajax({
         url: ajaxUrl,
@@ -3415,24 +4007,34 @@ function afterClickTab (timeFrame) {
 }
 
 $$(".lunch-tab").on("click", function (e) {
+    if($(".lunch-tab").hasClass('current-tab')){
+        return;
+    }else{
+        $(".time-tab").removeClass('current-tab');
+        $(".lunch-tab").addClass('current-tab');
+    }
     timeFrame = 0
     afterClickTab (timeFrame)
 })
 
-
-
 $$(".dinner-tab").on("click", function (e) {
+    if($(".dinner-tab").hasClass('current-tab')){
+        return;
+    }else{
+        $(".time-tab").removeClass('current-tab');
+        $(".dinner-tab").addClass('current-tab');
+    }
     timeFrame = 1
     afterClickTab (timeFrame)
 })
 $$(".night-tab").on("click", function (e) {
-    timeFrame = 2
-    afterClickTab (timeFrame)
-})
-$$("#explore-tab-button").on("click", function (e) {
-    if (currentTabPage == "explore-tab") {
+    if($(".night-tab").hasClass('current-tab')){
         return;
+    }else{
+        $(".time-tab").removeClass('current-tab');
+        $(".night-tab").addClass('current-tab');
     }
+    timeFrame = 2
     afterClickTab (timeFrame)
 })
 
@@ -3629,7 +4231,7 @@ function verifyCode () {
             myApp.hideIndicator()
             localStorage.checkedPhone = true; 
             mainView.router.loadPage({"pageName":"home"})
-            $("#explore-tab-button")[0].click()
+            myApp.showTab(".explore-tab")
             $(currentTimeTab())[0].click();              
             initAfterLogin ()
             document.getElementById("ask-calendar-back").style.display = "none"
@@ -3811,3 +4413,324 @@ function logoutFB () {
             console.log(JSON.stringify(response)) 
         });
 }
+
+;(function ($, window, document, undefined) {
+    var pluginName = "jTinder",
+        defaults = {
+            onDislike: null,
+            onLike: null,
+            onSuperLike: null,
+            animationRevertSpeed: 200,
+            animationSpeed: 200,
+            threshold: 1.2,
+            likeSelector: '.like',
+            dislikeSelector: '.dislike',
+            superlikeSelector: '.superlike'
+        };
+    var windowW = $(window).width(); 
+    var windowH = $(window).height(); 
+    console.log(windowH)
+
+    var container = null;
+    var panes = null;
+    var $that = null;
+    var xStart = 0;
+    var yStart = 0;
+    var touchStart = false;
+    var posX = 0, posY = 0, lastPosX = 0, lastPosY = 0, pane_width = 0, pane_count = 0, current_pane = 0;
+
+    function Plugin(element, options) {
+        this.element = element;
+        this.settings = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name = pluginName;
+        this.init(element);
+    }
+
+    Plugin.prototype = {
+
+
+        init: function (element) {
+
+            container = $(">ul", element);
+            panes = $(">ul>li", element);
+            pane_width = container.width();
+            pane_count = panes.length;
+            current_pane = panes.length - 1;
+            $that = this;
+
+            $(element).bind('touchstart mousedown', this.handler);
+            $(element).bind('touchmove mousemove', this.handler);
+            $(element).bind('touchend mouseup', this.handler);
+        },
+
+        showPane: function (index) {
+            panes.eq(current_pane).hide();
+            current_pane = index;
+        },
+
+        next: function () {
+            return this.showPane(current_pane - 1);
+        },
+
+        dislike: function() {
+            panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
+                if($that.settings.onDislike) {
+                    $that.settings.onDislike(panes.eq(current_pane));
+                }
+                $that.next();
+            });
+        },
+
+        like: function() {
+            panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
+                if($that.settings.onLike) {
+                    $that.settings.onLike(panes.eq(current_pane));
+                }
+                $that.next();
+            });
+        },
+
+        superlike: function () {
+            panes.eq(current_pane).animate({"transform": "translate(" + (0) + "px,-" + (pane_width*1.5) + "px) rotate(0deg)"}, $that.settings.animationSpeed, function () {
+                if($that.settings.onSuperLike) {
+                    $that.settings.onSuperLike(panes.eq(current_pane));
+                }
+                $that.next();
+            });
+        }, 
+
+        handler: function (ev) {
+            ev.preventDefault();
+
+            switch (ev.type) {
+                case 'touchstart':
+                    if(touchStart === false) {
+                        touchStart = true;
+                        xStart = ev.originalEvent.touches[0].pageX;
+                        yStart = ev.originalEvent.touches[0].pageY;
+                    }
+                case 'mousedown':
+                    if(touchStart === false) {
+                        touchStart = true;
+                        xStart = ev.pageX;
+                        yStart = ev.pageY;
+                    }
+                case 'mousemove':
+                case 'touchmove':
+                    if(touchStart === true) {
+                        var pageX = typeof ev.pageX == 'undefined' ? ev.originalEvent.touches[0].pageX : ev.pageX;
+                        var pageY = typeof ev.pageY == 'undefined' ? ev.originalEvent.touches[0].pageY : ev.pageY;
+                        var deltaX = parseInt(pageX) - parseInt(xStart);
+                        var deltaY = parseInt(pageY) - parseInt(yStart);
+                        var percent = ((100 / pane_width) * deltaX) / pane_count;
+                        posX = deltaX + lastPosX;
+                        posY = deltaY + lastPosY;
+                        // console.log(windowW, windowH, pageX, pageY)
+
+                        // if getting outside the screen
+                        if ( pageX >= windowW-2 || pageX <= 0 || pageY <= 0 || pageY >= windowH-2) {
+                            console.log("out")
+                            touchStart = false;
+                            var pageX = (typeof ev.pageX == 'undefined') ? ev.originalEvent.changedTouches[0].pageX : ev.pageX;
+                            var pageY = (typeof ev.pageY == 'undefined') ? ev.originalEvent.changedTouches[0].pageY : ev.pageY;
+                            var deltaX = parseInt(pageX) - parseInt(xStart);
+                            var deltaY = parseInt(pageY) - parseInt(yStart);
+
+                            posX = deltaX + lastPosX;
+                            posY = deltaY + lastPosY;
+                            var opa = Math.abs((Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2);
+                            var opaY = Math.abs((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2);
+
+                            if (opaY >= 1) {
+                                $(".superlike").addClass(".animated bounceIn");
+                                setTimeout(function () {
+                                    $(".superlike").removeClass(".animated bounceIn");
+                                }, 800);
+                                console.log("super")
+
+                            }
+                            else if (opa >= 1) {
+                                // console.log("afs")
+                                if (posX > 0) {
+                                    panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width)  + "px) rotate(30 deg)"}, $that.settings.animationSpeed, function () {
+                                        if($that.settings.onLike) {
+                                            $that.settings.onLike(panes.eq(current_pane));
+                                        }
+                                        $that.next();
+                                    });
+                                } else {
+                                    panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (posY + pane_width)  + "px) rotate(-30deg)"}, $that.settings.animationSpeed, function () {
+                                        if($that.settings.onDislike) {
+                                            $that.settings.onDislike(panes.eq(current_pane));
+                                        }
+                                        $that.next();
+                                    });
+                                }                       
+                                // if (posX > 0) {
+                                //  panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
+                                //      if($that.settings.onLike) {
+                                //          $that.settings.onLike(panes.eq(current_pane));
+                                //      }
+                                //      $that.next();
+                                //  });
+                                // } else {
+                                //  panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
+                                //      if($that.settings.onDislike) {
+                                //          $that.settings.onDislike(panes.eq(current_pane));
+                                //      }
+                                //      $that.next();
+                                //  });
+                                // }
+                            } else {
+                                lastPosX = 0;
+                                lastPosY = 0;
+                                panes.eq(current_pane).animate({"transform": "translate(0px,0px) rotate(0deg)"}, $that.settings.animationRevertSpeed);
+                                panes.eq(current_pane).find($that.settings.likeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                                panes.eq(current_pane).find($that.settings.superlikeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                                panes.eq(current_pane).find($that.settings.dislikeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                            }
+                            break;                          
+
+                        }
+
+                        panes.eq(current_pane).css("transform", "translate(" + posX + "px," + posY + "px) rotate(" + (percent / 2) + "deg)");
+
+                        var opa = (Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2;
+                        var opaY = ((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.6;
+
+                        // console.log(opa)
+                        if (opaY >= 1) {
+                            // if (opaY >)
+                            opaY = ((opaY > 1.0) ? 1.0 : opaY);
+                            // $(".superlike").css("color", "white");
+                            // $(".superlike").addClass(".animated bounceIn");
+                            // setTimeout(function () {
+                            //     $(".superlike").removeClass(".animated bounceIn");
+                            // }, 800);
+
+                        } else {
+                            if(opa > 1.0) {
+                                console.log("changechange")
+                                opa = 1.0;
+                                if (posX >= 10) {
+                                    // $(".like").addClass(".animated bounceIn");
+                                    // $(".like").css("color", "white");
+                                    // setTimeout(function () {
+                                    //     $(".like").removeClass(".animated bounceIn");
+                                    // }, 800);                                    
+                                } else if (posX < -10) {
+                                    // $(".dislike").addClass(".animated bounceIn");
+                                    // $(".dislike").css("color", "white");
+                                    // setTimeout(function () {
+                                    //     $(".dislike").removeClass(".animated bounceIn");
+                                    // }, 800);                                            
+                                }
+                            }
+                            if (posX >= 10) {
+                                // console.log("transform", "scale(" + Math.round( (opa + 1) * 100)/100 + ")")
+                                // $("#star-icon").css("transform", "scale(" + Math.round( (opa + 1) * 100)/100 + ")")
+                                panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', opa);
+                                panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                                panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);
+                            } else if (posX < -10) {
+                                // $("#times-icon").css("transform", "scale(" + Math.round( (opa + 1) * 100)/100 + ")")
+                                panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', opa);
+                                panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                                panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);
+                            } else if (posY <= -10) {
+                                panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);
+                                panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', opaY);
+                                panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);                                  
+                            }                           
+                        }
+
+                    }
+                    break;
+                case 'mouseup':
+                case 'touchend':
+                    if(touchStart === false) break;  
+                    touchStart = false;
+
+                    var pageX = (typeof ev.pageX == 'undefined') ? ev.originalEvent.changedTouches[0].pageX : ev.pageX;
+                    var pageY = (typeof ev.pageY == 'undefined') ? ev.originalEvent.changedTouches[0].pageY : ev.pageY;
+                    var deltaX = parseInt(pageX) - parseInt(xStart);
+                    var deltaY = parseInt(pageY) - parseInt(yStart);
+
+                    posX = deltaX + lastPosX;
+                    posY = deltaY + lastPosY;
+                    var opa = Math.abs((Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2);
+                    var opaY = Math.abs((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.6;
+                    if (opaY >= 1) {
+                        console.log("super")
+                        panes.eq(current_pane).animate({"transform": "translate(" + 0 + "px,-" + (pane_width)  + "px) rotate(0 deg)"}, $that.settings.animationSpeed, function () {
+                            if($that.settings.onSuperLike) {
+                                $that.settings.onSuperLike(panes.eq(current_pane));
+                            }
+                            $that.next();
+                        });                        
+                    }
+                    else if (opa >= 1) {
+                        // if (posY > 100) {
+                            // console.log("super")
+                        // } else {
+                        if (posX > 0) {
+                            panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width)  + "px) rotate(30 deg)"}, $that.settings.animationSpeed, function () {
+                                if($that.settings.onLike) {
+                                    $that.settings.onLike(panes.eq(current_pane));
+                                }
+                                $that.next();
+                            });
+                        } else {
+                            panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (posY + pane_width)  + "px) rotate(-30deg)"}, $that.settings.animationSpeed, function () {
+                                if($that.settings.onDislike) {
+                                    $that.settings.onDislike(panes.eq(current_pane));
+                                }
+                                $that.next();
+                            });
+                        }                                
+                        // }
+                        // console.log("afssss")
+                   
+                        // if (posX > 0) {
+                        //  panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
+                        //      if($that.settings.onLike) {
+                        //          $that.settings.onLike(panes.eq(current_pane));
+                        //      }
+                        //      $that.next();
+                        //  });
+                        // } else {
+                        //  panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
+                        //      if($that.settings.onDislike) {
+                        //          $that.settings.onDislike(panes.eq(current_pane));
+                        //      }
+                        //      $that.next();
+                        //  });
+                        // }
+                    } else {
+                        lastPosX = 0;
+                        lastPosY = 0;
+                        panes.eq(current_pane).animate({"transform": "translate(0px,0px) rotate(0deg)"}, $that.settings.animationRevertSpeed);
+                        panes.eq(current_pane).find($that.settings.likeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                        panes.eq(current_pane).find($that.settings.superlikeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                        panes.eq(current_pane).find($that.settings.dislikeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                    }
+                    break;
+            }
+        }
+    };
+
+    $.fn[ pluginName ] = function (options) {
+        this.each(function () {
+            if (!$.data(this, "plugin_" + pluginName)) {
+                $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+            }
+            else if ($.isFunction(Plugin.prototype[options])) {
+                $.data(this, 'plugin_' + pluginName)[options]();
+            }
+        });
+
+        return this;
+    };
+
+})(jQuery, window, document);
