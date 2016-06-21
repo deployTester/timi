@@ -179,16 +179,29 @@ html, body {
 }
 .you-are-matched-title {
     font-size: 36px;
-    position: absolute;
+    /*position: absolute;*/
     width: 100%;
     text-align: center;
-    margin-top: -75px;
+    margin-top: 80px;
     /* color: #222; */
     font-family: fantasy;
 }
 .facebook-login-button-tutorial .preloader {
     display: block;
     margin: 3px auto 4px;
+}
+.match-portrait {
+    width: 100px;
+    border-radius: 100%;
+    height: 100px;
+    display: block;
+    /* margin-top: calc( 30% + 0px ); */
+    /* padding-bottom: 60px; */
+    /* margin-bottom: calc( 45% + 0px ); */
+    margin-left: auto;
+    border: 1px solid #efefef;
+    margin-right: auto;
+    /* padding: 0; */
 }
 .pulse-portrait {
     width: 100px;
@@ -511,8 +524,31 @@ span.request-badge {
 #messenger-tab .list-block .item-text {
     color:#929292;
     font-size: 13px;
+    color: #666;
+    line-height: 21px;
+    position: relative;
+    overflow: hidden;
+    height: 21px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+#messenger-tab .list-block .item-preview {
+    color:#929292;
+    font-size: 13px;
+    color: #8e8e93;
+    line-height: 21px;
+    position: relative;
+    overflow: hidden;
+    height: 21px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 }
 #messenger-tab .item-after {
+    margin-top: 1px;
     color:#929292;
     font-size: 13px;
 }
@@ -815,7 +851,7 @@ a.link.button.col-50.color-gray {
     /*margin: 60px;    */
 }
 #underline-border {
-    width: 33.33%;
+    width: 25%;
     border-bottom: 3px solid #ec5298;
     /*transform: translate(-300%,0);*/
     position: absolute;
@@ -975,6 +1011,9 @@ label.label-radio input[type=checkbox]:checked~.item-inner, label.label-radio in
 [data-page="personal-setting-page"] .page-content {
     overflow-x: hidden;
     width: 100%;        
+}
+.page {
+    background: #FFF;
 }
 #explore-tab .page-content {
     overflow: hidden;
@@ -1238,8 +1277,8 @@ a {
     font-size: 32px;
     border-radius: 14px;
     font-weight: 700;
-    border: 5px solid #ec5298;
-    color: #ec5298;
+    border: 5px solid #63de9a;
+    color: #63de9a;
     position: absolute;
     padding: 20px;
     /*width: 150px;*/
@@ -1262,16 +1301,16 @@ a {
 
 #tinderslide .dislike {
 
-    border: 5px solid #2cb3c9; 
-    color: #2cb3c9;
+    border: 5px solid #ec5298; 
+    color: #ec5298;
     right: 45px;
     left: auto;
     /*background: url("../img/nope.png") no-repeat scroll 0 0;*/
 }
 
 #tinderslide .superlike {
-    border: 5px solid #63de9a; 
-    color: #63de9a;    
+    border: 5px solid #2cb3c9; 
+    color: #2cb3c9;    
     right: 25px;
     top: 200px;
     /*left: auto;*/

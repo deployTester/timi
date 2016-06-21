@@ -23,6 +23,12 @@ if(isset($_GET['user_id'])){
   $user_id = null;
 }
 
+if(isset($_GET['sender_id'])){
+  $sender_id = $_GET['sender_id'];
+}else{
+  $sender_id = null;
+}
+
 if(isset($_GET['sender_name'])){
   $sender_name = $_GET['sender_name'];
 }else{
@@ -113,6 +119,7 @@ $msg = array
   'geolocation'=>$geolocation,
   'day'=>$day,
   'time'=>$time,
+  'sender_id'=>$sender_id,
   'sender_name'=>$sender_name,
   'message_id'=>$message_id
 );

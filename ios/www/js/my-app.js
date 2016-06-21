@@ -10,13 +10,14 @@ var contactsList = [];
 var popupQueue = []; 
 var chatlist = [];
 var timeFrame = 0; 
-var myAvail = [1,1,1]; 
+var myAvail = [1,1,1,1]; 
 var xhr; 
 var isCordova = false;
 var device_token = "";
 var loadingCard; 
 var phoneNumber;
 var emojify;
+var isProcessing = false;
 var myMessages; 
 var currentTabPage = "";
 var borderPosition = -200;
@@ -24,10 +25,10 @@ var borderPosition = -200;
 
 var ray_token = "fc14487e19bc119e5e1115994bf094df"
 
-var jimmy_token = "34e760735a29876e2d95cd9c99d38b51"
+var jimmy_token = "cf40d87a845c66efbbe3a73205de5029"
 var loading = false;
 var availFriend = []
-for (var i = 0; i < 3; i++) {
+for (var i = 0; i < 4; i++) {
     availFriend[i] = []
 }
 var userLocation = []
@@ -42,9 +43,9 @@ for (var i = 0 ; i < 7; i++) {
         avail [i][j] = 1; 
     }
 }
-// localStorage.usertoken = "cf40d87a845c66efbbe3a73205de5029"
+
 var push_notification = null;
-var favoriteFoodList = ["Food", "Coffee", "Shopping", "Clubbing", "Party", "Chatting", "Drinking", "Workout", "Video Games", "Running", "Golf", "Swimming", "Basketball", "Soccer", "Sports", "Cooking", "Road Trip", "Concerts/Events", "Movie", "Board Games"].sort(cSort)
+var favoriteFoodList = ["Food", "Coffee", "Shopping", "Clubbing", "Party", "Chatting","Poker", "Drinking", "Workout", "Video Games", "Running", "Golf", "Swimming", "Basketball", "Soccer", "Sports", "Cooking", "Road Trip", "Concerts/Events", "Movie", "Board Games"].sort(cSort)
 var currentIndex = [ null, null, null]; 
 var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 var d = new Date()
@@ -78,14 +79,73 @@ function updateTimeAvail () {
         // d.getHours 
     } else if ( currentHours < 15) {
         // lunch dinner night available
-        timeAvail = [1,1,1]
+        timeAvail = [1,1,1,1]
     } else if ( currentHours < 21) {
         // dinner, night avialable
-        timeAvail = [0,1,1]
+        timeAvail = [0,1,1,1]
     } else {
-        timeAvail = [0,0,1]
+        timeAvail = [0,0,1,1]
         // night avialable
     }    
+}
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function daySince (date) {
+    var daysDiff = Math.floor( (new Date()).getDate() - date.getDate() ) ;    
+    if (daysDiff == 0) {
+        return "Today"
+
+    } else if (daysDiff < 2) {
+        return "Yesterday";
+
+    } else if (daysDiff < 8 ) {
+        return days[date.getDay()]
+    } else {
+        return date.getDate().toString() + " " + months[date.getMonth()] + ", " + date.getFullYear();
+    }
+    // var seconds = Math.floor((new Date() - date) / 1000);
+    // var days = Math.floor(seconds / (60*60*24));    
+
+}
+
+function timeSince (date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var seconds, minutes, hours, days;
+    if (seconds < 5) {
+        return "just now";
+    } 
+    else if (seconds < 60){
+        return seconds + " seconds ago";
+    } 
+    else if (seconds < 3600) {
+        minutes = Math.floor(seconds/60)
+        if(minutes > 1)
+            return minutes + " minutes ago";
+        else
+            return "1 minute ago";
+    } 
+    // 60 * 60 * 24
+    else if (seconds < 86400) {
+        hours = Math.floor(seconds/3600)
+        if(hours > 1)
+            return hours + " hours ago";
+        else
+            return "1 hour ago";
+    }
+    // 1 month and no more
+    else if (seconds < 2592000) {
+        days = Math.floor(seconds/86400)
+        if(days > 1)
+            return days + " days ago";
+        else
+            return "1 day ago";
+    }
+    else{
+
+        //return new Date(time).toLocaleDateString();
+        return date.getDate().toString() + " " + months[date.getMonth()] + ", " + date.getFullYear();
+    }
 }
 updateTimeAvail ()
 
@@ -116,16 +176,16 @@ strVar += "        });      ";
 strVar += "      };  ";
 strVar += "    <\/script>    ";
 
-strVar += "<script>"
-strVar += "  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
-strVar += "  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
-strVar += "  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)"
-strVar += "  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');"
-strVar += "  ga('create', 'UA-78465279-1', 'auto');"
-strVar += "  ga('send', 'pageview');"
+// strVar += "<script>"
+// strVar += "  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
+// strVar += "  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
+// strVar += "  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)"
+// strVar += "  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');"
+// strVar += "  ga('create', 'UA-78465279-1', 'auto');"
+// strVar += "  ga('send', 'pageview');"
 
-strVar += "</script>"
-
+// strVar += "</script>"
+scriptHTML += "<script type='text/javascript' src='" + "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js" + "'></script>";
 strVar += "";
 strVar += "    <div class=\"statusbar-overlay\" >";
 strVar += "    <\/div>";
@@ -148,12 +208,14 @@ strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"home\">";
 strVar += "";
 strVar += "            <div id=\"home-page-navbar-left\" class=\"home-nav\">" + barIconHTML + "</div><div class=\"home-nav\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Friends Nearby                     ";
-strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"home-nav\"><a class=\"link right-link\" onclick=\"inviteViaWechat()\"><i class=\"fa fa-share-alt \" ></i></a></div>   ";
+strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"home-nav\"><a class=\"link right-link\" onclick=\"inviteViaWechat()\"><i class=\"fa-user-plus \" ></i></a></div>   ";
 strVar += "        <div class=\"subnavbar\">";
 strVar += "          <div class=\"buttons-row\">";
+
 strVar += "            <a href=\"#tab1\" class=\"button time-tab lunch-tab tab-link active\">Noon<\/a>";
 strVar += "            <a href=\"#tab2\" class=\"button time-tab dinner-tab tab-link\">Evening<\/a>";
 strVar += "            <a href=\"#tab3\" class=\"button time-tab night-tab tab-link\">Night<\/a>";
+strVar += "            <a href=\"#tab0\" class=\"button time-tab now-tab tab-link \">Now<\/a>";
 strVar += "            <div id=\"underline-border\"></div>";
 strVar += "          <\/div>";
 strVar += "        <\/div>                              ";
@@ -185,7 +247,7 @@ strVar += "                <i class=\"fa fa-chevron-left\"><\/i>";
 strVar += "                <span>Back<\/span>";
 strVar += "              <\/a>";
 strVar += "            <\/div>          ";
-strVar += "            <div class=\"center\"><img onclick=\"openSystem ()\" class=\"navbar-chatting-avatar\" src= \"https:\/\/scontent-lga3-1.xx.fbcdn.net\/hphotos-prn2\/v\/t1.0-9\/10419421_10200182965892764_3445955032075166546_n.jpg?oh=af6473420546cff0c2bce9ed846f46a7&oe=57794D70\">Ray Xiao<\/div>";
+strVar += "            <div class=\"center\" id=\"chatting-page-title\"><img onclick=\"openSystem ()\" class=\"navbar-chatting-avatar\" src= \"https:\/\/scontent-lga3-1.xx.fbcdn.net\/hphotos-prn2\/v\/t1.0-9\/10419421_10200182965892764_3445955032075166546_n.jpg?oh=af6473420546cff0c2bce9ed846f46a7&oe=57794D70\">Ray Xiao<\/div>";
 strVar += "          <\/div>        ";
 strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"personal-setting-page\" >";
@@ -442,22 +504,22 @@ strVar += "          <\/div>  ";
 strVar += "";
 strVar += "          <div class=\"page cached \" data-page=\"personal-setting-page\">";
 strVar += "            <div class=\"page-content\" >";
-strVar += "              <div class=\"content-block-title\">";
-strVar += "                <span>What's in your mind <a class=\"clear-whatsup\" onclick=\"cleanWhatsUp()\">clear all</a><a class=\"clear-whatsup\" onclick=\"randomWhatsup()\">No much?</a><\/span>";
-strVar += "              <\/div> ";
-strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
-strVar += "                <ul>";
-strVar += "                  <li class=\"align-top\">";
-strVar += "                    <div class=\"item-content\">";
-strVar += "                      <div class=\"item-inner\">";
-strVar += "                        <div class=\"item-input\">";
-strVar += "                            <textarea class=\"resizable\" id=\"whatsup\" placeholder=\"Let your friends know what's in your mind. E.g., Let's Chipotle and chill? \"><\/textarea>";
-strVar += "                        <\/div>";
-strVar += "                      <\/div>";
-strVar += "                    <\/div>";
-strVar += "                  <\/li>";
-strVar += "                <\/ul>";
-strVar += "              <\/div>                       ";
+// strVar += "              <div class=\"content-block-title\">";
+// strVar += "                <span>What's in your mind <a class=\"clear-whatsup\" onclick=\"cleanWhatsUp()\">clear all</a><a class=\"clear-whatsup\" onclick=\"randomWhatsup()\">No much?</a><\/span>";
+// strVar += "              <\/div> ";
+// strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
+// strVar += "                <ul>";
+// strVar += "                  <li class=\"align-top\">";
+// strVar += "                    <div class=\"item-content\">";
+// strVar += "                      <div class=\"item-inner\">";
+// strVar += "                        <div class=\"item-input\">";
+// strVar += "                            <textarea class=\"resizable\" id=\"whatsup\" placeholder=\"Let your friends know what's in your mind. E.g., Let's Chipotle and chill? \"><\/textarea>";
+// strVar += "                        <\/div>";
+// strVar += "                      <\/div>";
+// strVar += "                    <\/div>";
+// strVar += "                  <\/li>";
+// strVar += "                <\/ul>";
+// strVar += "              <\/div>                       ";
 strVar += "";
 strVar += "              <div class=\"content-block-title\">";
 strVar += "                <span>Work / Education (current)<\/span>";
@@ -477,14 +539,14 @@ strVar += "                <\/ul>";
 strVar += "              <\/div>                       ";
 strVar += "";
 strVar += "              <div class=\"content-block-title\">";
-strVar += "                <span>Show 2nd Degree Friend<\/span>";
+strVar += "                <span>Show 2nd Degree Connection<\/span>";
 strVar += "              <\/div> ";
 strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
 strVar += "                <ul>";
 strVar += '                 <li> ';
 strVar += '                   <div class="item-content"> ';
 strVar += '                     <div class="item-inner"> ';
-strVar += '                       <div class="item-title label" style="width:80%;">Show Friends\'s friends</div> ';
+strVar += '                       <div class="item-title label" style="width:80%;">Show Friends of Friends</div> ';
 strVar += '                       <div class="item-input"> ';
 strVar += '                         <label class="label-switch" style="position: absolute;right: 20px; top: 8px;"> ';
 strVar += '                           <input type="checkbox" id="allowFoF"> ';
@@ -585,7 +647,11 @@ strVar += "              <div class=\"toolbar-inner\">";
 strVar += "                <textarea placeholder=\"Message\"><\/textarea><a href=\"#\" style=\"color:#ec5298 !important;\" class=\"link\">Send<\/a>";
 strVar += "              <\/div>";
 strVar += "            <\/div>            ";
-strVar += "            <div class=\"page-content messages-content\">";
+strVar += "            <div class=\"page-content messages-content \">"; 
+// strVar += '              <div class="pull-to-refresh-layer"> '
+// strVar += '                <div class="preloader"></div> '
+// strVar += '                <div class="pull-to-refresh-arrow"></div> '
+// strVar += '              </div>'
 strVar += "              <div class=\"messages\">";
 strVar += "                <div class=\"messages-date\">Sunday, Feb 9 <span>12:58<\/span><\/div>";
 strVar += "                <div class=\"message message-sent\">";
@@ -679,7 +745,37 @@ strVar += "  </div> "
 
 document.getElementById("body-html").innerHTML += strVar + scriptHTML
 
+// var ptrContent = $$('.pull-to-refresh-content');
+ 
+// // Add 'refresh' listener on it
+// ptrContent.on('refresh', function (e) {
+//     // Emulate 2s loading
 
+// // myMessages.addMessage(messageParameters, method, animate);
+
+//     setTimeout(function () {
+//         // Random image
+//         // var picURL = 'http://hhhhold.com/88/d/jpg?' + Math.round(Math.random() * 100);
+//         // // Random song
+//         // var song = songs[Math.floor(Math.random() * songs.length)];
+//         // // Random author
+//         // var author = authors[Math.floor(Math.random() * authors.length)];
+//         // // List item html
+//         // var itemHTML = '<li class="item-content">' +
+//         //                   '<div class="item-media"><img src="' + picURL + '" width="44"/></div>' +
+//         //                   '<div class="item-inner">' +
+//         //                     '<div class="item-title-row">' +
+//         //                       '<div class="item-title">' + song + '</div>' +
+//         //                     '</div>' +
+//         //                     '<div class="item-subtitle">' + author + '</div>' +
+//         //                   '</div>' +
+//         //                 '</li>';
+//         // // Prepend new list element
+//         // ptrContent.find('ul').prepend(itemHTML);
+//         // When loading done, we need to reset it
+//         myApp.pullToRefreshDone();
+//     }, 2000);
+// });
 
 
 function appReturnedFromBackground () {
@@ -715,73 +811,161 @@ function appReturnedFromBackground () {
     }
 }
 
-function sendMessage (text, name) {
-      // Random message type
-      var messageType = (['sent', 'received'])[Math.round(Math.random())];
-     
-      // Avatar and name for received message
-      var avatar, name;
+function timeFormatter (date) {
+    var hours = date.getHours(); 
+    var min = date.getMinutes(); 
+    var apm = (hours < 12) ? 'AM' : 'PM'; 
+    var hours = (hours < 12) ? hours : (hours - 12)
+    return doubleDigitFormatter(hours) + ':' + doubleDigitFormatter(min) + ' ' + apm
+}
 
-      // Add message
-        sendMessageAjax(49, text)
+function appendMessage (text, name, sent, timeString) {
+    // Random message type
 
-      myMessages.addMessage({
+    // var messageType = (['sent', 'received'])[Math.round(Math.random())];
+    var messageType = sent ? 'sent' : 'received'; 
+    name = name || ""
+    if (text === undefined) {
+        console.log("fuck")
+    }
+    console.log(text)
+    console.log(new Date(timeString).getDate())
+    // Avatar and name for received message
+    // var avatar, name;
+
+    // Add message
+
+
+    myMessages.addMessage({
         // Message text
         text: text,
-        type: 'sent',
+        type: messageType,
         // Avatar and name:
         // avatar: avatar,
         name: name,
         // Day
-        day: !conversationStarted ? 'Today' : false,
-        time: !conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
-      })
+        day: !conversationStarted ? daySince(new Date(timeString)) : false,
+        time: !conversationStarted ? timeFormatter(new Date(timeString)) : false
+    })
 }
+function doubleDigitFormatter (digit) {
+    if ( digit < 10 ) {
+        return "0" + digit
+    } else {
+        return digit
+    }
+}
+function loadMessageList (history) {
+    var previousTime = 0
+    for ( var i in history ) {
+        if (history[i].time != null ) {
+            var dd = new Date(history[i].time)
+            if (dd - previousTime > 300000) {
+                conversationStarted = false
+            } else {
+                conversationStarted = true
+            }
+        } else {
+            conversationStarted = false
+        }
+
+        // var curD = new Date()
+        previousTime = dd;
+        // console.log(curD - dd)
+
+        appendMessage(history[i].text, null, history[i].type, history[i].time)
+        // conversation started bug
+        console.log(history[i])
+    }
+}
+
 var conversationStarted = false;
-function initMessage () {
+var currentChatIndex; 
+
+function initMessage (index) {
+    console.log(index)
+
     conversationStarted = false;
+    
      
     // Init Messages
+
     myMessages = myApp.messages('.messages', {
       autoLayout:true
     });
+    myMessages.clean();
      
     // Init Messagebar
     var myMessagebar = myApp.messagebar('.messagebar');
 
-    name = "Ray Xiao"
+    var name = chatlist[index].user.username
+    // var history = chatlist[index].chat_history
+    // console.log(history)
+    document.getElementById("chatting-page-title").innerHTML = name
+    loadMessage(chatlist[index].user.user_id)
+    currentChatIndex = index
      
     // Handle message
+
+    // $$('.messagebar .link').on('touchstart', function () {
+    //     console.log("start");
+    //     $(".messagebar textarea").on("blur", function (e) {
+    //         console.log("blur")
+
+    //     });        
+
+    // });
+
     $$('.messagebar .link').on('click', function () {
-      // Message text
-      var messageText = myMessagebar.value().trim();
-      // Exit if empy message
-      if (messageText.length === 0) return;
-     
-      // Empty messagebar
-      myMessagebar.clear()
+        $(".messagebar textarea").focus()
+        console.log(currentChatIndex)
+        // Message text
+        var messageText = myMessagebar.value().trim();
+        var dateString = (new Date()).toISOString()
 
-      sendMessage (messageText, name)
-     
-      // Update conversation flag
-      conversationStarted = true;
-    });        
-    // $(".toolbar textarea").on("keydown", function (e){
-        
-    //     if (e.keyCode == 13) {
-    //         e.preventDefault();
-    //         $$('.messagebar .link').click()
-    //         // var messageText = myMessagebar.value().trim();
-    //         // // Exit if empy message
-    //         // if (messageText.length === 0) return;
+        // Exit if empy message
+        if (messageText.length === 0) return;
 
-    //         // // Empty messagebar
-    //         // myMessagebar.clear()            
-    //         // sendMessage(messageText, name)
-    //     }
-    //     // return false;
-    //     // console.log(e)
-    // });          
+        // Empty messagebar
+        myMessagebar.clear()
+
+        // change datebase
+        if (chatlist[currentChatIndex].chat_history == null ){
+            chatlist[currentChatIndex].chat_history = [{
+                text: messageText, 
+                time: dateString, 
+                type: true
+            }];      
+        } else {
+            chatlist[currentChatIndex].chat_history.push({
+                text: messageText, 
+                time: dateString, 
+                type: true
+            });        
+        }
+        chatlist[currentChatIndex].timeObject = dateString
+
+
+        // update database
+        localStorage.chatlist = JSON.stringify(chatlist);  
+
+        // if the conversation has started
+        if ( chatlist[currentChatIndex].chat_history != null && chatlist[currentChatIndex].chat_history.length > 1) {
+            var dd = new Date( chatlist[currentChatIndex].chat_history[ chatlist[currentChatIndex].chat_history.length - 2 ].time )
+            if ( (new Date(dateString)) - dd > 300000) {
+                conversationStarted = false
+            } else {
+                conversationStarted = true
+            }
+        } else {
+            conversationStarted = false;
+        }
+
+
+        appendMessage (messageText, null, true, dateString);
+        sendMessageAjax(chatlist[currentChatIndex].user.user_id, messageText);
+
+    });            
 }
 
 function clearBadge() {
@@ -819,8 +1003,8 @@ $$('#availability-tab').on('show', function () {
     changeNavbarTitle("Availability", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");  
     updateForm()
 });
- 
-$$('#messenger-tab').on('show', function () {
+
+function messengerOnShow () {
     currentTabPage = "messenger-tab"
     $(".subnavbar").css("display", "none")
     markAllRequest()
@@ -828,6 +1012,13 @@ $$('#messenger-tab').on('show', function () {
     getUnreadMatchList(function () {
         loadChattingList ()
     })    
+    loadAllNewMessage(function () {loadChattingList()})
+
+    // add something to check unread message!!!!   
+}
+ 
+$$('#messenger-tab').on('show', function () {
+    messengerOnShow()
     // loadChattingList ()
 });    
 $$('#invitation-tab').on('show', function () {
@@ -884,42 +1075,98 @@ function initIntro () {
 
 }
 function testScript () {
-    initAfterLogin()
-    $(".night-tab")[0].click(); 
-    setTimeout(function () {
-        var user = availFriend[2][0]
+   
+}
+
+function addToChatDatabase (user_id, text, send, time) {
+    var chatElem = {
+        time: time, 
+        type: send, 
+        text: text
+    }; 
+    var changed = false; 
+    console.log(chatElem)
+    for (var i in chatlist ) {
+        if (chatlist[i].user.user_id == user_id || chatlist[i].user.username == user_id ) {
+            changed = changed || true;
+            console.log("got name")
+            currentChatIndex = i
+            if ( chatlist[i].chat_history == null ) { 
+                console.log("got new arr")
+                chatlist[i].chat_history = [chatElem]
+            } else {
+                if (chatlist[i].chat_history.length > 14 ) {
+                    var temp = chatlist[i].chat_history.slice(chatlist[i].chat_history.length-14,chatlist[i].chat_history.length)
+                    chatlist[i].chat_history = temp
+                } 
+                console.log("append old arr")
+                chatlist[i].chat_history.push(chatElem)
+            }
+
+            // update time object
+            chatlist[i].timeObject = time.toISOString()
+        }
+    }     
+    if (changed == false) {
+        searchUserByUserId( user_id, addUserToChatList )
+    }
+    function addUserToChatList (userObject) {
         chatlist = getChatList ()
         var elem = {
-            user: user, 
+            user: userObject, 
             timeObject: (new Date()), 
-            schedule: 1
+            schedule: null
         }
-        pushChatList (elem)        
-    }, 500); 
-   
+        pushChatList (elem)   
+        var lastIndex =  chatlist.length - 1
+
+        if ( chatlist[lastIndex].chat_history == null ) { 
+            console.log("got new arr")
+            chatlist[lastIndex].chat_history = [chatElem]
+        } else {
+            if (chatlist[lastIndex].chat_history.length > 14 ) {
+                var temp = chatlist[lastIndex].chat_history.slice(chatlist[lastIndex].chat_history.length-14,chatlist[lastIndex].chat_history.length)
+                chatlist[lastIndex].chat_history = temp
+            } 
+            console.log("append old arr")
+            chatlist[lastIndex].chat_history.push(chatElem)
+        }
+
+        // update time object
+        chatlist[lastIndex].timeObject = time.toISOString()    
+        localStorage.chatlist = JSON.stringify(chatlist);              
+
+    }
+
+    localStorage.chatlist = JSON.stringify(chatlist);       
 }
 
 
 function loadChattingList () {
-    loadList = getChatList()
-    loadList.sort(tSort)
+    chatlist = getChatList()
+    chatlist.sort(tSort)
+    // cordova.
+    // cordova.plugins.clipboard.copy(JSON.stringify(chatlist))
     var htmlString = ""
-    if ( (loadList == null) || (loadList.length == 0) ) {
-        document.getElementById("messenger-list").innerHTML = "<div class='one-line-prompt'>You are not matched with any one yet. </div>"
+    if ( (chatlist == null) || (chatlist.length == 0) ) {
+        document.getElementById("messenger-list").innerHTML = "<div class='one-line-prompt'>You haven't been matched with anyone yet. </div>"
     } else {
-        loadList.map(function (unit) {
-            var schedule = unit.schedule; 
-            var activity = ["Noon", "Evening", "Night"]
+        var index = 0
+        chatlist.map(function (unit) {
+            var schedule = unit.schedule || 4; 
+            var activity = ["Noon", "Evening", "Night", "Now", "Chilling"]
             hehe = unit
             var d = new Date(hehe.timeObject)
             var raw_day = d.getDay()
             var timiDay; 
+            console.log(hehe)
             if (d.getHours() <= 1) {
                 timiDay = d.getDay() - 1
             } else {
                 timiDay = d.getDay()
             }
-            if (raw_day < 0) {
+            console.log(timiDay)
+            if (timiDay < 0) {
                 timiDay += 7
             }                
 
@@ -927,22 +1174,39 @@ function loadChattingList () {
             var user = unit.user
             var strVar = ""
             strVar += "<li>";
-            strVar += "  <a href=\"#\" class=\"item-link item-content\" onclick=\"textTo("+ user.phone +")\">";
+
+            strVar += "  <a href=\"#\" class=\"item-link item-content\" onclick=\"chatwith("+ index +")\">";
+            // mainView.router.loadPage({pageName:"chatting-page"})
             strVar += "    <div class=\"item-media\"><img src="+user.avatar+" width=\"60\"><\/div>";
             strVar += "    <div class=\"item-inner\" >";
             strVar += "      <div class=\"item-title-row\">";
             strVar += "        <div class=\"item-title\">"+user.username+"<\/div>";
-            strVar += "        <div class=\"item-after\"><\/div>";
+            strVar += "        <div class=\"item-after\">" + timeSince(new Date(chatlist[index].timeObject)) + "<\/div>";        
             strVar += "      <\/div>";
-            strVar += "      <div class=\"item-text\">Matched for " + activity[schedule] +" on " + days[timiDay] + "<\/div>";
+
+            if (unit.chat_history != null){
+                            strVar += "      <div class=\"item-text\">" + activity[schedule] +" on " + days[timiDay] + "<\/div>";                
+                            strVar += "        <div class=\"item-preview\">" + unit.chat_history[unit.chat_history.length-1].text + "<\/div>";    
+            } else {
+                            strVar += "      <div class=\"item-text\">" + activity[schedule] +" on " + days[timiDay] + "<\/div>";                
+                            // strVar += "      <div class=\"item-text\">Matched for " + activity[schedule] +" on " + days[timiDay] + "<\/div>";
+                strVar += "        <div class=\"item-preview\">Don't be shy and start your conversation! <\/div>";    
+            }            
             strVar += "    <\/div>";
             strVar += "  <\/a>";
             strVar += "<\/li>";  
             htmlString += strVar   
+            index++
             return;            
         });          
         document.getElementById("messenger-list").innerHTML ="<ul>" +htmlString +"</ul>"
     }
+}
+
+function chatwith (index) {
+    mainView.router.loadPage({pageName:"chatting-page"})
+    initMessage(index)
+
 }
 
 function addRandomFriendPopup () {
@@ -999,11 +1263,11 @@ function searchUser () {
      // var ajaxUrl = "http://gettimi.com/site/ReturnFriendInfo?user_token=" + localStorage.usertoken + "&number=" + queryNumber
 }
 
-function sendMessageAjax (receiver_id, text) {
-   
-    // var queryNumber = document.getElementById("searchbar-input-box").value
+function sendMessageAjax (receiver_id, text, token) {
+
     var ajaxUrl = "http://gettimi.com/site/SendMessage?user_token=" + localStorage.usertoken + "&message=" + text + "&receiver=" + receiver_id
-    console.log(ajaxUrl)
+
+
     $.ajax({
         url: ajaxUrl,
         type: "GET",
@@ -1058,6 +1322,51 @@ function addByNumber(queryNumber, html) {
             // myApp.alert("Network error. Please try again later? ")
         }
     });         
+}
+
+
+window.addEventListener('keyboardWillHide', function () {
+
+    // alert('Goodnight, sweet prince2');
+
+});
+// function keyboardHideHandler(e){
+    
+// }
+
+function processUser (user) {
+    console.log(user)
+}
+
+function searchUserByUserId (user_id, callback) {
+    // var queryNumber = document.getElementById("searchbar-input-box").value
+    var ajaxUrl = "http://gettimi.com/site/ReturnFriendInfo?user_token=" + localStorage.usertoken + "&user_id=" + user_id
+    console.log(ajaxUrl)
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // myApp.alert("good")
+            // myApp.confirm ()
+            // console.log(results)
+            callback(results)
+            
+            // if ( results.username == null ) {
+            //     // not found
+            //     myApp.alert("Timi did not find this user:(")
+            // } else {
+            //     myApp.confirm("Would you like to add " + results.username + "? ", function () {
+            //         addByNumber (queryNumber) 
+            //     })
+            // }
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });       
 }
 
 function searchByThisNumber () {
@@ -1297,6 +1606,93 @@ function postGeolocation () {
     });      
 }
 
+// get new message, store to localdb, and display using loadMessageList
+// called when the user receives new message
+// display *only new messages* in the database
+function loadNewMessage (receiver_id) {
+    if (receiver_id == null ){
+        return; 
+    }    
+
+    var ajaxUrl = "http://gettimi.com/site/LoadNewMessage?receiver=" + receiver_id + "&user_token=" + localStorage.usertoken
+    console.log(ajaxUrl)
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            newMessage = JSON.parse(results.result)
+            console.log(newMessage)
+            conversationStarted = true;
+            for ( var i in newMessage ) {
+                console.log(newMessage[i].title)
+                var message = newMessage[i].title
+                var message_date = new Date(newMessage[i].create_time*1000)
+                addToChatDatabase (receiver_id, message, false, message_date) 
+                appendMessage (message, null, false, message_date.toISOString())
+                // add to datebase
+            }
+            // loadMessageList(chatlist[currentChatIndex].chat_history)
+
+            //change UI 
+
+            console.log()
+            console.log(results)
+
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });   
+}
+
+
+// get new message, store to localdb, and display using loadMessageList
+// called when the user click user chat
+// display *all messages* in the database
+function loadMessage (receiver_id) {
+    if (receiver_id == null ){
+        return; 
+    }
+    token = localStorage.usertoken
+    var ajaxUrl = "http://gettimi.com/site/LoadNewMessage?receiver=" + receiver_id + "&user_token=" + token
+    console.log(ajaxUrl)
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            newMessage = JSON.parse(results.result)
+            console.log(newMessage)
+            for ( var i in newMessage ) {
+                console.log(newMessage[i].title)
+                var message = newMessage[i].title
+                var message_date = new Date(newMessage[i].create_time*1000)
+                addToChatDatabase (receiver_id, message, false, message_date) 
+
+                // add to datebase
+            }
+
+            // why currentChatIndex wtf.....
+            // oh so this is only for message login. 
+            loadMessageList(chatlist[currentChatIndex].chat_history)
+
+            //change UI 
+
+            console.log()
+            console.log(results)
+
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });   
+}
+
 function postPersonalInfo () {
 
 // 'username'=>$user->username,
@@ -1309,12 +1705,13 @@ function postPersonalInfo () {
 // 'favorites'=>$user->favorites,
 // 'whatsup'=>$user->whatsup,
 // 'range'=>$user->range,  
-    // myApp.showIndicator()
 
-    if (document.getElementById("whatsup").value == "") {
-        myApp.alert('Please fill in "what\'s in your mind".')
-        return
-    }
+
+    // if (document.getElementById("whatsup").value == "") {
+    //     myApp.alert('Please fill in "what\'s in your mind".')
+    //     return
+    // }
+    // document.getElementById("whatsup").value = document.getElementById("whatsup").value || ""
     if (document.getElementById("current").value == "") {
         myApp.alert('Please fill in "Work/Education".')
         return
@@ -1334,7 +1731,8 @@ function postPersonalInfo () {
         "user_token": localStorage.usertoken, 
         "favorites": usersFavoriteList,
         // "range": document.getElementById("distance-range").value, 
-        "whatsup": document.getElementById("whatsup").value,
+        // "whatsup": document.getElementById("whatsup").value,
+        "whatsup":"",
         "current": document.getElementById("current").value, 
         "friend_friend" : (document.getElementById("allowFoF").checked ? 1 : 0)
     }
@@ -1402,7 +1800,7 @@ function getPersonalInfo (callback) {
                 // return; 
             }
    
-            if (personalData.whatsup == "" || personalData.current == "") {
+            if (personalData.current == "") {
                 localStorage.hasChangedPref = 0
                 setTimeout(function () {
                     if ( localStorage.hasChangedPref == null || localStorage.hasChangedPref == "null" || localStorage.hasChangedPref == 0) {
@@ -1461,7 +1859,7 @@ function onCameraFail(message) {
 
 // upload user contact list to server
 function updateContactList () {
-    // myApp.showIndicator()
+
     var ajaxUrl = "http://gettimi.com/site/TakePhoneContact"
     console.log(contactsList.length)
     // "34e760735a29876e2d95cd9c99d38b51"
@@ -1655,7 +2053,7 @@ function getGeolocation () {
     //
     function onError(error) {
         console.log("get location err")
-        localStorage.allowedLocation = 0
+        // localStorage.allowedLocation = 0
         myApp.alert("Please go to Settings - Timi - and turn on Location access! ")
         // put system redirect
     }    
@@ -1772,7 +2170,7 @@ function HalfScreenConfirm () {
     if (onHalfScreenPopup) return; 
     onHalfScreenPopup = true; 
 
-    elem = halfScreenPopup.pop()
+    var elem = halfScreenPopup.pop()
     // elem.iconHTML = elem.iconHTML || "<i class='fa fa-comments'></i>";
     // elem.title = elem.title || "Title";
     // elem.text = elem.text || "from accessing a frame with origin .  The frame requesting access has a protocol of , the frame being accessed has a protocol of . Protocols must match.";
@@ -1817,7 +2215,7 @@ function fullScreenConfirm () {
     if (onFullScreenPopup) return; 
     onFullScreenPopup = true; 
 
-    elem = popupQueue.pop()
+    var elem = popupQueue.pop()
     elem.iconHTML = elem.iconHTML || "<i class='fa fa-comments'></i>";
     elem.title = elem.title || "Title";
     elem.text = elem.text || "from accessing a frame with origin .  The frame requesting access has a protocol of , the frame being accessed has a protocol of . Protocols must match.";
@@ -1862,7 +2260,7 @@ function superLikePopup (user) {
         confirmText:"Yes, send a message", 
         cancelText:"Keep playing", 
         callbackYes:function () {
-            textTo(user.phone)
+            myApp.showTab("#messenger-tab");  
         }, 
         callbackNo:function (){
 
@@ -1881,7 +2279,7 @@ function matched (user) {
         confirmText:"Yes, send a message", 
         cancelText:"Keep playing", 
         callbackYes:function () {
-            textTo(user.phone)
+            myApp.showTab("#messenger-tab");  
         }, 
         callbackNo:function (){
 
@@ -2240,9 +2638,9 @@ function showNoFriendBlock () {
         $(".no-friend").addClass("animated bounceIn")
         setTimeout(function () {
             $(".no-friend").removeClass("animated bounceIn")
-        }, 1000)
+        }, 500)
         getUnprocessedSwipe () 
-    }, 1500)        
+    }, 1000)        
 }
 
 function reportUser () {
@@ -2363,7 +2761,7 @@ function insertNewCard () {
         '                   <div class="color-gray"><div class="card-pic-title">School / Occupation</div><div class="card-pic-content">'+current+'</div></div>' +
         // '                   <div class="color-gray"><i class="fa fa-comments color-pink"></i>'+whatsup+'</div>' + 
         // '                  <div class="color-pink">' +item.name+ ' likes: </div>' + 
-        '                   <div class="color-gray"><div class="card-pic-title">Activities</div><div class="card-pic-content">'+favorites+'</div></div> ' + 
+        '                   <div class="color-gray"><div class="card-pic-title">Favorite Activities</div><div class="card-pic-content">'+favorites+'</div></div> ' + 
         '                </div> ' + 
         '              </div> ' + 
         // '              <div class="card-footer no-gutter row"> ' + 
@@ -2380,13 +2778,13 @@ function insertNewCard () {
 
     document.getElementById("tinderslide").innerHTML += ""+ 
     "<div class='row decision-button-row'>" + 
-        "<div class='col-33 button dislike-button button-fill color-gray' style='background-color:#2cb3c9;'>" + 
+        "<div class='col-33 button dislike-button button-fill color-gray' style='background-color:#ec5298;'>" + 
             "<i class='fa fa-times' id='times-icon'></i>" + 
         "</div>" + 
-        "<div class='col-33 button superlike-button button-fill color-gray' style='background-color:#63de9a;'>" + 
+        "<div class='col-33 button superlike-button button-fill color-gray' style='background-color:#2cb3c9;'>" + 
             "<div class='heart-combo'><i class='fa fa-heart left-heart' ></i><i class='fa fa-heart right-heart' ></i></div>" +         
         "</div>" + 
-        "<div class='col-33 button like-button button-fill color-gray' style='background-color:#ec5298;'>" + 
+        "<div class='col-33 button like-button button-fill color-gray' style='background-color:#63de9a;'>" + 
             "<i class='fa fa-heart' id='heart-icon'></i>" +         
         "</div>" +                 
     "</div>"
@@ -2436,10 +2834,20 @@ function updateFrontPage (timeFrame) {
         $(".no-friend").css("display", "none")
         console.log("has stuff")
         placePulse ();        
-        // placeTinderSwipe ()
+
+
+
+// here
         loadingCard = setTimeout(function () {
                 placeTinderSwipe ()
-        }, 100);            
+        }, 100);          
+
+
+
+
+
+
+
         // $(".no-friend").css("display", "none")
         // console.log("has stuff")
         // placePulse ();
@@ -2641,6 +3049,9 @@ function sendInvite () {
 
 // placeBusy will change the UI
 
+function showChatList () {
+    myApp.showTab("#messenger-tab");      
+}
 
 function placeBusy (unit) {
     var mealIndicator = ""; 
@@ -2680,10 +3091,10 @@ function placeBusy (unit) {
 
         var pulseHTML = 
         '<div class="you-are-matched-title"><i class="fa fa-hand-peace-o" aria-hidden="true"></i>It\'s a Match!<i class="fa fa-hand-peace-o" aria-hidden="true"></i></div>' +
-        '   <img src="' + unit.avatar + '" class="pulse-portrait animated bounceIn"  />' +
+        '   <img src="' + unit.avatar + '" class="match-portrait animated bounceIn"  />' +
         // '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' +        
         '   <div class="one-line-prompt " style="color:#929292">' + unit.username + ' </div>' + 
-        '   <div class="button color-pink button-fill one-line-button " style="width: 100%;" onclick="textTo(' + unit.phone + ')"><i class="fa fa-comment color-white" style="margin-right: 6px;" aria-hidden="true"></i>Text '+ unit.username +'</div>'  + 
+        '   <div class="button color-pink button-fill one-line-button " style="width: 100%;" onclick="showChatList()"><i class="fa fa-comment color-white" style="margin-right: 6px;" aria-hidden="true"></i>Text '+ unit.username +'</div>'  + 
         '   <div class="button color-gray button-fill one-line-button " style="width: 100%;" onclick="continuePlaying()"><i class="fa fa-repeat color-white" style="margin-right: 6px;" aria-hidden="true"></i>Continue Playing</div>'  +
         // '   <div class="button one-line-button color-green "  onclick="inviteViaWechat()"><i class="fa fa-weixin color-green" style="margin-right: 6px;" aria-hidden="true"></i><i class="fa fa-facebook color-blue" style="margin-right: 6px;" aria-hidden="true"></i>Share and Invite</div> '
         '   <div class="row"> ' +
@@ -2702,13 +3113,13 @@ function placeBusy (unit) {
 }
 
 function continuePlaying () {
-    myAvail = [1,1,1]
+    myAvail = [1,1,1,1]
     afterClickTab(timeFrame)
 }
  
 function inviteViaWechat () {
     try {
-        var shareURL = "http://gettimi.com"
+        var shareURL = "http://gettimi.com";
         window.plugins.socialsharing.share(null, "Join me at Timi - Find out who's free to hang out! ", null, shareURL);
         // window.plugins.socialsharing.shareVia('com.tencent.mm.ui.tools.ShareToTimeLineUI', workingList[index].title + " - 没六儿 最火热的话题与信息 ", null, null, shareURL, function(){myApp.alert("分享成功")}, function(msg) {myApp.alert("太不6了，再试试看？")})          
     } catch (err) {
@@ -3017,6 +3428,12 @@ function getPush () {
 var myApp = new Framework7({
     swipeBackPage: false, 
     modalTitle:"Timi", 
+    onPageBack: function (app, page) {
+        if (page.name == "chatting-page") {
+            console.log("back1!")
+            messengerOnShow ()
+        }
+    }, 
     onPageBeforeAnimation: function (app, page) {
         if (page.name == "home") {
             console.log("home")
@@ -3037,12 +3454,11 @@ var myApp = new Framework7({
                 
             }
             $(".home-nav").css("visibility", "hidden")  
-            $(".messagebar textarea").on("focus", function (e) {
+            $(".messagebar textarea").on("click", function (e) {
                 setTimeout(function () {
-                    $(".messages-content").animate({ scrollTop: $(".messages-content").height() });
-                    // $(".messages-content").scrollTop($(".messages-content").height(),0);
-                }, 1)
-                
+                    $(".messages-content").animate({ scrollTop: $(".messages-auto-layout").height()+"px"});
+                    // $(".messages-content").animate({ scrollTop: $(".messages-content").height()+"px" });
+                }, 400)
             });
         }
     }, 
@@ -3110,19 +3526,18 @@ var myApp = new Framework7({
             //     '</div> '
             // });            
         } else if ( page.name == "chatting-page" ) {
-            initMessage ()
-            
             $(".home-nav").css("visibility", "hidden");
             try {
                 Keyboard.hideFormAccessoryBar(true);
             }  catch(err) {
 
             }
-            $(".messagebar textarea").on("focus", function (e) {
+            $(".messagebar textarea").on("click", function (e) {
                 setTimeout(function () {
-                    $(".messages-content").animate({ scrollTop: $(".messages-content").height() });
-                    // $(".messages-content").scrollTop($(".messages-content").height(),0);
-                }, 1);
+                    $(".messages-content").animate({ scrollTop: $(".messages-auto-layout").height()+"px"});
+                    // $(".messages-content").animate({ scrollTop: $(".messages-content").height()+"px" });
+                }, 400);
+                console.log("duang")
                 
             })              
             
@@ -3135,7 +3550,7 @@ function openSystem () {
 }
 
 function updatePersonalPage () {
-    document.getElementById("whatsup").value = personalData.whatsup;
+    // document.getElementById("whatsup").value = personalData.whatsup;
     document.getElementById("current").value = personalData.current;
     if(personalData.friend_friend > 0){
         document.getElementById("allowFoF").checked = true;
@@ -3327,28 +3742,11 @@ function initPush () {
             hangoutRequestPopup(data.additionalData.time)
             // go to home
 
+
         }
         else if (data.additionalData.type == "3") {
             // matched
-
-// 'title'=>'You have been matched with '.$user->username.' for '.$time_word.'!',
-// 'type'=>3,//3 for match
-// 'user_id'=>$friend->id,
-// 'username'=>$friend->username,
-// 'avatar'=>Yii::app()->params['globalURL'].$friend->avatar,
-// 'email'=>$friend->email,
-// 'phone'=>$friend->phone,
-// 'country'=>$friend->country,
-// 'city'=>$friend->city,
-// 'geolocation'=>$friend->geolocation,
-// 'favorites'=>$friend->favorites,
-// 'whatsup'=>$friend->whatsup,
-// 'range'=>$friend->range,
-// 'day'=>$_GET['request_day'],
-// 'time'=>$_GET['request_time'],       
-            // myApp.alert(data)
             mainView.router.loadPage({"pageName":"home"})     
-            // 
             myApp.showTab("#explore-tab")
             
             if ( data.additionalData.time == 0) {
@@ -3357,10 +3755,15 @@ function initPush () {
             } else if ( data.additionalData.time == 1) {
                 timeFrame = 1
                 $(".dinner-tab")[0].click()
-            } else {
+            } else if ( data.additionalData.time == 2) {
                 timeFrame = 2
                 $(".night-tab")[0].click()
-            }             
+            } else if ( data.additionalData.time == 3) {
+                timeFrame = 3
+                $(".now-tab")[0].click()
+            }
+            // cordova.plugins.clipboard.copy(data.additionalData.sender_id);    
+
             // alert(JSON.stringify(data.additionalData))
             // myApp.alert(data.additionalData.username)
             var user = {
@@ -3368,15 +3771,17 @@ function initPush () {
                 "username": data.additionalData.username,
                 "phone": data.additionalData.phone, 
                 "email": data.additionalData.email, 
-                "user_id": data.additionalData.user_id, 
-                "geolocation": data.additionalData.geolocation, 
-                "favorites": data.additionalData.favorites, 
-                "whatsup": data.additionalData.whatsup, 
+                "user_id": data.additionalData.sender_id, 
+                // "geolocation": data.additionalData.geolocation, 
+                // "favorites": data.additionalData.favorites, 
+                // "whatsup": data.additionalData.whatsup, 
                 "day": data.additionalData.day, 
                 "time": data.additionalData.time, 
                 "chat_history" : []
                 // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
             }         
+            // alert(JSON.stringify(user))
+            // alert(JSON.stringify(data.additionalData))
             // post confirmation box
             // matched( user );
 
@@ -3386,7 +3791,13 @@ function initPush () {
                 timeObject: (new Date()), 
                 schedule: data.additionalData.time
             }
+
+    // getUnreadMatchList(function () {
+    //     loadChattingList ()
+    // })    
+
             pushChatList(elem)   
+            markAllRequest()
 
 
 
@@ -3401,6 +3812,9 @@ function initPush () {
                 afterClickTab(data.additionalData.time)                        
             })            
             // cancallation
+
+
+            // suepr like
         } else if ( data.additionalData.type == "6" ) {
             
 
@@ -3414,10 +3828,13 @@ function initPush () {
             } else if ( data.additionalData.time == 1) {
                 timeFrame = 1
                 $(".dinner-tab")[0].click()
-            } else {
+            } else if ( data.additionalData.time == 2){
                 timeFrame = 2
                 $(".night-tab")[0].click()
-            }             
+            } else {
+                timeFrame = 3
+                $(".now-tab")[0].click()                
+            }
             // alert(JSON.stringify(data.additionalData))
             // myApp.alert(data.additionalData.username)
             var user = {
@@ -3425,29 +3842,53 @@ function initPush () {
                 "username": data.additionalData.username,
                 "phone": data.additionalData.phone, 
                 "email": data.additionalData.email, 
-                "user_id": data.additionalData.user_id, 
-                "geolocation": data.additionalData.geolocation, 
-                "favorites": data.additionalData.favorites, 
-                "whatsup": data.additionalData.whatsup, 
+                "user_id": data.additionalData.sender_id, 
+                // "geolocation": data.additionalData.geolocation, 
+                // "favorites": data.additionalData.favorites, 
+                // "whatsup": data.additionalData.whatsup, 
                 "day": data.additionalData.day, 
                 "time": data.additionalData.time, 
                 "chat_history" : []
                 // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
-            }         
-            // post confirmation box
-            // matched( user );
+            }    
 
-            // chatlist = getChatList()
-            // var elem = {
-            //     user: user, 
-            //     timeObject: (new Date()), 
-            //     schedule: data.additionalData.time
-            // }
-            // pushChatList(elem)  
-
-            // superLikePopup(user)
+            markAllRequest()
 
 
+
+
+        } else if ( data.additionalData.type == "5" ) {
+            // var user = {
+            //     "avatar": data.additionalData.avatar,
+            //     "username": data.additionalData.username,
+            //     "phone": data.additionalData.phone, 
+            //     "email": data.additionalData.email, 
+            //     "user_id": data.additionalData.user_id, 
+            //     "geolocation": data.additionalData.geolocation, 
+            //     "favorites": data.additionalData.favorites, 
+            //     "whatsup": data.additionalData.whatsup, 
+            //     "day": data.additionalData.day, 
+            //     "time": data.additionalData.time, 
+            //     "chat_history" : []
+            //     // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
+            // }    
+            cordova.plugins.clipboard.copy(data.additionalData);
+            if ( mainView.url == "#chatting-page" && currentChatIndex != null ) {
+                if (chatlist[currentChatIndex].user.user_id == data.additionalData.sender_id) {
+                    loadNewMessage(chatlist[currentChatIndex].user.user_id)
+                    getUnreadMatchList(function () {
+                        // loadChattingList ()
+                    })    
+                    loadAllNewMessage(function () {
+                        // loadChattingList()
+                    })                       
+                } else {                   
+                }
+               
+            }
+            else if (currentTabPage == "messenger-tab") {
+                messengerOnShow()
+            }   
 
         }
 
@@ -3471,8 +3912,8 @@ function initPush () {
 
 function getUnprocessedSwipe () {
     var ajaxUrl = "http://gettimi.com/site/UnprocessedSwipe?user_token=" + localStorage.usertoken +"&day=" + queryDay
-    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab"]
-    var scheduleName = ["Noon", "Evening", "Night"]
+    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab", "now-tab"]
+    var scheduleName = ["Noon", "Evening", "Night", "Now"]
 
     console.log(ajaxUrl)
     $.ajax({
@@ -3483,7 +3924,7 @@ function getUnprocessedSwipe () {
             console.log(results.result)
             requestList = JSON.parse(results.result)
             for ( var i = 0; i < requestList.length; i++) {
-                if (requestList[i] > 0) {
+                if (requestList[i] > 0 && myAvail[i]== 1 && timeAvail[i] == 1 ) {
                     var html = $(cssClass[i]).html()
                     $(cssClass[i]).html(scheduleName[i] + "<span class='request-badge'>" + "</span>")                    
                 } else {
@@ -3513,16 +3954,17 @@ function getUnprocessedSwipe () {
 // day
 
 function hangoutRequestPopup (t) {
-    var scheduleName = ["this noon", "this evening", "tonight"]
-    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab"]
+    var scheduleName = ["this noon", "this evening", "tonight", "now"]
+    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab", ".now-tab"]
     var popupElem = {
         title: "Someone likes you!", 
-        text:"Someone wants to hang out with you "+ scheduleName[t] +" :) Swipe to find out! ", 
+        text:"Someone wants to hang out with you "+ scheduleName[t] +" :) Swipe to find out who! ", 
         iconHTML:'<i class="fa fa-heart" aria-hidden="true"></i>', 
         confirmText:"Yes, swipe now", 
         cancelText:"Later", 
         callbackYes:function () {
             mainView.router.loadPage({"pageName": "home"}); 
+            markAllRequest()
             myApp.showTab("#explore-tab");   
             console.log(t)       
             setTimeout(function () {
@@ -3530,7 +3972,9 @@ function hangoutRequestPopup (t) {
             }, 600)              
             
         }, 
-        callbackNo:function () {}
+        callbackNo:function () {
+            markAllRequest()
+        }
     }
     popupQueue.push(popupElem)
     fullScreenConfirm ()                     
@@ -3546,9 +3990,16 @@ var unreadList =[]
 
 function popupMatchGeneral () {
     if (localStorage.unread == 1) {
+
+        // unreadList
+        // var length = 
+        var textPerson = "friend"
+        if (unreadList.length > 1) {
+            textPerson = "friends"
+        }
         var popupElem = {
-            title: "You are matched! ", 
-            text:"Would you like to chat with them and hang out now? ", 
+            title: "You are matched with " + unreadList.length + " "+ textPerson + "! ", 
+            text:"Would you like to chat and hang out now? ", 
             iconHTML:'<i class="fa fa-heart" aria-hidden="true"></i>', 
             confirmText:"Yes, chat now", 
             cancelText:"Later", 
@@ -3565,6 +4016,43 @@ function popupMatchGeneral () {
     }
     
 }
+var unloadMessage = []
+function loadAllNewMessage ( callback ) {  
+    // token = localStorage.usertoken
+    var ajaxUrl = "http://gettimi.com/site/LoadAllNewMessage?user_token=" + localStorage.usertoken
+    console.log(ajaxUrl)
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // newMessage = JSON.parse(results.result)
+            // console.log(newMessage)
+            unloadMessage = JSON.parse(results.result)
+            for ( var i in unloadMessage ) {
+                console.log(i, unloadMessage[i])
+                unloadMessage[i].map(function (unit) {
+                    // console.log(unit)
+                    addToChatDatabase (unit.sender, unit.title, false, new Date(unit.create_time * 1000))
+                })                
+            }
+
+
+            console.log()
+            console.log(results)
+            if (callback != null) {
+                callback()
+            }
+            
+
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });  
+}
 
 function getUnreadMatchList (callback) {
      // user_token, request_Id
@@ -3577,23 +4065,32 @@ function getUnreadMatchList (callback) {
         success: function(results) {
             // heheda = results
             unreadList = JSON.parse(results.result);
-            if (unreadList.length == 0) {
+            localStorage.unread = 0
+
+            // unread list is nothing
+            if ( unreadList.length == 0 ) {
                 localStorage.unread = 0; 
                 callback()
             } else {
+                // if (localStorage.unread = 0)
+                // if (unreadList)
+                // if (localStorage.unread == 0) {
                 localStorage.unread = 1
                 unreadList.map(function (unit) {
                     console.log(unit)
 
                     chatlist = getChatList ()
-                    elem = {
+                    var elem = {
                         user: unit, 
                         timeObject: (new Date()), 
                         schedule: unit.time
                     }
                     pushChatList (elem)
                 }); 
-                callback () 
+                callback ()                     
+                // }
+                // localStorage.unread = 1
+
                                 
             }
 
@@ -3671,9 +4168,14 @@ function elemNotIn (elem) {
     var isIn = false;
     if (chatlist.length == 0) return true;
     listt = chatlist.map(function (unit) {
+        // if the username is matched, then updatethe user name to newer elem
         if (elem.user.username == unit.user.username) {
             isIn = isIn || true;
-            return elem;
+            unit.user = elem.user;
+            unit.timeObject = elem.timeObject;
+            unit.schedule = elem.schedule;
+            return unit; 
+            // return elem;
         } else {
             return unit; 
         }
@@ -3685,7 +4187,17 @@ function elemNotIn (elem) {
 function pushChatList (elem) {
     if (elemNotIn (elem)) {
         chatlist.push(elem)
-    } 
+    } else {
+        // listt = chatlist.map(function (unit) {
+        //     if (elem.user.username == unit.user.username) {
+        //         isIn = isIn || true;
+        //         return elem;
+        //     } else {
+        //         return unit; 
+        //     }
+        // }); 
+        // chatlist = listt;        
+    }
     localStorage.chatlist = JSON.stringify(chatlist);    
 }
 
@@ -3766,22 +4278,22 @@ function getFriendFreeTimeNoUI (callback) {
             userList = JSON.parse(results.result)
             console.log(3)
             // addDetail(); 
-            availFriend = [[], [], []]
+            availFriend = [[], [], [], []]
             userList.map(function (unit) {
-                for (var i = 0 ; i < 3; i ++) {
+                for (var i = 0 ; i < 4; i ++) {
                     if ( userListToAvailFriendBool (unit, i) ) {
                         availFriend[i].push(unit)
                     } 
                 }
             })
+            shuffle(availFriend[3])
             currentIndex = [ 
                 availFriend[0].length - 1,
                 availFriend[1].length - 1,
-                availFriend[2].length - 1,                
+                availFriend[2].length - 1,       
+                availFriend[3].length - 1                         
             ]
-            // shuffle(availFriend[0])
-            // shuffle(availFriend[1])
-            // shuffle(availFriend[2])           
+         
         }, 
         error: function (results) {
             console.log(results)
@@ -3794,12 +4306,8 @@ function userListToAvailFriendBool (unit, i) {
     return (unit.availability[i] == 1 || unit.availability[i] == "super")
 }
 
-function getFriendFreeTime (callback) {
-    console.log(0)
-    placePulse(); 
-    console.log(1)
-    console.log(queryDay)
-    var ajaxUrl = "http://gettimi.com/site/GetFriendsFreeSlots?user_token=" + localStorage.usertoken + "&day=" + queryDay+"&s="+Math.random()+"&time="+d.getDay()
+function suggestFriends() {
+    var ajaxUrl = "http://gettimi.com/site/suggestfriends?user_token=" + localStorage.usertoken 
     console.log(ajaxUrl)
     $.ajax({
         url: ajaxUrl,
@@ -3807,26 +4315,46 @@ function getFriendFreeTime (callback) {
         cache: false, 
         dataType: "jsonp",
         success: function(results) {
-            console.log(2)
+            console.log(JSON.parse(results.result)              )
+        }, 
+        error: function (results) {
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });       
+}
+
+function getFriendFreeTime (callback) {
+    if (isProcessing) return; 
+    console.log(0)
+    placePulse(); 
+    console.log(1)
+    console.log(queryDay)
+    var ajaxUrl = "http://gettimi.com/site/GetFriendsFreeSlots?user_token=" + localStorage.usertoken + "&day=" + queryDay+"&s="+Math.random()+"&time="+d.getDay()
+    console.log(ajaxUrl)
+    isProcessing = true;
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        cache: false, 
+        dataType: "jsonp",
+        success: function(results) {
+            isProcessing = false;
             userList = JSON.parse(results.result)
-            console.log(3)
-            // addDetail(); 
-            availFriend = [[], [], []]
+            availFriend = [[], [], [], []]
             userList.map(function (unit) {
-                for (var i = 0 ; i < 3; i ++) {
+                for (var i = 0 ; i < 4; i ++) {
                     if ( userListToAvailFriendBool (unit, i) ) {
                         availFriend[i].push(unit)
                     } 
                 }
             })
+            shuffle(availFriend[3])
             currentIndex = [ 
                 availFriend[0].length - 1,
                 availFriend[1].length - 1,
-                availFriend[2].length - 1,                
+                availFriend[2].length - 1,     
+                availFriend[3].length - 1,                             
             ]
-            // shuffle(availFriend[0])
-            // shuffle(availFriend[1])
-            // shuffle(availFriend[2])
             if ( myAvail[timeFrame] == 1 ) {
                 updateFrontPage (timeFrame)    
             } else {
@@ -3834,6 +4362,7 @@ function getFriendFreeTime (callback) {
             }                    
         }, 
         error: function (results) {
+            isProcessing = false;
             console.log(results)
             // myApp.alert("Network error. Please try again later? ")
         }
@@ -3865,6 +4394,7 @@ function getMySchedule (callbackFunction) {
         dataType: "jsonp",
         success: function(results) {
             myAvail = JSON.parse(results.result)
+            // myAvail.push(1)
             // myAvail = [1,1,1]
             console.log(myAvail)
             if ( myAvail[timeFrame] == 1 ) {
@@ -3885,7 +4415,7 @@ function getMySchedule (callbackFunction) {
 
 // download users' free time and display
 function updateFreeTime () {
-    // myApp.showIndicator()
+
     var user_token = localStorage.usertoken
     var ajaxUrl = "http://gettimi.com/site/UpdateFreetime?user_token=" + user_token + "&random=" +Math.random()
     
@@ -3922,7 +4452,7 @@ function goToMatchPage () {
 
 // Upload users' availability
 function submitCalendar () {
-    // myApp.showIndicator(); 
+
     var ajaxUrl = "http://gettimi.com/site/Freetime"                   
     $.ajax({
         url: ajaxUrl,
@@ -3966,11 +4496,13 @@ var targetBorderPosition
 function bottomBorder (timeFrame) {
     
     if ( timeFrame == 0 ) {
-        targetBorderPosition = -300
+        targetBorderPosition = -400
         
     } else if ( timeFrame == 1 ) {
-        targetBorderPosition = -200
+        targetBorderPosition = -300
     } else if ( timeFrame == 2 ) {
+        targetBorderPosition = -200
+    } else if (timeFrame == 3 ) {
         targetBorderPosition = -100
     }
     $("#underline-border").css("transform", "translate("+targetBorderPosition+"%,0)")
@@ -3984,7 +4516,7 @@ function bottomBorder (timeFrame) {
 function afterClickTab (timeFrame) {
 
     bottomBorder(timeFrame)
-    
+
     // not avail: occupied or not updated
     if ( myAvail[timeFrame] != 1 || timeAvail[timeFrame] != 1 ) {
 
@@ -3992,7 +4524,8 @@ function afterClickTab (timeFrame) {
         clearTimeout(loadingCard)
         placeBusy (myAvail[timeFrame])        
     } else {    
-        // no friend
+        // im available, update currentIndex / call getfriendsfreetime
+        getFriendFreeTime();
         if ( currentIndex[timeFrame] < 0 ) {
             console.log("heyo1")
             // not available, let placeBusy handle
@@ -4000,8 +4533,7 @@ function afterClickTab (timeFrame) {
             showNoFriendBlock ()
         } else {
             console.log("heyo2")
-            // if avail && with more users, show it
-            getFriendFreeTime()                
+            // do nothing here.               
         }    
     }
 }
@@ -4035,6 +4567,16 @@ $$(".night-tab").on("click", function (e) {
         $(".night-tab").addClass('current-tab');
     }
     timeFrame = 2
+    afterClickTab (timeFrame)
+})
+$$(".now-tab").on("click", function (e) {
+    if($(".now-tab").hasClass('current-tab')){
+        return;
+    }else{
+        $(".time-tab").removeClass('current-tab');
+        $(".now-tab").addClass('current-tab');
+    }
+    timeFrame = 3
     afterClickTab (timeFrame)
 })
 
@@ -4252,6 +4794,7 @@ function loginToTimiServer () {
 // Get data from Facebook
 function getFriendsAndPersonalData () { 
     console.log("api")
+    // limit 5000 so that it returns more than 25
     
     facebookConnectPlugin.api( "me/?fields=name,id,email,friends.limit(5000)", ["email","user_friends"],
         function (response) { 
@@ -4261,6 +4804,8 @@ function getFriendsAndPersonalData () {
             selfData.userId = response.id;
             selfData.email = response.email;  
             selfData.name = response.name; 
+
+            // in case the facebook bug comes up again
               
             try {
                 selfData.friends = response.friends["data"];   
@@ -4275,8 +4820,9 @@ function getFriendsAndPersonalData () {
             var ajaxUrl = "http://gettimi.com/site/facebookLogin"                      
             $.ajax({
                 url: ajaxUrl,
-                type: "GET",
-                dataType: "jsonp",
+                type: "POST",
+                dataType: "json",
+                crossDomain: true,
                 data: ({'selfData':friendDataEscaped}),
                 success: function(results) {
                     myApp.hideIndicator()
@@ -4289,7 +4835,7 @@ function getFriendsAndPersonalData () {
                         console.log("no phone")
                         // not verified verified users
 
-                        getGeolocation () 
+                        // getGeolocation () 
                         // required, if not, calendar won't be initialized
                         submitCalendar ()
                         // required, if not, the phone can't be filled in
@@ -4396,6 +4942,7 @@ function logout () {
     localStorage.usertoken = null; 
     localStorage.checkedPhone = false; 
     logoutFB()
+    localStorage.chatlist = JSON.stringify([])
     mainView.router.loadPage({
         "pageName":"index"
     })
@@ -4540,7 +5087,7 @@ function logoutFB () {
                             posX = deltaX + lastPosX;
                             posY = deltaY + lastPosY;
                             var opa = Math.abs((Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2);
-                            var opaY = Math.abs((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2);
+                            var opaY = Math.abs((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.5;
 
                             if (opaY >= 1) {
                                 $(".superlike").addClass(".animated bounceIn");
@@ -4597,52 +5144,46 @@ function logoutFB () {
                         panes.eq(current_pane).css("transform", "translate(" + posX + "px," + posY + "px) rotate(" + (percent / 2) + "deg)");
 
                         var opa = (Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2;
-                        var opaY = ((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.6;
+                        var opaY = ((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.5;
 
                         // console.log(opa)
-                        if (opaY >= 1) {
-                            // if (opaY >)
-                            opaY = ((opaY > 1.0) ? 1.0 : opaY);
-                            // $(".superlike").css("color", "white");
-                            // $(".superlike").addClass(".animated bounceIn");
-                            // setTimeout(function () {
-                            //     $(".superlike").removeClass(".animated bounceIn");
-                            // }, 800);
+                        if (opaY >= 0.8 && deltaY < 0) {
 
-                        } else {
-                            if(opa > 1.0) {
-                                console.log("changechange")
-                                opa = 1.0;
+                            opaY = ((opaY > 1.0) ? 1.0 : opaY);
+
+                            if(opa > 1) {
+                                opa = (opa > 1.2) ? 1.2 : opa;
                                 if (posX >= 10) {
-                                    // $(".like").addClass(".animated bounceIn");
-                                    // $(".like").css("color", "white");
-                                    // setTimeout(function () {
-                                    //     $(".like").removeClass(".animated bounceIn");
-                                    // }, 800);                                    
+                                    panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', (opa-1)*5);
+                                    panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                                    panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);                                                                  
                                 } else if (posX < -10) {
-                                    // $(".dislike").addClass(".animated bounceIn");
-                                    // $(".dislike").css("color", "white");
-                                    // setTimeout(function () {
-                                    //     $(".dislike").removeClass(".animated bounceIn");
-                                    // }, 800);                                            
+                                    panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', (opa-1)*5);
+                                    panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                                    panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);                                                                             
                                 }
-                            }
-                            if (posX >= 10) {
-                                // console.log("transform", "scale(" + Math.round( (opa + 1) * 100)/100 + ")")
-                                // $("#star-icon").css("transform", "scale(" + Math.round( (opa + 1) * 100)/100 + ")")
-                                panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', opa);
-                                panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
-                                panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);
-                            } else if (posX < -10) {
-                                // $("#times-icon").css("transform", "scale(" + Math.round( (opa + 1) * 100)/100 + ")")
-                                panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', opa);
-                                panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                            } else {
                                 panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);
-                            } else if (posY <= -10) {
-                                panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);
-                                panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', opaY);
-                                panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);                                  
-                            }                           
+                                panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', (opaY-0.8)*5);
+                                panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);                                     
+                            }     
+                        } else {
+                            if(opa > 0.8) {
+                                opa = (opa > 1) ? 1.0 : opa;
+                                if (posX >= 10) {
+                                    panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', (opa-0.8)*5);
+                                    panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                                    panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);                                                                  
+                                } else if (posX < -10) {
+                                    panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', (opa-0.8)*5);
+                                    panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                                    panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);                                                                             
+                                }
+                            } else {
+                                    panes.eq(current_pane).find($that.settings.dislikeSelector).css('opacity', 0);
+                                    panes.eq(current_pane).find($that.settings.superlikeSelector).css('opacity', 0);
+                                    panes.eq(current_pane).find($that.settings.likeSelector).css('opacity', 0);                                     
+                            }               
                         }
 
                     }
@@ -4659,10 +5200,9 @@ function logoutFB () {
 
                     posX = deltaX + lastPosX;
                     posY = deltaY + lastPosY;
-                    var opa = Math.abs((Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2);
+                    var opa = Math.abs((Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2)  ;
                     var opaY = Math.abs((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.6;
-                    if (opaY >= 1) {
-                        console.log("super")
+                    if (opaY >= 1 && deltaY < 0) {
                         panes.eq(current_pane).animate({"transform": "translate(" + 0 + "px,-" + (pane_width)  + "px) rotate(0 deg)"}, $that.settings.animationSpeed, function () {
                             if($that.settings.onSuperLike) {
                                 $that.settings.onSuperLike(panes.eq(current_pane));
@@ -4670,10 +5210,7 @@ function logoutFB () {
                             $that.next();
                         });                        
                     }
-                    else if (opa >= 1) {
-                        // if (posY > 100) {
-                            // console.log("super")
-                        // } else {
+                    else if (opa > 1 ) {
                         if (posX > 0) {
                             panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width)  + "px) rotate(30 deg)"}, $that.settings.animationSpeed, function () {
                                 if($that.settings.onLike) {
@@ -4689,25 +5226,8 @@ function logoutFB () {
                                 $that.next();
                             });
                         }                                
-                        // }
-                        // console.log("afssss")
-                   
-                        // if (posX > 0) {
-                        //  panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
-                        //      if($that.settings.onLike) {
-                        //          $that.settings.onLike(panes.eq(current_pane));
-                        //      }
-                        //      $that.next();
-                        //  });
-                        // } else {
-                        //  panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
-                        //      if($that.settings.onDislike) {
-                        //          $that.settings.onDislike(panes.eq(current_pane));
-                        //      }
-                        //      $that.next();
-                        //  });
-                        // }
                     } else {
+                        
                         lastPosX = 0;
                         lastPosY = 0;
                         panes.eq(current_pane).animate({"transform": "translate(0px,0px) rotate(0deg)"}, $that.settings.animationRevertSpeed);

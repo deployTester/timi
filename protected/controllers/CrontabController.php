@@ -4,6 +4,62 @@ class CrontabController extends Controller
 {
 
 
+	//Call this every 30 minutes? 1 hour?
+	public function actionPushNotificationQueue(){
+        //prevent anyone else from using our cron
+        if ($_SERVER['REMOTE_ADDR'] !== '104.41.148.236' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '104.41.148.236')) {
+            throw new CHttpException(404, "The requested link does not exist.");
+        }
+		$requests = Requests::model()->findAll('trash = 0 AND pushed = 0 AND status = 0 AND super = 0');
+
+        $lists = Yii::app()->db->createCommand('select id, sender, receiver, count(*) as count, request_day, request_time from tbl_requests where trash = 0 AND pushed = 0 AND status = 0 AND super = 0 group by receiver')->queryAll();
+
+        foreach($lists as $entry):
+			//super likes have been pushed alerady, we only push regular likes here...
+				$count = $entry['count'];
+				if(!$count){
+					$count = 1;	//just in case
+				}
+				$time_word = "now";
+
+				if($entry['request_time'] == 0){
+					$time_word = "this noon";
+				}else if($entry['request_time'] == 1){
+					$time_word = "this evening";
+				}else if($entry['request_time'] == 2){
+					$time_word = "tonight";
+				}
+				$user = Users::model()->findByPk($entry['sender']);	//the real sender
+				$type = 2;
+				$friend_word = "friend wants";
+				if($count > 1){
+					$friend_word = "friends want";
+				}
+				$title = $count." ".$friend_word." to hang out with you ".$time_word."! Open Timi and swipe right to see who!";
+				$data = array(
+					'title'=>$title,
+					'type'=>$type,
+					'user_id'=>$entry['receiver'],	//the receiver of the notification + request
+					'username'=>$user->username,
+					'avatar'=>$user->avatar,
+					'email'=>$user->email,
+					'phone'=>$user->phone,
+					'day'=>$entry['request_day'],
+					'time'=>$entry['request_time'],
+				);
+				$user->sendNotification($data);
+
+				$request = Requests::model()->findByPk($entry['id']);
+				$request->pushed = 1;
+				$request->save(false);
+
+		endforeach;
+		echo 200;
+	}
+
+
+
+
 	public function actionDailyPush(){
 
         //prevent anyone else from using our cron
@@ -52,6 +108,21 @@ class CrontabController extends Controller
 			}
 		}
 		echo 200;
+	}
+
+
+	//trash request after an hour -> for NOW request (2 hours trash)
+	public function actionTrashNowRequest(){
+        //prevent anyone else from using our cron
+        if ($_SERVER['REMOTE_ADDR'] !== '104.41.148.236' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '104.41.148.236')) {
+            throw new CHttpException(404, "The requested link does not exist.");
+        }
+        $requests = Requests::model()->findAll('UNIX_TIMESTAMP() - create_time > 3600 * 2 AND request_time = 3 AND trash = 0');
+        foreach($requests as $request):
+        	$request->trash = 1;
+        	$request->save(false);
+        endforeach;
+        echo 200;
 	}
 
 

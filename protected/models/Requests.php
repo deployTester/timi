@@ -29,7 +29,7 @@ class Requests extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('sender, receiver, create_time', 'required'),
-			array('sender, receiver, create_time, status, request_day, request_time, trash, sender_read, receiver_read, super', 'numerical', 'integerOnly'=>true),
+			array('sender, receiver, create_time, status, request_day, request_time, trash, sender_read, receiver_read, super, pushed', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, sender, receiver, create_time, status', 'safe', 'on'=>'search'),

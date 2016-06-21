@@ -133,7 +133,7 @@ class Users extends CActiveRecord
 
 					//send notification to the your friend and tell them you just signed up.
 					$data = array(
-						'title'=>'Your friend '.$this->username.' just signed up on Timi!',	//your own username
+						'title'=>'Your friend '.$this->username.' just joined Timi!',	//your own username
 						'type'=>1,
 						'user_id'=>$user->id,	//your friend's id
 					);
@@ -218,7 +218,7 @@ class Users extends CActiveRecord
 					if($refer != $user_id && $refer != $friend_id){
 						$mutual[$refer] = array(
 							"username"=>$referObj->username,
-							"avatar"=>$referObj->avatar
+							//"avatar"=>$referObj->avatar
 						);
 					}
 				}

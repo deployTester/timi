@@ -28,6 +28,12 @@ if(isset($_GET['type'])){
 	$type = 1;
 }
 
+if(isset($_GET['sender_id'])){
+	$sender_id = $_GET['sender_id'];
+}else{
+	$sender_id = null;
+}
+
 if(isset($_GET['sender_name'])){
 	$sender_name = $_GET['sender_name'];
 }else{
@@ -151,6 +157,7 @@ $body['aps'] = array(
     'day'=>$day,
     'time'=>$time,
     'message_id'=>$message_id,
+    'sender_id'=>$sender_id,
     'sender_name'=>$sender_name
 	);
 
