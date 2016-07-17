@@ -9,8 +9,11 @@ var contactedLoaded = false;
 var contactsList = [];
 var popupQueue = []; 
 var chatlist = [];
+var nearbyList = [];
+var nearbyIndex = -1;
 var timeFrame = 0; 
 var myAvail = [1,1,1,1]; 
+var badgeSpot = [0,0,0,0]
 var xhr; 
 var isCordova = false;
 var device_token = "";
@@ -31,7 +34,8 @@ var availFriend = []
 for (var i = 0; i < 4; i++) {
     availFriend[i] = []
 }
-var userLocation = []
+var userLocation = []; 
+var activityText = '<i class="fa fa-chevron-circle-down" aria-hidden="true"></i> I want to... '
 // var currentTimeFrame = 0;
 // var usersFavoriteList = []
 var timeOutValue = 5000;
@@ -45,13 +49,15 @@ for (var i = 0 ; i < 7; i++) {
 }
 
 var push_notification = null;
-var favoriteFoodList = ["Food", "Coffee", "Shopping", "Clubbing", "Party", "Chatting","Poker", "Drinking", "Workout", "Video Games", "Running", "Golf", "Swimming", "Basketball", "Soccer", "Sports", "Cooking", "Road Trip", "Concerts/Events", "Movie", "Board Games"].sort(cSort)
+var favoriteFoodList = ["Food", "Coffee", "Shopping", "Clubbing", "Party", "Chatting","Poker", "Drinking", "Workout", "Video Games", "Running", "Golf", "Swimming", "Basketball", "Soccer", "Sports", "Cooking", "Road Trip", "Concerts/Events", "Movie", "Board Games", "Karaoke"].sort(cSort)
 var currentIndex = [ null, null, null]; 
 var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+var fulldays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 var d = new Date()
 var currentHours = d.getHours()
 // var currentHours = 18
 var queryDay; 
+// var 
 // new Element("script", {src: "http://gettimi.com/ios/www/js/GALocalStorage.js?ns=1", type: "text/javascript"});
 
 var barIconHTML = '<a class=\"  open-panel link left-link\" style="visibility:hidden"><i class=\"fa fa-bars \"></i></a>';
@@ -87,6 +93,7 @@ function updateTimeAvail () {
         timeAvail = [0,0,1,1]
         // night avialable
     }    
+    timeAvail = [1,1,1,1]
 }
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -207,14 +214,18 @@ strVar += "          <\/div>";
 strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"home\">";
 strVar += "";
-strVar += "            <div id=\"home-page-navbar-left\" class=\"home-nav\">" + barIconHTML + "</div><div class=\"home-nav\" id=\"home-page-navbar-center\" onclick=\"switchTime ()\" >  Friends Nearby                     ";
-strVar += "            <\/div><div id=\"home-page-navbar-right\" class=\"home-nav\"><a class=\"link right-link\" onclick=\"inviteViaWechat()\"><i class=\"fa-user-plus \" ></i></a></div>   ";
+strVar += "            <div id=\"home-page-navbar-left\" class=\"home-nav\">" + 
+                            barIconHTML + 
+                        "</div>" + 
+                        "<div class=\"home-nav activity-button\" id=\"home-page-navbar-center\" onclick=\"selectActivity ()\" >" + 
+                            "<i class=\"fa fa-chevron-circle-down\" aria-hidden=\"true\"></i>I want to...";
+strVar += "             <\/div><div id=\"home-page-navbar-right\" class=\"home-nav\"><a class=\"link right-link\" onclick=\"myApp.showTab('#invitation-tab')\"><i class=\"fa fa-list-ul \" ></i></a></div>   ";
 strVar += "        <div class=\"subnavbar\">";
 strVar += "          <div class=\"buttons-row\">";
 
-strVar += "            <a href=\"#tab1\" class=\"button time-tab lunch-tab tab-link active\">Noon<\/a>";
-strVar += "            <a href=\"#tab2\" class=\"button time-tab dinner-tab tab-link\">Evening<\/a>";
-strVar += "            <a href=\"#tab3\" class=\"button time-tab night-tab tab-link\">Night<\/a>";
+strVar += "            <a href=\"#tab1\" class=\"button time-tab lunch-tab tab-link active\">Today<\/a>";
+strVar += "            <a href=\"#tab2\" class=\"button time-tab dinner-tab tab-link\">Tomorrow<\/a>";
+strVar += "            <a href=\"#tab3\" class=\"button time-tab night-tab tab-link\">Saturday<\/a>";
 strVar += "            <a href=\"#tab0\" class=\"button time-tab now-tab tab-link \">Now<\/a>";
 strVar += "            <div id=\"underline-border\"></div>";
 strVar += "          <\/div>";
@@ -241,7 +252,7 @@ strVar += "            <div class=\"center\">Your availability<\/div>";
 strVar += "          <\/div>";
 strVar += "";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"chatting-page\">";
-strVar += "            <div class=\"left\"> ";
+strVar += "            <div class=\"left\" style='position:absolute;'> ";
 strVar += "              <a class=\"link back-link\" id=\"ask-calendar-back\">               ";
 strVar += "                <i class=\"fa fa-chevron-left\"><\/i>";
 strVar += "                <span>Back<\/span>";
@@ -264,6 +275,20 @@ strVar += "                <span>Save<\/span>";
 strVar += "              <\/a>            ";
 strVar += "            <\/div>";
 strVar += "          <\/div>        ";
+strVar += "          <div class=\"navbar-inner cached\" data-page=\"availability-page\" >";
+strVar += "            <div class=\"left\" > ";
+strVar += "              <a class=\"link back-link\">               ";
+strVar += "                <i class=\"fa fa-chevron-left\"><\/i>";
+strVar += "                <span>Back<\/span>";
+strVar += "              <\/a>";
+strVar += "            <\/div>          ";
+strVar += "            <div class=\"center\" >My Availability<\/div>";
+strVar += "            <div class=\"right\" >";
+// strVar += "              <a class=\"link\" onclick=\"postPersonalInfo () \">               ";
+// strVar += "                <span>Save<\/span>";
+// strVar += "              <\/a>            ";
+strVar += "            <\/div>";
+strVar += "          <\/div>        ";
 strVar += "          <div class=\"navbar-inner cached\" data-page=\"phone-number\">      ";
 strVar += "            <div class=\"center\">Personal Info<\/div>";
 strVar += "          <\/div>";
@@ -277,10 +302,27 @@ strVar += "              <\/a>";
 strVar += "            <\/div>";
 strVar += "            <div class=\"center\">Friends<\/div>";
 strVar += "          <\/div>        ";
+strVar += "          <div class=\"navbar-inner cached\" data-page=\"nearby-list\">";
+strVar += "            <div class=\"left\"> ";
+strVar += "              <a class=\"link back-link\">               ";
+strVar += "                <i class=\"fa fa-chevron-left\"><\/i>";
+strVar += "                <span>Back<\/span>";
+strVar += "              <\/a>";
+strVar += "            <\/div>";
+strVar += "            <div class=\"center\">People Nearby<\/div>";
+strVar += "          <\/div>        ";
 strVar += "        <\/div>";
 strVar += "        <span class=\"progressbar-infinite\" id=\"progressbar\"><\/span> ";
 strVar += "";
 strVar += "        <div class=\"pages navbar-through\">";
+// strVar += "          <div class=\"page cached\" data-page=\"nearby-list\">";
+// strVar += "            <div class=\"page-content\">";
+// strVar += "                    <div id=\"nearbyslide\">";
+// strVar += "                        <ul>";
+// strVar += "                        <\/ul>";
+// strVar += "                    <\/div>            ";
+// strVar += "            <\/div>";
+// strVar += "          <\/div>";
 strVar += "          <div class=\"page cached\" data-page=\"phone-number\">";
 strVar += "            <div class=\"page-content\">";
 strVar += "              <form id=\"my-form\" class=\"list-block\">";
@@ -335,27 +377,30 @@ strVar += "          <\/div>";
 strVar += "          <div class=\"page cached \" data-page=\"home\">";
 strVar += "            <div class=\"toolbar tabbar tabbar-labels\">";
 strVar += "              <div class=\"toolbar-inner\">";
+
 strVar += "                <a href=\"#explore-tab\" id=\"explore-tab-button\" class=\"tab-link active\">";
-strVar += "                    <i class=\"fa fa-compass\"><\/i>";
-strVar += "                    <!-- <span class=\"tabbar-label\">Explore<\/span> -->";
+strVar += "                    <i class=\"fa fa-sign-language\"><span id=\"badge-red-dot-0\" style=\"display:none\" class=\"badge bg-red\"><\/span><\/i>";
+
+strVar += "                    <span class=\"tabbar-label\">Discover<\/span>";
 strVar += "                <\/a>";
-strVar += "                <a href=\"#availability-tab\" class=\"tab-link\">";
-strVar += "                    <i class=\"fa fa-calendar\">";
+// strVar += "                <a href=\"#invitation-tab\" id=\"invitation-tab-button\" class=\"tab-link\">";
+// strVar += "                    <i class=\"fa fa-users\"><span id=\"badge-red-dot-1\" style=\"display:none\" class=\"badge bg-red\"><\/span><\/i>";
+// strVar += "                    <span class=\"tabbar-label\">Group Invite<\/span>";
+// strVar += "                <\/a>";
+strVar += "                <a href=\"#messenger-tab\" class=\"tab-link\">";
+strVar += "                    <i class=\"fa fa-comments\"><span id=\"badge-red-dot-2\" style=\"display:none\" class=\"badge bg-red\"><\/span><\/i>";
+strVar += "                    <span class=\"tabbar-label\">Chats<\/span>";
+strVar += "                <\/a>";
+strVar += "                <a href=\"#search-tab\" class=\"tab-link\" >";
+strVar += "                    <i class=\"fa fa-search\">";
 strVar += "                        <!-- <span class=\"badge bg-red\"><\/span> -->";
 strVar += "                    <\/i>";
-strVar += "                    <!-- <span class=\"tabbar-label\">Availability<\/span> -->";
+strVar += "                    <span class=\"tabbar-label\">People Nearby<\/span>";
 strVar += "                <\/a>";
-strVar += "                <a href=\"#messenger-tab\" class=\"tab-link\">";
-strVar += "                    <i class=\"fa fa-comments\"><span style=\"display:none\" class=\"badge bg-red\"><\/span><\/i>";
-strVar += "                    <!-- <span class=\"tabbar-label\">Messenger<\/span> -->";
-strVar += "                <\/a>";
-strVar += "                <a href=\"#invitation-tab\" id=\"invitation-tab-button\" class=\"tab-link\">";
-strVar += "                    <i class=\"fa fa-users\"><\/i>";
-strVar += "                    <!-- <span class=\"tabbar-label\">Invite<\/span> -->";
-strVar += "                <\/a>";
+
 strVar += "                <a href=\"#more-tab\" class=\"tab-link\">";
-strVar += "                    <i class=\"fa fa-bars\"><\/i>";
-strVar += "                    <!-- <span class=\"tabbar-label\">More<\/span> -->";
+strVar += "                    <i class=\"fa fa-ellipsis-h\"><span id=\"badge-red-dot-3\" style=\"display:none\" class=\"badge bg-red\"><\/span><\/i>";
+strVar += "                    <span class=\"tabbar-label\">More<\/span>";
 strVar += "                <\/a>        ";
 strVar += "              <\/div>";
 strVar += "            <\/div>          ";
@@ -374,16 +419,14 @@ strVar += "                  <\/div>";
 strVar += "                <\/div>";
 strVar += "              <\/div>";
 strVar += "              <!-- Tab 2 -->";
-strVar += "              <div id=\"availability-tab\" class=\"tab\">";
-strVar += "                <div class=\"content-block\">";
-strVar += "                  <div class=\"page-content\">";
-strVar += "                    <div class=\"one-line-prompt\">";
-strVar += "                      let Timi know when you are available! ";
-strVar += "                    <\/div>                     ";
-strVar += "                    <div class=\"calendar-table\">       ";
-strVar += "                    <\/div>";
+strVar += "              <div id=\"search-tab\" class=\"tab\">";
+strVar += "                 <div class=\"page-content\">";
+strVar += "                         <div id=\"nearbyslide\">";
+strVar += "                             <ul>";
+strVar += "                             <\/ul>";
+strVar += "                         <\/div>            ";
 strVar += "                  <\/div>";
-strVar += "                <\/div>";
+
 strVar += "              <\/div>";
 strVar += "              <!-- Tab 3 -->";
 strVar += "              <div id=\"messenger-tab\" class=\"tab\">";
@@ -397,23 +440,40 @@ strVar += "              <\/div>";
 strVar += "              <!-- Tab 4 -->";
 strVar += "              <div id=\"invitation-tab\" class=\"tab\">";
 strVar += "                <div class=\"content-block\">";
-strVar += "                  <div class=\"page-content\">";
-strVar += "                  <form data-search-list=\".list-block-search\" data-search-in=\".item-title\" class=\"searchbar searchbar-init\">";
-strVar += "                    <div class=\"searchbar-input\">";
-strVar += "                      <input type=\"search\" id=\"searchbar-input-box\" placeholder=\"Search or Add Friend\"><a href=\"#\" class=\"searchbar-clear\"><\/a>";
-strVar += "                    <\/div><a href=\"#\" class=\"searchbar-cancel\">Cancel<\/a>";
-strVar += "                  <\/form>          ";
-strVar += "                  <div class=\"searchbar-overlay\"><\/div>            ";
-strVar += "                    <div class=\"content-block searchbar-not-found\">";
-strVar += "                      <div class=\"content-block-inner one-line-prompt\" style=\"color:#929292;\">Nothing found<\/div>";
-strVar += "                      <div class=\"button color-pink one-line-button\" onclick = \"searchByThisNumber ()\"> Add Friend by this number? <\/div>";
-strVar += "                    <\/div>            ";
-strVar += "                    <div class=\"list-block media-list list-block-search searchbar-found\" id=\"friend-list-form\">";
-strVar += "                      <div class=\"one-line-prompt\" style=\"color:#929292;\">There is no friend yet. <\/div>";
-strVar += "                      <div class=\"button color-pink button-fill one-line-button\" onclick = \"popupToAskContact ()\"> Let Timi find friends for you? <\/div>";
+strVar += "                  <div class=\"page-content\" id=\"list-content-block\">";
+strVar += "                     <div id=\"logo-holder\"></div>"
+strVar += "                     <form id=\"listview-user\" class=\"list-block media-list\">Recommended for you"
+strVar += "                     </form>"
+// strVar += "                     <div class=\"content-block-title\">Friends You May Know"
+// strVar += "                     </div>"
+// strVar += "                     <div class=\"content-block-title\">Recommended For You"
+// strVar += "                     </div>"
+// strVar += "                  <form data-search-list=\".list-block-search\" data-search-in=\".item-title\" class=\"searchbar searchbar-init\">";
+// strVar += "                    <div class=\"searchbar-input\">";
+// strVar += "                      <input type=\"search\" id=\"searchbar-input-box\" placeholder=\"Search or Add Friend\"><a href=\"#\" class=\"searchbar-clear\"><\/a>";
+// strVar += "                    <\/div><a href=\"#\" class=\"searchbar-cancel\">Cancel<\/a>";
+// strVar += "                  <\/form>          ";
+// strVar += "                  <div class=\"searchbar-overlay\"><\/div>            ";
+// strVar += "                  <div class=\"content-block searchbar-not-found\">";
+// strVar += "                    <div class=\"content-block-inner one-line-prompt\" style=\"color:#929292;\">Nothing found<\/div>";
+// strVar += "                    <div class=\"button color-pink one-line-button\" onclick = \"searchByThisNumber ()\"> Add Friend by this number? <\/div>";
+// strVar += "                  <\/div>            ";
+// strVar += "                  <div class=\"list-block media-list list-block-search searchbar-found\" id=\"friend-list-form\">";
+// strVar += "                    <div class=\"one-line-prompt\" style=\"color:#929292;\">There is no friend yet. <\/div>";
+// strVar += "                    <div class=\"button color-pink button-fill one-line-button\" onclick = \"popupToAskContact ()\"> Let Timi find friends for you? <\/div>";
+// strVar += "                    <\/div>   ";
 
-strVar += "                    <\/div>   ";
 strVar += "                  <\/div>";
+strVar += '   <div id=\'invite-all-block\' class="row"> '
+strVar += '        <div class="col-50"> '
+strVar += '            <div class="button button-fill color-gray " style="height:44px;line-height:44px;" onclick="clearSelection()"><i class="fa fa-braille color-white" style="margin-right: 6px;" aria-hidden="true"></i>Clear</div> '
+strVar += '        </div> '        
+strVar += '        <div class="col-50"> '
+strVar += '            <div class="button button-fill color-green " style="height:44px;line-height:44px;background:#63de9a;" onclick="top10Selection()"><i class="fa fa-list-ol color-white" style="margin-right: 6px;" aria-hidden="true"></i>Top 10</div> '
+strVar += '        </div> '    
+strVar += "        <div class= 'button color-pink one-line-button button-fill' style='width:100%;    margin: 15px auto;'  onclick='inviteAll()'> Let's go 🎉🎉🎉</div>"
+strVar += '   </div>'     
+
 strVar += "                <\/div>";
 strVar += "              <\/div>";
 strVar += "              <!-- Tab 5 -->";
@@ -435,10 +495,51 @@ strVar += "                    <\/div>";
 strVar += "                    ";
 strVar += "                    <div class=\"list-block media-list\">";
 strVar += "                      <ul>";
+// strVar += "                        <li onclick='mainView.router.loadPage({\"pageName\":\"availability-page\"})'>";
+// strVar += "                          <div class=\"item-content\">";
+// strVar += "                            <div class=\"item-media\">";
+// strVar += "                              <i class=\"fa fa-calendar icon-background-badge\" style=\"background:lightgreen\"><\/i>";
+// strVar += "                            <\/div>";
+// strVar += "                            <div class=\"item-inner\">";
+// strVar += "                              <div class=\"item-title-row\">";
+// strVar += "                                <div class=\"item-title\">My Availability<\/div>";
+// strVar += "                              <\/div>";
+// strVar += "                              <div class=\"item-subtitle\">Let Timi know when you are generally free<\/div>";
+// strVar += "                            <\/div>";
+// strVar += "                          <\/div>";
+// strVar += "                        <\/li>";
+// strVar += "                        <li onclick='mainView.router.load({\"pageName\":\"nearby-list\"})'>";
+// strVar += "                          <div class=\"item-content\">";
+// strVar += "                            <div class=\"item-media\">";
+// strVar += "                              <i class=\"fa fa-search icon-background-badge\" style=\"background:crimson\"><\/i>";
+// strVar += "                            <\/div>";
+// strVar += "                            <div class=\"item-inner\">";
+// strVar += "                              <div class=\"item-title-row\">";
+// strVar += "                                <div class=\"item-title\">People Nearby <span class='hot-badge'>NEW</span><\/div>";
+// strVar += "                              <\/div>";
+// strVar += "                              <div class=\"item-subtitle\">Discover people nearby<\/div><div id=\"unread-nearby-request\" class=\" badge\"><\/div>";
+// strVar += "                            <\/div>";
+// strVar += "                          <\/div>";
+// strVar += "                        <\/li>";
+
+// strVar += "                        <li onclick='inviteFriendsPopup()'>";
+// strVar += "                          <div class=\"item-content\">";
+// strVar += "                            <div class=\"item-media\">";
+// strVar += "                              <i class=\"fa fa-user-plus\"><\/i>";
+// strVar += "                            <\/div>";
+// strVar += "                            <div class=\"item-inner\">";
+// strVar += "                              <div class=\"item-title-row\">";
+// strVar += "                                <div class=\"item-title\">Invite friends<\/div>";
+// strVar += "                              <\/div>";
+// strVar += "                              <div class=\"item-subtitle\">Get more friends to use Timi!<\/div>";
+// strVar += "                            <\/div>";
+// strVar += "                          <\/div>";
+// strVar += "                        <\/li>";
+
 strVar += "                        <li onclick='mainView.router.loadPage({\"pageName\":\"personal-setting-page\"})'>";
 strVar += "                          <div class=\"item-content\">";
 strVar += "                            <div class=\"item-media\">";
-strVar += "                              <i class=\"fa fa-heart\"><\/i>";
+strVar += "                              <i class=\"fa fa-heart icon-background-badge\" style=\"background:#ec5298\"><\/i>";
 strVar += "                            <\/div>";
 strVar += "                            <div class=\"item-inner\">";
 strVar += "                              <div class=\"item-title-row\">";
@@ -451,7 +552,7 @@ strVar += "                        <\/li>";
 strVar += "                        <li onclick='window.open(\"sms:6178005220&body=Hi I have a question about Timi:\")'>";
 strVar += "                          <div class=\"item-content\">";
 strVar += "                            <div class=\"item-media\">";
-strVar += "                              <i class=\"fa  fa-question-circle\"><\/i>";
+strVar += "                              <i class=\"fa  fa-question-circle icon-background-badge\" style=\"background:#fc0\"><\/i>";
 strVar += "                            <\/div>";
 strVar += "                            <div class=\"item-inner\">";
 strVar += "                              <div class=\"item-title-row\">";
@@ -464,7 +565,7 @@ strVar += "                        <\/li>    ";
 strVar += "                        <li>";
 strVar += "                          <div class=\"item-content\" onclick=\"logout()\">";
 strVar += "                            <div class=\"item-media\">";
-strVar += "                              <i class=\"fa  fa-sign-out\"><\/i>";
+strVar += "                              <i class=\"fa  fa-sign-out icon-background-badge\" style=\"background:lightgray\"><\/i>";
 strVar += "                            <\/div>";
 strVar += "                            <div class=\"item-inner\">";
 strVar += "                              <div class=\"item-title-row\">";
@@ -502,6 +603,15 @@ strVar += "              <div class=\"gps-ring-startscreen\"></div>";
 strVar += "            <\/div>";
 strVar += "          <\/div>  ";
 strVar += "";
+strVar += "          <div class=\"page cached \" data-page=\"availability-page\">";
+strVar += "            <div class=\"page-content\" >";
+strVar += "                    <div class=\"one-line-prompt\">";
+strVar += "                      let Timi know when you are available! ";
+strVar += "                    <\/div>                     ";
+strVar += "                    <div class=\"calendar-table\">       ";
+strVar += "                    <\/div>";
+strVar += "            <\/div>";
+strVar += "          <\/div>  ";
 strVar += "          <div class=\"page cached \" data-page=\"personal-setting-page\">";
 strVar += "            <div class=\"page-content\" >";
 // strVar += "              <div class=\"content-block-title\">";
@@ -522,7 +632,7 @@ strVar += "            <div class=\"page-content\" >";
 // strVar += "              <\/div>                       ";
 strVar += "";
 strVar += "              <div class=\"content-block-title\">";
-strVar += "                <span>Work / Education (current)<\/span>";
+strVar += "                <span>My School<\/span>";
 strVar += "              <\/div> ";
 strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
 strVar += "                <ul>";
@@ -539,7 +649,7 @@ strVar += "                <\/ul>";
 strVar += "              <\/div>                       ";
 strVar += "";
 strVar += "              <div class=\"content-block-title\">";
-strVar += "                <span>Show 2nd Degree Connection<\/span>";
+strVar += "                <span>Privacy<\/span>";
 strVar += "              <\/div> ";
 strVar += "              <div class=\"list-block\" id=\"prompt-list-block\">";
 strVar += "                <ul>";
@@ -556,8 +666,22 @@ strVar += '                       </div> ';
 strVar += '                     </div> ';
 strVar += '                   </div> ';
 strVar += '                 </li> ';
+// strVar += '                 <li> ';
+// strVar += '                   <div class="item-content"> ';
+// strVar += '                     <div class="item-inner"> ';
+// strVar += '                       <div class="item-title label" style="width:80%;">Mute Notification Sound</div> ';
+// strVar += '                       <div class="item-input"> ';
+// strVar += '                         <label class="label-switch" style="position: absolute;right: 20px; top: 8px;"> ';
+// strVar += '                           <input type="checkbox" id="muteSound"> ';
+// strVar += '                           <div class="checkbox"></div> ';
+// strVar += '                         </label> ';
+// strVar += '                       </div> ';
+// strVar += '                     </div> ';
+// strVar += '                   </div> ';
+// strVar += '                 </li> ';
 strVar += "                <\/ul>";
 strVar += "              <\/div>";
+
 strVar += "   ";
 strVar += "";
 // strVar += "              <div class=\"content-block-title\">";
@@ -644,7 +768,7 @@ strVar += "          <\/div>     ";
 strVar += "          <div class=\"page cached toolbar-fixed\" data-page=\"chatting-page\">";
 strVar += "            <div class=\"toolbar messagebar\">";
 strVar += "              <div class=\"toolbar-inner\">";
-strVar += "                <textarea placeholder=\"Message\"><\/textarea><a href=\"#\" style=\"color:#ec5298 !important;\" class=\"link\">Send<\/a>";
+strVar += "                <textarea placeholder=\"Message\"><\/textarea><a href=\"#\" style=\"color:#ec5298 !important;font-weight: 500;\" class=\"link\">Send<\/a>";
 strVar += "              <\/div>";
 strVar += "            <\/div>            ";
 strVar += "            <div class=\"page-content messages-content \">"; 
@@ -677,7 +801,7 @@ strVar += "                <\/div>";
 strVar += "                <div class=\"message message-received\">";
 strVar += "                  <div class=\"message-name\">Ray Xiao<\/div>";
 strVar += "                  <div class=\"message-text\">Wow, awesome!<\/div>";
-strVar += "                  <div style=\"background-image:url(http:\/\/lorempixel.com\/output\/people-q-c-100-100-9.jpg)\" class=\"message-avatar\"><\/div>";
+strVar += "                  <div  class=\"message-avatar\"><\/div>";
 strVar += "                <\/div>";
 strVar += "              <\/div>";
 strVar += "            <\/div>";
@@ -792,7 +916,7 @@ function appReturnedFromBackground () {
         getGeolocation() 
 
         getMySchedule(function () {
-            afterClickTab(timeFrame)  
+            afterClickTab(timeFrame, true)  
         });
         
         getUnreadMatchList(function () {
@@ -807,6 +931,47 @@ function appReturnedFromBackground () {
             }, 0);            
         }   
         getUnprocessedSwipe()  
+        loadStrangers ()
+
+        // if ( mainView.url == "#chatting-page" && currentChatIndex != null ) {
+        //     // if (chatlist[currentChatIndex].user.user_id == data.additionalData.sender_id) {
+        //         // the sender matches current users
+        //         loadNewMessage(chatlist[currentChatIndex].user.user_id)
+        //         // getUnreadMatchList(function () {
+
+        //         // })    
+        //         loadAllNewMessage(function () {
+        //             // load
+        //             // loadloa
+        //         })                       
+        //     // } else { 
+        //         // the sender does not match current users                  
+        //     // }
+           
+        // }
+        // else if (currentTabPage == "messenger-tab") {
+        //     messengerOnShow()
+        // }  else {
+        //     // myApp.modal({
+        //     //     title:  'New Message',
+        //     //     text: data.additionalData.content.message,
+        //     //     buttons: [
+        //     //       {
+        //     //         text: 'Later',
+        //     //         onClick: function() {
+        //     //         }
+        //     //       },
+        //     //       {
+        //     //         text: 'Reply',
+        //     //         onClick: function() {
+        //     //             myApp.showTab("#messenger-tab")
+        //     //         }
+        //     //       }
+        //     //     ]
+        //     // });
+        // } 
+
+
 
     }
 }
@@ -819,9 +984,9 @@ function timeFormatter (date) {
     return doubleDigitFormatter(hours) + ':' + doubleDigitFormatter(min) + ' ' + apm
 }
 
-function appendMessage (text, name, sent, timeString) {
+function appendMessage (text, name, sent, timeString, animate) {
     // Random message type
-
+    animate = animate || false;
     // var messageType = (['sent', 'received'])[Math.round(Math.random())];
     var messageType = sent ? 'sent' : 'received'; 
     name = name || ""
@@ -846,7 +1011,7 @@ function appendMessage (text, name, sent, timeString) {
         // Day
         day: !conversationStarted ? daySince(new Date(timeString)) : false,
         time: !conversationStarted ? timeFormatter(new Date(timeString)) : false
-    })
+    }, 'append', animate);
 }
 function doubleDigitFormatter (digit) {
     if ( digit < 10 ) {
@@ -881,11 +1046,42 @@ function loadMessageList (history) {
 
 var conversationStarted = false;
 var currentChatIndex; 
+var inviteAllObject;
+
+function top10Selection () {
+    inviteAllObject  = myApp.formToJSON("#listview-user")
+    var index = 0; 
+    for (var i in inviteAllObject ){
+        if (index < 10){
+            inviteAllObject[i] = [i]
+        } else {
+            inviteAllObject[i] = []
+        }
+        index ++ 
+    }
+    myApp.formFromJSON("#listview-user", inviteAllObject)
+}
+
+function clearSelection () {
+    inviteAllObject  = myApp.formToJSON("#listview-user")
+    for (var i in inviteAllObject ){
+        if (inviteAllObject[i].length == 0){
+            inviteAllObject[i] = []
+        } else if (inviteAllObject[i][0] == i) { 
+            inviteAllObject[i] = []
+        } else {
+            console.log("WTF")
+        }
+
+    }
+    myApp.formFromJSON("#listview-user", inviteAllObject)
+}
 
 function initMessage (index) {
     console.log(index)
 
     conversationStarted = false;
+    currentChatIndex = index;
     
      
     // Init Messages
@@ -897,26 +1093,14 @@ function initMessage (index) {
      
     // Init Messagebar
     var myMessagebar = myApp.messagebar('.messagebar');
-
     var name = chatlist[index].user.username
-    // var history = chatlist[index].chat_history
-    // console.log(history)
+
     document.getElementById("chatting-page-title").innerHTML = name
     loadMessage(chatlist[index].user.user_id)
-    currentChatIndex = index
-     
-    // Handle message
-
-    // $$('.messagebar .link').on('touchstart', function () {
-    //     console.log("start");
-    //     $(".messagebar textarea").on("blur", function (e) {
-    //         console.log("blur")
-
-    //     });        
-
-    // });
+    
 
     $$('.messagebar .link').on('click', function () {
+
         $(".messagebar textarea").focus()
         console.log(currentChatIndex)
         // Message text
@@ -927,7 +1111,8 @@ function initMessage (index) {
         if (messageText.length === 0) return;
 
         // Empty messagebar
-        myMessagebar.clear()
+        $(".messagebar textarea").val('')
+        // myMessagebar.clear()
 
         // change datebase
         if (chatlist[currentChatIndex].chat_history == null ){
@@ -961,8 +1146,7 @@ function initMessage (index) {
             conversationStarted = false;
         }
 
-
-        appendMessage (messageText, null, true, dateString);
+        appendMessage (messageText, null, true, dateString, true);
         sendMessageAjax(chatlist[currentChatIndex].user.user_id, messageText);
 
     });            
@@ -984,59 +1168,145 @@ function tos() {
     myApp.popup(".popup-services")
 }
 
-$$('#explore-tab').on('show', function () {
-    //currentTabPage = "explore-tab"
-    console.log('Tab 1 is visible');
-    $(".subnavbar").css("display", "flex")
-    changeNavbarTitle("Friends Nearby", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
-    getPersonalInfo()
-    getMySchedule(function () {
-        afterClickTab(timeFrame)                        
-    })    
+$$('#search-tab').on('show', function () {
+    currentTabPage = "search-tab"
+    $(".subnavbar").css("display", "none")
+    changeNavbarTitle("PEOPLE NEARBY", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");      
+    // $(".home-nav").css("visibility", "hidden") 
+    nearbyPendingNum = 0;
+    discoverStrangers()
+    updateTabUI()
+    $("#home-page-navbar-center").removeClass("activity-button")
 });
+
+function updateTabUI () {
+    console.log("#"+currentTabPage)
+    $(".toolbar .tab-link").removeClass("active")
+    $("#"+currentTabPage).addClass("active")    
+}
+
+
  
 $$('#availability-tab').on('show', function () {
     currentTabPage = "availability-tab"
     console.log('Tab 2 is visible');
     updateFreeTime ()
     $(".subnavbar").css("display", "none")
-    changeNavbarTitle("Availability", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");  
+    changeNavbarTitle("AVAILABILITY", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");  
     updateForm()
+    updateTabUI()
 });
 
 function messengerOnShow () {
     currentTabPage = "messenger-tab"
     $(".subnavbar").css("display", "none")
     markAllRequest()
-    changeNavbarTitle("Past dates", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
+    loadChattingList ()
+    changeNavbarTitle("CHATS", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
     getUnreadMatchList(function () {
         loadChattingList ()
     })    
-    loadAllNewMessage(function () {loadChattingList()})
+    loadAllNewMessage(function () {
+        loadChattingList()
+    })
+    MarkAllFriendsMatchAsRead()
 
     // add something to check unread message!!!!   
 }
  
 $$('#messenger-tab').on('show', function () {
     messengerOnShow()
+    badgeSpot[2] = 0;
+    updateToolbarRedDot()
+    updateTabUI()
+    $("#home-page-navbar-center").removeClass("activity-button")
     // loadChattingList ()
 });    
+
+function loadListRequestView () {
+    // if ()
+    var list = availFriend[timeFrame].reverse()
+    
+
+
+    var listHTML = "<ul>"
+    list.map(function (unit) {
+        listHTML += '<li>' + 
+        '  <label class="label-checkbox item-content">' + 
+        '    <input type="checkbox" name="'+ unit.username +'" value="'+ unit.username +'" checked="checked">' + 
+        '    <div class="item-media">' + 
+        '      <i class="icon icon-form-checkbox"></i>' + 
+        '      <img src="' + unit.avatar + '">' +
+        '    </div>' + 
+        '    <div class="item-inner">' + 
+        '      <div class="item-title">' + emojiList[unit.emojiIndex] + "   "+ unit.username  +'</div>' + 
+        '    </div>' + 
+        '  </label>' + 
+        '</li>'
+
+    });
+    listHTML += "</ul>"
+    document.getElementById("listview-user").innerHTML = listHTML
+    availFriend[timeFrame].reverse(); // to reverse the list back.
+        document.getElementById("listview-user").style.display = "block" 
+        document.getElementById("logo-holder").style.display = "none" 
+}
 $$('#invitation-tab').on('show', function () {
     currentTabPage = "invitation-tab"
-    $(".subnavbar").css("display", "none")
-    if ( localStorage.allowedContact == 1 ) {
-        loadFriendsFromContact()
-    }
-    changeNavbarTitle("Invite friends to Timi", barIconHTML, "<a class=\"link right-link\" onclick='searchUser()'><i class=\"fa fa-user-plus\" ></i></a>"); 
-    console.log('Tab 4 is visible');
+    $(".subnavbar").css("display", "flex")
+    localStorage.listView=1;
+    // $(".subnavbar").css("display", "none");
+    // changeNavbarTitle(activityText, barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>"); 
+    changeNavbarTitle(activityText, barIconHTML, "<a class=\"link right-link\" onclick='localStorage.listView=0;myApp.showTab(\"#explore-tab\")'><i class=\"fa fa-compass fixed-width-icon \" ></i></a>"); 
+    getPersonalInfo()    
+    getMySchedule(function () {
+        afterClickTab(timeFrame)                        
+    })    
+    badgeSpot[1] = 0;
+    updateToolbarRedDot()
+    updateTabUI()
+    $("#explore-tab-button").addClass("active")
+    $("#home-page-navbar-center").addClass("activity-button")
+
+
+
+
+    // changeNavbarTitle("Tap to Hangout", barIconHTML, "<a class=\"link right-link\" onclick='searchUser()'><i class=\"fa fa-user-plus\" ></i></a>"); 
 });    
+$$('#explore-tab').on('show', function () {
+
+    if ( localStorage.listView == 1 ) {
+        myApp.showTab("#invitation-tab")
+        return; 
+    }
+    currentTabPage = "explore-tab"
+
+
+
+    console.log('Tab 1 is visible');
+
+    $(".subnavbar").css("display", "flex")
+
+
+    changeNavbarTitle(activityText, barIconHTML, "<a class=\"link right-link\" onclick='localStorage.listView=1; myApp.showTab(\"#invitation-tab\")'><i class=\"fa fa-list-ul fixed-width-icon \" ></i></a>"); 
+    getPersonalInfo()
+    getMySchedule(function () {
+        afterClickTab(timeFrame)                        
+    })    
+        // $(".time-tab").css("font-size", "12px")
+    badgeSpot[0] = 0;
+    updateToolbarRedDot()
+    $("#home-page-navbar-center").addClass("activity-button")
+
+});
 
 
 
 $$('#more-tab').on('show', function () {
     currentTabPage = "more-tab"
+    $(".toolbar .tab-link").removeClass("active")
     $(".subnavbar").css("display", "none")
-    changeNavbarTitle("More", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");
+    changeNavbarTitle("MORE", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");
     
     getPersonalInfo (function () {
         updatePersonalPage ()   
@@ -1047,10 +1317,35 @@ $$('#more-tab').on('show', function () {
     document.getElementById("profile-name").innerHTML = personalData.username
     $("#profile-pic-background").css("background", ('linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(' + personalData.avatar + ')'  ))
     console.log(localStorage.usertoken)
+
+    if ( nearbyPendingNum == 0 ) {
+        $("#unread-nearby-request").css("display", "none")
+    } else {
+        $("#unread-nearby-request").html(nearbyPendingNum)
+        $("#unread-nearby-request").css("display", "block")
+    }
+
+
+
     clearBadge()
+    badgeSpot[3] = 0;
+    updateToolbarRedDot()
+    $("#home-page-navbar-center").removeClass("activity-button")
     // change background too
     console.log('Tab 5 is visible');
 });   
+
+var nearbyPendingNum = 0;
+
+function updateToolbarRedDot () {
+    for (var i in badgeSpot) {
+        if (badgeSpot[i] == 1) {
+            $("#badge-red-dot-"+i).css("display", "block")
+        } else {
+            $("#badge-red-dot-"+i).css("display", "none")
+        }
+    }
+}
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -1090,7 +1385,7 @@ function addToChatDatabase (user_id, text, send, time) {
         if (chatlist[i].user.user_id == user_id || chatlist[i].user.username == user_id ) {
             changed = changed || true;
             console.log("got name")
-            currentChatIndex = i
+            // currentChatIndex = i  //maybe get this back
             if ( chatlist[i].chat_history == null ) { 
                 console.log("got new arr")
                 chatlist[i].chat_history = [chatElem]
@@ -1158,7 +1453,7 @@ function loadChattingList () {
             hehe = unit
             var d = new Date(hehe.timeObject)
             var raw_day = d.getDay()
-            var timiDay; 
+            var timiDay;  // time associated with that chat, not the current
             console.log(hehe)
             if (d.getHours() <= 1) {
                 timiDay = d.getDay() - 1
@@ -1180,15 +1475,15 @@ function loadChattingList () {
             strVar += "    <div class=\"item-media\"><img src="+user.avatar+" width=\"60\"><\/div>";
             strVar += "    <div class=\"item-inner\" >";
             strVar += "      <div class=\"item-title-row\">";
-            strVar += "        <div class=\"item-title\">"+user.username+"<\/div>";
+            strVar += "        <div class=\"item-title\">"+user.username+ "<\/div>";
             strVar += "        <div class=\"item-after\">" + timeSince(new Date(chatlist[index].timeObject)) + "<\/div>";        
             strVar += "      <\/div>";
 
             if (unit.chat_history != null){
-                            strVar += "      <div class=\"item-text\">" + activity[schedule] +" on " + days[timiDay] + "<\/div>";                
+                            // strVar += "      <div class=\"item-text\">" + days[timiDay] + "<\/div>";                
                             strVar += "        <div class=\"item-preview\">" + unit.chat_history[unit.chat_history.length-1].text + "<\/div>";    
             } else {
-                            strVar += "      <div class=\"item-text\">" + activity[schedule] +" on " + days[timiDay] + "<\/div>";                
+                            // strVar += "      <div class=\"item-text\">" + days[timiDay] + "<\/div>";                
                             // strVar += "      <div class=\"item-text\">Matched for " + activity[schedule] +" on " + days[timiDay] + "<\/div>";
                 strVar += "        <div class=\"item-preview\">Don't be shy and start your conversation! <\/div>";    
             }            
@@ -1256,6 +1551,93 @@ function changePicture () {
 
 
 
+}
+
+
+function addFriendBySwiping (user_id, decision, token, index) {
+    token = token || localStorage.usertoken
+    var ajaxUrl = "http://gettimi.com/site/SendFriendRequest?user_token=" + token + 
+    "&receiver=" + user_id + 
+    "&decision=" + decision
+
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // myApp.alert("good")
+            if (results.status == "matched") {
+                myApp.confirm("You are matched with " + nearbyList[index].username + "! Would you like to chat now? ", "Timi", function () {
+                    var user = nearbyList[index]
+                    console.log(user)
+                    // matched(user)
+
+
+                    chatlist = getChatList ()
+                    // assumed now
+                    var elem = {
+                        user: user, 
+                        timeObject: (new Date()), 
+                        schedule: 3
+                    }
+                    pushChatList (elem) 
+                    if (mainView.url == "#nearby-list") {
+                        mainView.router.back()
+                        myApp.showTab("#messenger-tab");                           
+                    } else if (mainView.url == "#home") {
+                        myApp.showTab("#messenger-tab");    
+                    } else {
+                        mainView.router.back()
+                        myApp.showTab("#messenger-tab");                           
+                    }
+                });
+            } else if (results.status == "sent") {
+                // myApp.confirm("You are matched with" + "name! " + "Would you like to chat now? ", "Timi", function () {
+
+                // });
+            } else {
+
+            }
+            console.log(results)
+
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });      
+}
+// function /site/
+
+function discoverStrangers () {
+    placeStrangerCard()    
+}
+
+function loadStrangers () {
+    var ajaxUrl = "http://gettimi.com/site/discoverStrangers?user_token=" + localStorage.usertoken 
+
+
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // myApp.alert("good")
+            console.log(results)
+            nearbyList = JSON.parse(results.result).reverse()
+            nearbyList.map(function (unit) {
+                unit.emojiIndex = Math.round(Math.random() * (emojiList.length-1))            
+            })
+            nearbyIndex = nearbyList.length - 1
+
+        }, 
+        error: function (results) {
+            // myApp.hideIndicator()
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });        
 }
 
 function searchUser () {
@@ -1473,89 +1855,102 @@ function updateProfilePic (fileURL) {
 }
 
 
-function loadPanel () {
-    var settingList = [{
-        icon: "",
-        title: "Calendar"
-    }, {
-        icon: "",
-        title: "Friends"
-    }, {
-        icon: "",
-        title: "Chat"
-    }, {
-        icon: "",
-        title: "Settings"
-    }, {
-        icon: "",
-        title: "Help"
-    }, {
-        icon: "",
-        title: "Log out"
-    }]
-    var panelStrVar = ""
-// panelStrVar += "                <div class=\"content-block\">";
-// panelStrVar += "                  <div class=\"page-content\" >";
-// panelStrVar += "                    <div class=\"profile-image-container\" id=\"profile-pic-background\">";
+// function loadPanel () {
+//     var settingList = [{
+//         icon: "",
+//         title: "Calendar"
+//     }, {
+//         icon: "",
+//         title: "Friends"
+//     }, {
+//         icon: "",
+//         title: "Chat"
+//     }, {
+//         icon: "",
+//         title: "Settings"
+//     }, {
+//         icon: "",
+//         title: "Help"
+//     }, {
+//         icon: "",
+//         title: "Log out"
+//     }]
+//     var panelStrVar = ""
+// // panelStrVar += "                <div class=\"content-block\">";
+// // panelStrVar += "                  <div class=\"page-content\" >";
+// // panelStrVar += "                    <div class=\"profile-image-container\" id=\"profile-pic-background\">";
+// // panelStrVar += "                    <\/div>";
+// // panelStrVar += "                    <div class=\"\">";
+// // panelStrVar += "                      <img onclick=\"changePicture()\" id=\"profile-pic\"class=\"profile-pic\" src=''>";
+// // panelStrVar += "                    <\/div>";
+// // panelStrVar += "                    <div class=\"user-name\" id=\"profile-name\">";
+// // panelStrVar += "";
+// // panelStrVar += "                    <\/div>";
+// // panelStrVar += "";
+// // panelStrVar += "                    <div class=\"edit-profile-text\" onclick=\"changePicture()\"> ";
+// // panelStrVar += "                      <b>Edit Profile Picture</b>";
+// // panelStrVar += "                    <\/div>";
+// // panelStrVar += "                    ";
+// panelStrVar += "                    <div class=\"list-block media-list\">";
+// panelStrVar += "                      <ul>";
+// panelStrVar += "                        <li onclick='mainView.router.loadPage({\"pageName\":\"personal-setting-page\"})'>";
+// panelStrVar += "                          <div class=\"item-content\">";
+// panelStrVar += "                            <div class=\"item-media\">";
+// panelStrVar += "                              <i class=\"fa fa-heart\"><\/i>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                            <div class=\"item-inner\">";
+// panelStrVar += "                              <div class=\"item-title-row\">";
+// panelStrVar += "                                <div class=\"item-title\">Personal Setting<\/div>";
+// panelStrVar += "                              <\/div>";
+// panelStrVar += "                              <div class=\"item-subtitle\">Favorite Activities, Prompt, and more<\/div>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                          <\/div>";
+// panelStrVar += "                        <\/li>";
+// panelStrVar += "                        <li onclick=''>";
+// panelStrVar += "                          <div class=\"item-content\">";
+// panelStrVar += "                            <div class=\"item-media\">";
+// panelStrVar += "                              <i class=\"fa fa-heart\"><\/i>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                            <div class=\"item-inner\">";
+// panelStrVar += "                              <div class=\"item-title-row\">";
+// panelStrVar += "                                <div class=\"item-title\">My Availability<\/div>";
+// panelStrVar += "                              <\/div>";
+// panelStrVar += "                              <div class=\"item-subtitle\">When you are free<\/div>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                          <\/div>";
+// panelStrVar += "                        <\/li>";
+// panelStrVar += "                        <li onclick='window.open(\"sms:6178005220&body=Hi I have a question about Timi:\")'>";
+// panelStrVar += "                          <div class=\"item-content\">";
+// panelStrVar += "                            <div class=\"item-media\">";
+// panelStrVar += "                              <i class=\"fa  fa-question-circle\"><\/i>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                            <div class=\"item-inner\">";
+// panelStrVar += "                              <div class=\"item-title-row\">";
+// panelStrVar += "                                <div class=\"item-title\">Help<\/div>";
+// panelStrVar += "                              <\/div>";
+// panelStrVar += "                              <div class=\"item-subtitle\">FAQ, contact, and more<\/div>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                          <\/div>";
+// panelStrVar += "                        <\/li>    ";
+// panelStrVar += "                        <li>";
+// panelStrVar += "                          <div class=\"item-content\" onclick=\"logout()\">";
+// panelStrVar += "                            <div class=\"item-media\">";
+// panelStrVar += "                              <i class=\"fa  fa-sign-out\"><\/i>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                            <div class=\"item-inner\">";
+// panelStrVar += "                              <div class=\"item-title-row\">";
+// panelStrVar += "                                <div class=\"item-title\">Log out<\/div>";
+// panelStrVar += "                              <\/div>";
+// panelStrVar += "                              <div class=\"item-subtitle\">No, No, and more<\/div>";
+// panelStrVar += "                            <\/div>";
+// panelStrVar += "                          <\/div>";
+// panelStrVar += "                        <\/li>                                                                          ";
+// panelStrVar += "                      <\/ul>";
 // panelStrVar += "                    <\/div>";
-// panelStrVar += "                    <div class=\"\">";
-// panelStrVar += "                      <img onclick=\"changePicture()\" id=\"profile-pic\"class=\"profile-pic\" src=''>";
-// panelStrVar += "                    <\/div>";
-// panelStrVar += "                    <div class=\"user-name\" id=\"profile-name\">";
-// panelStrVar += "";
-// panelStrVar += "                    <\/div>";
-// panelStrVar += "";
-// panelStrVar += "                    <div class=\"edit-profile-text\" onclick=\"changePicture()\"> ";
-// panelStrVar += "                      <b>Edit Profile Picture</b>";
-// panelStrVar += "                    <\/div>";
-// panelStrVar += "                    ";
-panelStrVar += "                    <div class=\"list-block media-list\">";
-panelStrVar += "                      <ul>";
-panelStrVar += "                        <li onclick='mainView.router.loadPage({\"pageName\":\"personal-setting-page\"})'>";
-panelStrVar += "                          <div class=\"item-content\">";
-panelStrVar += "                            <div class=\"item-media\">";
-panelStrVar += "                              <i class=\"fa fa-heart\"><\/i>";
-panelStrVar += "                            <\/div>";
-panelStrVar += "                            <div class=\"item-inner\">";
-panelStrVar += "                              <div class=\"item-title-row\">";
-panelStrVar += "                                <div class=\"item-title\">Personal Setting<\/div>";
-panelStrVar += "                              <\/div>";
-panelStrVar += "                              <div class=\"item-subtitle\">Favorite Activities, Prompt, and more<\/div>";
-panelStrVar += "                            <\/div>";
-panelStrVar += "                          <\/div>";
-panelStrVar += "                        <\/li>";
-panelStrVar += "                        <li onclick='window.open(\"sms:6178005220&body=Hi I have a question about Timi:\")'>";
-panelStrVar += "                          <div class=\"item-content\">";
-panelStrVar += "                            <div class=\"item-media\">";
-panelStrVar += "                              <i class=\"fa  fa-question-circle\"><\/i>";
-panelStrVar += "                            <\/div>";
-panelStrVar += "                            <div class=\"item-inner\">";
-panelStrVar += "                              <div class=\"item-title-row\">";
-panelStrVar += "                                <div class=\"item-title\">Help<\/div>";
-panelStrVar += "                              <\/div>";
-panelStrVar += "                              <div class=\"item-subtitle\">FAQ, contact, and more<\/div>";
-panelStrVar += "                            <\/div>";
-panelStrVar += "                          <\/div>";
-panelStrVar += "                        <\/li>    ";
-panelStrVar += "                        <li>";
-panelStrVar += "                          <div class=\"item-content\" onclick=\"logout()\">";
-panelStrVar += "                            <div class=\"item-media\">";
-panelStrVar += "                              <i class=\"fa  fa-sign-out\"><\/i>";
-panelStrVar += "                            <\/div>";
-panelStrVar += "                            <div class=\"item-inner\">";
-panelStrVar += "                              <div class=\"item-title-row\">";
-panelStrVar += "                                <div class=\"item-title\">Log out<\/div>";
-panelStrVar += "                              <\/div>";
-panelStrVar += "                              <div class=\"item-subtitle\">No, No, and more<\/div>";
-panelStrVar += "                            <\/div>";
-panelStrVar += "                          <\/div>";
-panelStrVar += "                        <\/li>                                                                          ";
-panelStrVar += "                      <\/ul>";
-panelStrVar += "                    <\/div>";
-// panelStrVar += "                  <\/div>";
-// panelStrVar += "                <\/div>";    
-$("#left-panel-html").html(panelStrVar)
-}
+// // panelStrVar += "                  <\/div>";
+// // panelStrVar += "                <\/div>";    
+// $("#left-panel-html").html(panelStrVar)
+// }
 
 
 
@@ -1572,7 +1967,7 @@ function serializeObject (obj)  {
 
 function postGeolocation () {
     if (userLocation == null || userLocation.length == 0 ) {
-        localStorage.allowedLocation = 0
+        // localStorage.allowedLocation = 0
         return 
     }
     var infoObject = {
@@ -1713,7 +2108,7 @@ function postPersonalInfo () {
     // }
     // document.getElementById("whatsup").value = document.getElementById("whatsup").value || ""
     if (document.getElementById("current").value == "") {
-        myApp.alert('Please fill in "Work/Education".')
+        myApp.alert('Please fill in "Your School".')
         return
     }
     if (usersFavoriteList.length < 3) {
@@ -1736,6 +2131,22 @@ function postPersonalInfo () {
         "current": document.getElementById("current").value, 
         "friend_friend" : (document.getElementById("allowFoF").checked ? 1 : 0)
     }
+
+    // var muteSound = (document.getElementById("muteSound").checked ? 1 : 0)
+    // localStorage.muteSound = muteSound
+    try {
+        initPush()
+    } catch( err ) {
+
+    }
+    
+    var updateFriendList = false; 
+    if (personalData.friend_friend != infoObject["friend_friend"]) {
+        updateFriendList = true;
+    } else {
+        updateFriendList = false;
+    }
+
     // serializeObject(infoObject)
     var ajaxUrl = "http://gettimi.com/site/returnInfo?" + serializeObject(infoObject)
     try {
@@ -1747,6 +2158,10 @@ function postPersonalInfo () {
                 localStorage.hasChangedPref = 1
                 // mainView
                 mainView.router.back()
+                console.log("update form", updateFriendList)
+                if (updateFriendList) {
+                    getFriendFreeTime()
+                }
                 // myApp.alert("good")
                 console.log(results)
                 // myApp.hideIndicator()
@@ -1764,6 +2179,84 @@ function postPersonalInfo () {
      
 }
 
+function MarkAllFriendsMatchAsRead () {
+    var ajaxUrl = "http://gettimi.com/site/MarkAllFriendsMatchAsRead?user_token=" + localStorage.usertoken 
+
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // request
+            console.log(results)
+            
+            // assumed now
+
+
+
+        }, 
+        error: function (results) {
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });       
+}
+
+
+// when there is a friend request match, turn the red dot on for chats
+function getUnreadFriendMatch () {
+    var ajaxUrl = "http://gettimi.com/site/getUnreadFriendMatch?user_token=" + localStorage.usertoken 
+
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        dataType: "jsonp",
+        success: function(results) {
+            // request
+            console.log(results)
+            // if ( JSON.parse(results.result) != null )
+            unreadFriendMatchList = JSON.parse(results.result);
+            console.log(unreadFriendMatchList)
+
+            // try {
+            //     nearbyPendingNum = JSON.parse(results.result).length;
+            // } catch (err) {
+            //     nearbyPendingNum = 0;
+            // }
+            badgeSpot[2] = 1
+            unreadFriendMatchList.map(function (unit) {
+                console.log(unit)
+                chatlist = getChatList ()
+                var user = {
+                    "avatar": unit.avatar,
+                    "username": unit.username,
+                    "phone": unit.phone, 
+                    "email": unit.email, 
+                    "user_id": unit.user_id, 
+                    "day": queryDay, 
+                    "time": 3
+                }
+                var elem = {
+                    user: user, 
+                    timeObject: (new Date()), 
+                    schedule: 3
+                }
+                pushChatList (elem)                 
+            })
+
+            
+            // assumed now
+
+
+
+        }, 
+        error: function (results) {
+            console.log(results)
+            // myApp.alert("Network error. Please try again later? ")
+        }
+    });        
+}
+
 function getPersonalInfo (callback) {
     var ajaxUrl = "http://gettimi.com/site/returnInfo?user_token=" + localStorage.usertoken
     $.ajax({
@@ -1777,7 +2270,7 @@ function getPersonalInfo (callback) {
             usersFavoriteList = personalData.favorites.split(",")
             document.getElementById("profile-pic").src = personalData.avatar;
             if (personalData.geolocation == "") {
-                localStorage.allowedLocation = 0
+                // localStorage.allowedLocation = 0
                 getGeolocation ()                
             } else {
                 getGeolocation ()
@@ -1900,9 +2393,11 @@ function rewindInvitation () {
         type: "GET",
         dataType: "jsonp",
         success: function(results) {
-            getMySchedule(function () {
-                afterClickTab(timeFrame)
-            });
+            // getMySchedule(function () {
+            //     afterClickTab(timeFrame)
+            // });
+            getFriendFreeTime();
+
 
         }, 
         error: function (results) {
@@ -2032,10 +2527,11 @@ function updateDistanceValue () {
         // do the update here
     }, 800)
 }
+var hasPoppedLocationNotice = false;
 
 function getGeolocation () {  
     var onSuccess = function(position) {
-        // localStorage.allowedLocation = 1
+
         // localStorage.
         // myApp.alert('Latitude: '          + position.coords.latitude          + '\n' +
         //       'Longitude: '         + position.coords.longitude         + '\n' +
@@ -2054,7 +2550,11 @@ function getGeolocation () {
     function onError(error) {
         console.log("get location err")
         // localStorage.allowedLocation = 0
-        myApp.alert("Please go to Settings - Timi - and turn on Location access! ")
+        if (localStorage.allowedLocation != 1 && hasPoppedLocationNotice == false) {
+            myApp.alert("Please go to Settings - Timi - and turn on Location access! ")
+            hasPoppedLocationNotice = 1
+        }
+        
         // put system redirect
     }    
     if ( localStorage.allowedLocation != 1 ) {
@@ -2065,6 +2565,7 @@ function getGeolocation () {
             confirmText:"Yes, turn on Location", 
             cancelText:"Skip", 
             callbackYes:function () {
+                hasPoppedLocationNotice = true;
                 navigator.geolocation.getCurrentPosition(onSuccess, onError);    
             }, 
             callbackNo:function (){}
@@ -2090,6 +2591,80 @@ function getGeolocation () {
 var onFullScreenPopup = false;
 var onHalfScreenPopup = false;
 var halfScreenPopup = [];
+
+
+
+function showPersonalPage (index) { 
+    
+    // var suggestFriendList = [
+    //     {
+    //         "name" : "Ray Xiao", 
+    //         "avatar": "http://gettimi.com/uploads/avatar/23/avatar1464335266484.jpg", 
+    //         "phone": "16178005220"
+    //     }, 
+    //     {
+    //         "name" : "Jiaming Zhong", 
+    //         "avatar" :"http://gettimi.com/uploads/avatar/49/avatar1463785412102.jpg", 
+    //         "phone" :"12126410987"
+    //     }, 
+    //     {
+    //         "name" : "Sa Wang", 
+    //         "avatar" :"http://gettimi.com/uploads/avatar/67/avatar1463785727153.jpg", 
+    //         "phone" :"15129837196"
+    //     }, 
+    //     {
+    //         "name" : "Binsong Zhao", 
+    //         "avatar" :"http://gettimi.com/uploads/avatar/165/avatar1464123595418.jpg", 
+    //         "phone" :"13392037990"
+    //     }        
+    // ];
+    // shuffle(suggestFriendList)
+
+    var listHTML = ""
+    // suggestFriendList.map (function (unit) {
+    //     var text = "<div class='button button-fill color-gray ' onclick = \"addByNumber(\'"+ unit.phone +"\', this, 'contact-list') \"><i class='fa fa-user-plus'></i>Add</div>"
+    //     var listUnitHTML =                     '<li>'+
+    //                 '      <a href="#" class=" item-content"> '+
+    //                 '        <div class="item-media"><img src="' + unit.avatar + '" width="28px" style="border-radius:100%;"></div>' + 
+    //                 '        <div class="item-inner"> '+
+    //                 '          <div class="item-title-row"> '+
+    //                 '            <div class="item-title">'+ unit.name +'<span class="hidden-number"> ' + "" + '</span></div> '+
+    //                 '            <div class="item-after">' + text + '</div> '+
+    //                 '          </div> '+
+    //                 // '          <div class="item-subtitle color-gray">'+ "" +'</div> '+
+    //                 // '          <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> --> '+
+    //                 '        </div> '+
+    //                 '      </a> '+
+    //                 '    </li> '
+    //     listHTML += listUnitHTML
+    // })
+    var htmlString = '<div class="list-block media-list" id="suggest-frined-list"><ul>'+
+                        listHTML + 
+                    '</ul></div>'          
+                    console.log(htmlString)                                             
+
+
+    var popupElem = {
+        title: chatlist[index].user.username, 
+        contentHTML: htmlString, 
+        leftButton: "Close", 
+
+        callbackLeft:function () {
+            currentIndex[timeFrame] = 1;
+            getMySchedule(function () {
+                afterClickTab(timeFrame)
+            });            
+            // navigator.geolocation.getCurrentPosition(onSuccess, onError);    
+        }, 
+        onload: function () {
+            // document.getElementById("")
+
+        }
+    }
+    halfScreenPopup.push(popupElem)
+    HalfScreenConfirm ()      
+}
+
 
 function addSuggestedFriends () { 
     
@@ -2144,9 +2719,9 @@ function addSuggestedFriends () {
     var popupElem = {
         title: "Friends You May Know", 
         contentHTML: htmlString, 
-        buttonHTML: "Continue", 
+        leftButton: "Done", 
 
-        callbackYes:function () {
+        callbackLeft:function () {
             currentIndex[timeFrame] = 1;
             getMySchedule(function () {
                 afterClickTab(timeFrame)
@@ -2163,6 +2738,262 @@ function addSuggestedFriends () {
 }
 
 
+var activityItem = ""
+function clickActivity(elem) {
+    hehe = elem;
+    var text = elem.getElementsByClassName("activity-text")[0].outerHTML;
+    var dropdownHTML = '<i class="fa fa-chevron-circle-down" aria-hidden="true"></i>';
+    emojiHTML = elem.getElementsByClassName("emoji-holder")[0].outerHTML;
+    setTimeout(function () {
+        myApp.closeModal (".half-screen-popup");
+        $("#home-page-navbar-center").html(dropdownHTML+emojiHTML+text)
+        var left_margin = ($(window).width() - $("#home-page-navbar-center").width()) / 2 
+        $("#home-page-navbar-center").css("left", left_margin+"px")            
+    }, 400)  
+    
+    // console.log(elem)
+}
+
+function selectActivity () {
+    // 🏀🍕☕️🍴🍺🍷🍻🍦🍣🍜🍗🚴🏋⛹🏾🎻🎮⚽️🎾🎱⛳️🏊
+
+    var listHTML = ""    
+    var mainList = [ 
+        "<span class='emoji-holder'>🍗</span><span class='activity-text'>Grab Lunch</span>", 
+        "<span class='emoji-holder'>🍴</span><span class='activity-text'>Get Dinner</span>",   
+        "<span class='emoji-holder'>🎲</span><span class='activity-text'>Play Poker</span><span class='hot-badge'>HOT</span>",                        
+        "<span class='emoji-holder'>🏀</span><span class='activity-text'>Watch Sports</span>", 
+       
+        "<span class='emoji-holder'>🍷</span><span class='activity-text'>Chill</span>", 
+        "<span class='emoji-holder'>🍹</span><span class='activity-text'>Rooftop Happy Hour</span>", 
+        "<span class='emoji-holder'>🎤</span><span class='activity-text'>Sing Karaoke</span><span class='hot-badge'>HOT</span>",    
+    ]
+    var activityList = [
+        "<span class='emoji-holder'>🍺</span><span class='activity-text'>Party! </span><span class='hot-badge'>NEW</span>",      
+        "<span class='emoji-holder'>🎓</span><span class='activity-text'>Study/Do Work</span>",   
+        "<span class='emoji-holder'>🍦</span><span class='activity-text'>Get Ice Cream</span>",                  
+        "<span class='emoji-holder'>🏀</span><span class='activity-text'>Play Basketball</span>",     
+        // "<span class='emoji-holder'>🎲</span><span class='activity-text'>Play Poker</span>", 
+        "<span class='emoji-holder'>⛱</span><span class='activity-text'>Kill time</span>",         
+        "<span class='emoji-holder'>🙌</span><span class='activity-text'>Chat</span>",         
+        "<span class='emoji-holder'>🏋</span><span class='activity-text'>Workout</span>",         
+        "<span class='emoji-holder'>🎮</span><span class='activity-text'>Play Video Games</span>", 
+        "<span class='emoji-holder'>⛳️</span><span class='activity-text'>Golf</span>", 
+        "<span class='emoji-holder'>🏊</span><span class='activity-text'>Swimming</span>", 
+        "<span class='emoji-holder'>⚽️</span><span class='activity-text'>Play Soccer</span>", 
+        "<span class='emoji-holder'>🏃</span><span class='activity-text'>Go Running</span>", 
+        "<span class='emoji-holder'>🎺</span><span class='activity-text'>Go to Concerts</span>", 
+        "<span class='emoji-holder'>🎬</span><span class='activity-text'>Watch a movie</span>",                                                                                                                                                                                                                                                 
+        "<span class='emoji-holder'>🍻</span><span class='activity-text'>Drink</span><span class='hot-badge'>HOT</span>", 
+        "<span class='emoji-holder'>👜</span><span class='activity-text'>Go shopping</span>",                         
+        "<span class='emoji-holder'>👾</span><span class='activity-text'>Play Board Games</span>", 
+        "<span class='emoji-holder'>👑</span><span class='activity-text'>Go Clubbing</span>"
+    ]
+    listHTML = '<li >'+
+            '      <div href="#" class="column-title  "> '+
+            // '        <div class="item-inner "> '+
+                     'TRENDING TODAY' + 
+            // '        </div> '+
+            '      </div> '+
+            '    </li> '
+    shuffle(activityList);
+    var finalList = mainList.concat(activityList)
+
+    mainList.map(function (unit) {
+              
+        listHTML += '<li onclick="clickActivity(this)">'+
+            '      <label href="#" class="label-radio item-content"> '+
+            '        <div class="item-inner"> '+
+            // '          <div class="item-title-row"> '+
+            '            <div class="item-title">'+ unit + '</div> '+
+            // '            <div class="item-after">' + text + '</div> '+
+            // '          </div> '+
+            // '          <div class="item-subtitle color-gray">'+ unit.number[num] +'</div> '+
+            // '          <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> --> '+
+            '        </div> '+
+            '      </label> '+
+            '    </li> '
+    });
+    listHTML += '<li >'+
+            '      <div href="#" class="column-title  "> '+
+            // '        <div class="item-inner "> '+
+                     'OTHERS' + 
+            // '        </div> '+
+            '      </div> '+
+            '    </li> ' 
+    activityList.map(function (unit) {
+              
+        listHTML += '<li onclick="clickActivity(this)">'+
+            '      <label href="#" class="label-radio item-content"> '+
+            '        <div class="item-inner"> '+
+            // '          <div class="item-title-row"> '+
+            '            <div class="item-title">'+ unit + '</div> '+
+            // '            <div class="item-after">' + text + '</div> '+
+            // '          </div> '+
+            // '          <div class="item-subtitle color-gray">'+ unit.number[num] +'</div> '+
+            // '          <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> --> '+
+            '        </div> '+
+            '      </label> '+
+            '    </li> '
+    });    
+
+    var htmlString = '<div class="content-block"><div class="page-content"><div class="list-block " id="activity-list-form"><ul>'+
+                        listHTML + 
+                    '</ul></div></div></div>'          
+                    console.log(htmlString)                                             
+
+
+    var popupElem = {
+        title: "", 
+        contentHTML: htmlString, 
+        leftButton: "", 
+
+        callbackLeft:function () {
+            // currentIndex[timeFrame] = 1;
+            // getMySchedule(function () {
+            //     afterClickTab(timeFrame)
+            // });            
+            // navigator.geolocation.getCurrentPosition(onSuccess, onError);    
+        }, 
+        callbackRight: function () {
+
+        }, 
+        onload: function () {
+            // document.getElementById("")
+
+        }
+    }
+    halfScreenPopup.push(popupElem)
+    HalfScreenConfirm ()  
+    $(".popup.half-screen-popup").css("width", Math.round($(window).width() * 0.8)+"px")
+    $(".popup.half-screen-popup").css("height", Math.round($(window).height() * 0.8)+"px")
+    $(".popup.half-screen-popup").css("top", Math.round($(window).height() * 0.1)+"px")
+    $(".popup.half-screen-popup").css("left", Math.round($(window).width() * 0.1)+"px")
+    $(".popup.half-screen-popup").css("border-radius", "5px")
+    // display: block;
+    // width: calc(80%);
+    // height: 80%;
+    // top: 10%;
+    // left: 10%;
+    // border-radius: 5px; 
+}
+
+
+function inviteFriendsPopup () { 
+
+    var list = JSON.parse(localStorage.contacts)
+    console.log(list)
+    var listHTML = ""
+    var templist = list.slice(0,20)
+    try{
+        cordova.plugins.clipboard.copy(JSON.stringify(templist))
+    } catch(err) {
+
+    }
+    
+
+    list.map(function (unit) {
+        // check the invitation status
+        for (var num in unit.number) {
+            var arr = null ; 
+            var text = ""
+            for (var name in invitedList ) {
+                // console.log(name)
+                if ( name == unit.name ) {
+                    arr = invitedList[name]
+                }
+            }
+            if ( arr == null ) {
+                // the user is yet to be invited
+                text = "<div class='button button-fill color-gray ' onclick = \"inviteFriend(\'"+ unit.number[num] +"\', this, 'contact-list') \"><i class='fa fa-envelope-o'></i>Invite</div>"
+
+            } else {
+                // The suer is invited or has signed up
+                var isInvited = arr[0]
+                var hasSignedUp = arr[1]
+
+                if (isInvited == 1 && hasSignedUp == 0) {
+                    text = "<div class='text-holder color-gray'>Invited</div>"
+                } else if ( hasSignedUp == 1 ){
+                    text = "<div class='text-holder color-gray'>Friend</div>"
+                } else {
+                    text = "<div class=' button button-fill color-gray ' onclick = \"inviteFriend(\'"+ unit.number[num] +"\', this, 'contact-list') \"><i class='fa fa-envelope-o'></i>Invite</div>"
+                }                
+            }                    
+            listHTML += '<li>'+
+                '      <a href="#" class=" item-content"> '+
+                '        <div class="item-inner"> '+
+                '          <div class="item-title-row"> '+
+                '            <div class="item-title">'+ unit.name + '</span></div> '+
+                '            <div class="item-after">' + text + '</div> '+
+                '          </div> '+
+                // '          <div class="item-subtitle color-gray">'+ unit.number[num] +'</div> '+
+                // '          <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> --> '+
+                '        </div> '+
+                '      </a> '+
+                '    </li> '
+        }
+
+    });
+    // htmlString = htmlString + '</ul>'
+
+
+    // var listHTML = ""
+    // htmlString.map (function (unit) {
+    //     var text = "<div class='button button-fill color-gray ' onclick = \"addByNumber(\'"+ unit.phone +"\', this, 'contact-list') \"><i class='fa fa-user-plus'></i>Add</div>"
+    //     var listUnitHTML =                     '<li>'+
+    //                 '      <a href="#" class=" item-content"> '+
+    //                 '        <div class="item-media"><img src="' + unit.avatar + '" width="28px" style="border-radius:100%;"></div>' + 
+    //                 '        <div class="item-inner"> '+
+    //                 '          <div class="item-title-row"> '+
+    //                 '            <div class="item-title">'+ unit.name +'<span class="hidden-number"> ' + "" + '</span></div> '+
+    //                 '            <div class="item-after">' + text + '</div> '+
+    //                 '          </div> '+
+    //                 // '          <div class="item-subtitle color-gray">'+ "" +'</div> '+
+    //                 // '          <!-- <div class="item-text">Lorem ipsum dolor sit amet...</div> --> '+
+    //                 '        </div> '+
+    //                 '      </a> '+
+    //                 '    </li> '
+    //     listHTML += listUnitHTML
+    // })
+
+
+    var htmlString = '<div class="content-block" ><div class="page-content" ><div class="list-block media-list" id="friend-list-form" ><ul>'+
+                        listHTML + 
+                    '</ul></div></div></div>'          
+                    console.log(htmlString)                                             
+
+
+    var popupElem = {
+        title: "Invite friends to Timi", 
+        contentHTML: htmlString, 
+        leftButton: "Close", 
+
+        callbackLeft:function () {
+            // currentIndex[timeFrame] = 1;
+            // getMySchedule(function () {
+            //     afterClickTab(timeFrame)
+            // });            
+            // navigator.geolocation.getCurrentPosition(onSuccess, onError);    
+        }, 
+        callbackRight: function () {
+
+        }, 
+        onload: function () {
+            // document.getElementById("")
+
+        }
+    }
+    halfScreenPopup.push(popupElem)
+    HalfScreenConfirm ()    
+    if ( localStorage.allowedContact == 1 ) {
+        loadFriendsFromContact()
+    }
+
+    // loadFriendsFromContact()  
+}
+
+
 
 function HalfScreenConfirm () {
 
@@ -2176,26 +3007,45 @@ function HalfScreenConfirm () {
     // elem.text = elem.text || "from accessing a frame with origin .  The frame requesting access has a protocol of , the frame being accessed has a protocol of . Protocols must match.";
     // elem.confirmText = elem.confirmText || "Yes, notify me";
     // elem.cancelText = elem.cancelText || "Skip";
+    elem.leftButton = elem.leftButton || ""
+    elem.rightButton = elem.rightButton || ""
+
+
 
 
     var popupHTML = '<div class="popup half-screen-popup">'+
-                        '<div class="popup-title">'+elem.title+'</div>' +    
+                        '<div class="navbar"><div class="navbar-inner"><div class="left">' + elem.leftButton + '</div><div class="center">'+elem.title+'</div><div class="right">' + elem.rightButton + '</div></div></div>' +    
                         elem.contentHTML +                                                                                   
-                        '<div class="popup-continue-button button button-fill color-gray">'+ elem.buttonHTML +'</div>' + 
                       '</div>'
 
 
 
+
+
+
     myApp.popup(popupHTML);
+    $(".navbar").css("visibility", "visible");
+    $(".navbar").css("position", "absolute");
+    var leftWidth = $(".half-screen-popup .left").width()
+    var rightWidth = $(".half-screen-popup .right").width()
+    var buttonWidth = (leftWidth < rightWidth) ? rightWidth : leftWidth;     
+    $(".half-screen-popup .left").css("width", buttonWidth+"px");
+    $(".half-screen-popup .right").css("width", buttonWidth+"px");       
     setTimeout(function () {
         elem.onload()
     }, 400)
-    $(".popup-continue-button").click(function () {
+    $(".half-screen-popup .left").click(function () {
         // console.log("confirm cliked")
         myApp.closeModal (".half-screen-popup")
-        elem.callbackYes ()
+        elem.callbackLeft ()
 
     }); 
+    $(".half-screen-popup .right").click(function () {
+        // console.log("confirm cliked")
+        myApp.closeModal (".half-screen-popup")
+        elem.callbackRight ()
+
+    });     
     $$('.half-screen-popup').on('close', function () {
         
         
@@ -2254,7 +3104,7 @@ function fullScreenConfirm () {
 }
 function superLikePopup (user) {
     var popupElem = {
-        title: user.username + " likes you! ", 
+        title: user.username + " LIKES you! ", 
         text:'Congrats! ' + user.username + ' wants to hang out with you. ' , 
         iconHTML:'<img style="margin-left: 0px; margin-top: 20px;" class="match-profile-pic" src="'+user.avatar+'"><img class="match-profile-pic" src="'+personalData.avatar+'">', 
         confirmText:"Yes, send a message", 
@@ -2541,6 +3391,7 @@ function popupToAskContact () {
             confirmText:"Yes, continue", 
             cancelText:"Skip", 
             callbackYes:function () {
+                localStorage.allowedContact = 1;
                 if (!contactedLoaded) {
                     var options = new ContactFindOptions();
                     options.filter="";
@@ -2687,6 +3538,212 @@ function placeTinderSwipe () {
     insertNewCard();
 }
 
+// supposedly 
+function getLastUpdateTime () {
+
+    var now = new Date(); 
+    var returntime;
+    var hours = now.getHours()
+    if (hours >= 12) {
+        //same day 12pm
+        returntime = new Date(); 
+    } else {
+        // yesterday 12pm
+        returntime = new Date((new Date()) - 86400 * 1000);         
+    }
+    returntime.setHours(12,0,0,0)
+    return returntime;     
+}
+// localStorage.swipeNumberLeft = 3; 
+
+function hasUpdatedNearby () {
+
+    var lastswiped; 
+    if (localStorage.swipeNumberLeft == undefined || localStorage.swipeNumberLeft == "null") {
+        localStorage.swipeNumberLeft = 3;
+    }
+    if (localStorage.swiped == undefined) {
+        lastswiped = new Date(0)
+    } else {
+        lastswiped = new Date(localStorage.swiped)
+    }
+    if (!lastswiped || lastswiped < getLastUpdateTime ()) {
+        // last swipe happens before last update, then update to three
+        localStorage.swipeNumberLeft = 3; 
+    } else {
+
+        // last swipe happens after last update, if less then 3, ok; else not ok
+        // if (localStorage.swipeNumberLeft ) 
+    }
+
+}
+
+function placeStrangerCard () {
+    hasUpdatedNearby();
+    if (nearbyList.length == 0) {
+        var pulseHTML = 
+        '   <img src="' + "img/timi.png" + '" class="matched-portrait animated bounceIn "  />' + 
+
+        '   <div class="one-line-prompt " style="color:#929292; font-size: 15px; line-height:25px; font-weight: 500;">' +
+        '       You\'ve got no people nearby 😅' +
+        '   </div>'         
+        document.getElementById("nearbyslide").innerHTML = pulseHTML;
+    } else {
+        if (localStorage.swipeNumberLeft > 0) {
+            document.getElementById("nearbyslide").innerHTML = "";
+            var tinderListHTML = 
+            "<div class='nearby-prompt'>You've got <span id='swipe-left-number'>" + localStorage.swipeNumberLeft +"</span> swipe(s) left for today! </div>" + 
+            "<div id='nearby-tinder-contain'><ul id='nearby-tinder-list-ul'></ul></div>";
+            document.getElementById("nearbyslide").innerHTML = tinderListHTML;
+            insertStrangerCard();    
+        } else {
+            document.getElementById("nearbyslide").innerHTML = "";
+            // var tinderListHTML = 
+            // "<div class='nearby-prompt'>You've got <span id='swipe-left-number'>0</span> swipe(s) left for today! </div>" + 
+            // "<div id='nearby-tinder-contain'><ul id='nearby-tinder-list-ul'></ul></div>";
+
+            var pulseHTML = 
+            '   <img src="' + "img/timi.png" + '" class="matched-portrait animated bounceIn "  />' + 
+
+            '   <div class="one-line-prompt " style="color:#929292; font-size: 15px; line-height:25px; font-weight: 500;">' +
+            '       You\'ve got no more swipe for today. 😅<br>' +
+            '       Come tomorrow at 12pm to get 3 more swipes! <br>' + 
+            '       Or let 3 best friends know Timi by pressing <span class=\'color-pink\' onclick="inviteViaWechat()">here</span>. ' + 
+            '       We will give you more swipes every day if they are on board! Contact us if it didn\'t work! </div>'         
+            document.getElementById("nearbyslide").innerHTML = pulseHTML;
+            // placeBusy()
+            // insertStrangerCard();    
+        }        
+    }
+
+
+}
+
+function insertStrangerCard () {
+
+    var item = nearbyList[nearbyIndex];
+
+    //item.check_friendship = true or false -> check direct friendship
+    var mutual_friends_count =  Object.keys(item.mutual).length;
+    var mutual_friends = item.mutual;
+    mutual_friends_string = "";
+
+    //if you guys are already friends.
+    //if(item.check_friendship){
+    //    mutual_friends_string = "You and "+item.username+" are friends. You guys have the following mutual friends: ";
+    //}else{
+    //    mutual_friends_string = "You and "+item.username+" are not friends yet. You have the following mutual friends: ";
+    //}
+    console.log(mutual_friends_count + " mutual friends");
+
+    //loop thru mutual friends
+    var j = 0;
+
+    $.each(item.mutual, function( i, val ) {
+         //if more than 4, we get the first 4.
+        if(j <= 4){
+            j++;
+            mutual_friends_string += val.username+", ";
+        }
+    });
+    //remove the space and , at the end.
+    mutual_friends_string = mutual_friends_string.slice(0, -2);
+
+    var remind_friends = mutual_friends_count - j;
+
+    if(remind_friends == 0){
+        mutual_friends_string += ".";
+    }else if(remind_friends == 1){
+        mutual_friends_string += " and 1 other.";
+    }else{
+        mutual_friends_string += " and " + remind_friends + " others.";
+    }
+
+    mutual_friend_holder = mutual_friends_count + " mutual <i class='fa fa-users' aria-hidden='true'></i>";
+
+    if(mutual_friends_count > 0){
+        mutual_friend_link = '<a href="#" class="mutual-friends-click color-white" onclick="showMutualFriends(mutual_friends_string)">'+ mutual_friend_holder +'</a>';
+    }else{
+        mutual_friend_link = "";
+    }
+
+    var current = item.current;
+    var whatsup = item.whatsup;
+    var favorites = item.favorites.split(',').join(', ');
+
+    if(!current){
+        current = "N/A";
+    }
+    if(!whatsup){
+        whatsup = "N/A";
+    }
+    if(!favorites){
+        favorites = "N/A";
+    }
+
+    var newCardHtml = 
+        '      <li class="new_card"> ' + 
+        '            <div class="card demo-card-header-pic" > ' + 
+        '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
+        '              <div style="" class="card-header no-border card-username-section">' + emojiList[item.emojiIndex] + " " + "Name is private until connected" + '<div class="color-white">'+mutual_friend_link+'</div></div> ' + 
+        '              <div class="card-content"> ' + 
+        '                <div class="card-content-inner"> ' + 
+        // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
+        '                   <div class="color-gray"><div class="card-pic-title">School / Occupation</div><div class="card-pic-content">'+current+'</div></div>' +
+        // '                   <div class="color-gray"><i class="fa fa-comments color-pink"></i>'+whatsup+'</div>' + 
+        // '                  <div class="color-pink">' +item.name+ ' likes: </div>' + 
+        '                   <div class="color-gray"><div class="card-pic-title">Favorite Activities</div><div class="card-pic-content">'+favorites+'</div></div> ' + 
+        '                </div> ' + 
+        '              </div> ' + 
+        // '              <div class="card-footer no-gutter row"> ' + 
+        // '                <a href="#" class="link button col-50 color-gray button-fill dislike-button">PASS</a> ' + 
+        // '                <a href="#" class="link button col-50 color-pink button-fill like-button">I\'M DOWN! </a> ' + 
+        // '              </div> ' + 
+        '            </div>    ' +
+        '            <div class="like" >LIKE</div> ' + 
+        '            <div class="dislike" >PASS</div> ' + 
+        // '            <div class="superlike" >WHISPER</div> ' +         
+        '          </li>';
+
+    document.getElementById("nearby-tinder-list-ul").innerHTML += newCardHtml;
+
+    document.getElementById("nearbyslide").innerHTML += ""+ 
+    "<div class='row decision-button-row'>" + 
+        "<div class='col-50 button dislike-button button-fill color-gray' style='background-color:#ec5298;font-size:20px;text-transform:uppercase;'>" + 
+            // "<i class='fa fa-times' id='times-icon'></i>" + 
+            "PASS" +
+        "</div>" + 
+        // "<div class='col-33 button like-button button-fill color-gray' style='background-color:#2cb3c9;' >" + 
+        //     // "<i class='fa fa-bell-slash left-heart' aria-hidden='true'></i><i class='fa fa-heart right-heart' id='heart-icon'></i>" +         
+        //     "WHISPER" +
+        // "</div>" +            
+        "<div class='col-50 button superlike-button button-fill color-gray' style='background-color:#63de9a;font-size:20px;text-transform:uppercase;'>" + 
+            // "<i class='fa fa-heart ' ></i>" +         
+            "Add Friend" +
+        "</div>" + 
+             
+    "</div>"
+
+
+    // setTimeout(function () {
+        initDiscoverSwipe ("#nearby-tinder-contain"); 
+    // }, 100)
+    
+
+
+    //use time out to make sure the previous step (initTinderSwipe) has finished executing - not ideal.
+    setTimeout(function(){ 
+        $(".new_card").show();
+        $(".new_card").removeClass('new_card');  
+        if(mutual_friends_count == 0){
+            $(".mutual-friends-click").hide();
+        }              
+    }, 500);
+}
+
+
+
+
 
 function insertNewCard () {
 
@@ -2754,7 +3811,7 @@ function insertNewCard () {
         '      <li class="new_card"> ' + 
         '            <div class="card demo-card-header-pic" > ' + 
         '              <div class="card-pic"  style="background:url(\''+ item.avatar + '\') 50% 50% no-repeat"></div> ' + 
-        '              <div style="" class="card-header no-border card-username-section">' + item.username + '<div class="color-white">'+mutual_friend_link+'</div></div> ' + 
+        '              <div style="" class="card-header no-border card-username-section">' + emojiList[item.emojiIndex] + " " + item.username + '<div class="color-white">'+mutual_friend_link+'</div></div> ' + 
         '              <div class="card-content"> ' + 
         '                <div class="card-content-inner"> ' + 
         // '                  <div class="color-pink">' +item.name+ ' says: </div>' + 
@@ -2769,9 +3826,9 @@ function insertNewCard () {
         // '                <a href="#" class="link button col-50 color-pink button-fill like-button">I\'M DOWN! </a> ' + 
         // '              </div> ' + 
         '            </div>    ' +
-        '            <div class="like" >LIKE</div> ' + 
+        '            <div class="like" >INVITE</div> ' + 
         '            <div class="dislike" >PASS</div> ' + 
-        '            <div class="superlike" >SUPERLIKE</div> ' +         
+        // '            <div class="superlike" >WHISPER</div> ' +         
         '          </li>';
 
     document.getElementById("tinder-list-ul").innerHTML += newCardHtml;
@@ -2779,14 +3836,18 @@ function insertNewCard () {
     document.getElementById("tinderslide").innerHTML += ""+ 
     "<div class='row decision-button-row'>" + 
         "<div class='col-33 button dislike-button button-fill color-gray' style='background-color:#ec5298;'>" + 
-            "<i class='fa fa-times' id='times-icon'></i>" + 
+            // "<i class='fa fa-times' id='times-icon'></i>" + 
+            "PASS" +
         "</div>" + 
-        "<div class='col-33 button superlike-button button-fill color-gray' style='background-color:#2cb3c9;'>" + 
-            "<div class='heart-combo'><i class='fa fa-heart left-heart' ></i><i class='fa fa-heart right-heart' ></i></div>" +         
+        "<div class='col-33 button like-button button-fill color-gray' style='background-color:#2cb3c9;' >" + 
+            // "<i class='fa fa-bell-slash left-heart' aria-hidden='true'></i><i class='fa fa-heart right-heart' id='heart-icon'></i>" +         
+            "SECRET" +
+        "</div>" +            
+        "<div class='col-33 button superlike-button button-fill color-gray' style='background-color:#63de9a;'>" + 
+            // "<i class='fa fa-heart ' ></i>" +         
+            "INVITE" +
         "</div>" + 
-        "<div class='col-33 button like-button button-fill color-gray' style='background-color:#63de9a;'>" + 
-            "<i class='fa fa-heart' id='heart-icon'></i>" +         
-        "</div>" +                 
+             
     "</div>"
 
 
@@ -2827,20 +3888,25 @@ function updateFrontPage (timeFrame) {
 
     if ( availFriend[timeFrame].length == 0 ) {
         console.log("has no stuff")
+        $("#invite-all-block").css("display", "none")
         placePulse(); 
         showNoFriendBlock ()
         return; 
     } else {
         $(".no-friend").css("display", "none")
         console.log("has stuff")
-        placePulse ();        
+        // placePulse ();        
+        
 
-
-
-// here
-        loadingCard = setTimeout(function () {
-                placeTinderSwipe ()
-        }, 100);          
+        if (currentTabPage == "invitation-tab") {
+            $("#invite-all-block").css("display", "flex")
+            loadListRequestView()
+        } else { // explore-tab
+            loadingCard = setTimeout(function () {
+                    placeTinderSwipe ()
+            }, 100);              
+        }
+        
 
 
 
@@ -2950,10 +4016,7 @@ function randomWhatsup () {
 
 }
 
-function initShuffleInvite () {
-    console.log("changed")
-    myApp.showTab("#invitation-tab")
-}
+var emojiList = ["🍻","🎉","👑","🍢","🍣","🍙","🍵","🍶","🍼","🍒","🍌","💥","🌻","🎃","🌿"]; 
 
 // Place the pulse effect
 function placePulse () {
@@ -2966,7 +4029,7 @@ function placePulse () {
         '   <img src="' + "img/timi.png" + '" class="pulse-portrait animated bounceIn"  />' + 
         '   <div class="gps-ring"></div>' + 
         // '   <div class="gps-ring-2"></div>' + 
-        '   <div class="one-line-prompt no-friend" style="color:#929292;font-size:17px;">It seems that <span class="color-black">no friend</span> is nearby<i class="fa fa-frown-o" aria-hidden="true"></i>. Invite friends by sending them a <span class="color-pink">FREE text!<i class="fa fa-smile-o" aria-hidden="true"></i></span>Easily get friends to hang out now!</div>' + 
+        '   <div class="one-line-prompt no-friend" style="color:#929292;font-size:17px;">It seems that <span class="color-black">no friend</span> is nearby😝 Send a <span class="color-pink">FREE text!<i class="fa fa-smile-o" aria-hidden="true"></i></span> to invite!</div>' + 
         '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;font-weight:700">Invite <span id="invite-friend-name"></span> !</div>' +     
 
         '   <div class="row"> ' +
@@ -2992,8 +4055,14 @@ function placePulse () {
         // // '            <div class="button button-fill color-green no-friend" style="height:44px;line-height:44px;" onclick="inviteViaWechat()"><i class="fa fa-weixin color-white" style="margin-right: 6px;" aria-hidden="true"></i>Invite friends from WeChat/Facebook</div> ' +
         // '        </div> ' +        
         // '   </div>'
+
         document.getElementById("tinderslide").innerHTML = pulseHTML
+        document.getElementById("logo-holder").innerHTML = pulseHTML
+        // document.getElementById("listview-user").innerHTML = pulseHTML
         document.getElementById("tinderslide").style.display = "block"
+        document.getElementById("listview-user").style.display = "none" 
+        document.getElementById("logo-holder").style.display = "block" 
+
         if (isCordova) {
             inviteNextFriend ()
         }
@@ -3006,20 +4075,9 @@ function placePulse () {
         '   <div class="gps-ring"></div>' + 
         // '   <div class="gps-ring-2"></div>' + 
         '   <div class="one-line-prompt no-friend" style="color:#929292">It seems that no friend is nearby. Invite friends to Timi by sending them a FREE text!</div>' + 
-        // '   <div class="one-line-prompt no-friend" style="color:#222; font-size: 17px;">Invite <span id="invite-friend-name">Ray Xiao</span>!</div>' +     
-
-        // '   <div class="row"> ' +
-        // '        <div class="col-50"> ' +
-        // '            <div class="button button-fill color-gray no-friend" style="height:44px;line-height:44px;" onclick="inviteNextFriend()">Skip</div> ' +
-        // '        </div> ' +
-        // '        <div class="col-50"> ' +
-        // '            <div class="button button-fill color-pink no-friend" style="height:44px;line-height:44px;" onclick="sendInvite()">Invite</div> ' +
-        // '        </div> ' +
-        // '    </div>'
-        // '   <div class="button color-pink one-line-button no-friend" onclick="initShuffleInvite ()">Invite friends to Timi? </div>' + 
         '   <div class="row"> ' +
         '        <div class="col-100"> ' +
-        '            <div class="button button-fill color-pink no-friend" style="height:50px;line-height:50px;" onclick="initShuffleInvite ()">Invite friends to Timi? </div> ' +
+        '            <div class="button button-fill color-pink no-friend" style="height:50px;line-height:50px;" onclick="inviteFriendsPopup ()">Invite friends to Timi? </div> ' +
         '        </div> ' +
         '    </div>' +           
         '   <div class="row"> ' +
@@ -3028,8 +4086,14 @@ function placePulse () {
         '        </div> ' +
         '    </div>' +        
         '   <div class="one-line-prompt no-friend" style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
+
         document.getElementById("tinderslide").innerHTML = pulseHTML
+        document.getElementById("logo-holder").innerHTML = pulseHTML
+        // document.getElementById("listview-user").innerHTML = pulseHTML
         document.getElementById("tinderslide").style.display = "block"
+        document.getElementById("listview-user").style.display = "none" 
+        document.getElementById("logo-holder").style.display = "block" 
+
     }
 
     // document.getElementById("tinderslide").innerHTML = pulseHTML
@@ -3066,13 +4130,16 @@ function placeBusy (unit) {
 
         var pulseHTML = 
         '   <img src="' + "img/timi.png" + '" class="matched-portrait animated bounceIn "  />' + 
-        // '   <div class="gps-ring"></div>' + 
-        // '   <div class="gps-ring-2"></div>' + 
+
         '   <div class="one-line-prompt " style="color:#929292">It looks like the time has passed already. ' + mealIndicator + ' </div>' 
-        // '   <div class="button color-pink one-line-button " onclick=\'myApp.showTab(\"#availability-tab\");\'>Turn on the slot? </div>' 
-        // '   <div class="one-line-prompt " style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
+
         document.getElementById("tinderslide").innerHTML = pulseHTML
-        document.getElementById("tinderslide").style.display = "block"          
+        document.getElementById("logo-holder").innerHTML = pulseHTML
+        // document.getElementById("listview-user").innerHTML = pulseHTML
+        document.getElementById("tinderslide").style.display = "block"
+        document.getElementById("listview-user").style.display = "none" 
+        document.getElementById("logo-holder").style.display = "block"        
+        getFriendFreeTimeNoUI()
         return; 
     }
     else if ( unit == 0 ) {
@@ -3083,12 +4150,23 @@ function placeBusy (unit) {
         '   <div class="one-line-prompt " style="color:#929292">It looks like you are busy for this time! </div>' + 
         '   <div class="button color-pink one-line-button " onclick=\'myApp.showTab(\"#availability-tab\");\'>Turn on the slot? </div>' 
         // '   <div class="one-line-prompt " style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
+        // document.getElementById("tinderslide").innerHTML = pulseHTML
+        // document.getElementById("tinderslide").style.display = "block"     
         document.getElementById("tinderslide").innerHTML = pulseHTML
-        document.getElementById("tinderslide").style.display = "block"          
-    } else {
+        document.getElementById("logo-holder").innerHTML = pulseHTML
+        // document.getElementById("listview-user").innerHTML = pulseHTML
+        document.getElementById("tinderslide").style.display = "block"
+        document.getElementById("listview-user").style.display = "none" 
+        document.getElementById("logo-holder").style.display = "block"            
+    }  
+    else if (unit == 1) {
+        placePulse()
+        showNoFriendBlock()
+    }
+    else {
         // matched with other
 
-
+        console.log(unit)
         var pulseHTML = 
         '<div class="you-are-matched-title"><i class="fa fa-hand-peace-o" aria-hidden="true"></i>It\'s a Match!<i class="fa fa-hand-peace-o" aria-hidden="true"></i></div>' +
         '   <img src="' + unit.avatar + '" class="match-portrait animated bounceIn"  />' +
@@ -3106,15 +4184,23 @@ function placeBusy (unit) {
         '        </div> ' +          
         '   </div>'               
         // '   <div class="one-line-prompt " style="color:#929292">Timi is the <span style="color:#ec5298">EASIEST</span> way to get friends to hang out</div>' 
+        // document.getElementById("tinderslide").innerHTML = pulseHTML
+        // document.getElementById("tinderslide").style.display = "block"    
+
         document.getElementById("tinderslide").innerHTML = pulseHTML
-        document.getElementById("tinderslide").style.display = "block"          
+        document.getElementById("logo-holder").innerHTML = pulseHTML
+        // document.getElementById("listview-user").innerHTML = pulseHTML
+        document.getElementById("tinderslide").style.display = "block"
+        document.getElementById("listview-user").style.display = "none" 
+        document.getElementById("logo-holder").style.display = "block" 
+
     }
   
 }
 
 function continuePlaying () {
     myAvail = [1,1,1,1]
-    afterClickTab(timeFrame)
+    afterClickTab(timeFrame, true)
 }
  
 function inviteViaWechat () {
@@ -3143,6 +4229,141 @@ function inviteViaWechat () {
         // myApp.alert("好像没法启用系统分享，请更新软件！")
     }    
 }
+var inviteAllList = []
+
+function inviteAll () {
+
+
+    inviteAllObject  = myApp.formToJSON("#listview-user")
+    inviteAllList = []
+    for (var i in inviteAllObject ){
+        if (inviteAllObject[i].length != 0) {
+            inviteAllList.push(inviteAllObject[i])
+        }
+    }
+    inviteAllList = inviteAllList.reverse();
+
+      myApp.modal({
+        title: 'Timi',
+        text: "Ready to invite "+inviteAllList.length + " friends? ",
+        verticalButtons: true,
+        buttons: [
+          {
+            text: 'Invite All! ',
+            onClick: function() {
+
+                // n^2 search so sequence does not matter. 
+                for (var i in inviteAllList) {
+                    for (var j in availFriend[timeFrame]) {
+                        if (availFriend[timeFrame][j].username == inviteAllList[i][0]) { 
+                            console.log(availFriend[timeFrame][j].username)
+                            requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][j].user_id, 1, 1, j);                          
+                        }
+                    }
+                }
+                afterClickTab(timeFrame, true)   
+
+
+            }
+          },
+          {
+            text: 'Whisper (Secretly Like All)',
+            onClick: function() {
+                for (var i in inviteAllList) {
+                    for (var j in availFriend[timeFrame]) {
+                        if (availFriend[timeFrame][j].username == inviteAllList[i][0]) { 
+                            console.log(availFriend[timeFrame][j].username)
+                            requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][j].user_id, 1, 0, j);                          
+                        }
+                    }
+                }
+                afterClickTab(timeFrame, true)  
+            }
+          },
+          {
+            text: 'Wait a sec! ',
+            onClick: function() {
+
+            }
+          },
+        ]
+      })
+}
+
+function initDiscoverSwipe (object) {
+    $(object).jTinder({
+        onSuperLike: function(item) {
+            localStorage.swiped = new Date()
+            localStorage.swipeNumberLeft = localStorage.swipeNumberLeft-1
+            addFriendBySwiping(nearbyList[nearbyIndex].user_id, 1, null, nearbyIndex)
+            nearbyIndex--
+
+            if (nearbyIndex < 0) {
+                // placePulse()
+                // showNoFriendBlock ()                
+            } else {
+                placeStrangerCard ()
+            }
+
+
+        }, 
+        onDislike: function (item) {
+            addFriendBySwiping(nearbyList[nearbyIndex].user_id, 2, null, nearbyIndex)
+            localStorage.swiped = new Date()
+            nearbyIndex--
+            localStorage.swipeNumberLeft = localStorage.swipeNumberLeft-1
+
+            if (nearbyIndex < 0) {
+                // placePulse()
+                // showNoFriendBlock ()                
+            } else {
+                placeStrangerCard ()
+            }       
+
+        }
+    });    
+    initNearbySwipeCSS()
+    // initTinderSwipeCSS()
+    console.log("init")
+    $(".like-button").on("click", function () {
+        // if (localStorage.promptLike != 1) {
+        //     myApp.confirm("By Swiping right, you are sending an anonymous \"invite\" to this user, and Timi will let you know if you are a match. Continue? ", "", function () {
+        //         localStorage.promptLike = 1
+        //         $(object).jTinder('like');
+        //     })
+        // } else {
+        //     $(object).jTinder('like');
+        // }
+        $(object).jTinder('like');
+        
+    })
+    $(".dislike-button").on("click", function () {
+        // if (localStorage.promptDisLike != 1) {
+        //     myApp.confirm("By Swiping left, you are sending an anonymous \"pass\" to this user, and Timi won\'t let this user know that you say no. Continue? ", "", function () {
+        //         localStorage.promptDisLike = 1
+        //         $(object).jTinder('dislike');
+        //     })
+        // } else {
+        //     $(object).jTinder('dislike');
+        // }
+        $(object).jTinder('dislike');
+
+        
+    })
+    $(".superlike-button").on("click", function () {
+        // if (localStorage.promptDisLike != 1) {
+        //     myApp.confirm("By Swiping left, you are sending an anonymous \"pass\" to this user, and Timi won\'t let this user know that you say no. Continue? ", "", function () {
+        //         localStorage.promptDisLike = 1
+        //         $(object).jTinder('dislike');
+        //     })
+        // } else {
+        //     $(object).jTinder('dislike');
+        // }
+        $(object).jTinder('superlike');
+
+        
+    })                    
+}
 
 
 // Initiate the tinder swipe page, called when the home page is loaded
@@ -3151,9 +4372,9 @@ function initTinderSwipe (object) {
         onSuperLike: function (item) {
 
             if (localStorage.promptSuperLike != 1) {
-                myApp.confirm("By Swiping up, you are sending an direct \"invite\" to this user, and Timi will let this user know that you have invited her. Continue? ", "", function () {
+                myApp.confirm("You are sending an invitation to this user, and Timi will let this user know that you have invited her. Continue? ", "Are You Sure? ", function () {
                     localStorage.promptSuperLike = 1
-                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 1);                         
+                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 1, currentIndex[timeFrame]);                         
                     currentIndex[timeFrame]--
                     if (currentIndex[timeFrame] < 0) {
                         placePulse()
@@ -3170,7 +4391,7 @@ function initTinderSwipe (object) {
                     }                    
                 })
             } else {
-                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 1);                         
+                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 1, currentIndex[timeFrame]);                         
                 currentIndex[timeFrame]--
                 if (currentIndex[timeFrame] < 0) {
                     placePulse()
@@ -3185,16 +4406,17 @@ function initTinderSwipe (object) {
             // placeTinderSwipe ()
 
             if (localStorage.promptLike != 1) {
-                myApp.confirm("By Swiping right, you are sending an anonymous \"invite\" to this user, and Timi will let you know if you are a match. Continue? ", "", function () {
-                    localStorage.promptLike = 1
-                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
-                    currentIndex[timeFrame]--
-                    if (currentIndex[timeFrame] < 0) {
-                        placePulse()
-                        showNoFriendBlock ()                
-                    } else {
-                        placeTinderSwipe ()
-                    }
+                myApp.confirm("By pressing \"Secret\", you are anonymously inviting this user, and Timi will let you know if you are a match. Continue? ", "Are You Sure? ", 
+                    function () {
+                        localStorage.promptLike = 1
+                        requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 0, currentIndex[timeFrame]);                         
+                        currentIndex[timeFrame]--
+                        if (currentIndex[timeFrame] < 0) {
+                            placePulse()
+                            showNoFriendBlock ()                
+                        } else {
+                            placeTinderSwipe ()
+                        }
                 }, function () {
                     if (currentIndex[timeFrame] < 0) {
                         placePulse()
@@ -3202,9 +4424,9 @@ function initTinderSwipe (object) {
                     } else {
                         placeTinderSwipe ()
                     }                    
-                })
+                });
             } else {
-                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1);                         
+                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 1, 0, currentIndex[timeFrame]);                         
                 currentIndex[timeFrame]--
                 if (currentIndex[timeFrame] < 0) {
                     placePulse()
@@ -3219,9 +4441,9 @@ function initTinderSwipe (object) {
         }, 
         onDislike: function (item) {
             if (localStorage.promptDisLike != 1) {
-                myApp.confirm("By Swiping left, you are sending an anonymous \"pass\" to this user, and Timi won\'t let this user know that you say no. Continue? ", "", function () {
+                myApp.confirm("You are passing this user, and Timi won\'t let this user know that you say no. Continue? ", "Are You Sure? ", function () {
                     localStorage.promptDisLike = 1
-                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
+                    requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2, 0, currentIndex[timeFrame]);                              
                     currentIndex[timeFrame]--
                     if (currentIndex[timeFrame] < 0) {
                         placePulse()
@@ -3238,7 +4460,7 @@ function initTinderSwipe (object) {
                     }                                     
                 })
             } else {
-                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2);                              
+                requestFriend(localStorage.usertoken, queryDay, timeFrame, availFriend[timeFrame][currentIndex[timeFrame]].user_id, 2, 0, currentIndex[timeFrame]);                              
                 currentIndex[timeFrame]--
                 if (currentIndex[timeFrame] < 0) {
                     placePulse()
@@ -3293,7 +4515,160 @@ function initTinderSwipe (object) {
                   
 }
 
+function initNearbySwipeCSS () {
+
+    // if ($(window).height() < 600 ) {
+    //     // iphone 5
+    //     var margin = 25
+    //     var marginV = 5; 
+    //     var marginH = margin;         
+    //     var cardWidth = (Math.round($(window).width()) - marginH * 2)
+    //     $(".card-pic").css("height", cardWidth+"px"); 
+    //     $(".card-pic").css("width", cardWidth+"px"); 
+    //     $("#tinderslide").css("width", cardWidth+"px"); 
+    //     $("#tinderslide").css("left", marginH + "px"); 
+    //     var nav = 44; 
+    //     var tbH = 44; 
+    //     var statusH = 0; 
+    //     var topMargin = 44; // where relative css starts from
+    //     var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
+    //     console.log(a)
+    //     a += tbH
+    //     a = topMargin + marginV
+    //     $("#tinderslide").css("margin-top", a + "px"); 
+    //     $(".card-header").css("margin-bottom", "0px");
+    //     $(".row.decision-button-row").css("bottom", "40px"); 
+    //     $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "40px"); 
+    //     $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "40px"); 
+    //     $(".decision-button-row .col-33, .decision-button-row .col-50").css("font-size", "14px");
+
+    // } else if ($(window).height() < 700 ) {
+    //     // iphone 6
+    //     var margin = 25
+    //     var cardWidth = (Math.round($(window).width()) - margin * 2)
+    //     $(".card-pic").css("height", cardWidth+"px"); 
+    //     $(".card-pic").css("width", cardWidth+"px"); 
+    //     $("#tinderslide").css("width", cardWidth+"px"); 
+    //     $("#tinderslide").css("left", margin + "px"); 
+    //     var nav = 44; 
+    //     var tbH = 44; 
+    //     var statusH = 0; 
+    //     var topMargin = 44; // where relative css starts from
+    //     var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
+    //     console.log(a)
+    //     a += tbH
+    //     a = topMargin + margin
+    //     $("#tinderslide").css("margin-top", a + "px"); 
+    //     $(".row.decision-button-row").css("bottom", "68px")
+    //     $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "44px"); 
+    //     $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "44px");         
+    // }
+
+    // else {
+    //     // iphone 6+
+    //     var margin = 25
+    //     var cardWidth = (Math.round($(window).width()) - margin * 2)
+    //     $(".card-pic").css("height", cardWidth+"px"); 
+    //     $(".card-pic").css("width", cardWidth+"px"); 
+    //     $("#tinderslide").css("width", cardWidth+"px"); 
+    //     $("#tinderslide").css("left", margin + "px"); 
+    //     var nav = 44; 
+    //     var tbH = 44; 
+    //     var statusH = 0; 
+    //     var topMargin = 44; // where relative css starts from
+    //     var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
+    //     console.log(a)
+    //     a += tbH
+    //     a = topMargin + margin
+    //     $("#tinderslide").css("margin-top", a + "px"); 
+    //     $(".row.decision-button-row").css("bottom", "88px")
+    //     $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "44px"); 
+    //     $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "44px");         
+    // }
+
+    // if ( currentIndex[timeFrame] < 0 ) return; 
+    if ($(window).height() < 600 ) {
+        // iphone 5
+        var margin = 25
+        var marginV = 5; 
+        var marginH = margin;         
+        var cardWidth = (Math.round($(window).width()) - marginH * 2)
+        $(".card-pic").css("height", cardWidth+"px"); 
+        $(".card-pic").css("width", cardWidth+"px"); 
+        $("#nearbyslide").css("width", cardWidth+"px"); 
+        $("#nearbyslide").css("left", marginH + "px"); 
+        var nav = 44; 
+        var tbH = 44; 
+        var statusH = 0; 
+        var topMargin = 44; // where relative css starts from
+        var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
+
+        a += tbH
+        a = topMargin + marginV 
+        console.log(a)
+        $(".nearby-prompt").css("top", ( 9 + 17 - a )+"px" )
+        $("#nearbyslide").css("margin-top", a + "px"); 
+        $(".card-header").css("margin-bottom", "0px");
+        $(".row.decision-button-row").css("bottom", "40px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "40px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "40px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("font-size", "14px");
+
+    } else if ($(window).height() < 700 ) {
+        // iphone 6
+        var margin = 25
+        var cardWidth = (Math.round($(window).width()) - margin * 2)
+        $(".card-pic").css("height", cardWidth+"px"); 
+        $(".card-pic").css("width", cardWidth+"px"); 
+        $("#nearbyslide").css("width", cardWidth+"px"); 
+        $("#nearbyslide").css("left", margin + "px"); 
+        var nav = 44; 
+        var tbH = 44; 
+        var statusH = 0; 
+        var topMargin = 44; // where relative css starts from
+        var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
+        
+        a += tbH
+        a = topMargin + margin 
+        console.log(a)
+        $(".nearby-prompt").css("top", ( 9 + 17 - a )+"px"  )
+        $("#nearbyslide").css("margin-top", a + "px"); 
+        $(".row.decision-button-row").css("bottom", "68px")
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "44px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "44px");         
+    }
+
+    else {
+        // iphone 6+
+        var margin = 25
+        var cardWidth = (Math.round($(window).width()) - margin * 2)
+        $(".card-pic").css("height", cardWidth+"px"); 
+        $(".card-pic").css("width", cardWidth+"px"); 
+        $("#nearbyslide").css("width", cardWidth+"px"); 
+        $("#nearbyslide").css("left", margin + "px"); 
+        var nav = 44; 
+        var tbH = 44; 
+        var statusH = 0; 
+        var topMargin = 44; // where relative css starts from
+        var a = Math.round(($(window).height() - nav-tbH-topMargin -statusH- $(".card.demo-card-header-pic").height())/2); 
+
+        a += tbH
+        a = topMargin + margin 
+        console.log(a)
+        $(".nearby-prompt").css("top", ( 9 + 17 - a )+"px" )
+        $("#nearbyslide").css("margin-top", a + "px"); 
+        $(".row.decision-button-row").css("bottom", "88px")
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "44px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "44px");         
+    }    
+}
+
+
+
 // Initiate the tinder page css, called when the home page is loaded
+
+
+
 function initTinderSwipeCSS() {
     // if ( currentIndex[timeFrame] < 0 ) return; 
     if ($(window).height() < 600 ) {
@@ -3319,6 +4694,7 @@ function initTinderSwipeCSS() {
         $(".row.decision-button-row").css("bottom", "40px"); 
         $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "40px"); 
         $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "40px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("font-size", "14px");
 
     } else if ($(window).height() < 700 ) {
         // iphone 6
@@ -3337,7 +4713,9 @@ function initTinderSwipeCSS() {
         a += tbH
         a = topMargin + margin
         $("#tinderslide").css("margin-top", a + "px"); 
-        $(".row.decision-button-row").css("bottom", "72px")
+        $(".row.decision-button-row").css("bottom", "68px")
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "44px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "44px");         
     }
 
     else {
@@ -3356,8 +4734,12 @@ function initTinderSwipeCSS() {
         console.log(a)
         a += tbH
         a = topMargin + margin
+
+        $("#logo-holder").css("top", "-45px")
         $("#tinderslide").css("margin-top", a + "px"); 
-        $(".row.decision-button-row").css("bottom", "96px")
+        $(".row.decision-button-row").css("bottom", "88px")
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("height", "44px"); 
+        $(".decision-button-row .col-33, .decision-button-row .col-50").css("line-height", "44px");         
     }
 }
 function updateFavFood () {
@@ -3432,12 +4814,20 @@ var myApp = new Framework7({
         if (page.name == "chatting-page") {
             console.log("back1!")
             messengerOnShow ()
+        } else if (page.name == "nearby-list") {
+            // console.log(mainView.url)
         }
     }, 
     onPageBeforeAnimation: function (app, page) {
         if (page.name == "home") {
             console.log("home")
             $(".home-nav").css("visibility", "visible") 
+            console.log(currentTabPage)
+            if (currentTabPage == "explore-tab" || currentTabPage == "invitation-tab") {
+                $(".subnavbar").css("display", "block")
+            } else {
+                $(".subnavbar").css("display", "none")
+            }
         }      
         else if (page.name == "personal-setting-page" )   {
             try {
@@ -3460,6 +4850,20 @@ var myApp = new Framework7({
                     // $(".messages-content").animate({ scrollTop: $(".messages-content").height()+"px" });
                 }, 400)
             });
+            // loadAllNewMessage(function () {
+            //     loadMessageList(chatlist[currentChatIndex].chat_history)
+            // })         
+        } else if (page.name == "availability-page") {
+            updateFreeTime ()
+            $(".subnavbar").css("display", "none")
+            // changeNavbarTitle("Availability", barIconHTML, "<a class=\"link right-link\" onclick='inviteViaWechat()'><i class=\"fa fa-user-plus\" ></i></a>");  
+            updateForm()            
+             $(".home-nav").css("visibility", "hidden") 
+        } else if (page.name == "nearby-list") {
+            $(".subnavbar").css("display", "none")
+            $(".home-nav").css("visibility", "hidden") 
+            nearbyPendingNum = 0;
+            discoverStrangers()
         }
     }, 
     onPageInit: function (app, page) {
@@ -3478,14 +4882,11 @@ var myApp = new Framework7({
                 afterClickTab(timeFrame)         
             }
             if (localStorage.unread == 1) {
-                $(".tab-link .badge").css("display", "block")
+                badgeSpot[2] = 1;
             } else {
-                $(".tab-link .badge").css("display", "none")
+                badgeSpot[2] = 0;
             }
-
-            setTimeout(function () {
-                
-            }, 300)      
+            updateToolbarRedDot()    
         } else if (page.name == "personal-setting-page") {
             try {
                 Keyboard.hideFormAccessoryBar(false);
@@ -3532,14 +4933,20 @@ var myApp = new Framework7({
             }  catch(err) {
 
             }
-            $(".messagebar textarea").on("click", function (e) {
+            $(".messagebar textarea").on("touchstart", function (e) {
                 setTimeout(function () {
                     $(".messages-content").animate({ scrollTop: $(".messages-auto-layout").height()+"px"});
                     // $(".messages-content").animate({ scrollTop: $(".messages-content").height()+"px" });
                 }, 400);
-                console.log("duang")
-                
-            })              
+                // myApp.alert("duang1")
+            });     
+            // $(".messagebar textarea").focus(function (e) {
+            //     setTimeout(function () {
+            //         $(".messages-content").animate({ scrollTop: $(".messages-auto-layout").height()+"px"});
+            //         // $(".messages-content").animate({ scrollTop: $(".messages-content").height()+"px" });
+            //     }, 300);
+            //     // myApp.alert("duang2")
+            // });     
             
         }
     }
@@ -3549,6 +4956,8 @@ function openSystem () {
     cordova.plugins.settings.open(null, null);    
 }
 
+
+
 function updatePersonalPage () {
     // document.getElementById("whatsup").value = personalData.whatsup;
     document.getElementById("current").value = personalData.current;
@@ -3557,6 +4966,11 @@ function updatePersonalPage () {
     }else{
         document.getElementById("allowFoF").checked = false;
     }
+    // if (localStorage.muteSound == 1 ) {
+    //     document.getElementById("muteSound").checked = true;
+    // } else {
+    //     document.getElementById("muteSound").checked = false;
+    // }
     // document.getElementById("distance-range").value = personalData.range
     // document.getElementById("distance-value").innerHTML = Math.round(personalData.range) + "mi."
     var formData = myApp.formToJSON('#favorite-food')
@@ -3625,7 +5039,9 @@ var tSort = function (a, b) {
 
 
 function onDeviceReady () {
-    // screen.orientation.lock();  
+    // screen.orientation.lock(); 
+
+    
     isCordova = true;
     try {
         Keyboard.shrinkView(true);
@@ -3651,6 +5067,13 @@ function onDeviceReady () {
         initAfterLogin ()
        
     } 
+
+    // this has to be placed at the back because it may crash. 
+    try {
+        StatusBar.styleDefault();
+    } catch (err) {
+
+    }    
 }
 function initAfterLogin () {
     mainView.router.loadPage({
@@ -3659,11 +5082,20 @@ function initAfterLogin () {
         "animatePages": true
     })
 
+
+
     getMySchedule()
     getPersonalInfo ()
-    myApp.showTab(".explore-tab")
-    currentTabPage = "explore-tab"
+    if (localStorage.listView == 1) {
+        myApp.showTab("#invitation-tab")
+        currentTabPage = "invitation-tab"
+    } else {
+        myApp.showTab("#explore-tab")
+        currentTabPage = "explore-tab"        
+    }
+
     $(currentTimeTab())[0].click()
+    getFriendFreeTime()
     //afterClickTab(timeFrame)
     markRequestAsRead()
     // get contact 
@@ -3674,13 +5106,19 @@ function initAfterLogin () {
     updateInvitationStatus ()  
     getUnprocessedSwipe () 
     getPush ()    
+    updateToolbarRedDot()
+    loadStrangers()
 }
 
 
 
 function initPush () {
     console.log(isCordova)
-    localStorage.allowedPush = "1"
+    // localStorage.allowedPush = "1"
+    // var playSound = "true"
+    // if (localStorage.muteSound == 1 ) {
+    //     playSound = "false"
+    // }
     // myApp.alert("init push")
     push_notification = PushNotification.init({
         android: {
@@ -3735,37 +5173,20 @@ function initPush () {
         // 1 friend sign uo
         // 2 someone liked
         // 3 matched
+
         if (data.additionalData.type == "1") {
             // go to home
         }
+        // some one likes you
         else if (data.additionalData.type == "2") {
             hangoutRequestPopup(data.additionalData.time)
+            appReturnedFromBackground()
             // go to home
 
 
         }
         else if (data.additionalData.type == "3") {
             // matched
-            mainView.router.loadPage({"pageName":"home"})     
-            myApp.showTab("#explore-tab")
-            
-            if ( data.additionalData.time == 0) {
-                timeFrame = 0
-                $(".lunch-tab")[0].click()
-            } else if ( data.additionalData.time == 1) {
-                timeFrame = 1
-                $(".dinner-tab")[0].click()
-            } else if ( data.additionalData.time == 2) {
-                timeFrame = 2
-                $(".night-tab")[0].click()
-            } else if ( data.additionalData.time == 3) {
-                timeFrame = 3
-                $(".now-tab")[0].click()
-            }
-            // cordova.plugins.clipboard.copy(data.additionalData.sender_id);    
-
-            // alert(JSON.stringify(data.additionalData))
-            // myApp.alert(data.additionalData.username)
             var user = {
                 "avatar": data.additionalData.avatar,
                 "username": data.additionalData.username,
@@ -3780,10 +5201,8 @@ function initPush () {
                 "chat_history" : []
                 // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
             }         
-            // alert(JSON.stringify(user))
-            // alert(JSON.stringify(data.additionalData))
-            // post confirmation box
-            // matched( user );
+
+            matched(user)
 
             chatlist = getChatList()
             var elem = {
@@ -3791,11 +5210,6 @@ function initPush () {
                 timeObject: (new Date()), 
                 schedule: data.additionalData.time
             }
-
-    // getUnreadMatchList(function () {
-    //     loadChattingList ()
-    // })    
-
             pushChatList(elem)   
             markAllRequest()
 
@@ -3816,27 +5230,6 @@ function initPush () {
 
             // suepr like
         } else if ( data.additionalData.type == "6" ) {
-            
-
-            mainView.router.loadPage({"pageName":"home"})     
-            // 
-            myApp.showTab("#explore-tab")
-            
-            if ( data.additionalData.time == 0) {
-                timeFrame = 0
-                $(".lunch-tab")[0].click()
-            } else if ( data.additionalData.time == 1) {
-                timeFrame = 1
-                $(".dinner-tab")[0].click()
-            } else if ( data.additionalData.time == 2){
-                timeFrame = 2
-                $(".night-tab")[0].click()
-            } else {
-                timeFrame = 3
-                $(".now-tab")[0].click()                
-            }
-            // alert(JSON.stringify(data.additionalData))
-            // myApp.alert(data.additionalData.username)
             var user = {
                 "avatar": data.additionalData.avatar,
                 "username": data.additionalData.username,
@@ -3850,9 +5243,38 @@ function initPush () {
                 "time": data.additionalData.time, 
                 "chat_history" : []
                 // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
-            }    
+            }               
+            appReturnedFromBackground()
 
-            markAllRequest()
+            myApp.confirm(user.username + " wants to hang out with you! Swipe right to confirm. ", "", function (){
+                mainView.router.loadPage({"pageName":"home"})     
+                // 
+                myApp.showTab("#explore-tab")
+                
+                // if ( data.additionalData.time == 0) {
+                //     timeFrame = 0
+                //     $(".lunch-tab")[0].click()
+                // } else if ( data.additionalData.time == 1) {
+                //     timeFrame = 1
+                //     $(".dinner-tab")[0].click()
+                // } else if ( data.additionalData.time == 2){
+                //     timeFrame = 2
+                //     $(".night-tab")[0].click()
+                // } else {
+                //     timeFrame = 3
+                //     $(".now-tab")[0].click()                
+                // }
+                timeFrame = data.additionalData.time
+                afterClickTab(timeFrame, true)
+                // alert(JSON.stringify(data.additionalData))
+                // myApp.alert(data.additionalData.username)
+
+                markAllRequest()                 
+            })
+
+
+
+
 
 
 
@@ -3872,23 +5294,91 @@ function initPush () {
             //     "chat_history" : []
             //     // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
             // }    
-            cordova.plugins.clipboard.copy(data.additionalData);
+            // cordova.plugins.clipboard.copy(data.additionalData);
             if ( mainView.url == "#chatting-page" && currentChatIndex != null ) {
                 if (chatlist[currentChatIndex].user.user_id == data.additionalData.sender_id) {
+                    // the sender matches current users
+
+
+    
+
                     loadNewMessage(chatlist[currentChatIndex].user.user_id)
                     getUnreadMatchList(function () {
-                        // loadChattingList ()
+
                     })    
                     loadAllNewMessage(function () {
-                        // loadChattingList()
+                        loadMessageList(chatlist[currentChatIndex].chat_history)
                     })                       
-                } else {                   
+                } else { 
+                    // the sender does not match current users                  
                 }
                
             }
             else if (currentTabPage == "messenger-tab") {
                 messengerOnShow()
-            }   
+            }  else {
+                // myApp.modal({
+                //     title:  'New Message',
+                //     text: data.additionalData.content.message,
+                //     buttons: [
+                //       {
+                //         text: 'Later',
+                //         onClick: function() {
+                //         }
+                //       },
+                //       {
+                //         text: 'Reply',
+                //         onClick: function() {
+                //             myApp.showTab("#messenger-tab")
+                //         }
+                //       }
+                //     ]
+                // });
+            } 
+
+        } else if (data.additionalData.type == "7") {
+            // matched 
+
+
+                var user = {
+                    "avatar": data.additionalData.avatar,
+                    "username": data.additionalData.username,
+                    "phone": data.additionalData.phone, 
+                    "email": data.additionalData.email, 
+                    "user_id": data.additionalData.sender_id, 
+                    // "geolocation": data.additionalData.geolocation, 
+                    // "favorites": data.additionalData.favorites, 
+                    // "whatsup": data.additionalData.whatsup, 
+                    "day": data.additionalData.day, 
+                    "time": data.additionalData.time, 
+                    "chat_history" : []
+                    // [sender_id:49, sender_name:"Doe", sender_avatar:"", receiver_id:23, receiver_name: "XXX", receiver_avatar:""]
+                }                    
+                // var user = nearbyList[index]
+                console.log(user)
+                // matched(user)
+
+
+                chatlist = getChatList ()
+                // assumed now
+                var elem = {
+                    user: user, 
+                    timeObject: (new Date()), 
+                    schedule: 3
+                }
+                pushChatList (elem) 
+                if (mainView.url == "#nearby-list") {
+                    mainView.router.back()
+                    myApp.showTab("#messenger-tab");                           
+                } else if (mainView.url == "#home") {
+                    myApp.showTab("#messenger-tab");    
+                } else {
+                    mainView.router.back()
+                    myApp.showTab("#messenger-tab");                           
+                }
+        } else if (data.additionalData.type == "8") {
+
+            // someone wants to add friend
 
         }
 
@@ -3909,11 +5399,30 @@ function initPush () {
         myApp.alert("Please go to Settings - Timi - and turn on Push Notification access! ")
     })    
 }
+var tabCSSClass = [".lunch-tab", ".dinner-tab", ".night-tab", ".now-tab"]
+
+function getDateString (elem) {
+    // elem
+    return (elem.getMonth()+1) + "-" + elem.getDate()
+}
 
 function getUnprocessedSwipe () {
     var ajaxUrl = "http://gettimi.com/site/UnprocessedSwipe?user_token=" + localStorage.usertoken +"&day=" + queryDay
-    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab", "now-tab"]
-    var scheduleName = ["Noon", "Evening", "Night", "Now"]
+
+
+    var scheduleName = [ (currentHours < 17 && currentHours >= 2) ? "Today" : "Tonight", "Tomorrow", fulldays[(queryDay+2)%7], "Now"]
+    console.log(scheduleName)
+     // dateTab; 
+    var tday = new Date()
+
+    var dateTab = [
+            getDateString(tday), 
+            getDateString(new Date((tday).setDate(tday.getDate()+1))), 
+            getDateString(new Date((tday).setDate(tday.getDate()+1))), 
+            getDateString(new Date())
+        ]
+
+    // var date = []
 
     console.log(ajaxUrl)
     $.ajax({
@@ -3923,14 +5432,15 @@ function getUnprocessedSwipe () {
         success: function(results) {
             console.log(results.result)
             requestList = JSON.parse(results.result)
+            requestList.push(0)
+            console.log(requestList)
             for ( var i = 0; i < requestList.length; i++) {
                 if (requestList[i] > 0 && myAvail[i]== 1 && timeAvail[i] == 1 ) {
-                    var html = $(cssClass[i]).html()
-                    $(cssClass[i]).html(scheduleName[i] + "<span class='request-badge'>" + "</span>")                    
+                    var html = $(tabCSSClass[i]).html()
+                    $(tabCSSClass[i]).html(scheduleName[i] +"<span class='date-tag'>" + dateTab[i] + "</span>"+ "<span class='request-badge'>" + "</span>")                    
                 } else {
-                    $(cssClass[i]).html(scheduleName[i])      
+                    $(tabCSSClass[i]).html(scheduleName[i]+"<span class='date-tag'>" + dateTab[i] + "</span>"+ "<span style='display:none' class='request-badge'>" + "</span>")      
                 }
-
             }
             // requestList.map(function (num) {
 
@@ -3954,8 +5464,9 @@ function getUnprocessedSwipe () {
 // day
 
 function hangoutRequestPopup (t) {
-    var scheduleName = ["this noon", "this evening", "tonight", "now"]
-    var cssClass = [".lunch-tab", ".dinner-tab", ".night-tab", ".now-tab"]
+    getQueryDay()
+    var scheduleName = [((new Date).getHours() < 17 && (new Date).getHours() > 1) ? "Today" : "Tonight", "Tomorrow", fulldays[(queryDay+2)%7] , "now"]
+    var tabCSSClass = [".lunch-tab", ".dinner-tab", ".night-tab", ".now-tab"]
     var popupElem = {
         title: "Someone likes you!", 
         text:"Someone wants to hang out with you "+ scheduleName[t] +" :) Swipe to find out who! ", 
@@ -3968,7 +5479,7 @@ function hangoutRequestPopup (t) {
             myApp.showTab("#explore-tab");   
             console.log(t)       
             setTimeout(function () {
-                $(cssClass[t])[0].click()
+                $(tabCSSClass[t])[0].click()
             }, 600)              
             
         }, 
@@ -4114,7 +5625,7 @@ function markAllRequest () {
         dataType: "jsonp",
         success: function(results) {
             localStorage.unread = 0
-            $(".tab-link .badge").css("display", "none")
+            $("#badge-red-dot-2").css("display", "none");
             console.log(results)
         }, 
         error: function (results) {
@@ -4185,6 +5696,7 @@ function elemNotIn (elem) {
 }
 
 function pushChatList (elem) {
+    chatlist = getChatList()
     if (elemNotIn (elem)) {
         chatlist.push(elem)
     } else {
@@ -4205,17 +5717,66 @@ function pushChatList (elem) {
 // (0 for noon, 1 for evening, 2 for night)
 
 // request or turn down friends
-function requestFriend(token, day, time, receiver, decision, superlike) {
+function requestFriend(token, day, time, receiver, decision, superlike, availIndex) {
     superlike = superlike || 0
-    var ajaxUrl = "http://gettimi.com/site/SendRequest?user_token=" + 
-        token + "&request_day=" + 
-        day + "&request_time=" + time + "&receiver=" + receiver + "&decision=" + decision + "&super=" + superlike; 
-        console.log(ajaxUrl)
+    console.log(token, day, time, receiver, decision, superlike)
+    if (timeFrame == 3) {
+        // now
+        time = 3
+    } else {
+        // not now
+        day = (day + timeFrame) % 7
+        time = 0;
+    }
+    activityItem = activityItem || ""
+    var dayString; 
+
+    
+    if( day == queryDay ) {
+        dayString = "Today";
+    } else if (day == ( queryDay +1 ) % 7) { 
+        dayString = "Tomorrow";
+    } else if (day == 0) {
+        dayString = "on Sunday";
+    } else if (day == 1) {
+        dayString = "on Monday";
+    } else if (day == 2) {
+        dayString = "on Tuesday";
+    } else if (day == 3) {
+        dayString = "on Wednesday";
+    } else if (day == 4) {
+        dayString = "on Thursday";
+    } else if (day == 5) {
+        dayString = "on Friday";
+    } else if (day == 6) {
+        dayString = "on Saturday";
+    } 
+    console.log(dayString, time)
+    if (time == 3) {
+        dayString = "Now"
+    }
+    // return;
+
+    
+      console.log(token, day, time, receiver, decision, superlike, dayString)
+    var ajaxUrl = "http://gettimi.com/site/SendRequest?user_token=" + token + 
+    "&request_day=" + day + 
+    "&request_time=" + time + 
+    "&receiver=" + receiver + 
+    "&decision=" + decision + 
+    "&super=" + superlike + 
+    "&activity=" + activityItem+
+    "&dayString=" + dayString; 
+    console.log(ajaxUrl)
+
+    // return;
     $.ajax({
         url: ajaxUrl,
         type: "GET",
         dataType: "jsonp",
         success: function(results) {
+            
+
             if (results.status == "sent") {
                 // console.log("good")
                 console.log(results)
@@ -4237,6 +5798,7 @@ function requestFriend(token, day, time, receiver, decision, superlike) {
             } else {
                 console.log(results)
             }
+            availFriend[time].splice(availIndex,1);
         }, 
         error: function (results) {
             myApp.hideIndicator()
@@ -4262,47 +5824,11 @@ function shuffle(a) {
 // compare with my avil and update the front page
 
 function getFriendFreeTimeNoUI (callback) {
-    console.log(0)
-    placePulse(); 
-    console.log(1)
-    console.log(queryDay)
-    var ajaxUrl = "http://gettimi.com/site/GetFriendsFreeSlots?user_token=" + localStorage.usertoken + "&day=" + queryDay+"&s="+Math.random()+"&time="+d.getDay()
-    console.log(ajaxUrl)
-    $.ajax({
-        url: ajaxUrl,
-        type: "GET",
-        cache: false, 
-        dataType: "jsonp",
-        success: function(results) {
-            console.log(2)
-            userList = JSON.parse(results.result)
-            console.log(3)
-            // addDetail(); 
-            availFriend = [[], [], [], []]
-            userList.map(function (unit) {
-                for (var i = 0 ; i < 4; i ++) {
-                    if ( userListToAvailFriendBool (unit, i) ) {
-                        availFriend[i].push(unit)
-                    } 
-                }
-            })
-            shuffle(availFriend[3])
-            currentIndex = [ 
-                availFriend[0].length - 1,
-                availFriend[1].length - 1,
-                availFriend[2].length - 1,       
-                availFriend[3].length - 1                         
-            ]
-         
-        }, 
-        error: function (results) {
-            console.log(results)
-            // myApp.alert("Network error. Please try again later? ")
-        }
-    });       
+    getFriendFreeTime(callback, true)    
 }
 
 function userListToAvailFriendBool (unit, i) {
+    // return true;
     return (unit.availability[i] == 1 || unit.availability[i] == "super")
 }
 
@@ -4315,6 +5841,7 @@ function suggestFriends() {
         cache: false, 
         dataType: "jsonp",
         success: function(results) {
+            suggestFriendList = JSON.parse(results.result) 
             console.log(JSON.parse(results.result)              )
         }, 
         error: function (results) {
@@ -4323,12 +5850,16 @@ function suggestFriends() {
     });       
 }
 
-function getFriendFreeTime (callback) {
-    if (isProcessing) return; 
-    console.log(0)
-    placePulse(); 
-    console.log(1)
-    console.log(queryDay)
+function getFriendFreeTime (callback, noUI) {
+    noUI = noUI || false;
+    console.log(noUI)
+    console.log("WTF5")
+    if (isProcessing && userList.length != 0) return; 
+    console.log("WTF6")
+    if (!noUI) {
+        console.log("WTF7")
+        placePulse(); 
+    }
     var ajaxUrl = "http://gettimi.com/site/GetFriendsFreeSlots?user_token=" + localStorage.usertoken + "&day=" + queryDay+"&s="+Math.random()+"&time="+d.getDay()
     console.log(ajaxUrl)
     isProcessing = true;
@@ -4340,6 +5871,12 @@ function getFriendFreeTime (callback) {
         success: function(results) {
             isProcessing = false;
             userList = JSON.parse(results.result)
+            userList.map(function (unit) {
+                unit.emojiIndex = Math.round(Math.random() * (emojiList.length-1))
+                // img = new Image (); 
+                // console.log(unit.avatar)
+                // img.src = unit.avatar;
+            })
             availFriend = [[], [], [], []]
             userList.map(function (unit) {
                 for (var i = 0 ; i < 4; i ++) {
@@ -4348,23 +5885,28 @@ function getFriendFreeTime (callback) {
                     } 
                 }
             })
-            shuffle(availFriend[3])
+            // shuffle(availFriend[3])
             currentIndex = [ 
                 availFriend[0].length - 1,
                 availFriend[1].length - 1,
                 availFriend[2].length - 1,     
                 availFriend[3].length - 1,                             
             ]
-            if ( myAvail[timeFrame] == 1 ) {
-                updateFrontPage (timeFrame)    
-            } else {
-                placeBusy (myAvail[timeFrame])
-            }                    
+            console.log("WTF8", !noUI, noUI)
+            if (!noUI) {
+                console.log("WTF9")
+                if ( myAvail[timeFrame] == 1 && timeAvail[timeFrame]) {
+                    console.log("WTF10")
+                    updateFrontPage (timeFrame)    
+                } else {
+                    console.log("WTF11")
+                    placeBusy (myAvail[timeFrame])
+                }                       
+            }
+             
         }, 
         error: function (results) {
             isProcessing = false;
-            console.log(results)
-            // myApp.alert("Network error. Please try again later? ")
         }
     });       
 }
@@ -4395,7 +5937,7 @@ function getMySchedule (callbackFunction) {
         success: function(results) {
             myAvail = JSON.parse(results.result)
             // myAvail.push(1)
-            // myAvail = [1,1,1]
+            myAvail = [1, 1, 1, 1];
             console.log(myAvail)
             if ( myAvail[timeFrame] == 1 ) {
                 if (callbackFunction != null) {
@@ -4494,7 +6036,7 @@ $(".subnavbar .tab-link").on("click", function (e) {
 // otherwise update
 var targetBorderPosition
 function bottomBorder (timeFrame) {
-    
+    var percentage = -400
     if ( timeFrame == 0 ) {
         targetBorderPosition = -400
         
@@ -4506,44 +6048,64 @@ function bottomBorder (timeFrame) {
         targetBorderPosition = -100
     }
     $("#underline-border").css("transform", "translate("+targetBorderPosition+"%,0)")
-    // settimeInterval(function () {
-
-    // }, )
     $("#underline-border").css("animation-duration", "0.5s")
 
 
 }
-function afterClickTab (timeFrame) {
+function afterClickTab (timeFrame, refresh) {
+
+    refresh = refresh || false;
+    console.log(refresh, timeFrame, $(tabCSSClass[timeFrame]).hasClass('current-tab'))
+    if($(tabCSSClass[timeFrame]).hasClass('current-tab')){
+        // if (!refresh) return;
+    }else{
+        $(".time-tab").removeClass('current-tab');
+        $(".time-tab").removeClass('active');
+        $(tabCSSClass[timeFrame]).addClass('current-tab');
+        $(tabCSSClass[timeFrame]).addClass('active');
+    }
+    
 
     bottomBorder(timeFrame)
 
     // not avail: occupied or not updated
-    if ( myAvail[timeFrame] != 1 || timeAvail[timeFrame] != 1 ) {
-
+    if ( myAvail[timeFrame] != 1 || timeAvail[timeFrame] != 1 || currentIndex[timeFrame] < 0 ) {
+        $("#invite-all-block").css("display", "none")
         console.log("yea")
         clearTimeout(loadingCard)
         placeBusy (myAvail[timeFrame])        
     } else {    
+        console.log("WTF1")
         // im available, update currentIndex / call getfriendsfreetime
-        getFriendFreeTime();
-        if ( currentIndex[timeFrame] < 0 ) {
-            console.log("heyo1")
-            // not available, let placeBusy handle
-            placePulse ()
-            showNoFriendBlock ()
+        if (userList.length == 0 || refresh) {
+            console.log("WTF2")
+            getFriendFreeTime();
+
         } else {
-            console.log("heyo2")
-            // do nothing here.               
-        }    
+            if ( myAvail[timeFrame] == 1 ) {
+                console.log("WTF3")
+                updateFrontPage (timeFrame)    
+            } else {
+                console.log("WTF4")
+                placeBusy (myAvail[timeFrame])
+            }                
+
+        }
+        // if ( currentIndex[timeFrame] < 0 ) {
+        //     // not available, let placeBusy handle
+        //     $("#invite-all-block").css("display", "none")
+        //     placePulse ()
+        //     showNoFriendBlock ()
+        // } else {
+        //     // do nothing here.               
+        // }            
+
     }
 }
 
 $$(".lunch-tab").on("click", function (e) {
     if($(".lunch-tab").hasClass('current-tab')){
         return;
-    }else{
-        $(".time-tab").removeClass('current-tab');
-        $(".lunch-tab").addClass('current-tab');
     }
     timeFrame = 0
     afterClickTab (timeFrame)
@@ -4552,9 +6114,6 @@ $$(".lunch-tab").on("click", function (e) {
 $$(".dinner-tab").on("click", function (e) {
     if($(".dinner-tab").hasClass('current-tab')){
         return;
-    }else{
-        $(".time-tab").removeClass('current-tab');
-        $(".dinner-tab").addClass('current-tab');
     }
     timeFrame = 1
     afterClickTab (timeFrame)
@@ -4562,9 +6121,6 @@ $$(".dinner-tab").on("click", function (e) {
 $$(".night-tab").on("click", function (e) {
     if($(".night-tab").hasClass('current-tab')){
         return;
-    }else{
-        $(".time-tab").removeClass('current-tab');
-        $(".night-tab").addClass('current-tab');
     }
     timeFrame = 2
     afterClickTab (timeFrame)
@@ -4572,9 +6128,6 @@ $$(".night-tab").on("click", function (e) {
 $$(".now-tab").on("click", function (e) {
     if($(".now-tab").hasClass('current-tab')){
         return;
-    }else{
-        $(".time-tab").removeClass('current-tab');
-        $(".now-tab").addClass('current-tab');
     }
     timeFrame = 3
     afterClickTab (timeFrame)
@@ -4709,8 +6262,10 @@ function currentTimeTab () {
         return ".lunch-tab"
     } else if (timeFrame == 1){
         return ".dinner-tab"
-    } else {
+    } else if (timeFrame == 2){
         return ".night-tab"
+    } else if (timeFrame == 3){
+        return ".now-tab"
     }
 }
 
@@ -4835,7 +6390,6 @@ function getFriendsAndPersonalData () {
                         console.log("no phone")
                         // not verified verified users
 
-                        // getGeolocation () 
                         // required, if not, calendar won't be initialized
                         submitCalendar ()
                         // required, if not, the phone can't be filled in
@@ -5030,16 +6584,17 @@ function logoutFB () {
         },
 
         like: function() {
-            panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
+            panes.eq(current_pane).animate({"transform": "translate(" + (0) + "px,-" + (pane_width*1.5) + "px) rotate(0deg)"}, $that.settings.animationSpeed, function () {
                 if($that.settings.onLike) {
                     $that.settings.onLike(panes.eq(current_pane));
                 }
                 $that.next();
-            });
+            });            
+
         },
 
         superlike: function () {
-            panes.eq(current_pane).animate({"transform": "translate(" + (0) + "px,-" + (pane_width*1.5) + "px) rotate(0deg)"}, $that.settings.animationSpeed, function () {
+            panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
                 if($that.settings.onSuperLike) {
                     $that.settings.onSuperLike(panes.eq(current_pane));
                 }
@@ -5090,19 +6645,19 @@ function logoutFB () {
                             var opaY = Math.abs((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.5;
 
                             if (opaY >= 1) {
-                                $(".superlike").addClass(".animated bounceIn");
-                                setTimeout(function () {
-                                    $(".superlike").removeClass(".animated bounceIn");
-                                }, 800);
-                                console.log("super")
+                                // $(".superlike").addClass(".animated bounceIn");
+                                // setTimeout(function () {
+                                //     $(".superlike").removeClass(".animated bounceIn");
+                                // }, 800);
+                                // console.log("super")
 
                             }
                             else if (opa >= 1) {
                                 // console.log("afs")
                                 if (posX > 0) {
                                     panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width)  + "px) rotate(30 deg)"}, $that.settings.animationSpeed, function () {
-                                        if($that.settings.onLike) {
-                                            $that.settings.onLike(panes.eq(current_pane));
+                                        if($that.settings.onSuperLike) {
+                                            $that.settings.onSuperLike(panes.eq(current_pane));
                                         }
                                         $that.next();
                                     });
@@ -5203,18 +6758,26 @@ function logoutFB () {
                     var opa = Math.abs((Math.abs(deltaX) / $that.settings.threshold) / 100 + 0.2)  ;
                     var opaY = Math.abs((Math.abs(deltaY) / $that.settings.threshold) / 100 + 0.2) / 1.6;
                     if (opaY >= 1 && deltaY < 0) {
-                        panes.eq(current_pane).animate({"transform": "translate(" + 0 + "px,-" + (pane_width)  + "px) rotate(0 deg)"}, $that.settings.animationSpeed, function () {
-                            if($that.settings.onSuperLike) {
-                                $that.settings.onSuperLike(panes.eq(current_pane));
-                            }
-                            $that.next();
-                        });                        
+                        /* no more swipe up*/
+                        lastPosX = 0;
+                        lastPosY = 0;
+                        panes.eq(current_pane).animate({"transform": "translate(0px,0px) rotate(0deg)"}, $that.settings.animationRevertSpeed);
+                        panes.eq(current_pane).find($that.settings.likeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                        panes.eq(current_pane).find($that.settings.superlikeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);
+                        panes.eq(current_pane).find($that.settings.dislikeSelector).animate({"opacity": 0}, $that.settings.animationRevertSpeed);                        
+                        /* no more swipe up*/
+                        // panes.eq(current_pane).animate({"transform": "translate(" + 0 + "px,-" + (pane_width)  + "px) rotate(0 deg)"}, $that.settings.animationSpeed, function () {
+                        //     if($that.settings.onLike) {
+                        //         $that.settings.onLike(panes.eq(current_pane));
+                        //     }
+                        //     $that.next();
+                        // });                        
                     }
                     else if (opa > 1 ) {
                         if (posX > 0) {
                             panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width)  + "px) rotate(30 deg)"}, $that.settings.animationSpeed, function () {
-                                if($that.settings.onLike) {
-                                    $that.settings.onLike(panes.eq(current_pane));
+                                if($that.settings.onSuperLike) {
+                                    $that.settings.onSuperLike(panes.eq(current_pane));
                                 }
                                 $that.next();
                             });

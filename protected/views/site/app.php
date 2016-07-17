@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Timi - Easily hang out with friends</title>
-  <meta name="description" content="Timi - The easiest way to find out who's free to hang out">
+  <meta name="description" content="Timi - The easiest way to hang out with friends and their friends">
   <meta name="keywords" content="timi">
   <meta name="apple-itunes-app" content="app-id=1111783063">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -60,11 +60,11 @@
               <div class="col-sm-6">
                 <div class="col-inner" data-sr="left">
                   <div class="section-heading">
-                    <h1 style="font-size:65px;">
+                    <h1 style="font-size:70px; font-weight:normal;">
                       Timi
-                      <img src="/images/timi.png" style="width:75px; margin-bottom:0px; margin-top:-9px;">
+                      <img src="/images/timi.png" style="width:80px; margin-bottom:0px; margin-top:-9px;">
                     </h1>
-                    <p style="font-size:18px;">The easiest way to find out who's free to hang out</p>
+                    <p style="font-size:18px;">The easiest way to hang out with friends and their friends</p>
                   </div> <!-- .section-heading -->
                   <div class="section-content">
                     <a class="btn btn-invert m-y-5" href="/site/downloadios">&nbsp;&nbsp;&nbsp;<i class="fa fa-apple"></i>App Store&nbsp;&nbsp;&nbsp;</a>

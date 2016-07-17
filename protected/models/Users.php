@@ -40,7 +40,7 @@ class Users extends CActiveRecord
 		return array(
 			array('social_id, user_token, create_time, username', 'required'),
 			array('social_id', 'unique'),
-			array('social_token_type, create_time, lastaction, status, gender, friend_friend', 'numerical', 'integerOnly'=>true),
+			array('social_token_type, create_time, lastaction, status, gender, friend_friend, points', 'numerical', 'integerOnly'=>true),
 			array('username, user_token', 'length', 'max'=>200),
 			array('password, social_token, email', 'length', 'max'=>300),
 			array('avatar, geolocation, favorites', 'length', 'max'=>500),
@@ -123,7 +123,7 @@ class Users extends CActiveRecord
 		foreach($array as $arr){
 			$user = Users::model()->findByAttributes(array('social_id'=>$arr['id']));
 			if($user){	//should be able to find him since FB only returns friends that use this app already.
-				$friends = Friends::model()->find('(sender = :uid AND receiver = :myid) OR (sender = :myid AND receiver = :uid)',array(':uid'=>$user->id, ':myid'=>$this->id));
+				$friends = Friends::model()->find('accept > 0 AND ((sender = :uid AND receiver = :myid) OR (sender = :myid AND receiver = :uid))',array(':uid'=>$user->id, ':myid'=>$this->id));
 				if(!$friends){
 					$friends = new Friends;
 					$friends->sender = $this->id;
@@ -143,6 +143,28 @@ class Users extends CActiveRecord
 		}
 		return;
 	}
+
+	public function updatePoints(){
+		$bonus = 50;
+
+		$old = LoginPoints::model()->find('user_id = :uid AND create_time >= unix_timestamp() - 86400', array(":uid"=>$this->id));	//bonus in the last 24
+
+		if($old){
+			// do nothing, he got the bonus already
+			return false;
+		}else{
+			$this->points += $bonus;
+			$this->save();
+
+			$points = new LoginPoints;
+			$points->user_id = $this->id;
+			$points->create_time = time();
+			$points->points += $bonus;
+			$points->save(false);
+			return true;
+		}
+	}
+
 
 	/**
 	 * This function updates the lastaction time in the user model, and also sets
@@ -190,15 +212,15 @@ class Users extends CActiveRecord
 	//return mutual friend list (ids) of 2 users: user_id and friend_id
 	public function getMutualFriends($user_id, $friend_id){
 
-		$count_user = Friends::model()->count('sender = :uid OR receiver = :uid', array(":uid"=>$user_id));
-		$count_friend = Friends::model()->count('sender = :uid OR receiver = :uid', array(":uid"=>$friend_id));
+		$count_user = Friends::model()->count('accept > 0 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$user_id));
+		$count_friend = Friends::model()->count('accept > 0 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$friend_id));
 		if($count_user > $count_friend){	//swipe for user, we only loop for the one with fewer friends.
 			$tmp = $user_id;
 			$user_id = $friend_id;
 			$friend_id = $tmp;
 		}
 
-		$friends = Friends::model()->findAll('sender = :uid OR receiver = :uid', array(":uid"=>$user_id));
+		$friends = Friends::model()->findAll('accept > 0 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$user_id));
 		$mutual = array();
 		foreach($friends as $friend){
 			if($friend->sender == $user_id){
@@ -206,7 +228,7 @@ class Users extends CActiveRecord
 			}else{
 				$other = $friend->sender;
 			}
-			$mut = Friends::model()->find('(sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid)', array(":uid"=>$other, ":fid"=>$friend_id));
+			$mut = Friends::model()->find('accept > 0 AND((sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid))', array(":uid"=>$other, ":fid"=>$friend_id));
 			if($mut){
 				if($mut->sender == $other){
 					$refer = $mut->sender;
@@ -253,6 +275,19 @@ class Users extends CActiveRecord
 		}
 	}
 
+
+	//This function added Geolocation for SPA index in tbl_geolocation.
+	//This table is using MyISAM right now, we need to update mysql to 5.7.5+ to be able to change it to INNODB at some point.
+	public function updatePointLocation($data){
+		$geolocation = Geolocation::model()->findByPk($this->id);
+		if(!$geolocation){
+			$geolocation = new Geolocation;
+			$geolocation->user_id = $this->id;
+		}
+		$geolocation->location = new CDbExpression("GeomFromText(:point)",
+        array(':point'=>'POINT('.$data[0].' '.$data[1].')'));
+		$geolocation->save(false);
+	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

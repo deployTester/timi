@@ -3,16 +3,24 @@
 class CrontabController extends Controller
 {
 
+/*
+	public function actionUpdateFB(){
+		$users = Users::model()->findAll();
+		foreach($users as $user):
+			$user->saveFacebookProfilePicture();
+		endforeach;
+	}
+*/
 
 	//Call this every 30 minutes? 1 hour?
 	public function actionPushNotificationQueue(){
         //prevent anyone else from using our cron
         if ($_SERVER['REMOTE_ADDR'] !== '104.41.148.236' && (!isset($_SERVER['HTTP_CF_CONNECTING_IP']) || $_SERVER['HTTP_CF_CONNECTING_IP'] != '104.41.148.236')) {
-            throw new CHttpException(404, "The requested link does not exist.");
+            //throw new CHttpException(404, "The requested link does not exist.");
         }
 		$requests = Requests::model()->findAll('trash = 0 AND pushed = 0 AND status = 0 AND super = 0');
 
-        $lists = Yii::app()->db->createCommand('select id, sender, receiver, count(*) as count, request_day, request_time from tbl_requests where trash = 0 AND pushed = 0 AND status = 0 AND super = 0 group by receiver')->queryAll();
+        $lists = Yii::app()->db->createCommand('select id, sender, receiver, count(*) as count, request_day, request_time, activity, time_word from tbl_requests where trash = 0 AND pushed = 0 AND status = 0 AND super = 0 group by receiver')->queryAll();
 
         foreach($lists as $entry):
 			//super likes have been pushed alerady, we only push regular likes here...
@@ -20,22 +28,26 @@ class CrontabController extends Controller
 				if(!$count){
 					$count = 1;	//just in case
 				}
-				$time_word = "now";
 
-				if($entry['request_time'] == 0){
-					$time_word = "this noon";
-				}else if($entry['request_time'] == 1){
-					$time_word = "this evening";
-				}else if($entry['request_time'] == 2){
-					$time_word = "tonight";
+				$time_word = "Now";
+
+				if($entry['time_word']){
+					$time_word = $entry['time_word'];
 				}
+
 				$user = Users::model()->findByPk($entry['sender']);	//the real sender
 				$type = 2;
 				$friend_word = "friend wants";
 				if($count > 1){
 					$friend_word = "friends want";
 				}
-				$title = $count." ".$friend_word." to hang out with you ".$time_word."! Open Timi and swipe right to see who!";
+
+				$activity = strtolower($entry['activity']);
+				if(!$activity){
+					$activity = "hang out";
+				}
+
+				$title = $count." ".$friend_word." to ".$activity." with you ".$time_word."! Open Timi and swipe right to see who!";
 				$data = array(
 					'title'=>$title,
 					'type'=>$type,
@@ -67,10 +79,14 @@ class CrontabController extends Controller
             throw new CHttpException(404, "The requested link does not exist.");
         }
 
-        exit();	//paused for now
-
 		$notifs = DeviceToken::model()->findAll();
 		foreach($notifs as $notif){
+
+			$user = Users::model()->findByPk($notif->user_id);
+			if($user && $user->lastaction > time() - 86400 * 2){	//active in the last 2 days, do not push
+				continue;
+			}
+
 			if ($notif && $notif->token) {
 				$data["user_id"] = $notif->user_id;
 				$array = array(
@@ -138,49 +154,49 @@ class CrontabController extends Controller
 		$jd_day = cal_to_jd(CAL_GREGORIAN,date("m"),date("d"),date("Y"));
 		$day = (jddayofweek($jd_day,0));
 		if($day == 0){
-			$request = Requests::model()->findAll('(request_day = 2 OR request_day = 3 OR request_day = 4 OR request_day = 5) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 4 OR request_day = 5) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 1){
-			$request = Requests::model()->findAll('(request_day = 3 OR request_day = 4 OR request_day = 5 OR request_day = 6) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 5 OR request_day = 6) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 2){
-			$request = Requests::model()->findAll('(request_day = 4 OR request_day = 5 OR request_day = 6 OR request_day = 0) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 6 OR request_day = 0) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 3){
-			$request = Requests::model()->findAll('(request_day = 6 OR request_day = 0 OR request_day = 1) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 0 OR request_day = 1) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 4){
-			$request = Requests::model()->findAll('(request_day = 0 OR request_day = 1 OR request_day = 6) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 1 OR request_day = 2) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 5){
-			$request = Requests::model()->findAll('(request_day = 0 OR request_day = 1 OR request_day = 2 OR request_day = 3) AND trash = 0');
+			$request = Requests::model()->findAll('(request_day = 2 OR request_day = 3) AND trash = 0');
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
 			}	
 		}
 		if($day == 6){
-			$request = Requests::model()->findAll('(request_day = 1 OR request_day = 2 OR request_day = 3 OR request_day = 4) AND trash = 0');	
+			$request = Requests::model()->findAll('(request_day = 3 OR request_day = 4) AND trash = 0');	
 			foreach($request as $rq){
 				$rq->trash = 1;
 				$rq->save(false);
@@ -189,6 +205,150 @@ class CrontabController extends Controller
 		echo 200;
 	}
 
+/*
+	public function actionRemindComeback(){
+
+		set_time_limit(0);
+       	spl_autoload_unregister(array('YiiBase', 'autoload'));
+        require_once '/var/www/html/webapp/protected/extensions/twilio/Services/Twilio.php';
+        spl_autoload_register(array('YiiBase', 'autoload'));
+
+        $sid = "AC619e2e0259cedfa2be0cce4aef50bd57"; // Your Account SID from www.twilio.com/user/account
+        $token = "b8eeb3138dbde40f096c47d62eb36a14"; // Your Auth Token from www.twilio.com/user/account
+
+        $lists = Yii::app()->db->createCommand("select id from tbl_users where lastaction < unix_timestamp() - 86400 * 7 and phone != ''")->queryAll();
+        $count = 0;
+
+        foreach($lists as $entry){
+        	$user = Users::model()->findByPk($entry['id']);
+
+        	$friends = Friends::model()->findAll('sender = :uid OR receiver = :uid', array(":uid"=>$user->id));
+
+        	if(!$friends){
+        		continue;
+        	}
+
+        	$friends_count = count($friends) + 10;
+
+        	$friend_array = array();
+			$friend_string = "";
+
+        	foreach($friends as $friend){
+        		if($friend->sender == $user->id){
+        			$other = $friend->receiver;
+        		}else{
+        			$other = $friend->sender;
+        		}
+				if (!in_array($other, $friend_array)){
+					array_push($friend_array, $other);
+				}
+        	}
+
+			//only output max to 3 examples...
+			if(count($friend_array) > 3){
+				$friend_array = array_slice($friend_array, 0, 3, true); 
+			}
+
+
+			foreach($friend_array as $fa){
+				$friend_obj = Users::model()->findByPk($fa);
+				$friend_string .= $friend_obj->username.", ";
+			}
+			$friend_string = substr($friend_string, 0, -2);
+			//$friend_string .= ".";
+
+			try{
+			        $client = new Services_Twilio($sid, $token);
+			        $message = $client->account->messages->sendMessage(
+			                 '+13472208626', // From a valid Twilio number
+			                  '+'.$user->phone, // Text this number
+			                  "Hi! 🍻🍻".$friends_count." friends of yours(e.g., ".$friend_string.") are using 🍙Timi! Use Timi to hang out with your friends and their friends NOW! No more texting around or feeling awkward to initiate/reject an invitation! 🍙Timi: Gettimi.com <http://gettimi.com>. You will ❤️ it!"
+			        );
+
+			        $count++;
+
+			}catch (Exception $e) {
+
+			}
+
+        }
+        echo $count."sent";
+	}
+*/
+
+/*
+	public function actionTestDisplay(){
+
+		set_time_limit(0);
+
+        spl_autoload_unregister(array('YiiBase', 'autoload'));
+        require_once '/var/www/html/webapp/protected/extensions/twilio/Services/Twilio.php';
+        spl_autoload_register(array('YiiBase', 'autoload'));
+
+        $sid = "AC619e2e0259cedfa2be0cce4aef50bd57"; // Your Account SID from www.twilio.com/user/account
+        $token = "b8eeb3138dbde40f096c47d62eb36a14"; // Your Auth Token from www.twilio.com/user/account
+
+		$lists = Yii::app()->db->createCommand("select name, number1, count(*) as count from tbl_phone_contacts where number1 not like '%861%' and number1 not like '10%' and number1 not like '150%' and number1 not like '135%' and number1 not like '1860%' and number1 not like '151%' and name not like '%taxi%' and name not like '%apple%' and name not like '%colum%' and number1 not like '0%' and name not like '%class%' and name not like '%police%' and name not like '%service%' and name not like '%campus%' and name not like '%school%' and name not like '%dad%' and name not like '%mom%' and name not like '%US%' and name not like '%ETS%' and name not like '%mergency%' and name not like '%hospital%' and name not like '%NYC%' and name not like '%chase%' and name not like '%bank%' and name not like '%NYC%' and name not like '%prof%' and name not like '%customer%' and name not like '%at&t%' and name not like '%att%' and name not like '%office%' and name not like '%PD%' and name not like '%cab%' and name not like '%rest%' and name not like '%help%' and name not like '%one%' and CHAR_LENGTH(number1) = 11 and CHAR_LENGTH(name) > 2 and name regexp '^[A-Za-z]' group by number1 having count >= 2 order by count desc")->queryAll();
+		$count = 0;
+
+		$lists = array_slice($lists, 966); 
+
+		foreach($lists as $entry):
+			$user = Users::model()->findByAttributes(array('phone'=>$entry['number1']));
+			if($user){
+				continue;
+			}else{
+				$friends = PhoneContacts::model()->findAllByAttributes(array('number1'=>$entry['number1']));
+				$friend_array = array();
+				$friend_string = "";
+
+				foreach($friends as $friend){
+					if (!in_array($friend->user_id, $friend_array)){
+						array_push($friend_array, $friend->user_id);
+					}
+				}
+
+				//only output max to 3 examples...
+				if(count($friend_array) > 3){
+					$friend_array = array_slice($friend_array, 0, 3, true); 
+				}
+
+				//give you a random number....
+				$count_friend = rand(12,29);
+
+				foreach($friend_array as $fa){
+					$user = Users::model()->findByPk($fa);
+					if($user){
+						$friend_string .= $user->username.", ";
+					}
+				}
+				$friend_string = substr($friend_string, 0, -2);
+				//$friend_string .= ".";
+
+				//put this back for test...
+				//$entry['number1'] = "12126410987";
+
+				try{
+
+			        $client = new Services_Twilio($sid, $token);
+			        $message = $client->account->messages->sendMessage(
+			                 '+13472208626', // From a valid Twilio number
+			                  '+'.$entry['number1'], // Text this number
+			                  "Hi! 🍻🍻".$count_friend." friends of yours(e.g., ".$friend_string.") just joined 🍙Timi! At Timi, you can easily hang out with friends and their friends. No more texting around or feeling awkward to initiate/reject an invitation! Try out 🍙Timi at: Gettimi.com <http://gettimi.com>. You will ❤️ it!"
+			        );
+					$count++;
+
+				}catch (Exception $e) {
+
+				}
+
+				//put this back for test..
+				//exit();
+			}
+		endforeach;
+		echo $count." sent";
+	}
+*/
 
 	//do not use this function for now we curertly pass all free slots
 

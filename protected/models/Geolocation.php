@@ -1,23 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "tbl_requests".
+ * This is the model class for table "tbl_geolocation".
  *
- * The followings are the available columns in table 'tbl_requests':
- * @property integer $id
- * @property integer $sender
- * @property integer $receiver
- * @property integer $create_time
- * @property integer $status
+ * The followings are the available columns in table 'tbl_geolocation':
+ * @property integer $user_id
+ * @property string $location
  */
-class Requests extends CActiveRecord
+class Geolocation extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_requests';
+		return 'tbl_geolocation';
 	}
 
 	/**
@@ -28,12 +25,10 @@ class Requests extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('sender, receiver, create_time', 'required'),
-			array('activity, time_word', 'length', 'max'=>50),
-			array('sender, receiver, create_time, status, request_day, request_time, trash, sender_read, receiver_read, super, pushed', 'numerical', 'integerOnly'=>true),
+			array('location', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, sender, receiver, create_time, status', 'safe', 'on'=>'search'),
+			array('user_id, location', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,11 +49,8 @@ class Requests extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'sender' => 'Sender',
-			'receiver' => 'Receiver',
-			'create_time' => 'Create Time',
-			'status' => 'Status',
+			'user_id' => 'User',
+			'location' => 'Location',
 		);
 	}
 
@@ -80,11 +72,8 @@ class Requests extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('sender',$this->sender);
-		$criteria->compare('receiver',$this->receiver);
-		$criteria->compare('create_time',$this->create_time);
-		$criteria->compare('status',$this->status);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('location',$this->location,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -95,7 +84,7 @@ class Requests extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Requests the static model class
+	 * @return Geolocation the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
