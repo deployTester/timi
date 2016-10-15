@@ -50,6 +50,43 @@ class SiteController extends Controller
 		echo "<script>setTimeout(function () {	location.href = 'https://play.google.com/store/apps/details?id=io.cordova.timi&hl=en';}, 10);</script>";
 	}
 
+	public function actionRestaurant($id){
+		date_default_timezone_set("America/New_York");	//set it to NEW YORK FOR NOW
+		$this->layout = 'restaurant';
+		$event = Event::model()->findByPk($id);
+		$this->pageTitle = $event->name." - Restaurants in ".$event->city." - Timi";
+		if(!$event){
+			throw new CHttpException(404, "The requested link does not exist.");
+		}
+		$pictures = EventPic::model()->findAllByAttributes(array('event_id'=>$event->id));
+		$this->render('restaurant', array('event'=>$event, 'pictures'=>$pictures));
+	}
+
+
+	public function actionDeletePicById(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user || ($user->id != 23 && $user->id != 49)){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		if(isset($_GET['pid'])){
+		    $picture = EventPic::model()->findByPk($_GET['pid']);
+		    if($picture){
+		    	$picture->delete();
+		    }		
+		}
+		echo 200;
+	}
+
 
 	/*
 	*	Handles regular sign up
@@ -71,13 +108,13 @@ class SiteController extends Controller
 			$user = new Users;
 			$user->username = $_GET['name'];
 			$user->email = $_GET['email'];
-			$user->password = hash('sha256', $user->password);
+			$user->password = hash('sha256', $_GET['password']);
 			$user->user_token = md5(time() . $user->password);
 			$user->social_token_type = 0;	//regular
 			$user->create_time = time();
 			$user->status = 1;
-			$user->avatar = $avatar;
-			$user->save();
+			$user->avatar = "";
+			$user->save(false);
 		}
 		$user->userActed();
 		if($user->phone){
@@ -427,7 +464,7 @@ class SiteController extends Controller
 							'type'=>1,
 							'user_id'=>$exist->id,
 						);
-						$user->sendNotification($data);
+						//$user->sendNotification($data);
 
 					}
 					$contact->create_time = time();
@@ -501,7 +538,19 @@ class SiteController extends Controller
 			}
 		}
 
-        $lists = Yii::app()->db->createCommand('select * from tbl_requests where (receiver = '.$user->id.' or (sender = '.$user->id.' and status = 1)) and unix_timestamp() - create_time < 86400 * 7')->queryAll();
+		if(!isset($_GET['day'])){
+			$this->sendJSONResponse(array(
+				'error'=>'invalid day'
+			));
+			exit();		
+		}else{
+			$day = $_GET['day'];
+		}
+
+		$tomorrow = ($day + 1) % 7;
+		$day_after = ($day + 2) % 7;
+
+        $lists = Yii::app()->db->createCommand('select * from tbl_requests where trash = 0 AND (request_day = '.$day.' OR request_day = '.$tomorrow.' OR request_day = '.$day_after.') AND ((receiver = '.$user->id.' AND status != 2) OR (sender = '.$user->id.' AND status = 1)) AND create_time >= unix_timestamp() - 86400 * 4 ORDER BY status ASC')->queryAll(); 
         $result = array();
 
         foreach($lists as $entry){
@@ -509,15 +558,58 @@ class SiteController extends Controller
         		$entry['sender'] = $entry['receiver']; //swipe
         	}
         	$sender = Users::model()->findByPk($entry['sender']);
+
+			$mutual = Users::model()->getMutualFriends($user->id, $sender->id);
+			$mutual_count = count($mutual);
+
+			$distance = 0;
+			$friendObj = $sender;
+			if($friendObj){
+				//get the minimum of either u or ur friend's range, in miles (geo location)
+				$range = min($user->range, $friendObj->range);
+			}
+
+			$userLocation = array();
+			$friendLocation = array();
+
+			if($user->geolocation && $friendObj->geolocation){
+				$userLocation = explode(",", $user->geolocation);
+				$friendLocation = explode(",", $friendObj->geolocation);
+			}
+
+			if(isset($userLocation[0]) && isset($userLocation[1]) && isset($friendLocation[0]) && isset($friendLocation[1])){
+				//$lat1, $lon1, $lat2, $lon2, $unit, return in miles, "K" return in Kilometers.
+				$distance = $this->getDistance($userLocation[0], $userLocation[1], $friendLocation[0], $friendLocation[1], "M");
+				if($distance > $range){
+					continue;		//have to ignore this long distance friend :(
+				}
+			}else{
+				continue;		//no location.
+			}
+
             $result[] = array(
             	'sender_id'=>$sender->id,
-            	'sender_name'=>$sender->username,
+            	'username'=>$sender->username,
+            	'distance'=>$distance,
+				'avatar'=>$sender->avatar,
+				'favorites'=>$sender->favorites,
+				'whatsup'=>$sender->whatsup,
+				'geolocation'=>$sender->geolocation,
+				'phone'=>$sender->phone,
+				'mutual'=>$mutual,
+				'mutual_count'=>$mutual_count,
+				'current'=>$sender->current,
             	'request_day'=>$entry['request_day'],
             	'request_time'=>$entry['request_time'],
             	'status'=>$entry['status'],	//0 is request, 1 is match, 2 is declined by you
-            	'trashed'=>$entry['trash']	//trashed means it's not match-able on the server side atm... we will talk about this later
+            	'trashed'=>$entry['trash'],	//trashed means it's not match-able on the server side atm... we will talk about this later
+            	'create_time'=>$entry['create_time'],
+            	'super'=>$entry['super'],	//0 means anonmyous.
+            	'time_word'=>$entry['time_word'],
+            	'activity'=>$entry['activity']
             );
         }
+
 		$result = json_encode($result);
 
 		$this->sendJSONResponse(array(
@@ -632,6 +724,7 @@ class SiteController extends Controller
 		if($friendship && !$friendship->accept && $friendship->receiver == $user->id){
 			$friendship->accept = $_GET['decision'];	//either accept or reject -> 1 or 2
 			$friendship->create_time = time();
+			$friendship->manual = 1;
 			$friendship->save();
 
 			if($friendship->accept == 1){	//MATCH!
@@ -665,6 +758,7 @@ class SiteController extends Controller
 			}
 		}else if(!$friendship){
 			$friendship = new Friends;
+			$friendship->manual = 1;
 			$friendship->sender = $user->id;
 			$friendship->receiver = $_GET['receiver'];
 			//if $_GET['decision'] == 1, accept = 0, otherwise accept = 2
@@ -735,6 +829,109 @@ class SiteController extends Controller
 
 
 	/*
+	*	This function toggles the record when the user likes the event.
+	*/
+	public function actionToggleEventLikes(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		if(!isset($_GET['event_id'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no event id'
+			));
+			exit();
+		}
+
+		$user->lastaction = time();
+		$user->save();
+
+		$found = EventLikes::model()->findByAttributes(array('user_id'=>$user->id, 'event_id'=>$_GET['event_id']));
+		if($found){
+			$found->delete();	//toggle
+			$event = Event::model()->findByPk($_GET['event_id']);
+			if($event){
+				$event->likes--;
+				$event->save(false);
+			}
+		}else{
+			$ue = new EventLikes;
+			$ue->user_id = $user->id;
+			$ue->event_id = $_GET['event_id'];
+			$ue->create_time = time();
+			$ue->save(false);
+			$event = Event::model()->findByPk($_GET['event_id']);
+			if($event){
+				$event->likes++;
+				$event->save(false);
+			}
+		}
+
+		$this->sendJSONResponse(array(
+			'success'=>"success"
+		));
+
+	}
+
+
+	/*
+	*	This function inserst record into table for analytic
+	*/
+	public function actionInsertPictureSeen(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		if(!isset($_GET['event_pic_id'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no event pic id'
+			));
+			exit();
+		}
+
+		$user->lastaction = time();
+		$user->save();
+
+		$found = UserEventPicSeen::model()->findByAttributes(array('user_id'=>$user->id, 'event_pic_id'=>$_GET['event_pic_id']));
+		if($found){
+			$found->create_time = time();
+		}else{
+			$ue = new UserEventPicSeen;
+			$ue->user_id = $user->id;
+			$ue->event_pic_id = $_GET['event_pic_id'];
+			$ue->create_time = time();
+			$ue->save(false);
+		}
+
+		$this->sendJSONResponse(array(
+			'success'=>"success"
+		));
+	}
+
+
+	/*
 	*	Returns all strangers / people with mutual friends that's close to you....
 	*/
 	public function actionDiscoverStrangers(){
@@ -757,10 +954,18 @@ class SiteController extends Controller
 		$user->lastaction = time();
 		$user->save();
 
-		//get people that's within 10 miles
-		$mile = 10;
+		//get people that's within 50 miles
+		$mile = 50;
 
 		$final_list = array();
+
+		$slots = Yii::app()->db->createCommand('select * from tbl_friends where receiver = '.$user->id.' and accept = 0')->queryAll();
+		foreach($slots as $entry):
+			$friend = $entry['sender'];
+			if (!in_array($friend, $final_list) && $friend != $user->id) {	//check duplicates
+				array_push($final_list, $friend);
+			}
+		endforeach;
 
 		$slots = Yii::app()->db->createCommand('SELECT t2.user_id FROM tbl_geolocation as t1 JOIN tbl_geolocation as t2 WHERE  t1.user_id = '.$user->id.' AND t2.user_id != '.$user->id.' AND MBRContains(LineString(Point (ST_X(t1.location) + '.$mile.' /  111.1 / COS(RADIANS(ST_Y(t1.location))), ST_Y(t1.location) + '.$mile.' / 111.1), Point (ST_X(t1.location) - '.$mile.' /  111.1 / COS(RADIANS(ST_Y(t1.location))), ST_Y(t1.location) - '.$mile.' / 111.1)), t2.location)')->queryAll();
 		foreach($slots as $entry):
@@ -773,6 +978,9 @@ class SiteController extends Controller
 		foreach($final_list as $value):
 
 			$friendObj = Users::model()->findByPk($value);	//get friend details
+			if(!$friendObj){
+				continue;
+			}
 
 			$check_friends = Friends::model()->find('accept > 0 AND ((sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid))', array(":uid"=>$user->id, ":fid"=>$friendObj->id));
 			if($check_friends){
@@ -810,6 +1018,13 @@ class SiteController extends Controller
 			}else{
 				continue;		//no location.
 			}
+			
+
+			//for sorting reason...
+			$check_receive_request = Friends::model()->find('receiver = :uid AND sender = :fid AND accept = 0', array(":uid"=>$user->id, ":fid"=>$friendObj->id));
+			if($check_receive_request){
+				$distance = 0;
+			}
 
 			$result[] = array(
 				'user_id'=>$value,
@@ -826,7 +1041,12 @@ class SiteController extends Controller
 			);
 		endforeach;
 
-		$this->sortBySubkey($result, 'distance');
+
+		if(isset($result)){
+			$this->sortBySubkey($result, 'distance');
+		}else{
+			$result = array();
+		}
 
 		$result = json_encode($result);
 
@@ -868,7 +1088,7 @@ class SiteController extends Controller
 			$userLocation = array();
 			$friendLocation = array();
 
-			$range = 20;
+			$range = 50;
 			$distance = 0;
 			if($friendObj){
 				//get the minimum of either u or ur friend's range, in miles (geo location)
@@ -1002,6 +1222,518 @@ class SiteController extends Controller
 	}
 
 
+	/*
+	*	This returns all the events you liked
+	*/
+	public function actionReturnMyLikes(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+        $lists = Yii::app()->db->createCommand('select * from tbl_event_likes where user_id = '.$user->id.' ORDER BY tbl_event_likes.create_time DESC')->queryAll();
+        $result = array();
+
+        foreach($lists as $entry){
+
+            $event = Event::model()->findByPk($entry['event_id']);
+            if(!$event){
+            	continue;
+            }
+		    $pictures = EventPic::model()->findAll(array(
+	            'condition' => 'event_id = :eid',
+	            'params' => array(
+	                ':eid'=>$event->id 
+	            ),
+	            'order'=>'cover DESC',
+	        ));
+
+			$pics = array();
+			foreach($pictures as $pic){
+				$pics[] = array(
+					"pid"=>$pic->id,
+					"path"=>$pic->path,
+					"cover"=>$pic->cover,
+					"title"=>$pic->title,
+					"price"=>$pic->price
+				);
+			}
+
+			$category = Category::model()->findByPk($event->category_id);
+			if($category){
+				$category_name = $category->name;
+			}else{
+				$category_name = "Uncategorized";
+			}
+
+			$likes = EventLikes::model()->findAllByAttributes(array('event_id'=>$event->id));
+			$friends = array();
+			$self = 0;
+			foreach($likes as $like){
+				$friend = Users::model()->findByPk($like->user_id);
+				if($friend){
+					//if you liked it yourself too, we mark self to 1.
+					if($friend->id == $user->id){
+						$self = 1;
+					}
+					$friends[] = array(
+						'user_id'=>$friend->id,
+						'username'=>$friend->username,
+						'avatar'=>$friend->avatar
+					);
+				}
+			}
+
+			$result[] = array(
+				'id'=>$event->id,
+				'place'=>$event->name,
+				'subtitle'=>$event->subtitle,
+				'city'=>$event->city,
+				'category_id'=>$event->category_id,
+				'category_name'=>$category_name,
+				'geolocation'=>$event->location,
+				'description'=>$event->description,
+				'recommend_menu'=>$event->recommend_menu,
+				'friends'=>$friends,
+				'self'=>$self,
+				'likes'=>count($likes),
+				'comments'=>$event->comments,
+				'create_time'=>$event->create_time,
+				'recommend'=>$event->recommend,
+				'homepage'=>$event->homepage,
+				'opentable_id'=>$event->opentable_id,
+				'reservation_link'=>$event->reservation_link,
+				'address'=>$event->address,
+				'phone'=>$event->phone,
+				'website'=>$event->website,
+				'description'=>$event->description,
+				'price'=>$event->price,
+				'pics'=>$pics,
+				'hours_json'=>$event->hours_json,
+				'rating'=>$event->rating,
+				'yelp_url'=>$event->yelp_url,
+
+				'user_id'=>$user->id,
+				'username'=>$user->username,
+				'avatar'=>$user->avatar,
+				'favorites'=>$user->favorites,
+				'whatsup'=>$user->whatsup,
+				'geolocation_person'=>$user->geolocation,
+				'create_time'=>0,
+				'phone_person'=>$user->phone
+			);          
+		}
+		$result = json_encode($result);
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+
+	/*
+	*	This returns all the events your friends liked
+	*/
+	public function actionReturnAllFriendsLikes(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+        $lists = Yii::app()->db->createCommand('select *, tbl_event_likes.create_time as ct from tbl_event_likes, tbl_friends where (tbl_event_likes.user_id = tbl_friends.sender and receiver = '.$user->id.') or (tbl_event_likes.user_id = tbl_friends.receiver and sender = '.$user->id.') ORDER BY ct DESC')->queryAll();
+        $result = array();
+
+        foreach($lists as $entry){
+
+        	if($entry['sender'] == $user->id){
+        		$fid = $entry['receiver'];
+        	}else{
+        		$fid = $entry['sender'];
+        	}
+
+            $friendObj = Users::model()->findByPk($fid);
+            if(!$friendObj){
+            	continue;
+            }
+            $event = Event::model()->findByPk($entry['event_id']);
+            if(!$event){
+            	continue;
+            }
+		    $pictures = EventPic::model()->findAll(array(
+	            'condition' => 'event_id = :eid',
+	            'params' => array(
+	                ':eid'=>$event->id 
+	            ),
+	            'order'=>'cover DESC',
+	        ));
+
+			$pics = array();
+			foreach($pictures as $pic){
+				$pics[] = array(
+					"pid"=>$pic->id,
+					"path"=>$pic->path,
+					"cover"=>$pic->cover,
+					"title"=>$pic->title,
+					"price"=>$pic->price
+				);
+			}
+
+			$category = Category::model()->findByPk($event->category_id);
+			if($category){
+				$category_name = $category->name;
+			}else{
+				$category_name = "Uncategorized";
+			}
+
+			$likes = EventLikes::model()->findAllByAttributes(array('event_id'=>$event->id));
+			$friends = array();
+			$self = 0;
+			foreach($likes as $like){
+				$friend = Users::model()->findByPk($like->user_id);
+				if($friend){
+					//if you liked it yourself too, we mark self to 1.
+					if($friend->id == $user->id){
+						$self = 1;
+					}
+					$friends[] = array(
+						'user_id'=>$friend->id,
+						'username'=>$friend->username,
+						'avatar'=>$friend->avatar
+					);
+				}
+			}
+
+
+			$result[] = array(
+				'id'=>$event->id,
+				'place'=>$event->name,
+				'subtitle'=>$event->subtitle,
+				'city'=>$event->city,
+				'category_id'=>$event->category_id,
+				'category_name'=>$category_name,
+				'geolocation'=>$event->location,
+				'description'=>$event->description,
+				'recommend_menu'=>$event->recommend_menu,
+				'friends'=>$friends,
+				'self'=>$self,
+				'likes'=>count($likes),
+				'comments'=>$event->comments,
+				'create_time'=>$event->create_time,
+				'recommend'=>$event->recommend,
+				'homepage'=>$event->homepage,
+				'opentable_id'=>$event->opentable_id,
+				'reservation_link'=>$event->reservation_link,
+				'address'=>$event->address,
+				'phone'=>$event->phone,
+				'website'=>$event->website,
+				'description'=>$event->description,
+				'price'=>$event->price,
+				'pics'=>$pics,
+				'hours_json'=>$event->hours_json,
+				'rating'=>$event->rating,
+				'yelp_url'=>$event->yelp_url,
+
+				'user_id'=>$friendObj->id,
+				'username'=>$friendObj->username,
+				'avatar'=>$friendObj->avatar,
+				'favorites'=>$friendObj->favorites,
+				'whatsup'=>$friendObj->whatsup,
+				'geolocation_person'=>$friendObj->geolocation,
+				'create_time'=>$entry['ct'],
+				'phone_person'=>$friendObj->phone
+			);          
+		}
+
+		$result = json_encode($result);
+		$this->sendJSONResponse(array(
+			'result'=>$result
+		));
+	}
+
+
+	/*
+	*	Returns all subjects
+	*/
+	public function actionReturnAllCategories(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		$categories = Category::model()->findAll(); 	//currently we return everything!
+		$result = array();
+		foreach($categories as $category):
+			$result[] = array(
+				'category_id'=>$category->id,
+				'name'=>$category->name,
+				'path'=>$category->path
+			);
+		endforeach;
+
+		$this->sendJSONResponse(array(
+			'result'=>json_encode($result)
+		));
+	}
+
+	public function actionOpenTableJS(){
+		echo "<script type='text/javascript' src='//secure.opentable.com/widget/reservation/loader?rid=27763&domain=com&type=standard&theme=standard&lang=en&overlay=false&iframe=false'></script>";
+	}
+
+
+	/*
+	*	Returns all the restaurants
+	*/
+	public function actionReturnAllEvents(){
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+		//$events = Event::model()->findAll(); 	//currently we return everything!
+		if(isset($_GET['category_id'])){
+			if(isset($_GET['recommend'])){
+				$events = Event::model()->findAllByAttributes(array('category_id'=>$_GET['category_id'], 'recommend'=>1), array('order'=>'id DESC'));
+			}else{
+				$events = Event::model()->findAllByAttributes(array('category_id'=>$_GET['category_id']), array('order'=>'id DESC'));
+			}
+		}else{
+			$events = Event::model()->findAll('homepage = 1');
+		}
+
+		$result = array();
+		foreach($events as $event):
+
+	        $pictures = EventPic::model()->findAll(array(
+	            'condition' => 'event_id = :eid',
+	            'params' => array(
+	                ':eid'=>$event->id 
+	            ),
+	            'order'=>'cover DESC',
+	        ));
+
+			$pics = array();
+			foreach($pictures as $pic){
+				$pics[] = array(
+					"pid"=>$pic->id,
+					"path"=>$pic->path,
+					"cover"=>$pic->cover,
+					"title"=>$pic->title,
+					"price"=>$pic->price
+				);
+			}
+			$category = Category::model()->findByPk($event->category_id);
+			if($category){
+				$category_name = $category->name;
+			}else{
+				$category_name = "Uncategorized";
+			}
+
+			$likes = EventLikes::model()->findAllByAttributes(array('event_id'=>$event->id));
+			$friends = array();
+			$self = 0;
+			foreach($likes as $like){
+				$friend = Users::model()->findByPk($like->user_id);
+				if($friend){
+					//if you liked it yourself too, we mark self to 1.
+					if($friend->id == $user->id){
+						$self = 1;
+					}
+					$friends[] = array(
+						'user_id'=>$friend->id,
+						'username'=>$friend->username,
+						'avatar'=>$friend->avatar
+					);
+				}
+			}
+
+			$result[] = array(
+				'id'=>$event->id,
+				'place'=>$event->name,
+				'subtitle'=>$event->subtitle,
+				'city'=>$event->city,
+				'category_id'=>$event->category_id,
+				'category_name'=>$category_name,
+				'geolocation'=>$event->location,
+				'description'=>$event->description,
+				'recommend_menu'=>$event->recommend_menu,
+				'friends'=>$friends,
+				'self'=>$self,
+				'likes'=>count($likes),
+				'comments'=>$event->comments,
+				'create_time'=>$event->create_time,
+				'recommend'=>$event->recommend,
+				'homepage'=>$event->homepage,
+				'opentable_id'=>$event->opentable_id,
+				'reservation_link'=>$event->reservation_link,
+				'address'=>$event->address,
+				'phone'=>$event->phone,
+				'website'=>$event->website,
+				'description'=>$event->description,
+				'price'=>$event->price,
+				'pics'=>$pics,
+				'hours_json'=>$event->hours_json,
+				'rating'=>$event->rating,
+				'yelp_url'=>$event->yelp_url,
+				'delivery_url'=>$event->delivery_url,
+			);
+		endforeach;
+
+		$this->sendJSONResponse(array(
+			'result'=>json_encode($result)
+		));
+
+	}
+
+
+	public function actionGetEventById(){
+
+		if(!isset($_GET['user_token'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByAttributes(array('user_token'=>$_GET['user_token']));
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		if(!isset($_GET['event_id'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no event id'
+			));
+			exit();
+		}else{
+			$event = Event::model()->findByPk($_GET['event_id']);
+			if(!$event){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid event id'
+				));
+				exit();	
+			}
+		}
+
+	        $pictures = EventPic::model()->findAll(array(
+	            'condition' => 'event_id = :eid',
+	            'params' => array(
+	                ':eid'=>$event->id 
+	            ),
+	            'order'=>'cover DESC',
+	        ));
+
+			$pics = array();
+			foreach($pictures as $pic){
+				$pics[] = array(
+					"pid"=>$pic->id,
+					"path"=>$pic->path,
+					"cover"=>$pic->cover,
+					"title"=>$pic->title,
+					"price"=>$pic->price
+				);
+			}
+			$category = Category::model()->findByPk($event->category_id);
+			if($category){
+				$category_name = $category->name;
+			}else{
+				$category_name = "Uncategorized";
+			}
+
+			$likes = EventLikes::model()->findAllByAttributes(array('event_id'=>$event->id));
+			$friends = array();
+			$self = 0;
+			foreach($likes as $like){
+				$friend = Users::model()->findByPk($like->user_id);
+				if($friend){
+					//if you liked it yourself too, we mark self to 1.
+					if($friend->id == $user->id){
+						$self = 1;
+					}
+					$friends[] = array(
+						'user_id'=>$friend->id,
+						'username'=>$friend->username,
+						'avatar'=>$friend->avatar
+					);
+				}
+			}
+
+			$result = array(
+				'id'=>$event->id,
+				'place'=>$event->name,
+				'subtitle'=>$event->subtitle,
+				'city'=>$event->city,
+				'category_id'=>$event->category_id,
+				'category_name'=>$category_name,
+				'geolocation'=>$event->location,
+				'description'=>$event->description,
+				'recommend_menu'=>$event->recommend_menu,
+				'friends'=>$friends,
+				'self'=>$self,
+				'likes'=>count($likes),
+				'comments'=>$event->comments,
+				'create_time'=>$event->create_time,
+				'recommend'=>$event->recommend,
+				'homepage'=>$event->homepage,
+				'opentable_id'=>$event->opentable_id,
+				'reservation_link'=>$event->reservation_link,
+				'address'=>$event->address,
+				'phone'=>$event->phone,
+				'website'=>$event->website,
+				'description'=>$event->description,
+				'price'=>$event->price,
+				'pics'=>$pics,
+				'hours_json'=>$event->hours_json,
+				'rating'=>$event->rating,
+				'yelp_url'=>$event->yelp_url,
+				'delivery_url'=>$event->delivery_url
+			);
+
+		$this->sendJSONResponse(array(
+			'result'=>json_encode($result)
+		));
+		
+	}
 
 
 	/*
@@ -1058,7 +1790,6 @@ class SiteController extends Controller
 
 		//get my friends
 		//put back order by lastaction DESC for order
-
 		$slots = Yii::app()->db->createCommand('select f.sender as sender, f.receiver as receiver from tbl_friends f, tbl_users u where accept = 1 AND (f.sender = '.$user->id.' OR f.receiver = '.$user->id.') AND (u.id = f.sender OR u.id = f.receiver) AND u.id != '.$user->id.' order by lastaction DESC')->queryAll();
 		foreach($slots as $entry):
 			if($user->id == $entry['sender']){
@@ -1126,7 +1857,7 @@ class SiteController extends Controller
 				continue; //if you guys are not friend and your friend turned off friend's friend
 			}
 
-			$range = 20;
+			$range = 50;
 			if($friendObj){
 				//get the minimum of either u or ur friend's range, in miles (geo location)
 				$range = min($user->range, $friendObj->range);
@@ -1201,9 +1932,11 @@ class SiteController extends Controller
 
 			$friend = $friendObj;	//get friend details
 			$mutual = Users::model()->getMutualFriends($user->id, $friend->id);
-			if(!count($mutual)){
-				continue;
-			}
+
+			$check_friendship = Friends::model()->find('accept = 1 AND ((sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid))', array(":uid"=>$user->id, ":fid"=>$friend->id));
+			// if(!$check_friendship && count($mutual) < 3){
+			// 	//continue;
+			// }
 
 			$result[] = array(
 				'user_id'=>$key,
@@ -1216,8 +1949,7 @@ class SiteController extends Controller
 				'phone'=>$friend->phone,
 				'mutual'=>$mutual,
 				'current'=>$friend->current,
-				//'check_friendship'=>$check_friends,
-				//'distance'=>$distance,
+				'check_friendship'=>$check_friends,
 			);
 
 		endforeach;
@@ -1335,7 +2067,7 @@ class SiteController extends Controller
 		$message = new Message;
 		$message->sender = $user->id;
 		$message->receiver = $_GET['receiver'];
-		$message->description = strip_tags($_GET['message']);
+		$message->description = strip_tags(base64_encode($_GET['message']));
 		$message->create_time = time();
 		$message->save();
 
@@ -1343,7 +2075,7 @@ class SiteController extends Controller
 
 			//send notification to the other party and tell them they are matched with you.
 		$data = array(
-				'title'=>$message->description,
+				'title'=>base64_decode($message->description),
 				'type'=>5,						//5 for message
 				'sender_id'=>$message->sender,
 				'user_id'=>$message->receiver,
@@ -1439,7 +2171,7 @@ class SiteController extends Controller
 		foreach($messages as $message){
 			$result[$message->id] = array(
 				'message_id'=>$message->id,
-				'title'=>$message->description,
+				'title'=>base64_decode($message->description),
 				'sender'=>$message->sender,
 				'receiver'=>$message->receiver,
 				'create_time'=>$message->create_time,
@@ -1488,7 +2220,7 @@ class SiteController extends Controller
 		$messages = Message::model()->findAll('(sender = :fid AND receiver = :uid) AND delivered = 0', array(':uid'=>$user->id, ':fid'=>$_GET['receiver']));
 		foreach($messages as $message){
 			$result[$message->id] = array(
-				'title'=>$message->description,
+				'title'=>base64_decode($message->description),
 				'sender'=>$message->sender,
 				'receiver'=>$message->receiver,
 				'create_time'=>$message->create_time,
@@ -1532,7 +2264,7 @@ class SiteController extends Controller
 		foreach($messages as $message){
 			$result[$message->receiver][] = array(
 				'id'=>$message->id,
-				'title'=>$message->description,
+				'title'=>base64_decode($message->description),
 				'sender'=>$message->sender,
 				'receiver'=>$message->receiver,
 				'create_time'=>$message->create_time,
@@ -1686,6 +2418,11 @@ class SiteController extends Controller
 				'avatar'=>$friend->avatar,
 				'email'=>$friend->email,
 				'phone'=>$friend->phone,
+				'geolocation'=>$friend->geolocation,
+				'favorites'=>$friend->favorites,
+				'whatsup'=>$friend->whatsup,
+				'range'=>$friend->range,
+				'current'=>$friend->current
 			);
 		}
 		$result = json_encode($result);
@@ -1697,7 +2434,7 @@ class SiteController extends Controller
 
 
 	/*
-	*	Mark all as read
+	*	Mark all as read -> strangers...
 	*/
 	public function actionMarkAllFriendsMatchAsRead(){
 		if(!isset($_GET['user_token'])){
@@ -1763,6 +2500,11 @@ class SiteController extends Controller
 					'email'=>$friend->email,
 					'phone'=>$friend->phone,
 					'day'=>$cc->request_day,
+					'geolocation'=>$friend->geolocation,
+					'favorites'=>$friend->favorites,
+					'whatsup'=>$friend->whatsup,
+					'range'=>$friend->range,
+					'current'=>$friend->current,
 				);
 			}
 			if($cc->receiver == $user->id && !$cc->receiver_read){
@@ -1774,6 +2516,11 @@ class SiteController extends Controller
 					'email'=>$friend->email,
 					'phone'=>$friend->phone,
 					'day'=>$cc->request_day,
+					'geolocation'=>$friend->geolocation,
+					'favorites'=>$friend->favorites,
+					'whatsup'=>$friend->whatsup,
+					'range'=>$friend->range,
+					'current'=>$friend->current,
 				);
 			}
 		}
@@ -1821,6 +2568,7 @@ class SiteController extends Controller
 
 	/*
 	*	Mark a match as read
+	*   NOT USING THIS FOR NOW
 	*/
 	public function actionMarkMatchAsRead(){
 		if(!isset($_GET['user_token'])){
@@ -1966,7 +2714,7 @@ class SiteController extends Controller
 			));
         }else{
         	$user->phone = trim($verify->number);
-        	$user->save();
+        	$user->save(false);
         }
 
 		$this->sendJSONResponse(array(
@@ -2116,7 +2864,7 @@ class SiteController extends Controller
 
 		if($check_if_busy){
 			$this->sendJSONResponse(array(
-				'error'=>'the other party is busy!'
+				'error'=>'the other party has been matched with you already! RID:'.$check_if_busy->id
 			));
 			exit();
 		}
@@ -2160,6 +2908,9 @@ class SiteController extends Controller
 				$request->request_time = $_GET['request_time'];
 				$request->receiver = $_GET['receiver'];
 				$request->status = 0;
+				if($time_word == "Now"){
+					$request->request_time = 3; //force it!
+				}
 				$request->time_word = $time_word;
 				if($request->super || $request->request_time == 3){
 					$request->pushed = 1;	//we push super and NOW likes right away
@@ -2375,7 +3126,7 @@ class SiteController extends Controller
 		}
 		
 		$user->lastaction = time();
-		$user->save();
+		$user->save(false);
 
 		$this->sendJSONResponse(array(
 			'username'=>$user->username,
@@ -2394,6 +3145,47 @@ class SiteController extends Controller
 		));
 
 	}
+
+
+	/*
+	*	This function returns other's information
+	*/
+	public function actionReturnUserInfo(){
+
+		if(!isset($_GET['user_id'])){
+			$this->sendJSONResponse(array(
+				'error'=>'no user token'
+			));
+			exit();
+		}else{
+			$user = Users::model()->findByPk($_GET['user_id']);
+			if(!$user){
+				$this->sendJSONResponse(array(
+					'error'=>'invalid user token'
+				));
+				exit();	
+			}
+		}
+
+		$this->sendJSONResponse(array(
+			'user_id'=>$user->id,
+			'username'=>$user->username,
+			'avatar'=>$user->avatar,
+			'email'=>$user->email,
+			'phone'=>$user->phone,
+			'country'=>$user->country,
+			'city'=>$user->city,
+			'geolocation'=>$user->geolocation,
+			'favorites'=>$user->favorites,
+			'whatsup'=>$user->whatsup,
+			'range'=>$user->range,
+			'current'=>$user->current,
+			'friend_friend'=>$user->friend_friend,
+			'points'=>$user->points
+		));
+
+	}
+
 
 
 	/*
@@ -2560,7 +3352,7 @@ class SiteController extends Controller
 			}
 		}
 
-		$total_cancel = Cancel::count('owner_id = :uid AND unix_timestamp() - create_time < 86400 * 30', array(":uid"=>$user->id));
+		$total_cancel = Cancel::count('owner_id = :uid AND create_time > unix_timestamp() - 86400 * 30', array(":uid"=>$user->id));
 
 		$this->sendJSONResponse(array(
 			'total'=>$total_cancel,
@@ -2635,6 +3427,60 @@ class SiteController extends Controller
 
 
 
+	public function actionGetUberEstimates(){
+
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Methods: GET');
+		header('Access-Control-Max-Age: 1000');
+
+		$start_latitude = $_GET['start_latitude'];
+		$start_longitude = $_GET['start_longitude'];
+		$end_latitude = $_GET['end_latitude'];
+		$end_longitude = $_GET['end_longitude'];
+
+		// $start_latitude = "40.7612137";
+		// $start_longitude = "-74.0014306";
+		// $end_latitude = "40.749431";
+		// $end_longitude = "-73.9896645";
+
+		$results = EstimateTaxi::getUberEstimates($start_latitude, $start_longitude, $end_latitude, $end_longitude);
+
+		$this->sendJSONPost(array(
+			'total'=>json_encode($results),
+		));	
+
+	}
+
+
+
+	public function actionGetLyftEstimates(){
+
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Methods: GET');
+		header('Access-Control-Max-Age: 1000');
+
+		
+
+		$start_latitude = $_GET['start_latitude'];
+		$start_longitude = $_GET['start_longitude'];
+		$end_latitude = $_GET['end_latitude'];
+		$end_longitude = $_GET['end_longitude'];
+
+		// $start_latitude = "40.7612137";
+		// $start_longitude = "-74.0014306";
+		// $end_latitude = "40.749431";
+		// $end_longitude = "-73.9896645";
+
+		$results = EstimateTaxi::getLyftEstimates($start_latitude, $start_longitude, $end_latitude, $end_longitude);
+
+		$this->sendJSONPost(array(
+			'total'=>json_encode($results),
+		));	
+
+	}
+
+
+
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -2687,6 +3533,33 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
+
+/*
+	public function actionAcceptInstagramPost(){
+
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Methods: GET, POST');  
+
+		$eventPic = new EventPic;
+		$eventPic->event_id = 1;
+		$eventPic->path = 1;
+		$eventPic->save(false);
+
+		if(isset($_GET['event_id'])){
+			if(isset($_GET['pictures'])){
+				$array = json_decode($_GET['pictures']);
+				foreach($array as $arr){
+					$eventPic = new EventPic;
+					$eventPic->event_id = $_GET['event_id'];
+					$eventPic->path = $arr;
+					$eventPic->save(false);
+				}
+			}
+		}
+
+		return 200;
+	}
+*/
 
 
 	/**

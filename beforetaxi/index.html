@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>BeforeTaxi</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="css/framework7.ios.min.css">
+  <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+  <!-- Icon plugin -->
+  <link rel="stylesheet" href="css/font-awesome-4.6.1/css/font-awesome.css">
+  <!-- Font -->
+  <link rel="stylesheet" href="css/google-font.css?n=1">
+  <!-- <link href="https://fonts.googleapis.com/css?family=PT Sans" rel="stylesheet"> -->
+  <!-- Animation -->
+  <link rel="stylesheet" href="css/animate.css?">
+  <!-- Core -->
+  <!-- <link rel="stylesheet" href="http://gettimi.com/beforetaxi/css/my-app.css?n=1"> -->
+  <link rel="stylesheet" href="css/my-app.css?n=1">
+  <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.0.1/emojify.min.css" /> -->
+
+
+  <!-- jQuery lib -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="cordova.js"></script>    
+
+  </head>
+ <body id="body-html">
+   <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+    <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <p>Left panel content goes here</p>
+      </div>
+    </div>
+    <div class="panel panel-right panel-cover">
+      <div class="content-block">
+        <p>Right panel content goes here</p>
+      </div>
+    </div>
+    <div class="views">
+      <div class="view view-main">
+        <div class="navbar">
+
+          <div class="navbar-inner" data-page="index">  
+            <div class="left"><a></a></div>                 
+            <div class="center">Real-Time Best Taxi Fare</div>
+            <div class="right"><a></a></div>              
+          </div>
+          <div class="navbar-inner cached" data-page="result">  
+            <div class="left"><a class="link left-link" onclick="pageBack()"><li class="fa fa-chevron-left"></li></a></div>                 
+            <div class="center ">Search Results</div>
+            <div class="right"><a></a></div>              
+          </div>          
+        </div>
+
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="index" class="page ">
+            <div class="page-content">
+              <form id="my-form" class="list-block startend-form">
+                <ul>
+                  <li>
+                    <a class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title "><i class="fa fa-circle color-green"></i></div>
+                        <div class="item-input">
+                          <input type="text" onfocus="this.setSelectionRange(0, 9999);" onkeyup="enterpressalert(event, this)" class="animated fadeIn" id="pickup" placeholder="Enter Pickup Location">
+                        <div class="clear-search-box" id="pickup-searchbox-clear" onclick="clearSearchBox('pickup')"><i style="margin: 0px 4px;" class="fa fa-times"></i></div> 
+                        </div>
+                         
+                      </div>
+                    </a>
+                  </li>
+                  <li id="destination-li">
+                    <a class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title "><i class="fa fa-circle color-red"></i></div>
+                        <div class="item-input">
+                          <input type="text" onfocus="this.setSelectionRange(0, 9999);" class="animated fadeIn" id="destination" onkeyup="enterpressalert(event, this)" placeholder="Enter Destination">
+                        </div>
+                        <div class="clear-search-box" id="destination-searchbox-clear" onclick="clearSearchBox('destination')"><i style="margin: 0px 4px;" class="fa fa-times"></i></div>                          
+                      </div>
+                    </a>
+                  </li>                  
+                </ul>
+              </form>            
+              <div id="map"></div>
+              <div class="centerMarker-green"></div>
+              <div class="centerMarker-red" style="display:none"></div>              
+
+              <div id="suggest-list" class="list-block">       
+                <ul>                                                   
+                </ul>                
+              </div>
+            </div>
+            <a href="#" id="ETA-button" class="link button button-fill"></a>      
+            <a href="#" id="current-position-button" class="link "><i class="fa fa-location-arrow"></i></a>           
+            <a href="#" id="clear-button" class="link "><i class="fa fa-repeat"></i>RESET</a>                        
+          </div>
+          <div data-page="result" class="page cached">
+            <div class="page-content contacts-content">
+              <div id="result-form" class="list-block startend-form">
+                <ul>
+                  <li>
+                    <a class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title "><i class="fa fa-circle color-green"></i></div>
+                        <div class="item-input">
+                          <input type="text" onfocus="this.blur()" class="animated fadeIn" id="pickup-result" placeholder="Enter Pickup Location">
+                        </div>                         
+                      </div>
+                    </a>
+                  </li>
+                  <li id="destination-result-li">
+                    <a class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title "><i class="fa fa-circle color-red"></i></div>
+                        <div class="item-input">
+                          <input type="text" onfocus="this.blur()" id="destination-result"  placeholder="Enter Destination">
+                        </div>                          
+                      </div>
+                    </a>
+                  </li>                  
+                </ul>
+              </div>              
+              <div id="fare-chart" class="list-block contacts-block media-list">
+                <ul>
+                </ul>
+              </div>                                   
+            </div>          
+          </div>          
+        </div>
+         <div class="toolbar">
+          <div class="toolbar-inner">
+          </div>
+        </div> 
+      </div>
+    </div>
+    <div id="script">
+      <script type="text/javascript" src="js/localScript.js"></script>        
+      <script type="text/javascript" src="js/framework7.min.js"></script>       
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAqBHCFbs_2Q3o7ZTAxID8Xnd3dUBUSdw&libraries=places&language=en&callback=mapLoaded" async defer></script>    
+ 
+      <!-- // <script type="text/javascript" src="http://gettimi.com/beforetaxi/js/my-app.js?n=1"></script> -->
+
+      <!-- should be the last one -->
+      <script type="text/javascript" src="js/my-app.js?n=1" ></script>
+
+
+    </div>
+  </body>
+ 
+</html>

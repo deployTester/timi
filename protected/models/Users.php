@@ -38,9 +38,8 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('social_id, user_token, create_time, username', 'required'),
-			array('social_id', 'unique'),
-			array('social_token_type, create_time, lastaction, status, gender, friend_friend, points', 'numerical', 'integerOnly'=>true),
+			array('user_token, create_time, username', 'required'),
+			array('social_id, social_token_type, create_time, lastaction, status, gender, friend_friend, points', 'numerical', 'integerOnly'=>true),
 			array('username, user_token', 'length', 'max'=>200),
 			array('password, social_token, email', 'length', 'max'=>300),
 			array('avatar, geolocation, favorites', 'length', 'max'=>500),
@@ -212,15 +211,15 @@ class Users extends CActiveRecord
 	//return mutual friend list (ids) of 2 users: user_id and friend_id
 	public function getMutualFriends($user_id, $friend_id){
 
-		$count_user = Friends::model()->count('accept > 0 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$user_id));
-		$count_friend = Friends::model()->count('accept > 0 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$friend_id));
+		$count_user = Friends::model()->count('accept = 1 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$user_id));
+		$count_friend = Friends::model()->count('accept = 1 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$friend_id));
 		if($count_user > $count_friend){	//swipe for user, we only loop for the one with fewer friends.
 			$tmp = $user_id;
 			$user_id = $friend_id;
 			$friend_id = $tmp;
 		}
 
-		$friends = Friends::model()->findAll('accept > 0 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$user_id));
+		$friends = Friends::model()->findAll('accept = 1 AND (sender = :uid OR receiver = :uid)', array(":uid"=>$user_id));
 		$mutual = array();
 		foreach($friends as $friend){
 			if($friend->sender == $user_id){
@@ -228,7 +227,7 @@ class Users extends CActiveRecord
 			}else{
 				$other = $friend->sender;
 			}
-			$mut = Friends::model()->find('accept > 0 AND((sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid))', array(":uid"=>$other, ":fid"=>$friend_id));
+			$mut = Friends::model()->find('accept = 1 AND((sender = :uid AND receiver = :fid) OR (sender = :fid AND receiver = :uid))', array(":uid"=>$other, ":fid"=>$friend_id));
 			if($mut){
 				if($mut->sender == $other){
 					$refer = $mut->sender;
@@ -237,7 +236,7 @@ class Users extends CActiveRecord
 				}
 				if (!in_array($refer, $mutual)) {	//check duplicates
 					$referObj = Users::model()->findByPk($refer);
-					if($refer != $user_id && $refer != $friend_id){
+					if($referObj && $refer != $user_id && $refer != $friend_id){
 						$mutual[$refer] = array(
 							"username"=>$referObj->username,
 							//"avatar"=>$referObj->avatar

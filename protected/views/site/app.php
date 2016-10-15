@@ -6,8 +6,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Timi - Easily hang out with friends</title>
-  <meta name="description" content="Timi - The easiest way to hang out with friends and their friends">
+  <title>Timi - Explore fancy places with friends</title>
+  <meta name="description" content="Timi - Discover fancy places and hang out with friends">
   <meta name="keywords" content="timi">
   <meta name="apple-itunes-app" content="app-id=1111783063">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -64,7 +64,12 @@
                       Timi
                       <img src="/images/timi.png" style="width:80px; margin-bottom:0px; margin-top:-9px;">
                     </h1>
-                    <p style="font-size:18px;">The easiest way to hang out with friends and their friends</p>
+                    <?php if(isset($_GET['qixi'])): ?>
+                      <p style="font-size:18px;">生死之交遍布天南海北，同城找不到人约饭吗？</p>
+                      <p style="font-size:18px; font-weight:bold;">#Timi #约饭神器</p>
+                    <?php else: ?>
+                      <p style="font-size:18px;">Explore fancy places with friends</p> 
+                    <?php endif; ?>
                   </div> <!-- .section-heading -->
                   <div class="section-content">
                     <a class="btn btn-invert m-y-5" href="/site/downloadios">&nbsp;&nbsp;&nbsp;<i class="fa fa-apple"></i>App Store&nbsp;&nbsp;&nbsp;</a>

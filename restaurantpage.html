@@ -1,0 +1,354 @@
+<!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Timi</title>
+<!-- Path to Framework7 Library CSS-->
+<link rel="stylesheet" href="/ios/www/css/framework7.ios.min.css">
+<link rel="stylesheet" href="/ios/www/css/framework7.ios.colors.min.css">
+<!-- Tinder  -->
+<link rel="stylesheet" href="/ios/www/css/jTinder.css?n=1">
+<!-- Slider plugin -->
+<link rel="stylesheet" href="/ios/www/css/rangeslider.css">
+<!-- Icon plugin -->
+<link rel="stylesheet" href="/ios/www/css/font-awesome-4.6.1/css/font-awesome.css">
+<!-- Font -->
+<link rel="stylesheet" href="/ios/www/css/google-font.css?n=1">
+<!-- <link href="https://fonts.googleapis.com/css?family=PT Sans" rel="stylesheet"> -->
+<!-- Animation -->
+<link rel="stylesheet" href="/ios/www/css/animate.css?">
+<!-- Core -->
+<!-- <link rel="stylesheet" href="http://gettimi.com/ios/www/css/my-app.css?n=1"> -->
+<link rel="stylesheet" href="/ios/www/css/my-app.css?n=1">
+<!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.0.1/emojify.min.css" /> -->
+<!-- jQuery lib -->
+<script type="text/javascript" src="/ios/www/js/jquery.min.js"></script>
+<!-- Slider plugin -->
+<script type="text/javascript" src="/ios/www/js/rangeslider.js"></script>
+<!-- transform2d lib -->
+<script type="text/javascript" src="/ios/www/js/jquery.transform2d.js"></script>
+<!-- jTinder lib -->
+<script type="text/javascript" src="/ios/www/js/jquery.jTinder.js"></script>
+<!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Timi</title>
+<!-- Path to Framework7 Library CSS-->
+<link rel="stylesheet" href="/ios/www/css/framework7.ios.min.css">
+<link rel="stylesheet" href="/ios/www/css/framework7.ios.colors.min.css">
+<!-- Tinder  -->
+<link rel="stylesheet" href="/ios/www/css/jTinder.css?n=1">
+<!-- Slider plugin -->
+<link rel="stylesheet" href="/ios/www/css/rangeslider.css">
+<!-- Icon plugin -->
+<link rel="stylesheet" href="/ios/www/css/font-awesome-4.6.1/css/font-awesome.css">
+<!-- Font -->
+<link rel="stylesheet" href="/ios/www/css/google-font.css?n=1">
+<!-- <link href="https://fonts.googleapis.com/css?family=PT Sans" rel="stylesheet"> -->
+<!-- Animation -->
+<link rel="stylesheet" href="/ios/www/css/animate.css?">
+<!-- Core -->
+<!-- <link rel="stylesheet" href="http://gettimi.com/ios/www/css/my-app.css?n=1"> -->
+<link rel="stylesheet" href="/ios/www/css/my-app.css?n=1">
+<!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/emojify.js/1.0.1/emojify.min.css" /> -->
+<!-- jQuery lib -->
+<script type="text/javascript" src="/ios/www/js/jquery.min.js"></script>
+<!-- Slider plugin -->
+<script type="text/javascript" src="/ios/www/js/rangeslider.js"></script>
+<!-- transform2d lib -->
+<script type="text/javascript" src="/ios/www/js/jquery.transform2d.js"></script>
+<!-- jTinder lib -->
+<script type="text/javascript" src="/ios/www/js/jquery.jTinder.js"></script>
+<script>
+   window.onload = function() {
+     var myApp = new Framework7();
+     var mySwiper1 = myApp.swiper('.swiper-food-container', {
+         spaceBetween: 0, 
+         slidesPerView: 1, 
+         speed: 200, 
+         // pagination:'.swiper-pagination',
+     });   
+     $(".swiper-food-container").css("height",$(".swiper-food-container").width() )
+   
+   };
+</script>
+<script type="text/javascript" src="/ios/www/js/facebookConnectPlugin.js"></script>
+<!-- Path to Framework7 Library JS-->
+<script type="text/javascript" src="/ios/www/js/framework7.min.js"></script>
+<!-- Path to your app js-->
+<!-- // <script type="text/javascript" src="js/my-app.js?n=1"></script> -->
+<script type="text/javascript" src="/ios/www/js/localScript.js"></script>
+
+<div class="view view-main" data-page="restaurant-page">
+   <div class="navbar" id="navbar-container" style="visibility: visible;">
+      <div class="navbar-inner navbar-on-center" data-page="restaurant-page">
+         <div class="center-title center" id="restaurant-name-navbar" style="left: -14.5px; display: block;">Bergdorf Goodman Restaurant</div>
+      </div>
+   </div>
+   <span class="progressbar-infinite" id="progressbar"></span>         
+   <div class="pages navbar-through">
+      <div class="page page-on-center" data-page="restaurant-page">
+         <div class="page-content contacts-content restaurant-page-content">
+            <div class="list-block contacts-block">
+               <div class="list-group">
+                  <ul>
+                     <div id="restaurant-picture-list">
+                        <div class="swiper-container swiper-food-container swiper-container-horizontal">
+                           <div class="swiper-wrapper">
+                              <div class="swiper-slide swiper-slide-active" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant14.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide swiper-slide-next" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant13.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant1.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant2.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant11.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant9.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant6.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant10.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant23.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant3.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant4.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant15.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant8.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant12.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant22.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant21.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant7.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant5.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant20.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant16.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant18.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant17.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                              <div class="swiper-slide" style="width: 414px;">
+                                 <div class="image-class" style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant19.jpg&quot;) 100% 50% / cover no-repeat; height: 414px;"></div>
+                              </div>
+                           </div>
+                           <div class="swiper-pagination"></div>
+                           <div id="photo-number">23 PHOTOS</div>
+                        </div>
+                     </div>
+<!--                      <div id="action-bar">
+                        <div id="like-restaurant-button" style="color: rgb(222, 99, 99);"><i class="fa fa-bookmark"></i></div>
+                     </div> -->
+                     <div class="restaurant-info-group" style="border-bottom: 1px solid #e6e7e8;">
+                        <div class="row restaurant-info-bar">
+                           <div class="col-50 ">
+                              <div class="col-title" id="restaurant-page-dollar">$60/ppl</div>
+                              <div class="col-subtitle">price</div>
+                           </div>
+                           <div class="col-50 ">
+                              <div class="col-title" id="restaurant-page-star">4.5<span class="col-subtitle"> / 5</span></div>
+                              <div class="col-subtitle">rating</div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="restaurant-info-group" class="list-block restaurant-info-text-block">
+                        <ul>
+                           <li class="item-content" id="restaurant-page-address-li" style="display: flex;">
+                              <div class="item-media"><i style="background:rgb(99,154,222);" class="fa icon-background-badge fa-map"></i></div>
+                              <div class="item-inner">
+                                 <div class="item-after restaurant-info-text" id="restaurant-page-address">754 5th Ave, New York, NY 10019</div>
+                              </div>
+                           </li>
+                           <li class="item-content" id="restaurant-page-phone-li">
+                              <div class="item-media"><i style="background:rgb(99,222,154);" class="fa icon-background-badge fa-phone"></i></div>
+                              <div class="item-inner">
+                                 <div class="item-after restaurant-info-text" id="restaurant-page-phone"><a href="tel:(212) 872-8977">(212) 872-8977</a></div>
+                              </div>
+                           </li>
+                           <li class="item-content" id="restaurant-page-website-li">
+                              <div class="item-media"><i style="background:#464748;" class="fa icon-background-badge fa-at"></i></div>
+                              <div class="item-inner">
+                                 <div class="item-after restaurant-info-text" id="restaurant-page-website">http://www.bergdorfgoodman.com/BG-Restaurant/cat485403__/c.cat?icid=Rest_LP</div>
+                              </div>
+                           </li>
+                        </ul>
+                     </div>
+                     <div id="restaurant-map" style="position: relative;">
+                     </div>
+                     <div id="restaurant-description">
+                        <div class="restaurant-page-title">Description</div>
+                        <p><b></b></p>
+                        <p>Located on the Seventh Floor with sweeping views of Central Park, BG Restaurant is open daily for lunch, tea, cocktails and dinner. Visit this picturesque setting, designed by Kelly Wearstler, and enjoy irresistible dishes including our famous Gotham Salad</p>
+                        <p></p>
+                        <p>Hours</p>
+                        <p>Mon - Fri 11:30 am - 8:00 pm </p>
+                        <p>Sat 11:30 am - 7:00 pm</p>
+                        <p>Sun 11:30 am - 5:00 pm</p>
+                     </div>
+                     <div id="restaurant-hours"></div>
+                     <div id="restaurant-recommend-menu"></div>
+                     <div id="restaurant-gallery-title">
+                        <div class="restaurant-page-title">Gallery</div>
+                     </div>
+                     <div id="restaurant-gallery">
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant12.jpg&quot;, 1454)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant12.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1454"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant1.jpg&quot;, 1443)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant1.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1443"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant2.jpg&quot;, 1444)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant2.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1444"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant3.jpg&quot;, 1445)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant3.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1445"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant4.jpg&quot;, 1446)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant4.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1446"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant5.jpg&quot;, 1447)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant5.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1447"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant6.jpg&quot;, 1448)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant6.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1448"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant7.jpg&quot;, 1449)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant7.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1449"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant8.jpg&quot;, 1450)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant8.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1450"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant9.jpg&quot;, 1451)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant9.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1451"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant10.jpg&quot;, 1452)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant10.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1452"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant11.jpg&quot;, 1453)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant11.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1453"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant13.jpg&quot;, 1455)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant13.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1455"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant14.jpg&quot;, 1456)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant14.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1456"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant15.jpg&quot;, 1457)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant15.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1457"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant16.jpg&quot;, 1458)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant16.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1458"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant17.jpg&quot;, 1459)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant17.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1459"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant18.jpg&quot;, 1460)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant18.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1460"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant19.jpg&quot;, 1461)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant19.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1461"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant20.jpg&quot;, 1462)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant20.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1462"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant21.jpg&quot;, 1463)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant21.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1463"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant22.jpg&quot;, 1464)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant22.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1464"></div>
+                        </li>
+                        <li class="image-class-half " onclick="goToRestaurantPage(352, &quot;http%3A%2F%2Fgettimi.com%2Fimages%2Fbgrestaurant%2Fbgrestaurant23.jpg&quot;, 1465)">
+                           <a class="image-holder  lazy lazy-fadein " style="background: url(&quot;http://gettimi.com/images/bgrestaurant/bgrestaurant23.jpg&quot;) 100% 50% / cover no-repeat; height: 189px;"></a>
+                           <div class="image-background" style="height: 189px;"></div>
+                           <div id="image-avatar-1465"></div>
+                        </li>
+                     </div>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div id="reserve-button" class="modern-square-button" style="background: rgb(99, 222, 154);">Reserve By Calling</div>
+         <div id="reserve-button-background"></div>
+      </div>
+   </div>
+</div>

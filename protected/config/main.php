@@ -23,6 +23,9 @@ return array(
         	'ext.yii-mail.YiiMailMessage',
         	'ext.imperavi-redactor-widget.ImperaviRedactorWidget',
 			'ext.segment_analytics.lib.*',
+			'ext.InstaYelp.*',
+			'ext.GoogleVision.*',
+			'ext.Taxi.*',
 	        'application.classes.*',
 	),
 

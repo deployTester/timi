@@ -30,7 +30,7 @@ class Requests extends CActiveRecord
 		return array(
 			array('sender, receiver, create_time', 'required'),
 			array('activity, time_word', 'length', 'max'=>50),
-			array('sender, receiver, create_time, status, request_day, request_time, trash, sender_read, receiver_read, super, pushed', 'numerical', 'integerOnly'=>true),
+			array('sender, receiver, create_time, status, request_day, request_time, trash, sender_read, receiver_read, super, pushed, msg', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, sender, receiver, create_time, status', 'safe', 'on'=>'search'),

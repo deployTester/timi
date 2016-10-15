@@ -1,0 +1,23 @@
+/**/_xdc_._6lysia && _xdc_._6lysia( {
+   "destination_addresses" : [ "300-306 W 57th St, New York, NY 10019, USA" ],
+   "origin_addresses" : [ "603-635 W 42nd St, New York, NY 10036, USA" ],
+   "rows" : [
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "1.7 mi",
+                  "value" : 2669
+               },
+               "duration" : {
+                  "text" : "20 mins",
+                  "value" : 1175
+               },
+               "status" : "OK"
+            }
+         ]
+      }
+   ],
+   "status" : "OK"
+}
+ )

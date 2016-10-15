@@ -1,0 +1,308 @@
+/*
+pink: #464748;
+light gray: #d2d2d2;
+dark gray: #929292;
+white: #fefefe;
+fb-blue: #3b5998;
+*/
+body {
+    /*font-family: Open sans;*/
+    font-family: Open sans;
+    font-weight: 300;
+}
+.color-green {
+    color: rgba(99,222,154,1);
+}
+.color-red {
+    color: crimson;
+}
+
+* { 
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+.item-after {
+    user-select: auto;
+    -moz-user-select: -moz-auto;
+    -khtml-user-select: auto;
+    -webkit-user-select: auto;
+    -webkit-touch-callout: auto;    
+}
+input { 
+    user-select: auto;
+    -moz-user-select: -moz-auto;
+    -khtml-user-select: auto;
+    -webkit-user-select: auto;
+    -webkit-touch-callout: auto;
+    /*-webkit-transform: translate3d(0px,0px,0px);*/
+}
+div#map {
+    height: calc( 100% - 88px ); 
+    width: 100%;
+}
+#result-form input {
+    text-align: left;
+}
+/* with in map */
+/*.startend-form {
+    position: absolute;
+    width: calc(100% - 30px);
+    left: 15px;
+    top: 25px;
+    z-index: 1000;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+}*/
+/* on top of map */
+.startend-form {
+    margin: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+}
+.list-block a.item-content:active {
+    background: #f7f7f7;
+}
+a#current-position-button {
+    bottom: 69px;
+    position: absolute;
+    right: 25px;
+    font-size: 17px;
+    font-size: 23px;
+    z-index: 10;
+    background: rgba(255,255,255,0.95);
+    width: 32px;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+#current-position-button i {
+    font-size: 17px;
+    vertical-align: top;
+    height: 32px;
+    line-height: 32px; 
+}
+a#clear-button {
+    bottom: 69px;
+    position: absolute;
+    right: 85px;
+    font-size: 17px;
+    z-index: 10;
+    background: rgba(255,255,255,0.95);
+    width: auto;
+    text-align: center;
+    border-radius: 2px;
+    padding: 0px 10px;
+    line-height: 32px;
+    font-weight: 500;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+#clear-button i {
+    font-size: 17px;
+    vertical-align: top;
+    height: 32px;
+    line-height: 32px;
+    margin-right: 8px;
+
+}
+a#clear-button:active , a#current-position-button:active {
+    opacity: 0.5;
+}
+#suggest-list {
+    /*display: none;*/
+    position: absolute;
+    width: calc(100% - 0px);
+    left: 0px;
+    top: 95px;
+    z-index: 1000;
+    max-height: 270px; 
+    overflow: scroll;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);    
+}
+
+/**/
+
+.clear-search-box {
+     visibility: hidden; 
+    font-size: 11px;
+    height: 16px;
+    line-height: 16px;
+    /* background: #888; */
+    border-radius: 100%;
+    width: 16px;
+    text-align: center;
+    /* margin-top: 7px; */
+    position: absolute;
+    right: 6px;
+    border: 4px solid transparent;
+    display: inline-block;
+    bottom: 10px;
+}
+span.title-description {
+    font-size: 13px;
+    /* line-height: 100%; */
+    /* height: 100%; */
+    margin-left: 12px;
+    font-weight: 400;
+    display: inline-block;
+    float: right;
+    color: #a9a9a9;
+}
+#suggest-list .item-title{
+    font-size: 15px;
+    font-weight: 500; 
+
+}
+#suggest-list .item-after {
+    font-size: 13px;
+    font-weight: 500; 
+    margin-left: 0px;    
+}
+#suggest-list ul, .startend-form ul {
+    background: transparent;
+}
+a {
+    color: #464748;
+}
+.startend-form .item-title {
+    padding-right: 13px;
+    font-size: 10px;
+}
+.startend-form.list-block .item-inner {
+    padding-right: 8px;
+}
+.startend-form input[type="text"] {
+    font-size: 15px;
+    text-align: center;
+    width: calc(100% - 28px);
+    display: inline-block;
+}
+.statusbar-overlay {
+    /*background: transparent;*/
+}
+.centerMarker-green {
+  position:absolute;
+  /*url of the marker*/
+  /*http://maps.gstatic.com/mapfiles/markers2/icon_green.png*/
+  background:url(../img/2744green.png) no-repeat;
+  /*center the marker*/
+  top:50%;left:50%;
+  background-size: contain;
+
+  z-index:1;
+  /*fix offset when needed*/
+    margin-left: -14px;
+    margin-top: 0px;
+  /*size of the image*/
+  height:42px;
+  width:28px;
+  cursor:pointer;    
+    
+}
+.centerMarker-red {
+    position: absolute;
+    background: url(../img/2744crimson.png) no-repeat;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    margin-left: -14px;
+    margin-top: 0px;
+    height: 41px;
+    width: 27px;
+    cursor: pointer;
+}
+.result-icon {
+    width: 32px; 
+    height: 32px;
+}
+#fare-chart.list-block .item-text {
+    height: 21px;
+    -webkit-line-clamp: 2;
+    font-size: 14px;
+}
+#fare-chart.list-block .item-after {
+    font-weight: 500; 
+    font-size: 15px;
+}
+.navbar {
+    /*display: none;*/
+}
+.gmnoprint {
+    display: none;
+}
+#fare-chart .row {
+    height: 33.3%; 
+}
+#fare-chart {
+    height: 100%;
+}
+/*#fare-chart a:active {
+    background: #f7f7f7;
+}*/
+#fare-chart .item-title{
+    font-weight: 400;    
+}
+.toolbar {
+    display: none;
+}
+.tabbar-fixed .page-content, .tabbar-through .page-content, .toolbar-fixed .page-content, .toolbar-through .page-content {
+    padding-bottom: 50px;
+}
+#ETA-button {
+    display: block;
+    z-index: 100;
+    margin: 0 auto;
+    position: absolute;
+    background: rgb(99,222,154);
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    bottom: 0;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    border-radius: 0px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+}
+.recommended {
+    background: rgb(99,222,154);
+    /* line-height: 17px; */
+    color: white;
+    font-size: 13px;
+    /* height: 17px; */
+    margin-left: 10px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    display: inline-block;
+}
+/*.bg-green {
+    background: rgb(99,222,154)!important ;
+    background-color: rgba(99,222,154)!important ;
+}
+*/
+
+
+@media screen and (max-width: 350px) {
+    /* iphone 5*/
+    #suggest-list {
+        max-height: 135px; 
+    }    
+}
+
+
+@media screen and (min-width: 360px) {
+    /* iphone 6 */
+    #suggest-list {
+        max-height: 216px; 
+    }        
+}
+@media screen and (min-width: 400px) {
+    #suggest-list {
+        max-height: 270px; 
+    }        
+}

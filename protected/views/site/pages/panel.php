@@ -20,6 +20,9 @@ $total_swipes_yes = Requests::model()->count('create_time > unix_timestamp() - 8
 $matches = Requests::model()->findAll('create_time > unix_timestamp() - 86400 AND status = 1');
 $total_match = count($matches);
 
+$swipe_stranger = Friends::model()->count('create_time > unix_timestamp() - 86400 AND manual = 1');
+
+$swipe_stranger_match = Friends::model()->count('create_time > unix_timestamp() - 86400 AND manual = 1 AND accept = 1');
 ?>
 
 <div>
@@ -61,6 +64,12 @@ $total_match = count($matches);
 			?>
 		<?php endforeach; ?>
 	</div>
+	<div><b>New Stranger Swipes(24hrs):</b> <?php echo $swipe_stranger; ?></div>
+	<div><b>New Stranger Matches(24hrs):</b> <?php echo $swipe_stranger_match; ?></div>
+
+
+<a href="timi://?param=hehe">Timi</a>
+
 
 </div>
 
